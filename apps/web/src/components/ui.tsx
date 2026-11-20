@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { Button as LooseleafButton } from "@/components/ui/button";
 import type { DataOrigin } from "@/lib/types";
 
 export function Button({
@@ -10,10 +11,16 @@ export function Button({
   variant?: "primary" | "secondary" | "quiet";
   children: ReactNode;
 }) {
+  const looseleafVariant =
+    variant === "primary" ? "default" : variant === "secondary" ? "secondary" : "ghost";
   return (
-    <button className={`button button-${variant} ${className}`} {...props}>
+    <LooseleafButton
+      variant={looseleafVariant}
+      className={`looseleaf-button ${className}`}
+      {...props}
+    >
       {children}
-    </button>
+    </LooseleafButton>
   );
 }
 

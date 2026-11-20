@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { InkProvider } from "@/lib/ink/react";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen antialiased">{children}</body>
+      <body className="min-h-screen antialiased">
+        <InkProvider textures={false}>{children}</InkProvider>
+      </body>
     </html>
   );
 }
