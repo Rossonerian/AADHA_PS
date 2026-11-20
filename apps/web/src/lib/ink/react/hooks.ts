@@ -82,6 +82,8 @@ export function mergeRefs<T>(...refs: AnyRef<T>[]): React.RefCallback<T> {
 }
 
 export function useMergedRef<T>(...refs: AnyRef<T>[]): React.RefCallback<T> {
+  // The dependency list intentionally mirrors the caller's ref tuple.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   return React.useCallback(mergeRefs(...refs), refs);
 }
 
