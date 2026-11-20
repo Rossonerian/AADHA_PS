@@ -1,7 +1,7 @@
-# Aacharya — Source of Truth
+# PaisaProof — Source of Truth
 
 > Repo path: `docs/SOURCE_OF_TRUTH.md`. Owner: **Hardhik**. Others propose changes via a PR titled `contract: ...`; Hardhik approves and updates this file.
-> Product spec: `docs/PRD.md` (Aacharya — Product Requirements Document). If this file and the PRD disagree on a contract, **this file wins**.
+> Product spec: `docs/PRD.md` (PaisaProof — Product Requirements Document). If this file and the PRD disagree on a contract, **this file wins**.
 > Assumption: "Advisor work" = the **Verifier** (PRD Section 7).
 
 ## 1. Work split
@@ -17,7 +17,7 @@ Integration owner: **Hardhik**. Contract owner: **Hardhik**.
 
 ## 2. Rules that override everything
 
-1. Aacharya never tells a user to buy, sell or hold anything, never gives price targets of its own, and never ranks or recommends stocks. Ratings describe **sources**, never stocks.
+1. PaisaProof never tells a user to buy, sell or hold anything, never gives price targets of its own, and never ranks or recommends stocks. Ratings describe **sources**, never stocks.
 2. Every LLM output shown to users goes through `core.guardrails.check_output()` before it is returned.
 3. Every data record shown in the demo carries `data_origin: "real" | "synthetic"`; the UI shows it as a badge.
 4. Numbers in the UI come from our data via templates, never written freely by an LLM.
@@ -38,7 +38,7 @@ Integration owner: **Hardhik**. Contract owner: **Hardhik**.
 ## 4. Repo layout
 
 ```text
-aacharya/
+paisaproof/
   apps/web/                     # Ananya
   services/api/app/
     main.py                     # Hardhik

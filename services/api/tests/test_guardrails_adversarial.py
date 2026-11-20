@@ -101,7 +101,7 @@ def test_neutral_fallback_and_edge_cases() -> None:
 
     audited = check_output(
         "This Telegram post claimed 'Buy XYZ at 100 for target 150'; "
-        "Aacharya marks such urgency claims as red flags."
+        "PaisaProof marks such urgency claims as red flags."
     )
     assert audited.ok is True
 

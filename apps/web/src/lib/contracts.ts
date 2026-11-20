@@ -1,5 +1,5 @@
 /**
- * Aacharya API v1 TypeScript contracts.
+ * PaisaProof API v1 TypeScript contracts.
  * Strictly aligned with docs/SOURCE_OF_TRUTH.md Sections 7 & 8.
  */
 

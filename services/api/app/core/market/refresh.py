@@ -19,7 +19,7 @@ from app.core.logging import get_logger
 from app.core.market.prices import index, prices
 from app.core.market.symbols import canonicalize_ticker, get_market_data_dir
 
-_logger = get_logger("aacharya.market.refresh")
+_logger = get_logger("paisaproof.market.refresh")
 
 NSE_EQUITY_LIST_URL = "https://nsearchives.nseindia.com/content/equities/EQUITY_L.csv"
 

@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     app_env: str = "local"
     app_version: str = "0.1.0"
     cors_origins: str = "http://localhost:3000,http://127.0.0.1:3000"
-    database_url: str = "sqlite:///./aacharya_dev.db"
+    database_url: str = "sqlite:///./paisaproof_dev.db"
     database_url_unpooled: str = ""
 
     neon_auth_base_url: str = ""

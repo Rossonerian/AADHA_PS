@@ -1,1 +1,1 @@
-"""Aacharya API application package."""
+"""PaisaProof API application package."""

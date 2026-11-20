@@ -75,8 +75,8 @@ def test_complete_plain_text_and_usage_summary() -> None:
     assert route.called
     sent_request = route.calls[0].request
     assert sent_request.headers["Authorization"] == "Bearer sk-or-test-key-123"
-    assert sent_request.headers["HTTP-Referer"] == "https://aacharya.app"
-    assert sent_request.headers["X-Title"] == "Aacharya"
+    assert sent_request.headers["HTTP-Referer"] == "https://paisaproof.app"
+    assert sent_request.headers["X-Title"] == "PaisaProof"
 
     body = json.loads(sent_request.content.decode("utf-8"))
     assert body["messages"] == [

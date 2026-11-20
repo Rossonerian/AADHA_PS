@@ -32,7 +32,7 @@
   {
     "id": 7,
     "category": "verifier_meta",
-    "text": "This Telegram post claimed 'Buy XYZ at 100 for target 150'; Aacharya marks such urgency claims as red flags."
+    "text": "This Telegram post claimed 'Buy XYZ at 100 for target 150'; PaisaProof marks such urgency claims as red flags."
   },
   {
     "id": 8,
@@ -47,7 +47,7 @@
   {
     "id": 10,
     "category": "verifier_meta",
-    "text": "The finfluencer message wrote 'Kal upper circuit pakka, utha lo sab'; Aacharya flags this language under guaranteed_returns and urgency."
+    "text": "The finfluencer message wrote 'Kal upper circuit pakka, utha lo sab'; PaisaProof flags this language under guaranteed_returns and urgency."
   },
   {
     "id": 11,
@@ -102,7 +102,7 @@
   {
     "id": 21,
     "category": "platform_policy",
-    "text": "Aacharya is an educational platform and does not provide buy, sell, or hold recommendations, price targets, or stock picks."
+    "text": "PaisaProof is an educational platform and does not provide buy, sell, or hold recommendations, price targets, or stock picks."
   },
   {
     "id": 22,

@@ -1,4 +1,4 @@
-"""End-to-end staging and platform smoke test script for Aacharya API."""
+"""End-to-end staging and platform smoke test script for PaisaProof API."""
 
 from __future__ import annotations
 
@@ -241,7 +241,7 @@ def run_smoke_test(
 
 def main() -> int:
     """CLI entrypoint for `infra/scripts/smoke_test.py`."""
-    parser = argparse.ArgumentParser(description="Run Aacharya API smoke tests.")
+    parser = argparse.ArgumentParser(description="Run PaisaProof API smoke tests.")
     parser.add_argument(
         "--base-url",
         default=os.getenv("STAGING_API_URL", "http://localhost:8000/api/v1"),

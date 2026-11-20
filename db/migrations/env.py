@@ -1,4 +1,4 @@
-"""Alembic migration environment for Aacharya."""
+"""Alembic migration environment for PaisaProof."""
 
 import os
 import sys

@@ -1,4 +1,4 @@
-# Aacharya — Product Requirements Document (PRD)
+# PaisaProof — Product Requirements Document (PRD)
 
 > `[PENDING EXPORT: Drop exported PRD.md here before C0 freeze]`
 

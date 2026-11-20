@@ -80,7 +80,7 @@ def get_logger(name: str) -> logging.Logger:
     return logger
 
 
-_request_logger = get_logger("aacharya.http")
+_request_logger = get_logger("paisaproof.http")
 
 
 class RequestLoggingMiddleware(BaseHTTPMiddleware):

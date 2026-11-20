@@ -1,6 +1,16 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import {
+  BookOpen,
+  ChartNoAxesCombined,
+  CircleHelp,
+  House,
+  Moon,
+  Search,
+  Sparkles,
+  Sun,
+} from "lucide-react";
 import { DashboardCharts, ExplainChart, ScenarioChart } from "@/components/charts";
 import {
   Button,
@@ -41,14 +51,14 @@ type View =
   | "explain"
   | "verifier"
   | "progress";
-type NavItem = { id: View; label: string; icon: string; tool?: string; level?: number };
+type NavItem = { id: View; label: string; icon: typeof House; tool?: string; level?: number };
 const navItems: NavItem[] = [
-  { id: "home", label: "Overview", icon: "⌂" },
-  { id: "learn", label: "Learning path", icon: "▤" },
-  { id: "scenario", label: "Practice scenarios", icon: "⌁", tool: "scenarios", level: 1 },
-  { id: "explain", label: "Explain a stock", icon: "◷", tool: "explain_stock", level: 2 },
-  { id: "verifier", label: "Source verifier", icon: "⌕", tool: "verifier", level: 3 },
-  { id: "progress", label: "My progress", icon: "↗", tool: "dashboard", level: 4 },
+  { id: "home", label: "Overview", icon: House },
+  { id: "learn", label: "Learning path", icon: BookOpen },
+  { id: "scenario", label: "Practice scenarios", icon: Sparkles, tool: "scenarios", level: 1 },
+  { id: "explain", label: "Explain a stock", icon: Search, tool: "explain_stock", level: 2 },
+  { id: "verifier", label: "Source verifier", icon: CircleHelp, tool: "verifier", level: 3 },
+  { id: "progress", label: "My progress", icon: ChartNoAxesCombined, tool: "dashboard", level: 4 },
 ];
 
 function friendlyError(error: unknown): string {
@@ -77,7 +87,8 @@ function formatFact(value: unknown): string {
   return value == null ? "Not available" : JSON.stringify(value);
 }
 
-export default function AacharyaApp() {
+export default function PaisaProofApp() {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   const [view, setView] = useState<View>("home");
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [plan, setPlan] = useState<LearningPlan | null>(null);
@@ -474,11 +485,11 @@ export default function AacharyaApp() {
 
   if (!profile)
     return (
-      <main className="welcome-screen">
+      <main className="welcome-screen" data-theme={theme}>
         <div className="welcome-noise" aria-hidden="true" />
         <div className="welcome-brand">
-          <span className="brand-mark">a</span>
-          <span>Aacharya</span>
+          <span className="brand-mark">P</span>
+          <span>PaisaProof</span>
         </div>
         <div className="welcome-content">
           <div className="welcome-copy">
@@ -557,7 +568,7 @@ export default function AacharyaApp() {
           </Panel>
         </div>
         <footer className="welcome-footer">
-          <span>© 2026 Aacharya</span>
+          <span>© 2026 PaisaProof</span>
           <span>Learn with care. Decide with context.</span>
         </footer>
       </main>
@@ -565,16 +576,21 @@ export default function AacharyaApp() {
 
   const isLocked = (entry: NavItem) => Boolean(entry.level && profile.level < entry.level);
   return (
-    <div className="app-shell">
+    <div className="app-shell" data-theme={theme}>
+      <div className="ambient-backdrop" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
       <aside className="sidebar">
         <button
           className="sidebar-brand"
           onClick={() => navigate("home")}
-          aria-label="Aacharya overview"
+          aria-label="PaisaProof overview"
         >
-          <span className="brand-mark">a</span>
+          <span className="brand-mark">P</span>
           <span>
-            Aacharya<small>LEARNING STUDIO</small>
+            PaisaProof<small>LEARNING STUDIO</small>
           </span>
         </button>
         <div className="side-label">YOUR SPACE</div>
@@ -587,7 +603,7 @@ export default function AacharyaApp() {
               aria-current={view === item.id ? "page" : undefined}
             >
               <span className="nav-icon" aria-hidden="true">
-                {item.icon}
+                <item.icon size={19} strokeWidth={1.8} />
               </span>
               <span>{item.label}</span>
               {isLocked(item) && <span className="nav-level">L{item.level}</span>}
@@ -615,14 +631,14 @@ export default function AacharyaApp() {
             className="sidebar-help"
             onClick={() => setToast("Your progress is saved to this demo session.")}
           >
-            <span aria-hidden="true">?</span> Help & feedback
+            <CircleHelp size={17} aria-hidden="true" /> Help & feedback
           </button>
         </div>
       </aside>
       <div className="main-column">
         <header className="topbar">
           <button className="mobile-brand" onClick={() => navigate("home")}>
-            <span className="brand-mark">a</span>Aacharya
+            <span className="brand-mark">P</span>PaisaProof
           </button>
           <div className="breadcrumb">
             <span>Workspace</span>
@@ -630,6 +646,13 @@ export default function AacharyaApp() {
             <strong>{activeNav}</strong>
           </div>
           <div className="topbar-right">
+            <button
+              className="theme-toggle"
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
+            >
+              {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}
+            </button>
             <span className="streak-chip">
               <span aria-hidden="true">✦</span> 4 day streak
             </span>
@@ -777,7 +800,7 @@ export default function AacharyaApp() {
             (profile.level < 4 ? <LockNotice level={4} /> : <ProgressView data={dashboard} />)}
         </main>
         <footer className="app-footer">
-          <span>Aacharya · Learn to read the signal</span>
+          <span>PaisaProof · Learn to read the signal</span>
           <span>Progress is personal. The market is uncertain.</span>
         </footer>
       </div>
@@ -1223,10 +1246,8 @@ function LessonView({
                 ))}
               </div>
               {check && (
-                <div className="inline-feedback">
-                  {check === question.options[0]
-                    ? "That’s it. Matching dates and comparing with an index gives you more context."
-                    : "Try again. Look for the choice that checks both timing and the wider market."}
+                <div className="inline-feedback" role="status">
+                  Answer selected. Continue when you’re ready.
                 </div>
               )}
             </Panel>
@@ -1235,10 +1256,7 @@ function LessonView({
             <Button variant="secondary" onClick={onBack}>
               Save and leave
             </Button>
-            <Button
-              onClick={onContinue}
-              disabled={busy || !check || check !== question?.options[0]}
-            >
+            <Button onClick={onContinue} disabled={busy || !check}>
               Continue to assessment <span>→</span>
             </Button>
           </div>
