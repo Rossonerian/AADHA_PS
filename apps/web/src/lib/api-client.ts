@@ -26,7 +26,11 @@ export function getApiBaseUrl(): string {
   const configured =
     process.env.NEXT_PUBLIC_API_URL?.trim() || process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
   if (configured && configured.length > 0) {
-    return configured.replace(/\/+$/, "");
+    const trimmed = configured.replace(/\/+$/, "");
+    if (/^https?:\/\/[^/]+$/i.test(trimmed)) {
+      return `${trimmed}/api/v1`;
+    }
+    return trimmed;
   }
   return "/api/v1";
 }
