@@ -81,6 +81,34 @@ Blockers: docs/PRD.md export; Divyansh education endpoints for full C2/C3 smoke 
 _Append updates here._
 
 ```text
+[Arnav] MAJOR | First real test blocked at Step 1 (2026-11-21)
+Impact: OPENROUTER_API_KEY is absent; live exact-match F1 is unmeasured, not zero. Existing grounding updates below report development against eval.jsonl, compromising its held-out status.
+Options: A) Hardhik configures OpenRouter and supplies an independent held-out acceptance set (recommended); B) explicitly accept the existing corpus as a diagnostic only. No tuning performed in this run.
+Need from: Hardhik — OpenRouter access and evaluation-integrity decision. Tasks 2–6 remain pending under the requested stop-on-blocker rule; no synthetic-only sign-off assumed.
+```
+
+```text
+[Arnav] 76.25% | Phase 3/6: First real-test preflight
+Done: Added real-core evaluation runner and raw blocked output in docs/evidence/extraction_f1.md; Python 3.11.16 validation below.
+Next: Configure OpenRouter and resolve held-out integrity, then resume the ordered task list.
+Minor: FINNHUB_API_KEY absent; configured DB is SQLite. No apps/web edits or contract changes.
+Blockers: Live F1 unmeasured; no acceptance progress claimed.
+
+$ PYTHONPATH=services/api python -m pytest services/api/tests -q
+306 passed, 1 warning in 31.37s
+$ python -m ruff check services/api infra db/migrations
+All checks passed!
+$ python -m black --check services/api infra db/migrations
+All done! ✨ 🍰 ✨
+90 files would be left unchanged.
+$ PYTHONPATH=services/api python -m mypy services/api/app
+Success: no issues found in 57 source files
+```
+
+Commands above used `.venv/Scripts/python.exe`; pytest's warning is Starlette's
+deprecation of `httpx` with `starlette.testclient` in favor of `httpx2`.
+
+```text
 [Arnav] MAJOR | Platform scaffold and PRD are missing; the supplied SoT is the only available contract.
 Impact: Fresh-DB migration, authenticated API integration, and live extraction and market checks are blocked.
 Options: A) Hardhik provides the missing scaffold and interfaces while Orca workers build independent Verifier modules (recommended); B) pause all work.
