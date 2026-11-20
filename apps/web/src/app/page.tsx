@@ -104,14 +104,8 @@ export default function PaisaProofApp() {
   const [assessmentResult, setAssessmentResult] = useState<AssessmentResult | null>(null);
 
   useEffect(() => {
-    const storedTheme = window.localStorage.getItem("paisaproof-theme");
-    if (storedTheme === "light" || storedTheme === "dark") setTheme(storedTheme);
-  }, []);
-
-  useEffect(() => {
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
-    window.localStorage.setItem("paisaproof-theme", theme);
   }, [theme]);
   const [toast, setToast] = useState("");
   const [busy, setBusy] = useState(false);
