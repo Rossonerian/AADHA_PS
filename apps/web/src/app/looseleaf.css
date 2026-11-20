@@ -824,8 +824,8 @@
 
   :is(
       :active:where(
-          :not(:disabled, [aria-disabled="true"], [data-disabled]:not([data-disabled="false"]))
-        ),
+        :not(:disabled, [aria-disabled="true"], [data-disabled]:not([data-disabled="false"]))
+      ),
       [data-pressed]:not([data-pressed="false"])
     )
     > svg[data-ink]
@@ -838,8 +838,8 @@
   }
   :is(
       :active:where(
-          :not(:disabled, [aria-disabled="true"], [data-disabled]:not([data-disabled="false"]))
-        ),
+        :not(:disabled, [aria-disabled="true"], [data-disabled]:not([data-disabled="false"]))
+      ),
       [data-pressed]:not([data-pressed="false"])
     )
     > svg[data-ink]:where(:has([data-layer="hover"]):not([data-still])) {
@@ -848,8 +848,8 @@
   }
   :is(
       :active:where(
-          :not(:disabled, [aria-disabled="true"], [data-disabled]:not([data-disabled="false"]))
-        ),
+        :not(:disabled, [aria-disabled="true"], [data-disabled]:not([data-disabled="false"]))
+      ),
       [data-pressed]:not([data-pressed="false"])
     )
     > svg[data-ink]
@@ -860,8 +860,8 @@
   }
   :is(
       :active:where(
-          :not(:disabled, [aria-disabled="true"], [data-disabled]:not([data-disabled="false"]))
-        ),
+        :not(:disabled, [aria-disabled="true"], [data-disabled]:not([data-disabled="false"]))
+      ),
       [data-pressed]:not([data-pressed="false"])
     )
     > svg[data-ink]
@@ -871,8 +871,8 @@
   }
   [data-ink-sink="self"]:is(
       :active:where(
-          :not(:disabled, [aria-disabled="true"], [data-disabled]:not([data-disabled="false"]))
-        ),
+        :not(:disabled, [aria-disabled="true"], [data-disabled]:not([data-disabled="false"]))
+      ),
       [data-pressed]:not([data-pressed="false"])
     )
     > svg[data-ink]
@@ -881,8 +881,8 @@
   }
   :is(
       :active:where(
-          :not(:disabled, [aria-disabled="true"], [data-disabled]:not([data-disabled="false"]))
-        ),
+        :not(:disabled, [aria-disabled="true"], [data-disabled]:not([data-disabled="false"]))
+      ),
       [data-pressed]:not([data-pressed="false"])
     )
     > svg[data-ink]
@@ -1258,7 +1258,7 @@
   }
 }
 @utility ll-stock-* {
-  --ll-stock: --value(--color- *, [color]);
+  --ll-stock: --value(--color-*, [color]);
 }
 @utility ll-tooth-cold {
   --ll-tex-paper: var(--ll-tex-fibre), var(--ll-tex-relief), var(--ll-tex-cloud);
@@ -1367,17 +1367,17 @@
 
 @media (forced-colors: active) {
   :is(svg[data-ink].absolute, :is([data-ink-host], .ll-ink-host) > svg[data-ink]):not(
-      [data-ink="icon"],
-      [data-ink="doodle"],
-      [data-ink="sticker"],
-      [data-ink="stamp"],
-      [data-ink="tape"],
-      [data-ink="prop"],
-      [data-ink="mascot"],
-      [data-ink="illustration"],
-      [data-ink="badge"],
-      [data-ink-keep]
-    ) {
+    [data-ink="icon"],
+    [data-ink="doodle"],
+    [data-ink="sticker"],
+    [data-ink="stamp"],
+    [data-ink="tape"],
+    [data-ink="prop"],
+    [data-ink="mascot"],
+    [data-ink="illustration"],
+    [data-ink="badge"],
+    [data-ink-keep]
+  ) {
     display: none;
   }
   :is([data-ink-host], .ll-ink-host),

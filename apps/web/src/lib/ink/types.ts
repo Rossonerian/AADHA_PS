@@ -7,16 +7,7 @@ export type BBox = [number, number, number, number];
 export type Tier = "hi" | "lo";
 
 export type Material =
-  | "under"
-  | "wash"
-  | "hl"
-  | "marker"
-  | "pencil"
-  | "waxy"
-  | "text"
-  | "felt"
-  | "stamp"
-  | "top";
+  "under" | "wash" | "hl" | "marker" | "pencil" | "waxy" | "text" | "felt" | "stamp" | "top";
 
 export type LayerName =
   | "rest"
@@ -37,14 +28,7 @@ export type PenKind = "felt" | "pencil" | "marker" | "hl";
 export type WeightClass = "fine" | "std" | "brush";
 
 export type Accent =
-  | "tomato"
-  | "tangerine"
-  | "lemon"
-  | "grass"
-  | "teal"
-  | "sky"
-  | "grape"
-  | "bubblegum";
+  "tomato" | "tangerine" | "lemon" | "grass" | "teal" | "sky" | "grape" | "bubblegum";
 
 export type BasePenName =
   | "ink"
