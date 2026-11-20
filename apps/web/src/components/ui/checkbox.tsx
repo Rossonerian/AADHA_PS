@@ -1,12 +1,17 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Checkbox as CheckboxPrimitive } from "radix-ui"
+import * as React from "react";
+import { Checkbox as CheckboxPrimitive } from "radix-ui";
 
-import { useInk, useMergedRef } from "@/lib/ink/react"
-import { checkboxRecipe } from "@/lib/ink/recipes/checkbox-ink"
-import { REVEAL_DASH, REVEAL_WHEN_CHECKED, REVEAL_WHEN_INDETERMINATE, markTouched } from "@/lib/ink/recipes/draw-on-ink"
-import { cn } from "@/lib/utils"
+import { useInk, useMergedRef } from "@/lib/ink/react";
+import { checkboxRecipe } from "@/lib/ink/recipes/checkbox-ink";
+import {
+  REVEAL_DASH,
+  REVEAL_WHEN_CHECKED,
+  REVEAL_WHEN_INDETERMINATE,
+  markTouched,
+} from "@/lib/ink/recipes/draw-on-ink";
+import { cn } from "@/lib/utils";
 
 function Checkbox({
   className,
@@ -16,11 +21,17 @@ function Checkbox({
   onClickCapture,
   ...props
 }: React.ComponentProps<typeof CheckboxPrimitive.Root> & {
-  seed?: string | number
+  seed?: string | number;
 }) {
-  const invalid = props["aria-invalid"] === true || props["aria-invalid"] === "true"
-  const forced = "data-focus-visible" in props
-  const { hostRef, hostProps, node } = useInk({ recipe: checkboxRecipe, params: { disabled: !!disabled, invalid }, kind: "checkbox", seed, layers: forced ? "all" : undefined })
+  const invalid = props["aria-invalid"] === true || props["aria-invalid"] === "true";
+  const forced = "data-focus-visible" in props;
+  const { hostRef, hostProps, node } = useInk({
+    recipe: checkboxRecipe,
+    params: { disabled: !!disabled, invalid },
+    kind: "checkbox",
+    seed,
+    layers: forced ? "all" : undefined,
+  });
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"
@@ -28,8 +39,8 @@ function Checkbox({
       {...hostProps}
       disabled={disabled}
       onClickCapture={(e) => {
-        markTouched(e)
-        onClickCapture?.(e)
+        markTouched(e);
+        onClickCapture?.(e);
       }}
       className={cn(
         "peer relative isolate size-4 shrink-0 after:absolute after:-inset-1.5 disabled:cursor-not-allowed",
@@ -39,7 +50,7 @@ function Checkbox({
         "group-hover/field:[&>svg_[data-layer=hover]]:visible group-hover/field:[&>svg_[data-layer=hover]]:opacity-100",
         "has-[+[data-slot=label]:hover]:[&>svg_[data-layer=hover]]:visible has-[+[data-slot=label]:hover]:[&>svg_[data-layer=hover]]:opacity-100",
         "has-[+input+[data-slot=label]:hover]:[&>svg_[data-layer=hover]]:visible has-[+input+[data-slot=label]:hover]:[&>svg_[data-layer=hover]]:opacity-100",
-        className
+        className,
       )}
       {...props}
     >
@@ -49,7 +60,7 @@ function Checkbox({
         className="pointer-events-none absolute inset-0 hidden place-content-center leading-none font-bold forced-colors:grid forced-colors:data-[state=checked]:before:content-['✓'] forced-colors:data-[state=indeterminate]:before:content-['–']"
       />
     </CheckboxPrimitive.Root>
-  )
+  );
 }
 
-export { Checkbox }
+export { Checkbox };

@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { splitFieldClass } from "@/lib/field-class"
-import { useInk } from "@/lib/ink/react"
-import { inputRecipe } from "@/lib/ink/recipes/input-ink"
-import { cn } from "@/lib/utils"
+import { splitFieldClass } from "@/lib/field-class";
+import { useInk } from "@/lib/ink/react";
+import { inputRecipe } from "@/lib/ink/recipes/input-ink";
+import { cn } from "@/lib/utils";
 
 const control =
   "h-full w-full min-w-0 flex-1 appearance-none border-0 bg-transparent px-3 py-1 text-[length:inherit] [text-align:inherit] " +
@@ -14,15 +14,15 @@ const control =
   "autofill:shadow-[inset_0_0_0_1000px_var(--ll-slip)] autofill:[-webkit-text-fill-color:var(--ll-input-ink)] " +
   "[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-ms-reveal]:hidden " +
   "[&[type=number]]:[appearance:textfield] " +
-  "[&[type=password]:not(:placeholder-shown)]:font-mono [&[type=password]:not(:placeholder-shown)]:tracking-wider"
+  "[&[type=password]:not(:placeholder-shown)]:font-mono [&[type=password]:not(:placeholder-shown)]:tracking-wider";
 
 const frame =
-  "relative isolate flex h-9 w-full min-w-0 items-center font-hand text-base text-(--ll-input-ink) caret-(--ll-caret) compact:h-8 calm:h-7 calm:text-[15px]"
+  "relative isolate flex h-9 w-full min-w-0 items-center font-hand text-base text-(--ll-input-ink) caret-(--ll-caret) compact:h-8 calm:h-7 calm:text-[15px]";
 
-const isTrue = (v: unknown) => v === true || v === "true"
+const isTrue = (v: unknown) => v === true || v === "true";
 
 function InputControl({ className, type, ...props }: React.ComponentProps<"input">) {
-  return <input type={type} data-slot="input" className={cn(control, className)} {...props} />
+  return <input type={type} data-slot="input" className={cn(control, className)} {...props} />;
 }
 
 function Input({
@@ -34,24 +34,40 @@ function Input({
   ref,
   ...props
 }: React.ComponentProps<"input"> & {
-  inputClassName?: string
-  seed?: string | number
+  inputClassName?: string;
+  seed?: string | number;
 }) {
   const { hostRef, hostProps, node } = useInk({
     recipe: inputRecipe,
-    params: { disabled: !!props.disabled, invalid: isTrue(props["aria-invalid"]), readOnly: !!props.readOnly },
+    params: {
+      disabled: !!props.disabled,
+      invalid: isTrue(props["aria-invalid"]),
+      readOnly: !!props.readOnly,
+    },
     kind: "field",
     seed,
     still: true,
-  })
-  if (type === "hidden") return <InputControl type="hidden" ref={ref} {...props} />
-  const split = splitFieldClass(className)
+  });
+  if (type === "hidden") return <InputControl type="hidden" ref={ref} {...props} />;
+  const split = splitFieldClass(className);
   return (
-    <span data-slot="input-frame" data-ink-focus="within" ref={hostRef} {...hostProps} style={style} className={cn(frame, split.frame)}>
+    <span
+      data-slot="input-frame"
+      data-ink-focus="within"
+      ref={hostRef}
+      {...hostProps}
+      style={style}
+      className={cn(frame, split.frame)}
+    >
       {node}
-      <InputControl type={type} ref={ref} className={cn(split.control, inputClassName)} {...props} />
+      <InputControl
+        type={type}
+        ref={ref}
+        className={cn(split.control, inputClassName)}
+        {...props}
+      />
     </span>
-  )
+  );
 }
 
-export { Input, InputControl }
+export { Input, InputControl };

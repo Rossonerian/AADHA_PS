@@ -133,7 +133,6 @@ export default function PaisaProofApp() {
     answer: string;
     data_origin: DataOrigin;
   } | null>(null);
-  const [onboardingOrigin, setOnboardingOrigin] = useState<DataOrigin>("synthetic");
   const [onboardingResult, setOnboardingResult] = useState<OnboardingResult | null>(null);
   const [lessonCheck, setLessonCheck] = useState("");
   const [assessmentAnswers, setAssessmentAnswers] = useState<
@@ -234,7 +233,6 @@ export default function PaisaProofApp() {
     setBusy(true);
     try {
       const start = await api.onboardingStart();
-      setOnboardingOrigin(start.data_origin);
       setOnboarding({
         sessionId: start.session_id,
         question: start.question,
@@ -269,7 +267,6 @@ export default function PaisaProofApp() {
         },
         onboarding.index,
       );
-      setOnboardingOrigin(result.data_origin);
       if (result.next_question)
         setOnboarding({
           ...onboarding,
@@ -731,7 +728,6 @@ export default function PaisaProofApp() {
             <OnboardingView
               state={onboarding}
               result={onboardingResult}
-              origin={onboardingOrigin}
               busy={busy}
               onAnswer={(answer) =>
                 setOnboarding((current) => (current ? { ...current, answer } : current))
@@ -1012,7 +1008,6 @@ function HomeView({
 function OnboardingView({
   state,
   result,
-  origin,
   busy,
   onAnswer,
   onConfidence,
@@ -1028,7 +1023,6 @@ function OnboardingView({
     answer: string;
   } | null;
   result: OnboardingResult | null;
-  origin: DataOrigin;
   busy: boolean;
   onAnswer: (value: string) => void;
   onConfidence: (value: number) => void;
