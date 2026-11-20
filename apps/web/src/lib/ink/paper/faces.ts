@@ -16,7 +16,7 @@ export interface FaceSpec {
   };
 }
 
-const MARK = /<!--ll-face:(.*?)-->/gs;
+const MARK = /<!--ll-face:([\s\S]*?)-->/g;
 
 export function faceMark(spec: FaceSpec): string {
   return `<!--ll-face:${JSON.stringify(spec).replace(/--/g, "-\\u002d")}-->`;
