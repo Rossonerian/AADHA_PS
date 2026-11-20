@@ -44,6 +44,14 @@ class Settings(BaseSettings):
     finnhub_api_key: str = ""
 
     market_data_dir: str = "data/seed/market"
+    market_data_max_stale_days: int = 5
+
+    rate_limit_enabled: bool = True
+    rate_limit_window_seconds: int = 60
+    rate_limit_user_per_window: int = 20
+    rate_limit_ip_per_window: int = 60
+    max_request_body_bytes: int = 1_048_576
+    max_verify_body_bytes: int = 10_485_760
 
     @field_validator("database_url", "database_url_unpooled", mode="before")
     @classmethod

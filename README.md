@@ -27,7 +27,7 @@
    ```bash
    make setup
    ```
-3. Run database migrations and validate/seed local data:
+3. Run database migrations and load content seed tables (questions, lessons, scenarios, stock explainers — never fake users):
    ```bash
    make migrate && make seed
    ```
@@ -35,6 +35,12 @@
    ```bash
    make dev
    ```
+
+## First-Test User Path (No Demo/Seed Users)
+
+Fresh accounts are created exclusively via **Neon Auth sign-up** (`POST /api/auth/sign-up/email` on Vercel or through the landing page sign-in/sign-up flow). On the first authenticated request to `/api/v1/me` or any feature route, `core.auth.current_user()` verifies the Neon Auth EdDSA JWT against `NEON_AUTH_JWKS_URL` and auto-provisions the row in `public.users` at Level 1.
+
+`infra/scripts/seed.py` validates dataset `data_origin` tags and loads **content tables only** (`questions`, `lessons`, `scenarios`, `edu_explain_cache`). Offline study/persona user fixtures (`study_seed.yaml`, `data/seed/verifier/seed.py`) are excluded from production seeding.
 
 ## Commands
 
@@ -49,35 +55,60 @@
 | `make build` | Build Next.js production bundle (`apps/web`) |
 | `make check-api` | Verify API `/health` and `/me` auth guard (`API_URL` defaults to `http://localhost:8000/api/v1`) |
 | `make migrate` | Apply Alembic migrations (`alembic -c db/alembic.ini upgrade head`) |
-| `make seed` | Validate and seed `data/seed/` records |
+| `make seed` | Validate `data/seed/` and load Education content tables (`questions`, `lessons`, `scenarios`, `edu_explain_cache`) |
 | `make cron` | Refresh market caches and score open verifier claims |
 
 ## API & Health Checks
 
-Run the public platform probe against local or deployed API hosts:
-
 ```bash
-# Public health + unauthenticated 401 guard
+# Public health + unauthenticated 401 guard + market freshness check
 make check-api API_URL=https://<your-api-host>/api/v1
 
-# Authenticated platform gate (/health + 401/200 /me)
+# Full fresh-user staging walkthrough (onboarding -> plan -> lesson -> scenario -> explain -> verify -> dashboard)
 PYTHONPATH=services/api services/api/.venv/bin/python infra/scripts/smoke_test.py \
   --base-url https://<your-api-host>/api/v1 \
-  --platform-only \
-  --jwt "<BEARER_JWT>"
+  --auth-base-url https://aadha-ps.vercel.app/api/auth \
+  --origin https://aadha-ps.vercel.app \
+  --fresh-user --cleanup-db --timeout 75
 
 # Minimal curl checks
 curl -sf https://<your-api-host>/api/v1/health
 curl -sf https://aadha-ps.vercel.app/api/neon/health
 ```
 
+## Cron, Stale-Refresh Alerting & Rate Limits
+
+- **Daily Cron:** Scheduled on Render via `infra/render.yaml` at `0 13 * * 1-5` (`13:00 UTC` / `18:30 IST`, post-NSE close) running `infra/scripts/daily_job.py` (refreshes `core.market` caches, calls `verifier.score_open_claims()`, and logs a `daily_job` row in `job_runs`).
+- **Stale Market Alerting:** `GET /api/v1/health` checks `market_data_as_of` against `MARKET_DATA_MAX_STALE_DAYS` (default `5`) and emits a structured `WARNING` log (`market_data_stale`) if stale or missing; `smoke_test.py --max-stale-days 5` fails fast if `market_data_as_of` is stale.
+- **Rate Limits & Body Caps:** Sliding-window per-user and per-IP rate limits (`429 RATE_LIMITED` + `Retry-After`) protect `/api/v1/verify`, `/api/v1/nasdaq-verifier/submit`, `/api/v1/nasdaq-verifier/challenge`, `/api/v1/explain`, `/api/v1/assessments/*/submit`, `/api/v1/study/*/submit`, `/api/v1/scenarios/*/answer`, and `/api/v1/onboarding/answer` while keeping `/health` and `/me` exempt. Request bodies are capped at `MAX_REQUEST_BODY_BYTES` (`1 MiB` default) and `MAX_VERIFY_BODY_BYTES` (`10 MiB` on `/verify`), returning `413 PAYLOAD_TOO_LARGE`.
+
+## Environment Variables
+
+Templates with safe placeholder values live in [`.env.example`](.env.example).
+
+| Variable | Target | Purpose |
+|---|---|---|
+| `APP_ENV`, `APP_VERSION` | Render, Local | Runtime environment (`production`/`development`) and reported API version |
+| `CORS_ORIGINS` | Render, Local | Comma-separated allowed web origins (include `https://aadha-ps.vercel.app`) |
+| `DATABASE_URL` | Render, Vercel, Local | Pooled Neon Postgres connection string |
+| `DATABASE_URL_UNPOOLED` | Render, Local | Direct non-pooled Neon Postgres URL used by Alembic migrations & cleanup |
+| `NEON_AUTH_BASE_URL` | Render, Vercel, Local | Neon Managed Better Auth endpoint URL |
+| `NEON_AUTH_JWKS_URL` | Render, Vercel, Local | JWKS endpoint used by FastAPI to verify EdDSA JWTs |
+| `NEON_AUTH_COOKIE_SECRET` | Vercel, Local | 32-byte cookie encryption secret for `@neon/auth` |
+| `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_ENDPOINT_URL_S3`, `AWS_REGION` | Vercel, Local | Neon S3-compatible Object Storage credentials (`assets` bucket) |
+| `NEON_REALTIME_URL`, `NEON_REALTIME_SECRET`, `NEXT_PUBLIC_NEON_REALTIME_URL` | Vercel, Local | Neon Realtime WebSocket endpoint and signing secret |
+| `OPENROUTER_API_KEY`, `OPENROUTER_DEFAULT_MODEL`, `OPENROUTER_BASE_URL` | Render, Local | OpenRouter LLM credentials and model (`nvidia/nemotron-3.5-lightning:free`) |
+| `FINNHUB_API_KEY` | Render, Local | Finnhub factual quotes/profile key for `/api/v1/nasdaq-verifier/*` |
+| `MARKET_DATA_DIR`, `MARKET_DATA_MAX_STALE_DAYS` | Render, Local | Seed/cache path (`data/seed/market`) and stale-refresh warning threshold |
+| `RATE_LIMIT_ENABLED`, `RATE_LIMIT_WINDOW_SECONDS`, `RATE_LIMIT_USER_PER_WINDOW`, `RATE_LIMIT_IP_PER_WINDOW` | Render, Local | Sliding-window rate limiter configuration (`true`, `60s`, `20/user`, `60/IP`) |
+| `MAX_REQUEST_BODY_BYTES`, `MAX_VERIFY_BODY_BYTES` | Render, Local | Payload size caps (`1048576` default, `10485760` `/verify`) |
+| `NEXT_PUBLIC_APP_URL`, `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_USE_MOCKS` | Vercel, Local | Web origin, Render `/api/v1` base URL, and `false` to disable staging mocks |
+
 ## Deployment
 
-Required environment variable keys for all targets are documented in [`.env.example`](.env.example).
-
-- **Neon:** Hosts Lakebase Postgres, Neon Auth (JWKS + trusted web origins), Object Storage, and Realtime.
-- **Render:** Hosts the Python 3.11 FastAPI service (`alembic -c db/alembic.ini upgrade head && uvicorn app.main:app --app-dir services/api --host 0.0.0.0 --port $PORT`, health check `/api/v1/health`) and daily post-close cron (`infra/scripts/daily_job.py`).
-- **Vercel:** Deploys the Next.js frontend from `apps/web` with Neon service bindings and `NEXT_PUBLIC_API_URL` pointing to the Render `/api/v1` base.
+- **Neon:** Hosts Lakebase Postgres, Neon Auth (JWKS + `https://aadha-ps.vercel.app` trusted origin), Object Storage, and Realtime.
+- **Render:** Hosts the Python 3.11 FastAPI service (`alembic -c db/alembic.ini upgrade head && uvicorn app.main:app --app-dir services/api --host 0.0.0.0 --port $PORT`, health check `/api/v1/health`) and daily cron (`infra/scripts/daily_job.py`).
+- **Vercel:** Deploys Next.js from `apps/web` with Neon service env vars, `NEXT_PUBLIC_USE_MOCKS=false`, and `NEXT_PUBLIC_API_URL` pointing to the Render `/api/v1` base.
 
 ## Repository Layout & Ownership
 
@@ -85,7 +116,7 @@ Required environment variable keys for all targets are documented in [`.env.exam
 .
 ├── apps/web/               # Next.js frontend (Ananya)
 ├── services/api/
-│   ├── app/core/           # Config, DB, Neon Auth, OpenRouter LLM, guardrails, market data (Hardhik)
+│   ├── app/core/           # Config, DB, Neon Auth, OpenRouter, Finnhub, guardrails, market, rate limits (Hardhik)
 │   ├── app/education/      # Onboarding, lessons, scenarios, assessments (Divyansh)
 │   ├── app/verifier/       # Source verification & scoring (Arnav)
 │   └── app/nasdaq_verifier/# Nasdaq literacy capstone

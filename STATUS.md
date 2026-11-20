@@ -7,10 +7,10 @@
 
 | Person | % | Phase | Blockers | Last Update |
 |---|---|---|---|---|
-| Hardhik | 80% | Phase 6/6 (Integration & Demo — Phases 1–5 complete; C1 live green) | docs/PRD.md export; Divyansh education routes for C2/C3 | 2026-11-21 |
+| Hardhik | 85% | Phase 6/6 (Staging hardening PR open; blocked on OpenRouter quota & Vercel mocks-off) | OpenRouter free-tier 50/day limit exhausted (53/50, $0 credits) blocking live /verify smoke; Vercel NEXT_PUBLIC_USE_MOCKS=false & Render FINNHUB_API_KEY/cron confirm; apps/web/.env.example & /api/neon/health 403 decision; docs/PRD.md & C4 video | 2026-11-21 |
 | Arnav | 76.25% | Phase 3/6 & Phase 6/6 open (Phases 1,2,4,5 done; grounding 59/59) | OpenRouter key for live F1; real-source dataset or Option B sign-off | 2026-11-20 |
 | Divyansh | 100% | Phase 6/6 (Education complete; 20/20 tests pass) | none | 2026-11-20 |
-| Ananya | 0% | Phase 1/6 (unblocked: Next.js scaffold & contracts.ts ready) | none | 2026-11-20 |
+| Ananya | ~75% (est. — self-update requested) | Phase 5/6 (UI PRs #2, #3, #6, #7, #8 merged; mocks-off check pending) | Set NEXT_PUBLIC_USE_MOCKS=false default in apps/web/.env.example & verify live API mode | 2026-11-21 |
 
 ## Checkpoint Targets
 
@@ -38,6 +38,13 @@ Blockers: docs/PRD.md export pending; live cloud secrets (Supabase, OpenRouter, 
 Arnav 76.25% (Phase 3/6 & 6/6) | Divyansh 0% (Phase 1/6) | Hardhik 80% (Phase 6/6) | Ananya 0% (Phase 1/6; UI PRs #2/#3 merged, % self-update pending)
 Behind target: Divyansh (target C1 25%; next target C2 50%) — prioritize P0 onboarding, plan, and lessons before P1/P2 polish
 Blockers: docs/PRD.md export pending; Arnav live F1 & real-source Option A/B sign-off; Divyansh education backend routes for C2
+```
+
+```text
+[TEAM] C3 (Pre-Freeze) | Overall ~84% (est. — owner self-updates requested)
+Arnav 76.25% (Phase 3/6 & 6/6; please self-update) | Divyansh 100% (Phase 6/6; please confirm after main integration) | Hardhik 85% (Phase 6/6) | Ananya ~75% est. (PRs #2,#3,#6,#7,#8 merged; please self-update)
+Behind target: Arnav 76.25% vs C3 85% (live extraction F1 blocked on OpenRouter quota + Phase 6 real-source Option A/B sign-off); Ananya UI unverified with mocks=false
+Blockers: OpenRouter free daily limit exhausted (53/50, $0 credits); Vercel NEXT_PUBLIC_USE_MOCKS=false & Render FINNHUB_API_KEY/cron confirm; docs/PRD.md export & C4 backup video
 ```
 
 ## Hardhik
@@ -74,6 +81,29 @@ Done: Live C1 verified end-to-end across Vercel (https://aadha-ps.vercel.app), R
 Next: Checkpoint C2/C3 integration with Divyansh education routes & Ananya live UI wiring, update data/DATA_MANIFEST.md, and run full staging smoke test twice before C4.
 Minor: Disabled reasoning token overhead for Nemotron models in core.llm so structured outputs do not truncate; guarded /api/neon/verify with 403 in production, hardened CORS/base-URL normalization, and cleaned up README.md and Makefile check commands.
 Blockers: docs/PRD.md export; Divyansh education endpoints for full C2/C3 smoke path.
+```
+
+```text
+[Hardhik] 85% | Phase 6/6: Staging hardening, content seeding & fresh-user smoke harness
+Done:
+- Added sliding-window per-user (20/min) & per-IP (60/min) 429 rate limiting, 413 payload caps (1 MiB / 10 MiB /verify, Content-Length & streamed), and /health stale-market warning (`market_data_stale`).
+- Updated `infra/scripts/seed.py` to load Education content tables only (live Neon DB verified: questions=120, lessons=12, scenarios=24, edu_explain_cache=30, users=0); updated `README.md`, `.env.example`, and `data/DATA_MANIFEST.md` (zero leaked secrets; zero edits in apps/web/).
+- Extended `infra/scripts/smoke_test.py` (`--fresh-user --cleanup-db --max-stale-days` across onboarding -> plan -> lesson -> scenario -> explain -> verify -> dashboard); live staging run passed Steps 1-7 (`health`, `/me`, 12-Q `onboarding`, `plan/lesson`, `scenarios`, `explain`) then hit OpenRouter 429 at `/verify`; offline full walkthrough passes in pytest.
+- Local verification output:
+  `pytest services/api/tests -q`: `312 passed, 1 warning in 23.84s`
+  `ruff check services/api infra db/migrations`: `All checks passed!`
+  `black --check services/api infra db/migrations`: `91 files would be left unchanged.`
+  `mypy services/api/app`: `Success: no issues found in 58 source files`
+Next: Re-run `infra/scripts/smoke_test.py --fresh-user --cleanup-db` twice on staging once OpenRouter quota & Vercel `NEXT_PUBLIC_USE_MOCKS=false` are resolved, complete `docs/DEMO_BACKUP_CHECKLIST.md`, and freeze C4.
+Minor: Branch `infra/staging-hardening` opened via PR (not self-merged); verified live Vercel `/api/neon/verify` returns 403 (`https://aadha-ps.vercel.app`) while `/api/neon/health` currently returns 200 and live bundle still compiles `NEXT_PUBLIC_USE_MOCKS !== "false"`.
+Blockers: OpenRouter free-models-per-day quota exhausted (53/50, $0 credits); Vercel `NEXT_PUBLIC_USE_MOCKS=false` & Render `FINNHUB_API_KEY`/cron check; Ananya `apps/web/.env.example` & `/api/neon/health` 403 decision; `docs/PRD.md` export & C4 video.
+```
+
+```text
+[Hardhik] MAJOR | Live staging double-smoke blocked by OpenRouter 50/day free quota; Vercel mocks still ON
+Impact: `POST /api/v1/verify` returns HTTP 502 on live Render (`free-models-per-day`: 53/50 used, $0 credits), blocking 2x live full-walkthrough certification for C4; live Vercel frontend still evaluates `NEXT_PUBLIC_USE_MOCKS !== "false"` (no Vercel/Render CLI available locally; `apps/web/` untouched per boundary rules).
+Options: A) Add >=$10 OpenRouter credits (unlocks 1000/day) or swap a funded `OPENROUTER_API_KEY` on Render, set `NEXT_PUBLIC_USE_MOCKS=false` + redeploy Vercel (confirming `FINNHUB_API_KEY` + Render cron schedule), have Ananya flip `apps/web/.env.example` & clarify `/api/neon/health` 403 policy (recommended); B) Wait for daily UTC reset of free OpenRouter quota before re-running 2x live staging smoke tests.
+Need from: Hardhik/User (OpenRouter credits/new key, Vercel `NEXT_PUBLIC_USE_MOCKS=false` + Render env/cron check, `docs/PRD.md`, C4 recording) and Ananya (`apps/web/.env.example`, `/api/neon/health` 403 confirmation).
 ```
 
 ## Arnav

@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+import yaml
 from sqlalchemy import inspect
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
@@ -22,10 +23,27 @@ from app.core.db import get_engine, get_session_factory
 from app.core.logging import get_logger
 from app.core.market import get_market_data_as_of
 from app.core.models import JobRunRecord
+from app.education.loader import load_yaml_file
+from app.education.repository import EducationRepository
 
 _logger = get_logger("paisaproof.seed")
 
 VALID_DATA_ORIGINS = frozenset({"real", "synthetic"})
+CONTENT_EDUCATION_FILES: tuple[str, ...] = (
+    "questions.yaml",
+    "lessons.yaml",
+    "scenarios.yaml",
+    "explain_stocks.yaml",
+)
+CONTENT_EDUCATION_KEYS: tuple[str, ...] = (
+    "questions",
+    "lessons",
+    "scenarios",
+    "explain_stocks",
+)
+EDUCATION_CONTENT_TABLES = frozenset(
+    {"questions", "lessons", "scenarios", "edu_explain_cache"}
+)
 
 REQUIRED_PRICE_COLUMNS = frozenset(
     {
@@ -161,6 +179,105 @@ def _validate_json_file(json_path: Path, seed_root: Path) -> tuple[int, set[str]
     raise TypeError(f"Unsupported JSON payload in {rel}")
 
 
+def _validate_yaml_content_file(
+    yaml_path: Path, seed_root: Path
+) -> tuple[int, set[str]]:
+    rel = yaml_path.relative_to(seed_root).as_posix()
+    payload = yaml.safe_load(yaml_path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise TypeError(f"YAML seed payload must be a mapping: {rel}")
+
+    origins: set[str] = set()
+    record_count = 0
+    for key in CONTENT_EDUCATION_KEYS:
+        items = payload.get(key)
+        if not isinstance(items, list):
+            continue
+        for idx, item in enumerate(items, start=1):
+            if not isinstance(item, dict):
+                raise TypeError(f"{rel}[{key}][{idx}] must be a mapping")
+            origin = str(item.get("data_origin") or "").strip().lower()
+            if origin not in VALID_DATA_ORIGINS:
+                raise ValueError(
+                    f"Invalid or missing data_origin={origin!r} in {rel}[{key}][{idx}]"
+                )
+            origins.add(origin)
+            record_count += 1
+
+    if record_count == 0:
+        raise ValueError(f"YAML content file contains zero records: {rel}")
+    return record_count, origins
+
+
+def _load_content_into_session(
+    session: Session,
+    edu_dir: Path,
+) -> dict[str, int]:
+    loaded = {
+        "questions": 0,
+        "lessons": 0,
+        "scenarios": 0,
+        "explain_records": 0,
+    }
+    repo = EducationRepository(session)
+    for filename in CONTENT_EDUCATION_FILES:
+        file_path = edu_dir / filename
+        if not file_path.exists():
+            continue
+        part = load_yaml_file(repo, file_path)
+        if part.study_attempts > 0:
+            raise ValueError(
+                f"Content seed file {filename} must not contain study_attempts/users"
+            )
+        loaded["questions"] += part.questions
+        loaded["lessons"] += part.lessons
+        loaded["scenarios"] += part.scenarios
+        loaded["explain_records"] += part.explain_records
+    return loaded
+
+
+def _load_education_content_tables(
+    seed_root: Path,
+    *,
+    db: Session | None = None,
+) -> dict[str, int]:
+    empty = {
+        "questions": 0,
+        "lessons": 0,
+        "scenarios": 0,
+        "explain_records": 0,
+    }
+    edu_dir = seed_root / "education"
+    if not edu_dir.exists():
+        return empty
+
+    content_paths = [
+        edu_dir / filename
+        for filename in CONTENT_EDUCATION_FILES
+        if (edu_dir / filename).exists()
+    ]
+    if not content_paths:
+        return empty
+
+    if db is not None:
+        table_names = set(inspect(db.get_bind()).get_table_names())
+        if not EDUCATION_CONTENT_TABLES.issubset(table_names):
+            return empty
+        return _load_content_into_session(db, edu_dir)
+
+    try:
+        engine = get_engine()
+        table_names = set(inspect(engine).get_table_names())
+        if not EDUCATION_CONTENT_TABLES.issubset(table_names):
+            _logger.info("seed_content_load_skipped_missing_tables")
+            return empty
+        with get_session_factory()() as session:
+            return _load_content_into_session(session, edu_dir)
+    except (SQLAlchemyError, OSError, RuntimeError) as exc:
+        _logger.warning("seed_content_load_db_skipped", extra={"error": str(exc)})
+        return empty
+
+
 def _record_seed_job_run(
     summary: dict[str, Any],
     *,
@@ -228,6 +345,12 @@ def seed(
                 count, origins = _validate_csv_file(file_path, resolved_seed_dir)
             elif suffix == ".json":
                 count, origins = _validate_json_file(file_path, resolved_seed_dir)
+            elif (
+                subdir_name == "education" and file_path.name in CONTENT_EDUCATION_FILES
+            ):
+                count, origins = _validate_yaml_content_file(
+                    file_path, resolved_seed_dir
+                )
             else:
                 continue
             files_validated += 1
@@ -237,6 +360,7 @@ def seed(
     if files_validated == 0:
         raise ValueError(f"No seed files found under {resolved_seed_dir}")
 
+    content_loaded = _load_education_content_tables(resolved_seed_dir, db=db)
     market_as_of = get_market_data_as_of()
     summary: dict[str, Any] = {
         "status": "ok",
@@ -245,6 +369,7 @@ def seed(
         "files_validated": files_validated,
         "records_validated": records_validated,
         "data_origins": sorted(all_origins),
+        "content_loaded": content_loaded,
         "market_data_as_of": market_as_of,
     }
 

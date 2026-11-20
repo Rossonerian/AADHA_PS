@@ -19,6 +19,7 @@ _HTTP_STATUS_CODES: dict[int, str] = {
     404: "NOT_FOUND",
     405: "METHOD_NOT_ALLOWED",
     409: "CONFLICT",
+    413: "PAYLOAD_TOO_LARGE",
     422: "VALIDATION_ERROR",
     429: "RATE_LIMITED",
 }
