@@ -7,7 +7,7 @@
 
 | Person | % | Phase | Blockers | Last Update |
 |---|---|---|---|---|
-| Hardhik | 76% | Phase 4/6 (CI & Deploy — GitHub CI green, local Phases 1,3,5 done) | Supabase creds, OpenRouter key, Vercel/Render deploy, docs/PRD.md export | 2026-11-20 |
+| Hardhik | 80% | Phase 4/6 (CI & Deploy — Neon postgres/auth/storage/realtime live; Phases 1,2,3,5 done) | Render/Vercel deploy URLs, OPENROUTER_API_KEY in cloud, docs/PRD.md export | 2026-11-20 |
 | Arnav | 0% | Phase 1/6 (unblocked: core stubs & market/guardrails/llm ready) | none | 2026-11-20 |
 | Divyansh | 0% | Phase 1/6 (unblocked: core stubs & auth/db ready) | none | 2026-11-20 |
 | Ananya | 0% | Phase 1/6 (unblocked: Next.js scaffold & contracts.ts ready) | none | 2026-11-20 |
@@ -51,6 +51,14 @@ Done: Linked & pushed `Rossonerian/AADHA_PS` (`main`); GitHub Actions CI run `44
 Next: Wire live Supabase/OpenRouter env secrets and deploy staging API (Render/Railway) + Web (Vercel) for C1.
 Minor: Merged remote `PROMPT_*.md` and `SOURCE_OF_TRUTH_1.md` cleanly without rewriting history.
 Blockers: Live Supabase/OpenRouter/Vercel/Render creds and `docs/PRD.md` export (need from Hardhik).
+```
+
+```text
+[Hardhik] 80% | Phase 4/6: CI & deployment
+Done: Provisioned Neon (`dawn-silence-66045214`), live Alembic (`0001_initial_platform`), wired Next 16 + Neon SDKs (`@neon/auth`, `files-sdk`, `@neon/realtime`, `pg`) & FastAPI EdDSA JWKS; live E2E proved Postgres, Auth (`/api/v1/me` 401->200), Storage, Realtime; `59/59` pytest + build green.
+Next: Deploy API (Render) + Web (Vercel) with Neon/OpenRouter cloud secrets for C1 staging URLs.
+Minor: Updated `core.llm` default model to `nvidia/nemotron-3.5-lightning:free` ($0 fallback pricing); enabled `http://127.0.0.1:3000` in Neon Auth dev trusted origins.
+Blockers: Render/Vercel deploy URLs, OPENROUTER_API_KEY in cloud, docs/PRD.md export.
 ```
 
 ## Arnav

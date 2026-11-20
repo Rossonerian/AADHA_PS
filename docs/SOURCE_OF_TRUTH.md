@@ -29,10 +29,10 @@ Integration owner: **Hardhik**. Contract owner: **Hardhik**.
 |---|---|
 | Frontend | Next.js (App Router) + TypeScript + Tailwind; charts with Recharts |
 | Backend | Python 3.11+, FastAPI, Pydantic v2, SQLAlchemy 2 + Alembic |
-| Database & auth | Supabase Postgres + Supabase Auth (JWT verified in API) |
+| Database & auth | Neon Lakebase Postgres + Neon Auth (Managed Better Auth); Neon Object Storage + Neon Realtime |
 | LLM | OpenRouter, called only through `core.llm.complete()` |
 | Market data | NSE/BSE bhavcopy or yfinance (`.NS`), loaded by `core.market` |
-| Hosting | Web on Vercel; API + cron on Render (or Railway); DB on Supabase |
+| Hosting | Web on Vercel; API + cron on Render (or Railway); DB/Auth/Storage/Realtime on Neon |
 | CI | GitHub Actions: lint, typecheck, tests on every PR |
 
 ## 4. Repo layout
@@ -58,7 +58,7 @@ aacharya/
 
 | Function | Contract |
 |---|---|
-| `core.auth.current_user()` | FastAPI dependency → `User{id, level}` |
+| `core.auth.current_user()` | FastAPI dependency → `User{id, level}` (verifies Neon Auth EdDSA JWKS or HS256 JWT) |
 | `core.llm.complete(prompt, schema=None)` | Returns text or validated JSON; logs cost |
 | `core.guardrails.check_output(text)` | Returns `GuardResult{ok, text, reasons}`. Blocks buy/sell/hold, targets, recommendations (English + Hinglish); on fail returns neutral fallback text |
 | `core.market.prices(symbol, start, end)` | Adjusted daily OHLCV DataFrame |

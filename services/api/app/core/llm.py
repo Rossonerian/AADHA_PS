@@ -30,6 +30,8 @@ _FENCE_RE = re.compile(r"^```(?:json|JSON)?\s*(.*?)\s*```$", re.DOTALL)
 
 # Fallback USD pricing per 1M tokens: (input_per_1m, output_per_1m).
 MODEL_PRICING_PER_1M: dict[str, tuple[float, float]] = {
+    "nvidia/nemotron-3.5-lightning:free": (0.0, 0.0),
+    "nvidia/nemotron-3.5-super-vl:free": (0.0, 0.0),
     "google/gemini-2.0-flash-001": (0.10, 0.40),
     "openai/gpt-4o-mini": (0.15, 0.60),
     "openai/gpt-4o": (2.50, 10.00),

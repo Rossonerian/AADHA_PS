@@ -26,7 +26,15 @@ target_metadata = Base.metadata
 
 
 def _get_database_url() -> str:
-    raw_url = os.getenv("DATABASE_URL") or get_settings().database_url
+    env_db = os.getenv("DATABASE_URL", "")
+    if env_db.startswith("sqlite"):
+        return normalize_database_url(env_db)
+    raw_url = (
+        os.getenv("DATABASE_URL_UNPOOLED")
+        or get_settings().database_url_unpooled
+        or env_db
+        or get_settings().database_url
+    )
     return normalize_database_url(raw_url)
 
 

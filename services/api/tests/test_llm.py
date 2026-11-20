@@ -255,3 +255,34 @@ async def test_acomplete_structured_output() -> None:
     assert isinstance(parsed, ClaimExtraction)
     assert parsed.symbol == "INFY"
     assert parsed.direction == "down"
+
+
+@respx.mock
+def test_complete_free_nemotron_models_log_zero_cost(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Free OpenRouter Nemotron models resolve to $0.0 fallback cost."""
+    for model_name in (
+        "nvidia/nemotron-3.5-lightning:free",
+        "nvidia/nemotron-3.5-super-vl:free",
+    ):
+        reset_usage_summary()
+        monkeypatch.setenv("OPENROUTER_DEFAULT_MODEL", model_name)
+        get_settings.cache_clear()
+        respx.post("https://openrouter.ai/api/v1/chat/completions").mock(
+            return_value=httpx.Response(
+                200,
+                json={
+                    "choices": [
+                        {"message": {"role": "assistant", "content": "Zero cost ok"}}
+                    ],
+                    "usage": {"prompt_tokens": 2000, "completion_tokens": 500},
+                },
+            )
+        )
+
+        result = complete("Hello Nemotron")
+        assert result == "Zero cost ok"
+        summary = get_usage_summary()
+        assert summary["total_cost_usd"] == 0.0
+        assert summary["by_model"][model_name]["cost_usd"] == 0.0

@@ -25,3 +25,6 @@ data/market_cache/
 
 # OS
 .DS_Store
+.neon
+node_modules/
+/bun.lock

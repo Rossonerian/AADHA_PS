@@ -15,16 +15,28 @@ services:
         sync: false
       - key: DATABASE_URL
         sync: false
-      - key: SUPABASE_URL
+      - key: DATABASE_URL_UNPOOLED
         sync: false
-      - key: SUPABASE_ANON_KEY
+      - key: NEON_AUTH_BASE_URL
         sync: false
-      - key: SUPABASE_JWT_SECRET
+      - key: NEON_AUTH_JWKS_URL
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_ENDPOINT_URL_S3
+        sync: false
+      - key: AWS_REGION
+        sync: false
+      - key: NEON_REALTIME_URL
+        sync: false
+      - key: NEON_REALTIME_SECRET
         sync: false
       - key: OPENROUTER_API_KEY
         sync: false
       - key: OPENROUTER_DEFAULT_MODEL
-        value: openai/gpt-4o-mini
+        value: nvidia/nemotron-3.5-lightning:free
       - key: OPENROUTER_BASE_URL
         value: https://openrouter.ai/api/v1
       - key: MARKET_DATA_DIR
@@ -45,7 +57,7 @@ services:
       - key: OPENROUTER_API_KEY
         sync: false
       - key: OPENROUTER_DEFAULT_MODEL
-        value: openai/gpt-4o-mini
+        value: nvidia/nemotron-3.5-lightning:free
       - key: OPENROUTER_BASE_URL
         value: https://openrouter.ai/api/v1
       - key: MARKET_DATA_DIR
