@@ -13,12 +13,23 @@ import {
 } from "lucide-react";
 import { DashboardCharts, ExplainChart, ScenarioChart } from "@/components/charts";
 import {
+  Avatar,
+  AvatarFallback,
   Button,
+  Checkbox,
   DataBadge,
+  Input,
   LockNotice,
   Panel,
   ProgressBar,
+  RadioGroup,
+  RadioGroupItem,
   SectionHeading,
+  Slider,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  Textarea,
   Toast,
 } from "@/components/ui";
 import { api, isToolLocked } from "@/lib/api";
@@ -122,7 +133,6 @@ export default function PaisaProofApp() {
     answer: string;
     data_origin: DataOrigin;
   } | null>(null);
-  const [onboardingOrigin, setOnboardingOrigin] = useState<DataOrigin>("synthetic");
   const [onboardingResult, setOnboardingResult] = useState<OnboardingResult | null>(null);
   const [lessonCheck, setLessonCheck] = useState("");
   const [assessmentAnswers, setAssessmentAnswers] = useState<
@@ -223,7 +233,6 @@ export default function PaisaProofApp() {
     setBusy(true);
     try {
       const start = await api.onboardingStart();
-      setOnboardingOrigin(start.data_origin);
       setOnboarding({
         sessionId: start.session_id,
         question: start.question,
@@ -258,7 +267,6 @@ export default function PaisaProofApp() {
         },
         onboarding.index,
       );
-      setOnboardingOrigin(result.data_origin);
       if (result.next_question)
         setOnboarding({
           ...onboarding,
@@ -497,14 +505,15 @@ export default function PaisaProofApp() {
             <span className="brand-mark">P</span>
             <span>PaisaProof</span>
           </div>
-          <button
+          <Button
+            variant="quiet"
             className="theme-toggle welcome-theme-toggle"
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
             aria-pressed={theme === "dark"}
           >
             {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}
-          </button>
+          </Button>
         </div>
         <div className="welcome-content">
           <div className="welcome-copy">
@@ -540,7 +549,7 @@ export default function PaisaProofApp() {
             <p>We’ll shape a learning path around what you already know.</p>
             <form onSubmit={signInWithEmail} className="signin-form">
               <label htmlFor="email">Email address</label>
-              <input
+              <Input
                 id="email"
                 type="email"
                 placeholder="you@example.com"
@@ -549,7 +558,7 @@ export default function PaisaProofApp() {
                 autoComplete="email"
               />
               <label htmlFor="password">Password</label>
-              <input
+              <Input
                 id="password"
                 type="password"
                 value={password}
@@ -598,7 +607,8 @@ export default function PaisaProofApp() {
         <span />
       </div>
       <aside className="sidebar">
-        <button
+        <Button
+          variant="quiet"
           className="sidebar-brand"
           onClick={() => navigate("home")}
           aria-label="PaisaProof overview"
@@ -607,11 +617,12 @@ export default function PaisaProofApp() {
           <span>
             PaisaProof<small>LEARNING STUDIO</small>
           </span>
-        </button>
+        </Button>
         <div className="side-label">YOUR SPACE</div>
         <nav aria-label="Main navigation">
           {navItems.map((item) => (
-            <button
+            <Button
+              variant="quiet"
               key={item.id}
               className={`nav-link ${view === item.id || (view === "lesson" && item.id === "learn") || (view === "assessment" && item.id === "learn") ? "selected" : ""} ${isLocked(item) ? "locked" : ""}`}
               onClick={() => navigate(item.id)}
@@ -622,7 +633,7 @@ export default function PaisaProofApp() {
               </span>
               <span>{item.label}</span>
               {isLocked(item) && <span className="nav-level">L{item.level}</span>}
-            </button>
+            </Button>
           ))}
         </nav>
         <div className="sidebar-bottom">
@@ -642,43 +653,48 @@ export default function PaisaProofApp() {
                 : "All learning tools are open"}
             </p>
           </div>
-          <button
+          <Button
+            variant="quiet"
             className="sidebar-help"
             onClick={() => setToast("Your progress is saved to this demo session.")}
           >
             <CircleHelp size={17} aria-hidden="true" /> Help & feedback
-          </button>
+          </Button>
         </div>
       </aside>
       <div className="main-column">
         <header className="topbar">
-          <button className="mobile-brand" onClick={() => navigate("home")}>
+          <Button variant="quiet" className="mobile-brand" onClick={() => navigate("home")}>
             <span className="brand-mark">P</span>PaisaProof
-          </button>
+          </Button>
           <div className="breadcrumb">
             <span>Workspace</span>
             <span className="crumb-sep">/</span>
             <strong>{activeNav}</strong>
           </div>
           <div className="topbar-right">
-            <button
+            <Button
+              variant="quiet"
               className="theme-toggle"
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
               aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
               aria-pressed={theme === "dark"}
             >
               {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}
-            </button>
+            </Button>
             <span className="streak-chip">
               <span aria-hidden="true">✦</span> 4 day streak
             </span>
-            <button
+            <Button
+              variant="quiet"
               className="avatar-button"
               aria-label={`${profile.name} profile`}
               onClick={() => setToast("You’re signed in to the demo workspace.")}
             >
-              {profile.name.slice(0, 1).toUpperCase()}
-            </button>
+              <Avatar>
+                <AvatarFallback>{profile.name.slice(0, 1).toUpperCase()}</AvatarFallback>
+              </Avatar>
+            </Button>
           </div>
         </header>
         <main className="page-content">
@@ -686,9 +702,14 @@ export default function PaisaProofApp() {
             <div className="inline-error" role="alert">
               <span aria-hidden="true">!</span>
               {error}
-              <button onClick={clearError} aria-label="Dismiss error">
+              <Button
+                variant="quiet"
+                className="error-dismiss"
+                onClick={clearError}
+                aria-label="Dismiss error"
+              >
                 ×
-              </button>
+              </Button>
             </div>
           )}
           {view === "home" && (
@@ -707,7 +728,6 @@ export default function PaisaProofApp() {
             <OnboardingView
               state={onboarding}
               result={onboardingResult}
-              origin={onboardingOrigin}
               busy={busy}
               onAnswer={(answer) =>
                 setOnboarding((current) => (current ? { ...current, answer } : current))
@@ -857,9 +877,16 @@ function HomeView({
           </h1>
           <p>A little practice today can make the next big claim easier to question.</p>
         </div>
-        <button className="avatar-large" onClick={onLearn} aria-label="Open your learning path">
-          {profile.name.slice(0, 1).toUpperCase()}
-        </button>
+        <Button
+          variant="quiet"
+          className="avatar-large"
+          onClick={onLearn}
+          aria-label="Open your learning path"
+        >
+          <Avatar size="lg">
+            <AvatarFallback>{profile.name.slice(0, 1).toUpperCase()}</AvatarFallback>
+          </Avatar>
+        </Button>
       </div>
       <div className="hero-card">
         <div className="hero-illustration" aria-hidden="true">
@@ -892,12 +919,12 @@ function HomeView({
           <span className="eyebrow">A GOOD PLACE TO BEGIN</span>
           <h2>Pick up where you are</h2>
         </div>
-        <button className="text-link" onClick={onLearn}>
+        <Button variant="quiet" className="text-link" onClick={onLearn}>
           View learning path <span aria-hidden="true">→</span>
-        </button>
+        </Button>
       </div>
       <div className="home-cards">
-        <button className="home-action-card" onClick={onLearn}>
+        <Button variant="quiet" className="home-action-card" onClick={onLearn}>
           <span className="card-icon green">▤</span>
           {plan && <DataBadge origin="synthetic" />}
           <span className="card-meta">YOUR LEARNING PATH</span>
@@ -906,8 +933,8 @@ function HomeView({
             Continue a short lesson <b>↗</b>
           </span>
           <ProgressBar value={plan?.progress_pct ?? 0} />
-        </button>
-        <button className="home-action-card" onClick={onScenario}>
+        </Button>
+        <Button variant="quiet" className="home-action-card" onClick={onScenario}>
           <span className="card-icon amber">⌁</span>
           <span className="card-meta">PRACTICE SCENARIOS</span>
           <strong>Read the clues</strong>
@@ -923,8 +950,8 @@ function HomeView({
             <i />
             <i />
           </span>
-        </button>
-        <button className="home-action-card" onClick={onVerifier}>
+        </Button>
+        <Button variant="quiet" className="home-action-card" onClick={onVerifier}>
           <span className="card-icon lilac">⌕</span>
           <span className="card-meta">SOURCE VERIFIER</span>
           <strong>{hasVerifier ? "Check a claim" : "Unlock at Level 3"}</strong>
@@ -932,7 +959,7 @@ function HomeView({
             Look into a shared message <b>↗</b>
           </span>
           <span className="lock-dash">{hasVerifier ? "Available now" : "2 levels to go"}</span>
-        </button>
+        </Button>
       </div>
       <div className="home-lower">
         <Panel className="welcome-note">
@@ -981,7 +1008,6 @@ function HomeView({
 function OnboardingView({
   state,
   result,
-  origin,
   busy,
   onAnswer,
   onConfidence,
@@ -997,7 +1023,6 @@ function OnboardingView({
     answer: string;
   } | null;
   result: OnboardingResult | null;
-  origin: DataOrigin;
   busy: boolean;
   onAnswer: (value: string) => void;
   onConfidence: (value: number) => void;
@@ -1054,9 +1079,9 @@ function OnboardingView({
   return (
     <div className="narrow-view">
       <div className="flow-top">
-        <button className="back-button" onClick={onStart}>
+        <Button variant="quiet" className="back-button" onClick={onStart}>
           ← Overview
-        </button>
+        </Button>
         <span className="flow-step">
           Question {state.index + 1} <span>/ 3</span>
         </span>
@@ -1069,19 +1094,23 @@ function OnboardingView({
           </span>
           <DataBadge origin="synthetic" />
         </div>
-        <h2>{state.question.text}</h2>
-        <div className="quiz-options">
+        <h2 id="onboarding-question">{state.question.text}</h2>
+        <RadioGroup
+          value={state.answer}
+          onValueChange={onAnswer}
+          aria-labelledby="onboarding-question"
+          className="quiz-options"
+        >
           {state.question.options.map((option) => (
-            <button
+            <RadioGroupItem
               key={option}
+              value={option}
               className={`quiz-option ${state.answer === option ? "chosen" : ""}`}
-              onClick={() => onAnswer(option)}
             >
-              <span className="option-radio" />
               {option}
-            </button>
+            </RadioGroupItem>
           ))}
-        </div>
+        </RadioGroup>
         <ConfidenceControl
           value={state.confidence}
           onChange={onConfidence}
@@ -1112,13 +1141,12 @@ function ConfidenceControl({
         <label>{label}</label>
         <strong>{value}%</strong>
       </div>
-      <input
-        type="range"
-        min="50"
-        max="100"
-        step="5"
-        value={value}
-        onChange={(event) => onChange(Number(event.target.value))}
+      <Slider
+        min={50}
+        max={100}
+        step={5}
+        value={[value]}
+        onValueChange={(next) => onChange(next[0] ?? value)}
         aria-label={`${label} ${value} percent`}
       />
       <div className="range-labels">
@@ -1175,14 +1203,15 @@ function LearningView({
               </p>
             </div>
             <DataBadge origin="synthetic" />
-            <button
+            <Button
+              variant="quiet"
               className="lesson-open"
               onClick={() => item.status !== "locked" && onOpen(item.id)}
               disabled={busy || item.status === "locked"}
               aria-label={`Open ${item.title}`}
             >
               {item.status === "locked" ? "⌑" : "→"}
-            </button>
+            </Button>
           </Panel>
         ))}
       </div>
@@ -1218,9 +1247,9 @@ function LessonView({
   const question = lesson?.check_questions[0];
   return (
     <div className="lesson-reader">
-      <button className="back-button" onClick={onBack}>
+      <Button variant="quiet" className="back-button" onClick={onBack}>
         ← Learning path
-      </button>
+      </Button>
       {busy && <Panel>Loading lesson…</Panel>}
       {lesson && (
         <>
@@ -1248,19 +1277,23 @@ function LessonView({
                 <span className="eyebrow">QUICK CHECK</span>
                 <DataBadge origin="synthetic" />
               </div>
-              <h3>{question.text}</h3>
-              <div className="quiz-options">
+              <h3 id="lesson-question">{question.text}</h3>
+              <RadioGroup
+                value={check}
+                onValueChange={setCheck}
+                aria-labelledby="lesson-question"
+                className="quiz-options"
+              >
                 {question.options.map((option) => (
-                  <button
+                  <RadioGroupItem
                     key={option}
-                    onClick={() => setCheck(option)}
+                    value={option}
                     className={`quiz-option ${check === option ? "chosen" : ""}`}
                   >
-                    <span className="option-radio" />
                     {option}
-                  </button>
+                  </RadioGroupItem>
                 ))}
-              </div>
+              </RadioGroup>
               {check && (
                 <div className="inline-feedback" role="status">
                   Answer selected. Continue when you’re ready.
@@ -1368,9 +1401,9 @@ function AssessmentView({
   return (
     <div className="narrow-view">
       <div className="flow-top">
-        <button className="back-button" onClick={onLearn}>
+        <Button variant="quiet" className="back-button" onClick={onLearn}>
           ← Learning path
-        </button>
+        </Button>
         <span className="flow-step">{assessment.items.length} questions</span>
       </div>
       <SectionHeading
@@ -1386,24 +1419,28 @@ function AssessmentView({
             </span>
             <DataBadge origin="synthetic" />
           </div>
-          <h3>{item.text}</h3>
-          <div className="quiz-options">
+          <h3 id={`assessment-question-${item.id}`}>{item.text}</h3>
+          <RadioGroup
+            value={answers[item.id]?.answer ?? ""}
+            onValueChange={(answer) =>
+              setAnswers((current) => ({
+                ...current,
+                [item.id]: { answer, confidence: current[item.id]?.confidence ?? 65 },
+              }))
+            }
+            aria-labelledby={`assessment-question-${item.id}`}
+            className="quiz-options"
+          >
             {item.options.map((option) => (
-              <button
+              <RadioGroupItem
                 key={option}
+                value={option}
                 className={`quiz-option ${answers[item.id]?.answer === option ? "chosen" : ""}`}
-                onClick={() =>
-                  setAnswers((current) => ({
-                    ...current,
-                    [item.id]: { answer: option, confidence: current[item.id]?.confidence ?? 65 },
-                  }))
-                }
               >
-                <span className="option-radio" />
                 {option}
-              </button>
+              </RadioGroupItem>
             ))}
-          </div>
+          </RadioGroup>
           <ConfidenceControl
             label="How sure are you?"
             value={answers[item.id]?.confidence ?? 65}
@@ -1523,21 +1560,22 @@ function ScenarioView({
           {!result ? (
             <Panel className="answer-panel">
               <span className="eyebrow">YOUR READ</span>
-              <h3>Over this period, the company will…</h3>
-              <div className="direction-options">
-                <button
-                  className={answer === "up" ? "selected" : ""}
-                  onClick={() => setAnswer("up")}
-                >
+              <h3 id="scenario-direction-question">Over this period, the company will…</h3>
+              <RadioGroup
+                value={answer}
+                onValueChange={(value) => {
+                  if (value === "up" || value === "down") setAnswer(value);
+                }}
+                aria-labelledby="scenario-direction-question"
+                className="direction-options"
+              >
+                <RadioGroupItem value="up" className={answer === "up" ? "selected" : ""}>
                   <span>↗</span>Outperform the index
-                </button>
-                <button
-                  className={answer === "down" ? "selected" : ""}
-                  onClick={() => setAnswer("down")}
-                >
+                </RadioGroupItem>
+                <RadioGroupItem value="down" className={answer === "down" ? "selected" : ""}>
                   <span>↘</span>Underperform the index
-                </button>
-              </div>
+                </RadioGroupItem>
+              </RadioGroup>
               <ConfidenceControl
                 label="How confident are you?"
                 value={confidence}
@@ -1545,22 +1583,26 @@ function ScenarioView({
               />
               <span className="eyebrow clue-label">WHICH CLUES MATTER TO YOU?</span>
               <div className="clue-picker">
-                {clueOptions.map((clue) => (
-                  <button
-                    className={clues.includes(clue) ? "checked" : ""}
-                    key={clue}
-                    onClick={() =>
-                      setClues((current) =>
-                        current.includes(clue)
-                          ? current.filter((item) => item !== clue)
-                          : [...current, clue],
-                      )
-                    }
-                  >
-                    <span>{clues.includes(clue) ? "✓" : "+"}</span>
-                    {clue}
-                  </button>
-                ))}
+                {clueOptions.map((clue, index) => {
+                  const labelId = `clue-label-${index}`;
+                  const checked = clues.includes(clue);
+                  return (
+                    <div className="clue-picker-option" key={clue}>
+                      <Checkbox
+                        checked={checked}
+                        aria-labelledby={labelId}
+                        onCheckedChange={(next) =>
+                          setClues((current) =>
+                            next === true
+                              ? [...current, clue]
+                              : current.filter((item) => item !== clue),
+                          )
+                        }
+                      />
+                      <span id={labelId}>{clue}</span>
+                    </div>
+                  );
+                })}
               </div>
               <Button onClick={onReveal} disabled={busy}>
                 {busy ? "Checking your call…" : "Reveal the outcome"}
@@ -1640,7 +1682,7 @@ function ExplainView({
         <form onSubmit={onSubmit} className="stock-search">
           <label>
             <span>Company or symbol</span>
-            <input
+            <Input
               value={symbol}
               onChange={(event) => setSymbol(event.target.value)}
               placeholder="e.g. DEMO"
@@ -1649,7 +1691,7 @@ function ExplainView({
           </label>
           <label>
             <span>Year</span>
-            <input
+            <Input
               type="number"
               value={year}
               min="2000"
@@ -1783,26 +1825,21 @@ function VerifierView({
                 <h3>Where did this come from?</h3>
               </div>
             </div>
-            <div className="input-tabs">
-              <button
-                className={!searchSource ? "active" : ""}
-                onClick={() => setSearchSource(false)}
-              >
-                Paste or link
-              </button>
-              <button
-                className={searchSource ? "active" : ""}
-                onClick={() => setSearchSource(true)}
-              >
-                Screenshot
-              </button>
-            </div>
+            <Tabs
+              value={searchSource ? "screenshot" : "paste"}
+              onValueChange={(value) => setSearchSource(value === "screenshot")}
+            >
+              <TabsList className="input-tabs">
+                <TabsTrigger value="paste">Paste or link</TabsTrigger>
+                <TabsTrigger value="screenshot">Screenshot</TabsTrigger>
+              </TabsList>
+            </Tabs>
             {!searchSource ? (
               <>
                 <label className="field-label" htmlFor="verify-link">
                   Link <span>Optional</span>
                 </label>
-                <input
+                <Input
                   id="verify-link"
                   className="text-input"
                   value={url}
@@ -1812,7 +1849,7 @@ function VerifierView({
                 <label className="field-label" htmlFor="verify-text">
                   Paste the forwarded text
                 </label>
-                <textarea
+                <Textarea
                   id="verify-text"
                   className="text-area"
                   value={text}
@@ -1824,7 +1861,7 @@ function VerifierView({
                   <label className="field-label" htmlFor="guess">
                     Your first read <span>Optional</span>
                   </label>
-                  <input
+                  <Input
                     id="guess"
                     className="text-input"
                     value={guess}
@@ -1844,7 +1881,7 @@ function VerifierView({
               </>
             ) : (
               <label className="dropzone">
-                <input type="file" accept="image/*" onChange={onScreenshot} disabled={busy} />
+                <Input type="file" accept="image/*" onChange={onScreenshot} disabled={busy} />
                 <span className="drop-icon">↑</span>
                 <strong>{busy ? "Reading the sample…" : "Choose a screenshot"}</strong>
                 <small>PNG, JPG, or WEBP · Up to 10 MB</small>
@@ -1936,9 +1973,9 @@ function VerifierView({
                     </div>
                   ))}
                 </div>
-                <button className="text-link" onClick={() => setSearchSource(true)}>
+                <Button variant="quiet" className="text-link" onClick={() => setSearchSource(true)}>
                   See source rating history <span>→</span>
-                </button>
+                </Button>
               </Panel>
               <Panel>
                 <div className="panel-heading">

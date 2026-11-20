@@ -220,7 +220,7 @@ textarea:focus-visible {
   border-radius: 20px;
   background: #edf0eb;
 }
-.progress-track > span {
+.progress-track > [data-slot="progress-indicator"] {
   display: block;
   height: 100%;
   border-radius: inherit;
@@ -857,6 +857,8 @@ h3 {
 .data-badge {
   display: inline-flex;
   width: fit-content;
+  height: auto;
+  min-height: 0;
   align-items: center;
   gap: 5px;
   padding: 4px 7px;
@@ -918,6 +920,10 @@ h3 {
   cursor: pointer;
   font-size: 17px;
 }
+.inline-error .error-dismiss {
+  min-height: 30px;
+  padding: 0 6px;
+}
 .toast {
   position: fixed;
   right: 24px;
@@ -951,6 +957,11 @@ h3 {
   cursor: pointer;
   color: #869188;
   font-size: 17px;
+}
+.toast .toast-dismiss {
+  width: 30px;
+  min-height: 30px;
+  padding: 0;
 }
 .app-footer {
   font-size: 9px;
@@ -1095,6 +1106,12 @@ h3 {
   color: var(--ink);
   font-size: 12px;
 }
+.signin-form .looseleaf-input-frame,
+.stock-search .looseleaf-input-frame,
+.verifier-form-panel .looseleaf-input-frame {
+  height: auto;
+  min-height: 41px;
+}
 .signin-form input::placeholder,
 .text-input::placeholder,
 .text-area::placeholder {
@@ -1231,25 +1248,6 @@ h3 {
   background: #f0f6f0;
   color: #315c4c;
 }
-.option-radio {
-  display: grid;
-  width: 16px;
-  height: 16px;
-  flex: 0 0 auto;
-  place-items: center;
-  border: 1.5px solid #cbd3cb;
-  border-radius: 50%;
-}
-.chosen .option-radio {
-  border-color: #527b5a;
-}
-.chosen .option-radio::after {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #527b5a;
-  content: "";
-}
 .confidence-control {
   margin: 18px 0 20px;
 }
@@ -1263,28 +1261,21 @@ h3 {
   color: var(--green);
   font-size: 11px;
 }
-.confidence-control input[type="range"] {
-  display: block;
-  width: 100%;
-  height: 5px;
+.confidence-control [data-slot="slider"] {
   margin: 11px 0 6px;
-  border-radius: 8px;
-  appearance: none;
-  background: linear-gradient(90deg, #89a58a, #e6ebe4);
-  cursor: pointer;
 }
-.confidence-control input[type="range"]::-webkit-slider-thumb {
+.confidence-control [data-slot="slider-track"] {
+  height: 5px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #89a58a, #e6ebe4);
+}
+.confidence-control [data-slot="slider-range"] {
+  border-radius: inherit;
+  background: var(--green);
+}
+.confidence-control [data-slot="slider-thumb"] {
   width: 17px;
   height: 17px;
-  appearance: none;
-  border: 3px solid white;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 1px 5px #1e3d2f50;
-}
-.confidence-control input[type="range"]::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
   border: 3px solid white;
   border-radius: 50%;
   background: var(--green);
@@ -1808,7 +1799,7 @@ h3 {
   gap: 5px;
   margin-bottom: 15px;
 }
-.clue-picker button {
+.clue-picker-option {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1821,24 +1812,19 @@ h3 {
   cursor: pointer;
   font-size: 9px;
 }
-.clue-picker button > span {
-  display: grid;
+.clue-picker-option [data-slot="checkbox"] {
   width: 15px;
   height: 15px;
+  min-height: 15px;
   flex: 0 0 auto;
-  place-items: center;
-  border: 1px solid #cbd4cb;
   border-radius: 4px;
-  color: var(--green);
-  font-size: 10px;
 }
-.clue-picker button.checked {
+.clue-picker-option > span {
+  line-height: 1.4;
+}
+.clue-picker-option:has([data-state="checked"]) {
   border-color: #d6e2d6;
   background: #f1f6f1;
-}
-.clue-picker button.checked > span {
-  border-color: #7b9b80;
-  background: #e4efe5;
 }
 .fine-print {
   margin: 10px 0 0;
@@ -2013,7 +1999,8 @@ h3 {
   border-radius: 7px;
   background: #f1f3ef;
 }
-.input-tabs button {
+.input-tabs [data-slot="tabs-trigger"] {
+  height: 31px;
   min-height: 31px;
   border: 0;
   border-radius: 5px;
@@ -2022,7 +2009,7 @@ h3 {
   cursor: pointer;
   font-size: 10px;
 }
-.input-tabs button.active {
+.input-tabs [data-slot="tabs-trigger"][data-state="active"] {
   background: white;
   color: #3e5344;
   box-shadow: 0 1px 3px #1c2b1b14;
@@ -2053,6 +2040,9 @@ h3 {
   color: var(--ink);
   font-size: 11px;
   line-height: 1.6;
+}
+.verifier-form-panel .looseleaf-textarea {
+  min-height: 125px;
 }
 .guess-toggle {
   margin: 14px 0 8px;
@@ -2114,6 +2104,14 @@ h3 {
   position: absolute;
   width: 1px;
   height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+.dropzone .looseleaf-input-frame {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  min-height: 0;
   overflow: hidden;
   clip: rect(0 0 0 0);
 }

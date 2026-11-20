@@ -11,6 +11,18 @@ import {
   YAxis,
 } from "recharts";
 import {
+  Alert,
+  Badge,
+  Button,
+  DataBadge,
+  Input,
+  Panel,
+  ProgressBar,
+  RadioGroup,
+  RadioGroupItem,
+  Slider,
+} from "@/components/ui";
+import {
   ApiClientError,
   apiFetch,
   getNasdaqChallenge,
@@ -34,18 +46,6 @@ type View =
 const num = (v: number | null, d = 2) =>
   v === null || v === undefined ? "—" : v.toLocaleString("en-US", { maximumFractionDigits: d });
 
-function Badge({ origin }: { origin: "real" | "synthetic" }) {
-  return origin === "real" ? (
-    <span className="rounded bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-800">
-      REAL DATA
-    </span>
-  ) : (
-    <span className="rounded bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800">
-      SYNTHETIC DEMO DATA
-    </span>
-  );
-}
-
 function Check({
   ok,
   label,
@@ -65,12 +65,7 @@ function Check({
         </span>
         <span className="text-gray-600">{value}</span>
       </div>
-      <div className="mt-1 h-1.5 rounded bg-gray-100" role="presentation">
-        <div
-          className={`h-1.5 rounded ${ok ? "bg-emerald-600" : "bg-amber-500"}`}
-          style={{ width: `${Math.max(0, Math.min(100, pct))}%` }}
-        />
-      </div>
+      <ProgressBar value={pct} ariaLabel={`${label} progress`} />
     </li>
   );
 }
@@ -79,12 +74,14 @@ function LockedCard({ missing, progress }: { missing: string[]; progress: Progre
   const planOk = !missing.includes("plan_progress_100");
   const brierOk = !missing.includes("brier_lte_0.25");
   return (
-    <section className="rounded-lg border border-gray-200 bg-white p-5" aria-labelledby="cap-title">
+    <Panel className="p-5" aria-labelledby="cap-title">
       <div className="flex items-center justify-between gap-3">
         <h2 id="cap-title" className="text-base font-semibold text-gray-900">
           Final capstone: Nasdaq literacy check
         </h2>
-        <span className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-700">Locked</span>
+        <Badge variant="outline" className="text-xs">
+          Locked
+        </Badge>
       </div>
       <p className="mt-2 text-sm text-gray-600">
         Finish every requirement to read real Nasdaq data. The server checks these, not this page.
@@ -109,7 +106,7 @@ function LockedCard({ missing, progress }: { missing: string[]; progress: Progre
           pct={brierOk ? 100 : 40}
         />
       </ul>
-    </section>
+    </Panel>
   );
 }
 
@@ -147,19 +144,20 @@ function Verifier({ data }: { data: NasdaqChallengeResponse }) {
 
   return (
     <div className="space-y-4">
-      <p className="rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-900" role="note">
+      <Alert
+        className="rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-900"
+        variant="warning"
+        role="note"
+      >
         {data.disclaimer}
-      </p>
+      </Alert>
       <div className="grid gap-4 md:grid-cols-[1.25fr_1fr]">
-        <section
-          className="rounded-lg border border-gray-200 bg-white p-4"
-          aria-label="Market snapshot"
-        >
+        <Panel className="p-4" aria-label="Market snapshot">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h2 className="text-base font-semibold text-gray-900">
               {snap.name} · {snap.symbol}
             </h2>
-            <Badge origin={data.data_origin} />
+            <DataBadge origin={data.data_origin} />
           </div>
           <dl className="mt-3 grid grid-cols-2 gap-2 text-sm sm:grid-cols-3">
             {[
@@ -214,12 +212,9 @@ function Verifier({ data }: { data: NasdaqChallengeResponse }) {
           >
             ↗ Open full page on Nasdaq.com
           </a>
-        </section>
+        </Panel>
 
-        <section
-          className="rounded-lg border border-gray-200 bg-white p-4"
-          aria-label="Comprehension check"
-        >
+        <Panel className="p-4" aria-label="Comprehension check">
           {result ? (
             <div aria-live="polite">
               <h2 className="text-base font-semibold text-gray-900">
@@ -241,44 +236,44 @@ function Verifier({ data }: { data: NasdaqChallengeResponse }) {
               </ul>
             </div>
           ) : (
-            <fieldset>
+            <fieldset className="min-w-0">
               <legend className="flex w-full justify-between text-sm">
                 <span className="font-semibold text-gray-900">Comprehension check</span>
                 <span className="text-gray-500">
                   Q {i + 1} of {data.questions.length}
                 </span>
               </legend>
-              <p className="mt-2 text-sm text-gray-800">{q.text}</p>
-              <div className="mt-2 space-y-1.5">
+              <p id={`nasdaq-question-${q.id}`} className="mt-2 text-sm text-gray-800">
+                {q.text}
+              </p>
+              <RadioGroup
+                value={answers[q.id] ?? ""}
+                onValueChange={(answer) => {
+                  setAnswers({ ...answers, [q.id]: answer });
+                  setErr(null);
+                }}
+                aria-labelledby={`nasdaq-question-${q.id}`}
+                className="mt-2 grid gap-1.5"
+              >
                 {q.options.map((o) => (
-                  <label
+                  <RadioGroupItem
                     key={o}
-                    className={`flex cursor-pointer items-center gap-2 rounded border px-2.5 py-1.5 text-sm ${
-                      answers[q.id] === o ? "border-blue-500 bg-blue-50" : "border-gray-200"
-                    }`}
+                    value={o}
+                    className="min-h-10 w-full justify-start rounded border border-gray-200 px-2.5 py-1.5 text-left text-sm text-gray-900 data-[state=checked]:border-blue-500 data-[state=checked]:bg-blue-50"
                   >
-                    <input
-                      type="radio"
-                      name={q.id}
-                      checked={answers[q.id] === o}
-                      onChange={() => {
-                        setAnswers({ ...answers, [q.id]: o });
-                        setErr(null);
-                      }}
-                    />
                     {o}
-                  </label>
+                  </RadioGroupItem>
                 ))}
-              </div>
+              </RadioGroup>
               <label className="mt-3 block text-sm text-gray-700">
                 Confidence: <span className="font-medium">{conf}%</span>
-                <input
-                  type="range"
+                <Slider
                   min={50}
                   max={100}
                   step={5}
-                  value={conf}
-                  onChange={(e) => setConf(Number(e.target.value))}
+                  value={[conf]}
+                  onValueChange={(value) => setConf(value[0] ?? conf)}
+                  aria-label={`Confidence ${conf} percent`}
                   className="mt-1 w-full"
                 />
               </label>
@@ -287,16 +282,12 @@ function Verifier({ data }: { data: NasdaqChallengeResponse }) {
                   {err}
                 </p>
               )}
-              <button
-                type="button"
-                onClick={next}
-                className="mt-3 w-full rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-gray-800"
-              >
+              <Button variant="primary" type="button" onClick={next} className="mt-3 w-full">
                 {i + 1 < data.questions.length ? "Next question" : "Submit answers"}
-              </button>
+              </Button>
             </fieldset>
           )}
-        </section>
+        </Panel>
       </div>
     </div>
   );
@@ -363,25 +354,31 @@ export function NasdaqVerifier() {
             <label className="sr-only" htmlFor="sym">
               Nasdaq symbol
             </label>
-            <input
+            <Input
               id="sym"
               value={symbol}
               onChange={(e) => setSymbol(e.target.value)}
+              frameClassName="w-24"
               className="w-24 rounded-md border border-gray-300 px-2 py-1.5 text-sm"
             />
-            <button type="submit" className="rounded-md border border-gray-300 px-3 py-1.5 text-sm">
+            <Button
+              variant="secondary"
+              type="submit"
+              className="h-auto min-h-9 px-3 py-1.5 text-sm"
+            >
               Load
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="quiet"
               type="button"
               onClick={() => {
                 setSymbol("NDX");
                 reload("NDX");
               }}
-              className="rounded-md border border-gray-300 px-3 py-1.5 text-sm"
+              className="h-auto min-h-9 px-3 py-1.5 text-sm"
             >
               NDX benchmark
-            </button>
+            </Button>
           </form>
         )}
       </header>
