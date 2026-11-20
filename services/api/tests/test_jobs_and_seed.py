@@ -65,7 +65,7 @@ def test_seed_rejects_missing_data_origin(tmp_path: Path) -> None:
 def test_daily_job_executes_refresh_and_scoring_and_logs_job_run(
     db_session: Session,
 ) -> None:
-    """`daily_job.py` runs market refresh + scoring stub and inserts `job_runs` row."""
+    """`daily_job.py` runs market refresh + claim scoring and inserts `job_runs` row."""
     from infra.scripts.daily_job import run_daily_job
 
     def _mock_refresh() -> dict[str, Any]:
@@ -80,7 +80,7 @@ def test_daily_job_executes_refresh_and_scoring_and_logs_job_run(
     summary = run_daily_job(db=db_session, refresh_fn=_mock_refresh)
     assert summary["status"] == "ok"
     assert summary["market_data_as_of"] == "2026-11-20"
-    assert summary["claim_scoring"] == {"status": "stub", "scored": 0}
+    assert summary["claim_scoring"] == {"status": "ok", "scored": 0}
     assert summary["db_recorded"] is True
 
     row = db_session.scalar(
