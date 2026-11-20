@@ -7,7 +7,7 @@
 
 | Person | % | Phase | Blockers | Last Update |
 |---|---|---|---|---|
-| Hardhik | 71% | Phase 4/6 (CI & Deploy — local Phases 1,3,5 complete) | Supabase creds, OpenRouter key, GitHub remote, Vercel/Render accounts, docs/PRD.md export | 2026-11-20 |
+| Hardhik | 76% | Phase 4/6 (CI & Deploy — GitHub CI green, local Phases 1,3,5 done) | Supabase creds, OpenRouter key, Vercel/Render deploy, docs/PRD.md export | 2026-11-20 |
 | Arnav | 0% | Phase 1/6 (unblocked: core stubs & market/guardrails/llm ready) | none | 2026-11-20 |
 | Divyansh | 0% | Phase 1/6 (unblocked: core stubs & auth/db ready) | none | 2026-11-20 |
 | Ananya | 0% | Phase 1/6 (unblocked: Next.js scaffold & contracts.ts ready) | none | 2026-11-20 |
@@ -43,6 +43,14 @@ Done: C0 repo+Next.js scaffold (`make lint/typecheck/build` pass); Alembic+Postg
 Next: Link GitHub remote, wire live Supabase/OpenRouter secrets, deploy staging API (Render) + Web (Vercel) for C1.
 Minor: ZOMATO->ETERNAL & TATAMOTORS->TMPV mapped post-corporate-action; `db/migrations/env.py` logging fix applied; aligned `contracts.ts` & `api-client.ts` to SoT §7 and fixed `Makefile` bun/npm compatibility.
 Blockers: Live Supabase/OpenRouter/Vercel/Render creds, GitHub remote URL, and `docs/PRD.md` export (need from Hardhik).
+```
+
+```text
+[Hardhik] 76% | Phase 4/6: CI & deployment
+Done: Linked & pushed `Rossonerian/AADHA_PS` (`main`); GitHub Actions CI run `44775028099` passed (`Web` 37s, `API` + Postgres 16 + Alembic + 55 pytest 1m5s).
+Next: Wire live Supabase/OpenRouter env secrets and deploy staging API (Render/Railway) + Web (Vercel) for C1.
+Minor: Merged remote `PROMPT_*.md` and `SOURCE_OF_TRUTH_1.md` cleanly without rewriting history.
+Blockers: Live Supabase/OpenRouter/Vercel/Render creds and `docs/PRD.md` export (need from Hardhik).
 ```
 
 ## Arnav
