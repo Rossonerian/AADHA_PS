@@ -311,4 +311,24 @@ Blockers: none
 
 ## Ananya
 
-_Append updates here._
+_Web UI (`apps/web`) status as of 2026-11-21._
+
+```text
+[Ananya] Web UI | current state
+Auth: sign-in and sign-up tabs; sign-out via Neon Auth. The demo workspace has been removed.
+Lessons: Looseleaf ChoiceOption radios; lesson checks POST /lessons/{id}/check.
+Gating: LockNotice is actionable and gates by level (L1-L4).
+Capstone: Nasdaq view (Level 4) on /nasdaq-verifier.
+Charts: theme-aware. Dark-theme contrast polished.
+Dev fixtures: NEXT_PUBLIC_USE_MOCKS=true (with NEXT_PUBLIC_MOCK_LEVEL) enables fixture mode. It is dev-only and absent from the production bundle.
+In progress: mobile navigation.
+```
+
+Open items:
+- Server-side answer shuffle (Divyansh).
+- Top-level `data_origin` missing on some endpoints.
+- `/verify` returns 500 without an OpenRouter key.
+- Nasdaq challenge store is process-local.
+- Live F1 run (Arnav, needs OpenRouter key).
+- Real-source seed (Arnav, Option A/B decision from Hardhik).
+- CI database name `aacharya_test` (Hardhik).

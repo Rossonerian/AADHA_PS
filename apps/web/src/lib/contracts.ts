@@ -51,6 +51,8 @@ export interface QuestionItem {
   skill_area?: SkillArea;
   difficulty?: number;
   options: string[];
+  /** Display text per option value (used when the answer value is not human readable). */
+  labels?: Record<string, string>;
 }
 
 export interface ChartPoint {
@@ -172,13 +174,35 @@ export interface LessonSection {
   heading: string;
   body: string;
   example?: string;
+  takeaway?: string | null;
 }
 
 export interface LessonDetailResponse {
   id: string;
   title: string;
+  level?: number;
+  minutes?: number;
+  skill_area?: SkillArea;
   sections: LessonSection[];
   check_questions: QuestionItem[];
+}
+
+/** One entry of POST /lessons/{id}/check `feedback` (backend types it as dict). */
+export interface LessonCheckFeedbackItem {
+  question_id?: string;
+  correct?: boolean;
+  explanation?: string;
+}
+
+/** Response of POST /api/v1/lessons/{id}/check. */
+export interface LessonCheckResponse {
+  lesson_id?: string;
+  passed: boolean;
+  score_pct: number;
+  plan_progress_pct: number;
+  correct_count?: number;
+  total_count?: number;
+  feedback?: LessonCheckFeedbackItem[];
 }
 
 /* -------------------------------------------------------------------------- */

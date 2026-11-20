@@ -203,7 +203,7 @@ def export_evidence_files(repo: EducationRepository, out_dir: Path) -> dict[str,
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Export Aacharya Education pre/post evidence with 95% CIs."
+        description="Export PaisaProof Education pre/post evidence with 95% CIs."
     )
     parser.add_argument(
         "--db", default=":memory:", help="Path to SQLite DB (default: in-memory seeded)"

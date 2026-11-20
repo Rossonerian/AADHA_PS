@@ -1785,7 +1785,7 @@ questions:
   - Stock recommendations are safer than source ratings
   answer: A source rating evaluates a publisher's historical accuracy and red flags;
     it never tells you whether to buy or sell a stock
-  explanation: Aacharya evaluates information sources, never stocks; even credible
+  explanation: PaisaProof evaluates information sources, never stocks; even credible
     analysts can be wrong on any single thesis.
   tags:
   - judging_info

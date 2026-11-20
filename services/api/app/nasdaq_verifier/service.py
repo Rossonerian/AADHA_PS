@@ -8,7 +8,7 @@ from typing import Any
 from app.core.guardrails import check_output
 
 DISCLAIMER = (
-    "Educational literacy check only — Aacharya never recommends buying, selling, "
+    "Educational literacy check only — PaisaProof never recommends buying, selling, "
     "or holding any security."
 )
 CHALLENGE_TTL = 1800

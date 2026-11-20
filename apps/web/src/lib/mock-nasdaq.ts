@@ -19,7 +19,7 @@ export function mockNasdaqChallenge(symbol: string): NasdaqChallengeResponse {
     as_of: new Date().toISOString(),
     snapshot: {
       symbol: sym,
-      name: "Demo company",
+      name: "Sample company",
       sector: "Technology",
       price: 190,
       day_low: 188,
@@ -28,8 +28,9 @@ export function mockNasdaqChallenge(symbol: string): NasdaqChallengeResponse {
       week52_high: 200,
       market_cap_musd: 3_000_000,
       pe_ttm: 30,
+      // 12 monthly points, Dec 2025 through Nov 2026 (last point 2026-11-01, before 2026-11-21).
       chart: Array.from({ length: 12 }, (_, i) => ({
-        date: `2026-${String(i + 1).padStart(2, "0")}-01`,
+        date: new Date(Date.UTC(2025, 11 + i, 1)).toISOString().slice(0, 10),
         close: 160 + i * 3 + (i % 3) * 2,
       })),
       data_origin: "synthetic",
