@@ -1,6 +1,7 @@
 """Nasdaq verifier: gate, Finnhub mapping, scoring and no-recommendation wording."""
 
 import json
+import uuid
 from collections.abc import Iterator
 from typing import Any
 
@@ -10,9 +11,15 @@ from fastapi.testclient import TestClient
 from app.core import finnhub as fh_mod
 from app.core.auth import User, current_user
 from app.core.finnhub import FinnhubClient, get_finnhub
+from app.education.repository import EducationRepository
 from app.main import create_app
 from app.nasdaq_verifier import service
-from app.nasdaq_verifier.gate import GateInputs, get_gate_inputs
+from app.nasdaq_verifier.gate import (
+    GateInputs,
+    get_gate_inputs,
+    missing_requirements,
+    read_gate_inputs,
+)
 
 BANNED = ("buy", "sell", "hold", "price target", "strong buy", "analyst")
 
@@ -82,6 +89,46 @@ def test_locked_user_gets_403(locked: TestClient) -> None:
 def test_missing_data_fails_closed(migrated_db: str) -> None:
     c = next(_client(User(id="u1", level=4), GateInputs(None, None)))
     assert c.get("/api/v1/nasdaq-verifier/challenge").status_code == 403
+
+
+def test_gate_fails_closed_on_nonfinite_or_out_of_range_inputs() -> None:
+    user = User(id="00000000-0000-4000-8000-000000000001", level=4)
+    assert "brier_lte_0.25" in missing_requirements(
+        user, GateInputs(100.0, float("nan"))
+    )
+    assert "brier_lte_0.25" in missing_requirements(user, GateInputs(100.0, -0.01))
+    assert "plan_progress_100" in missing_requirements(
+        user, GateInputs(float("inf"), 0.2)
+    )
+
+
+def test_gate_derives_progress_from_education_lesson_checks(db_session: Any) -> None:
+    user_id = str(uuid.uuid4())
+    repo = EducationRepository(db_session)
+    repo.ensure_user(user_id, level=4)
+    repo.upsert_plan(
+        user_id,
+        level=4,
+        lesson_ids=["lesson_a", "lesson_b"],
+        progress={"lesson_a": "completed", "lesson_b": "not_started"},
+    )
+    repo.record_skill_scores(user_id, {"risk": 80.0}, brier=0.18)
+    user = User(id=user_id, level=4)
+    assert repo.is_orm, type(db_session)
+    assert repo.get_plan(user_id) is not None
+
+    inputs = read_gate_inputs(db_session, user)
+    assert inputs.progress_pct == 50.0
+    assert inputs.brier == pytest.approx(0.18)
+
+    repo.upsert_plan(
+        user_id,
+        level=4,
+        lesson_ids=["lesson_a", "lesson_b"],
+        progress={"lesson_a": "completed", "lesson_b": "completed"},
+    )
+    inputs = read_gate_inputs(db_session, user)
+    assert inputs.progress_pct == 100.0
 
 
 def test_unlocked_flow_and_real_origin(unlocked: TestClient) -> None:

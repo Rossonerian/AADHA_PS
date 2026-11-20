@@ -236,19 +236,19 @@ scenarios:
       pe_ratio: 16.4
       surveillance: null
   outcome:
-    stock_pct: -33.96
-    index_pct: -8.41
-    relative_pct: -25.55
+    stock_pct: -31.74
+    index_pct: -8.29
+    relative_pct: -23.45
     actual_direction: down
-    entry_close: 318.0
-    exit_close: 210.0
+    entry_close: 314.88
+    exit_close: 214.95
   key_clues:
   - Repeated RBI NPA divergence findings
   - Regulatory refusal to extend CEO tenure
   - Concentrated corporate lending book
   explanation: Governance and asset-quality concerns accelerated after RBI declined
     the CEO's extension, leading to sharp repricing.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_dhfl_2018
   symbol: DHFL
   as_of_date: '2018-09-21'
@@ -485,19 +485,19 @@ scenarios:
       cfo_to_ebitda_pct: 38.0
       surveillance: ASM Stage IV
   outcome:
-    stock_pct: -58.81
-    index_pct: -7.59
-    relative_pct: -51.22
+    stock_pct: -59.33
+    index_pct: -5.86
+    relative_pct: -53.47
     actual_direction: down
-    entry_close: 505.0
-    exit_close: 208.01
+    entry_close: 454.11
+    exit_close: 184.7
   key_clues:
   - Extreme P/E expansion without matching cash flow conversion
   - Regulatory scrutiny and surveillance flags
   - Thin institutional ownership
   explanation: Rapid retail-driven rallies disconnected from cash flow and governance
     clarity often reverse violently via lower circuits.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_pcjeweller_2018
   symbol: PCJEWELLER
   as_of_date: '2018-04-26'
@@ -608,19 +608,19 @@ scenarios:
       pe_ratio: 18.5
       surveillance: ASM Stage IV
   outcome:
-    stock_pct: -52.08
-    index_pct: 0.02
-    relative_pct: -52.1
+    stock_pct: -24.76
+    index_pct: 0.67
+    relative_pct: -25.43
     actual_direction: down
-    entry_close: 240.0
-    exit_close: 115.0
+    entry_close: 23.54
+    exit_close: 17.72
   key_clues:
   - Institutional exit on governance questions
   - Elevated receivables and working capital strain
   - Surveillance escalation
   explanation: Governance doubts and institutional exits sparked severe volatility
     and steep capital erosion.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_manpasand_2018
   symbol: MANPASAND
   as_of_date: '2018-05-27'
@@ -856,19 +856,19 @@ scenarios:
       net_loss_fy21_cr: -1701
       price_to_sales: 49.0
   outcome:
-    stock_pct: -34.78
+    stock_pct: -29.18
     index_pct: 3.06
-    relative_pct: -37.84
+    relative_pct: -32.24
     actual_direction: down
-    entry_close: 1564.0
-    exit_close: 1020.0
+    entry_close: 1560.8
+    exit_close: 1105.3
   key_clues:
   - Heavy OFS component in IPO
   - Steep price-to-sales multiple with persistent net losses
   - Monetisation headwinds in core payments
   explanation: Expensive loss-making IPOs with large OFS supply often undergo sharp
     valuation resets once listing hype fades.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_zomato_2023
   symbol: ZOMATO
   as_of_date: '2023-05-19'
@@ -979,19 +979,19 @@ scenarios:
       food_ebitda_positive: true
       yoy_rev_growth_pct: 70.0
   outcome:
-    stock_pct: 43.26
+    stock_pct: 41.32
     index_pct: 6.38
-    relative_pct: 36.88
+    relative_pct: 34.94
     actual_direction: up
     entry_close: 64.5
-    exit_close: 92.4
+    exit_close: 91.15
   key_clues:
   - Inflection to positive core unit economics
   - Strong cash cushion with zero debt
   - Accelerating revenue paired with narrowing losses
   explanation: When a high-growth business demonstrably inflects toward profitability
     with a strong balance sheet, market re-rating can follow.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_adanient_2023
   symbol: ADANIENT
   as_of_date: '2023-01-24'
@@ -1103,19 +1103,19 @@ scenarios:
       group_leverage_focus: true
       fpo_active: true
   outcome:
-    stock_pct: -50.09
+    stock_pct: -50.1
     index_pct: -1.92
-    relative_pct: -48.17
+    relative_pct: -48.18
     actual_direction: down
-    entry_close: 3442.0
-    exit_close: 1718.0
+    entry_close: 3435.75
+    exit_close: 1714.53
   key_clues:
   - Extreme trailing valuation multiple (>120x P/E)
   - Public forensic/short-seller scrutiny during capital raise
   - High sensitivity to refinancing sentiment
   explanation: Parabolic valuations leave minimal margin of safety when governance
     or leverage concerns hit sentiment.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_tcs_2020
   symbol: TCS
   as_of_date: '2020-03-24'
@@ -1226,19 +1226,19 @@ scenarios:
       roe_pct: 37.5
       debt_to_equity: 0.08
   outcome:
-    stock_pct: 16.7
+    stock_pct: 19.42
     index_pct: 32.18
-    relative_pct: -15.48
+    relative_pct: -12.76
     actual_direction: up
-    entry_close: 1755.0
-    exit_close: 2048.0
+    entry_close: 1444.88
+    exit_close: 1725.48
   key_clues:
   - Fortress net-cash balance sheet during systemic panic
   - High recurring enterprise contract visibility
   - Structural digital tailwind
   explanation: High-ROE, net-cash businesses frequently recover strongly once systemic
     liquidity panics subside.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_hdfcbank_2020
   symbol: HDFCBANK
   as_of_date: '2020-03-24'
@@ -1349,19 +1349,19 @@ scenarios:
       car_pct: 18.5
       casa_pct: 42.2
   outcome:
-    stock_pct: 20.33
+    stock_pct: 34.0
     index_pct: 32.18
-    relative_pct: -11.85
+    relative_pct: 1.82
     actual_direction: up
-    entry_close: 856.0
-    exit_close: 1030.0
+    entry_close: 357.66
+    exit_close: 479.28
   key_clues:
   - Strong capital adequacy and low historical GNPA
   - Flight-to-safety deposit inflows
   - Systemic panic rather than bank-specific fraud
   explanation: Distinguishing systemic macro panics from idiosyncratic solvency crises
     is a core analytical skill.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_itc_2022
   symbol: ITC
   as_of_date: '2022-02-02'
@@ -1472,19 +1472,19 @@ scenarios:
       dividend_yield_pct: 4.9
       debt_to_equity: 0.0
   outcome:
-    stock_pct: 18.1
+    stock_pct: 23.58
     index_pct: -6.48
-    relative_pct: 24.58
+    relative_pct: 30.06
     actual_direction: up
-    entry_close: 232.0
-    exit_close: 274.0
+    entry_close: 182.79
+    exit_close: 225.9
   key_clues:
   - Favorable tax stability in core cash-cow business
   - Zero debt and ~5% dividend yield cushion
   - Improving non-cigarette segment margins
   explanation: Steady cash flows, tax clarity, and modest starting valuation supported
     a durable re-rating through 2022.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_irctc_2021
   symbol: IRCTC
   as_of_date: '2021-10-19'
@@ -1596,19 +1596,19 @@ scenarios:
       six_month_rally_pct: 215.0
       split_event: '1:5'
   outcome:
-    stock_pct: -23.83
+    stock_pct: -18.36
     index_pct: -3.55
-    relative_pct: -20.28
+    relative_pct: -14.81
     actual_direction: down
-    entry_close: 1175.0
-    exit_close: 895.0
+    entry_close: 1042.49
+    exit_close: 851.07
   key_clues:
   - Stock split mistaken for fundamental value creation
   - Extreme >200x trailing P/E
   - Single-ministry regulatory concentration risk
   explanation: Parabolic pre-split rallies priced for perfection are acutely vulnerable
     to regulatory or profit-booking shocks.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_bcg_2022
   symbol: BCG
   as_of_date: '2022-03-01'
@@ -1720,19 +1720,19 @@ scenarios:
       surveillance: ASM Stage IV
       forensic_audit: true
   outcome:
-    stock_pct: -36.12
-    index_pct: 1.82
-    relative_pct: -37.94
-    actual_direction: down
-    entry_close: 108.0
-    exit_close: 68.99
+    stock_pct: 11.02
+    index_pct: 1.64
+    relative_pct: 9.38
+    actual_direction: up
+    entry_close: 71.3
+    exit_close: 79.15
   key_clues:
   - SEBI forensic audit on preferential allotments
   - Extreme social media promotion + surveillance flags
   - Disconnected valuation surge
   explanation: Forensic audit disclosures on heavily promoted high-flyers historically
     trigger severe multi-month drawdowns.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_suzlon_2008
   symbol: SUZLON
   as_of_date: '2008-01-15'
@@ -1843,19 +1843,19 @@ scenarios:
       pe_ratio: 52.0
       warranty_provisions_rising: true
   outcome:
-    stock_pct: -38.11
+    stock_pct: -28.55
     index_pct: -19.67
-    relative_pct: -18.44
+    relative_pct: -8.88
     actual_direction: down
-    entry_close: 412.0
-    exit_close: 255.0
+    entry_close: 373.71
+    exit_close: 267.02
   key_clues:
   - Debt-funded overseas acquisition
   - Product warranty cost escalations
   - High valuation multiple entering credit downturn
   explanation: Debt-funded acquisitions combined with operational defects amplify
     downside when global liquidity tightens.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_jetairways_2018
   symbol: JETAIRWAYS
   as_of_date: '2018-08-09'
@@ -1966,19 +1966,19 @@ scenarios:
       results_deferred: true
       negative_net_worth: true
   outcome:
-    stock_pct: -27.8
-    index_pct: -4.16
-    relative_pct: -23.64
+    stock_pct: -29.18
+    index_pct: -4.39
+    relative_pct: -24.79
     actual_direction: down
-    entry_close: 302.0
-    exit_close: 218.03
+    entry_close: 301.75
+    exit_close: 213.7
   key_clues:
   - Unexplained deferral of quarterly results
   - High debt and negative net worth in fuel-sensitive industry
   - Cash crunch and lease arrears
   explanation: Deferring quarterly results amid negative net worth and fuel spikes
     signals acute solvency danger.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_kfa_2011
   symbol: KFA
   as_of_date: '2011-11-08'
@@ -2213,19 +2213,19 @@ scenarios:
       group_debt_cr: 6500
       key_person_risk: true
   outcome:
-    stock_pct: -66.67
+    stock_pct: -56.79
     index_pct: -1.28
-    relative_pct: -65.39
+    relative_pct: -55.51
     actual_direction: down
-    entry_close: 192.0
-    exit_close: 64.0
+    entry_close: 191.75
+    exit_close: 82.85
   key_clues:
   - High promoter pledging (>75%)
   - Opaque holding-company debt structure
   - Acute key-person and lender-invocation risk
   explanation: High promoter pledging and complex group leverage create severe tail
     risk when leadership shocks occur.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_rcom_2017
   symbol: RCOM
   as_of_date: '2017-05-26'
@@ -2331,25 +2331,25 @@ scenarios:
     - Rating agencies downgrade RCom debt to default/junk grades after missed loan
       servicing
     - Industry tariff war slashes wireless ARPU and EBITDA
-    - Total debt exceeds Rs 45,000 Cr — over 8x annual EBITDA
+    - Total debt exceeds Rs 45,000 Cr â€” over 8x annual EBITDA
     numbers:
       debt_to_ebitda: 8.4
       credit_rating_downgrade: true
       surveillance: ASM Stage IV
   outcome:
-    stock_pct: -17.83
+    stock_pct: -5.44
     index_pct: 1.83
-    relative_pct: -19.66
+    relative_pct: -7.27
     actual_direction: down
-    entry_close: 25.8
-    exit_close: 21.2
+    entry_close: 25.75
+    exit_close: 24.35
   key_clues:
   - Credit rating downgrade to default grade
   - Unsustainable >8x Debt/EBITDA
   - Structural sector tariff disruption
   explanation: Credit downgrades and debt servicing delays rarely leave equity holders
     unscathed.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_infibeam_2018
   symbol: INFIBEAM
   as_of_date: '2018-09-27'
@@ -2584,19 +2584,19 @@ scenarios:
       ceo_resigned: true
       pe_ratio: 15.8
   outcome:
-    stock_pct: -4.55
+    stock_pct: -2.98
     index_pct: 0.94
-    relative_pct: -5.49
+    relative_pct: -3.92
     actual_direction: down
-    entry_close: 462.0
-    exit_close: 441.0
+    entry_close: 350.05
+    exit_close: 339.63
   key_clues:
   - Sudden CEO resignation amid public board-founder dispute
   - Near-term leadership vacuum
   - Strong cash cushion limits solvency risk
   explanation: Sudden CEO exits trigger immediate governance uncertainty and sharp
     short-term sell-offs even in cash-rich firms.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_bajfinance_2020
   symbol: BAJFINANCE
   as_of_date: '2020-05-26'
@@ -2708,19 +2708,19 @@ scenarios:
       drawdown_from_peak_pct: -60.0
       roe_pre_covid_pct: 20.2
   outcome:
-    stock_pct: 82.2
-    index_pct: 26.99
-    relative_pct: 55.21
+    stock_pct: 90.93
+    index_pct: 27.0
+    relative_pct: 63.93
     actual_direction: up
-    entry_close: 1910.0
-    exit_close: 3480.0
+    entry_close: 178.07
+    exit_close: 339.98
   key_clues:
   - Pre-crisis equity capital cushion (25% CAR)
   - Rapidly declining moratorium book
   - High-ROE consumer franchise recovering post-lockdown
   explanation: Well-capitalized lenders that proactively build equity buffers often
     rebound rapidly once credit-loss fears peak.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_tatamotors_2020
   symbol: TATAMOTORS
   as_of_date: '2020-10-27'
@@ -2831,19 +2831,19 @@ scenarios:
       pv_market_share_rising: true
       deleveraging_plan: true
   outcome:
-    stock_pct: 105.17
+    stock_pct: 105.79
     index_pct: 19.76
-    relative_pct: 85.41
+    relative_pct: 86.03
     actual_direction: up
-    entry_close: 135.5
-    exit_close: 278.0
+    entry_close: 132.15
+    exit_close: 271.96
   key_clues:
   - Free cash flow inflection at JLR
   - Explicit debt-reduction roadmap
   - Domestic PV & EV market share momentum
   explanation: Credible deleveraging paired with positive free cash flow often drives
     powerful cyclical turnarounds.
-  data_origin: synthetic
+  data_origin: real
 - id: sc_asianpaint_2024
   symbol: ASIANPAINT
   as_of_date: '2024-11-08'
@@ -2954,16 +2954,16 @@ scenarios:
       q2_pat_yoy_pct: -43.0
       new_entrant_pressure: true
   outcome:
-    stock_pct: -12.75
-    index_pct: 2.18
-    relative_pct: -14.93
+    stock_pct: -13.49
+    index_pct: 1.95
+    relative_pct: -15.44
     actual_direction: down
-    entry_close: 2768.0
-    exit_close: 2415.19
+    entry_close: 2705.25
+    exit_close: 2340.4
   key_clues:
   - Sharp 43% YoY profit contraction
   - Intensifying industry competition threatening moat
   - Rich ~55x starting P/E multiple
   explanation: When a richly valued market leader faces simultaneous earnings contraction
     and structural competition, multiples compress.
-  data_origin: synthetic
+  data_origin: real

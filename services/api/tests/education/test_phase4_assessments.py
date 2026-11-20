@@ -130,6 +130,28 @@ class TestPhase4Assessments(unittest.TestCase):
         self.assertAlmostEqual(res["brier"], 0.25, places=4)
         self.assertFalse(res["passed"])
 
+    def test_assessment_rejects_duplicate_item_substitution_before_scoring(
+        self,
+    ) -> None:
+        self.repo.ensure_user("u_duplicate_assessment", level=1)
+        assessment = start_assessment(self.repo, "u_duplicate_assessment", 1)
+        answers = self._build_answers(assessment["items"], 12, 50)
+        answers[-1] = dict(answers[0])
+        with self.assertRaises(ValidationDomainError) as duplicate:
+            submit_assessment(
+                self.repo,
+                "u_duplicate_assessment",
+                assessment["assessment_id"],
+                answers,
+            )
+        self.assertEqual(duplicate.exception.code, "DUPLICATE_ITEM")
+        self.assertEqual(
+            self.repo.list_attempts(
+                user_id="u_duplicate_assessment", context="assessment"
+            ),
+            [],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

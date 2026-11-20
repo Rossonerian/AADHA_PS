@@ -14,7 +14,7 @@ from .enums import (
     ToolName,
     cumulative_unlocks_for_level,
 )
-from .exceptions import NotFoundError, ToolLockedError
+from .exceptions import NotFoundError, ToolLockedError, ValidationDomainError
 from .repository import EducationRepository
 
 
@@ -208,6 +208,20 @@ def submit_lesson_check(
         raise NotFoundError("LESSON_NOT_FOUND", f"Lesson '{lesson_id}' does not exist.")
 
     cq_map = {cq["id"]: cq for cq in lesson["check_questions"]}
+    if len(answers) != len(cq_map):
+        raise ValidationDomainError(
+            "INCOMPLETE_SUBMISSION", f"Expected {len(cq_map)} lesson answers."
+        )
+    submitted_ids = [str(answer.get("question_id", "")) for answer in answers]
+    if len(set(submitted_ids)) != len(submitted_ids):
+        raise ValidationDomainError(
+            "DUPLICATE_ITEM", "Each lesson question must be answered exactly once."
+        )
+    if set(submitted_ids) != set(cq_map):
+        raise ValidationDomainError(
+            "INVALID_SUBMISSION_ITEMS",
+            "Answers must match the questions issued for this lesson.",
+        )
     correct_count = 0
     feedback: list[dict[str, Any]] = []
 
