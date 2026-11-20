@@ -1,23 +1,14 @@
-"""User tool-unlock lookup helper."""
+"""User tool-unlock lookup helper for Hardhik's main.py /me route."""
 
-from sqlalchemy import inspect, text
-from sqlalchemy.orm import Session
+from __future__ import annotations
 
-from app.core.enums import LEVEL_UNLOCKS
+from typing import Any
+
+from .learning import get_user_unlocks as _get_user_unlocks
+from .repository import EducationRepository
 
 
-def get_user_unlocks(db: Session, user_id: str, level: int) -> list[str]:
-    """Return unlocked tool names for `user_id` from `unlocks` table or level defaults."""
-    bind = db.get_bind()
-    if inspect(bind).has_table("unlocks"):
-        rows = db.execute(
-            text(
-                "SELECT tool FROM unlocks WHERE user_id = :user_id ORDER BY unlocked_at ASC"
-            ),
-            {"user_id": user_id},
-        ).fetchall()
-        if rows:
-            return [str(row[0]) for row in rows]
-
-    clamped_level = min(max(level, 1), 4)
-    return [tool.value for tool in LEVEL_UNLOCKS[clamped_level]]
+def get_user_unlocks(db: Any, user_id: str, level: int = 1) -> list[str]:
+    """Adapter for Hardhik's GET /me endpoint accepting a db Session or Connection."""
+    repo = EducationRepository(db)
+    return _get_user_unlocks(repo, str(user_id), user_level=int(level))

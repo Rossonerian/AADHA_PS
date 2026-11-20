@@ -1,0 +1,2148 @@
+questions:
+- id: q_l1_basics_01
+  level: 1
+  skill_area: basics
+  difficulty: 1
+  text: What is the primary regulator of India's securities and stock markets?
+  options:
+  - SEBI
+  - RBI
+  - IRDAI
+  - TRAI
+  answer: SEBI
+  explanation: The Securities and Exchange Board of India (SEBI) regulates Indian
+    capital markets and protects investors.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l1_basics_02
+  level: 1
+  skill_area: basics
+  difficulty: 1
+  text: What does a Demat account hold for an Indian equity investor?
+  options:
+  - Shares in electronic form
+  - Physical gold coins
+  - Fixed deposit receipts only
+  - Cash savings balance
+  answer: Shares in electronic form
+  explanation: A Demat (dematerialised) account with NSDL or CDSL stores securities
+    electronically.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l1_basics_03
+  level: 1
+  skill_area: basics
+  difficulty: 2
+  text: Which index tracks 50 large, liquid Indian companies listed on the NSE?
+  options:
+  - NIFTY 50
+  - SENSEX 30
+  - India VIX
+  - NIFTY Smallcap 250
+  answer: NIFTY 50
+  explanation: NIFTY 50 represents the weighted average of 50 major Indian companies
+    listed on the National Stock Exchange.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l1_basics_04
+  level: 1
+  skill_area: basics
+  difficulty: 2
+  text: Under India's T+1 equity settlement cycle, when are shares credited after
+    a Monday trade (assuming Tuesday is a working day)?
+  options:
+  - Tuesday
+  - Wednesday
+  - Friday
+  - The same minute as order placement
+  answer: Tuesday
+  explanation: T+1 settlement completes transfer of funds and securities on the next
+    business day after the trade date.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l1_basics_05
+  level: 1
+  skill_area: basics
+  difficulty: 2
+  text: What does owning 1 equity share of a listed company represent?
+  options:
+  - Fractional ownership in the business
+  - A guaranteed fixed interest loan
+  - A government-backed deposit
+  - A right to fixed monthly salary
+  answer: Fractional ownership in the business
+  explanation: Equity shares represent proportional ownership in a company's net assets
+    and residual earnings.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l1_basics_06
+  level: 1
+  skill_area: basics
+  difficulty: 3
+  text: What is the difference between a market order and a limit order?
+  options:
+  - A limit order sets the maximum buy or minimum sell price; a market order executes
+    at the best available price
+  - A market order can only be placed after 3:30 PM
+  - A limit order guarantees immediate execution at any price
+  - There is no difference on NSE
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  explanation: Limit orders protect price certainty, whereas market orders prioritize
+    immediate execution.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l1_basics_07
+  level: 1
+  skill_area: basics
+  difficulty: 3
+  text: How is a company's market capitalisation calculated?
+  options:
+  - Share price multiplied by total outstanding shares
+  - Total revenue multiplied by profit margin
+  - Total debt minus cash
+  - Annual dividend multiplied by 10
+  answer: Share price multiplied by total outstanding shares
+  explanation: Market cap equals current share price times total number of issued
+    equity shares.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l1_basics_08
+  level: 1
+  skill_area: basics
+  difficulty: 3
+  text: What is an Initial Public Offering (IPO)?
+  options:
+  - The first time a private company offers shares to the public on a stock exchange
+  - A company's annual dividend announcement
+  - A SEBI penalty notice
+  - A stock split by a listed firm
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  explanation: An IPO transitions a company from private ownership to public exchange
+    listing.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l1_basics_09
+  level: 1
+  skill_area: basics
+  difficulty: 4
+  text: After a 1:2 stock split (1 share split into 2), what happens to an investor's
+    total holding value immediately, all else equal?
+  options:
+  - 'It stays the same: share count doubles and price halves'
+  - It doubles automatically
+  - It drops by 50%
+  - The company's profit doubles
+  answer: 'It stays the same: share count doubles and price halves'
+  explanation: A stock split changes share count and per-share price proportionally
+    without altering business value.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l1_basics_10
+  level: 1
+  skill_area: basics
+  difficulty: 4
+  text: What does the bid-ask spread in an exchange order book measure?
+  options:
+  - The gap between the highest buyer bid and lowest seller ask price
+  - The annual dividend yield
+  - The broker's annual maintenance fee
+  - The gap between NSE and BSE closing times
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  explanation: Wider bid-ask spreads indicate lower liquidity and higher implicit
+    transaction cost.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l1_reading_stock_01
+  level: 1
+  skill_area: reading_stock
+  difficulty: 1
+  text: Which financial statement shows a company's revenue and net profit over a
+    quarter or year?
+  options:
+  - Income Statement (Profit & Loss)
+  - Balance Sheet
+  - Shareholding Pattern
+  - Auditor Appointment Notice
+  answer: Income Statement (Profit & Loss)
+  explanation: The P&L statement reports revenues, expenses, and net profit over a
+    reporting period.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l1_reading_stock_02
+  level: 1
+  skill_area: reading_stock
+  difficulty: 1
+  text: Which statement gives a snapshot of a company's assets, liabilities, and equity
+    on a specific date?
+  options:
+  - Balance Sheet
+  - Cash Flow Statement
+  - Income Statement
+  - Press Release
+  answer: Balance Sheet
+  explanation: A Balance Sheet records what a company owns (assets) and owes (liabilities)
+    at a point in time.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l1_reading_stock_03
+  level: 1
+  skill_area: reading_stock
+  difficulty: 2
+  text: What does Earnings Per Share (EPS) measure?
+  options:
+  - Net profit attributable to equity shareholders divided by total shares
+  - Total sales divided by employees
+  - Cash balance divided by debt
+  - Share price divided by 100
+  answer: Net profit attributable to equity shareholders divided by total shares
+  explanation: EPS expresses how much net profit corresponds to each outstanding equity
+    share.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l1_reading_stock_04
+  level: 1
+  skill_area: reading_stock
+  difficulty: 2
+  text: How is the Price-to-Earnings (P/E) ratio computed?
+  options:
+  - Market price per share divided by Earnings Per Share
+  - Revenue divided by total assets
+  - Debt divided by equity
+  - Dividend divided by share price
+  answer: Market price per share divided by Earnings Per Share
+  explanation: P/E shows how many rupees of market price investors currently pay per
+    rupee of annual earnings.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l1_reading_stock_05
+  level: 1
+  skill_area: reading_stock
+  difficulty: 2
+  text: What does a rising trading volume during a price move indicate?
+  options:
+  - More shares changed hands, reflecting broader market participation
+  - The company issued new bonus shares
+  - The exchange halted trading
+  - Profit margins doubled
+  answer: More shares changed hands, reflecting broader market participation
+  explanation: Volume counts total shares traded during a session and helps contextualize
+    price moves.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l1_reading_stock_06
+  level: 1
+  skill_area: reading_stock
+  difficulty: 3
+  text: Why is Operating Cash Flow (OCF) checked alongside Net Profit?
+  options:
+  - Accounting profit can rise on credit sales while actual cash collected lags
+  - OCF is always identical to net profit
+  - OCF ignores customer payments
+  - OCF only applies to banks
+  answer: Accounting profit can rise on credit sales while actual cash collected lags
+  explanation: Comparing OCF to net profit verifies whether reported earnings are
+    turning into real cash.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l1_reading_stock_07
+  level: 1
+  skill_area: reading_stock
+  difficulty: 3
+  text: What does a high Debt-to-Equity ratio generally signal about a non-financial
+    company?
+  options:
+  - Greater reliance on borrowed funds relative to shareholder equity
+  - Zero interest expenses
+  - Guaranteed high profitability
+  - Higher promoter shareholding
+  answer: Greater reliance on borrowed funds relative to shareholder equity
+  explanation: Higher leverage increases fixed interest obligations, which can strain
+    cash flows in downturns.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l1_reading_stock_08
+  level: 1
+  skill_area: reading_stock
+  difficulty: 3
+  text: What is Return on Equity (ROE)?
+  options:
+  - Net profit expressed as a percentage of shareholders' equity
+  - Revenue divided by market cap
+  - Share price growth over 1 week
+  - Total debt divided by cash
+  answer: Net profit expressed as a percentage of shareholders' equity
+  explanation: ROE indicates how efficiently a company generates net profit from shareholders'
+    capital.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l1_reading_stock_09
+  level: 1
+  skill_area: reading_stock
+  difficulty: 4
+  text: What does promoter share pledging mean in Indian listed companies?
+  options:
+  - Promoters have used their shares as collateral to borrow money
+  - Promoters donated shares to charity
+  - The company bought back shares
+  - SEBI froze the stock permanently
+  answer: Promoters have used their shares as collateral to borrow money
+  explanation: High promoter pledging creates forced-selling risk if the share price
+    falls below lender margins.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l1_reading_stock_10
+  level: 1
+  skill_area: reading_stock
+  difficulty: 4
+  text: Why can a low P/E ratio sometimes be misleading ('value trap')?
+  options:
+  - Earnings may be cyclically peaking or about to fall sharply
+  - Low P/E always means the company is debt-free
+  - Low P/E guarantees fast revenue growth
+  - P/E is unaffected by one-time gains
+  answer: Earnings may be cyclically peaking or about to fall sharply
+  explanation: Trailing P/E looks backward; temporary or declining earnings can make
+    a stock appear optically cheap.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l1_judging_info_01
+  level: 1
+  skill_area: judging_info
+  difficulty: 1
+  text: A Telegram channel promises '100% guaranteed 40% returns in 15 days'. What
+    is this?
+  options:
+  - A classic red flag — equity market returns cannot be guaranteed
+  - A standard SEBI-approved scheme
+  - A normal mutual fund disclosure
+  - An NSE exchange announcement
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  explanation: Equity investments carry market risk; any promise of guaranteed high
+    returns is a major red flag.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l1_judging_info_02
+  level: 1
+  skill_area: judging_info
+  difficulty: 1
+  text: Where should you verify a company's official quarterly results or board decisions
+    in India?
+  options:
+  - Official NSE/BSE corporate filings
+  - Anonymous WhatsApp forwards
+  - Unverified social media reels
+  - Paid tipster SMS messages
+  answer: Official NSE/BSE corporate filings
+  explanation: Listed companies are legally required to publish material disclosures
+    on NSE and BSE.
+  tags:
+  - judging_info
+  data_origin: synthetic
+- id: q_l1_judging_info_03
+  level: 1
+  skill_area: judging_info
+  difficulty: 2
+  text: What does a SEBI registration number starting with 'INH' indicate?
+  options:
+  - SEBI-registered Research Analyst (RA)
+  - NSE trading holiday
+  - Income tax refund code
+  - Unregistered social media creator
+  answer: SEBI-registered Research Analyst (RA)
+  explanation: SEBI assigns INH prefixes to registered Research Analysts and INA prefixes
+    to Investment Advisers.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l1_judging_info_04
+  level: 1
+  skill_area: judging_info
+  difficulty: 2
+  text: Why is 'act within the next 10 minutes before upper circuit!' a red flag?
+  options:
+  - Artificial urgency pressures people to skip basic verification
+  - Upper circuits are announced 10 minutes in advance
+  - SEBI mandates 10-minute decision windows
+  - It proves insider audit approval
+  answer: Artificial urgency pressures people to skip basic verification
+  explanation: Scammers and pump-and-dump operators use urgency to discourage independent
+    due diligence.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l1_judging_info_05
+  level: 1
+  skill_area: judging_info
+  difficulty: 2
+  text: What is a 'screenshot bias' (cherry-picking) in social media stock tips?
+  options:
+  - Showing only winning trades while hiding or deleting losing calls
+  - Using dark mode charts
+  - Posting official annual reports
+  - Comparing returns against NIFTY 50
+  answer: Showing only winning trades while hiding or deleting losing calls
+  explanation: Selective posting creates an illusion of high accuracy unless every
+    call is logged transparently.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l1_judging_info_06
+  level: 1
+  skill_area: judging_info
+  difficulty: 3
+  text: A stock tip names no entry price, no timeframe, and no downside risk—just
+    'huge upside coming!'. How should this claim be classified?
+  options:
+  - Vague and unscorable claim
+  - Audited institutional research
+  - SEBI-verified valuation
+  - Guaranteed outperformer
+  answer: Vague and unscorable claim
+  explanation: Without clear timeframe and measurable terms, claims cannot be objectively
+    evaluated.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l1_judging_info_07
+  level: 1
+  skill_area: judging_info
+  difficulty: 3
+  text: What does it mean when an Indian stock is placed on the NSE/BSE ASM (Additional
+    Surveillance Measure) list?
+  options:
+  - Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  - The stock won a corporate governance award
+  - The stock is guaranteed to double
+  - Trading is permanently banned forever
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  explanation: ASM/GSM lists warn market participants about heightened surveillance
+    due to abnormal trading metrics.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l1_judging_info_08
+  level: 1
+  skill_area: judging_info
+  difficulty: 3
+  text: Why should you check whether a finfluencer discloses paid sponsorships or
+    personal holdings?
+  options:
+  - Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  - Sponsorships guarantee factual accuracy
+  - SEBI bans all disclosures
+  - Personal holdings eliminate market risk
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  explanation: 'Incentives matter: undisclosed compensation or front-running creates
+    severe conflicts of interest.'
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l1_judging_info_09
+  level: 1
+  skill_area: judging_info
+  difficulty: 4
+  text: A tiny illiquid stock suddenly sees a 10x volume spike right after bulk SMS
+    messages promote it. What pattern does this resemble?
+  options:
+  - Pump-and-dump manipulation
+  - Routine index rebalancing
+  - Scheduled RBI policy cut
+  - Standard dividend ex-date
+  answer: Pump-and-dump manipulation
+  explanation: Coordinated promotion paired with sudden pre/post volume spikes in
+    illiquid stocks is a classic pump-and-dump signature.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l1_judging_info_10
+  level: 1
+  skill_area: judging_info
+  difficulty: 4
+  text: Why is checking a source's historical track record over many calls better
+    than judging by one viral call?
+  options:
+  - One lucky call can happen by chance; consistency across many scored claims separates
+    skill from luck
+  - One viral call proves permanent accuracy
+  - Track records only matter for bonds
+  - Past errors never repeat
+  answer: One lucky call can happen by chance; consistency across many scored claims
+    separates skill from luck
+  explanation: Small sample sizes suffer from luck; systematic scoring reveals true
+    reliability.
+  tags:
+  - judging_info
+  data_origin: synthetic
+- id: q_l1_risk_01
+  level: 1
+  skill_area: risk
+  difficulty: 1
+  text: Why do investors diversify across multiple sectors instead of putting 100%
+    into one stock?
+  options:
+  - To reduce the impact of a single company-specific shock on the entire portfolio
+  - To guarantee zero losses in market crashes
+  - To avoid paying any taxes
+  - Because exchanges forbid owning one stock
+  answer: To reduce the impact of a single company-specific shock on the entire portfolio
+  explanation: Diversification reduces unsystematic (company-specific) risk, though
+    market-wide risk remains.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l1_risk_02
+  level: 1
+  skill_area: risk
+  difficulty: 1
+  text: If a stock falls by 50% (from Rs 100 to Rs 50), what percentage gain is needed
+    to return to Rs 100?
+  options:
+  - 100%
+  - 50%
+  - 75%
+  - 25%
+  answer: 100%
+  explanation: Loss asymmetry means a 50% drawdown requires a 100% gain just to break
+    even.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l1_risk_03
+  level: 1
+  skill_area: risk
+  difficulty: 2
+  text: What is an emergency fund's role before investing in volatile equities?
+  options:
+  - Covers 6+ months of living expenses so you are not forced to sell equities during
+    a downturn
+  - Maximizes intraday margin leverage
+  - Replaces all health insurance
+  - Used to chase penny stock rallies
+  answer: Covers 6+ months of living expenses so you are not forced to sell equities
+    during a downturn
+  explanation: Liquid emergency savings prevent forced liquidation of volatile investments
+    at unfavorable prices.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l1_risk_04
+  level: 1
+  skill_area: risk
+  difficulty: 2
+  text: What does a 'circuit breaker' (upper/lower price band like 5% or 20%) on NSE/BSE
+    do?
+  options:
+  - Limits how much a stock's price can move in a single day, halting orders beyond
+    the band
+  - Guarantees buyers will always exist at the lower band
+  - Doubles daily trading hours
+  - Eliminates company bankruptcy risk
+  answer: Limits how much a stock's price can move in a single day, halting orders
+    beyond the band
+  explanation: Lower circuits can trap holders with no buyers, creating severe liquidity
+    risk.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l1_risk_05
+  level: 1
+  skill_area: risk
+  difficulty: 2
+  text: Why does borrowing money (margin/leverage) amplify risk?
+  options:
+  - Losses are magnified on your own capital and can trigger forced margin calls
+  - Margin loans have zero interest
+  - Leverage only magnifies gains, not losses
+  - Brokers absorb all downside losses
+  answer: Losses are magnified on your own capital and can trigger forced margin calls
+  explanation: Leverage magnifies both upside and downside, risking rapid capital
+    wipeout.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l1_risk_06
+  level: 1
+  skill_area: risk
+  difficulty: 3
+  text: What does 'overconfidence' mean when forecasting stock or scenario outcomes?
+  options:
+  - Assigning very high confidence (e.g., 95%) even when actual accuracy is much lower
+  - Checking official filings before deciding
+  - Admitting uncertainty with 55% confidence
+  - Diversifying across index funds
+  answer: Assigning very high confidence (e.g., 95%) even when actual accuracy is
+    much lower
+  explanation: Overconfidence leads to oversized positions and high Brier error scores.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l1_risk_07
+  level: 1
+  skill_area: risk
+  difficulty: 3
+  text: What is liquidity risk in small-cap or penny stocks?
+  options:
+  - Difficulty exiting a position near the quoted price due to thin buyer volume
+  - The risk that a stock pays too much dividend
+  - The risk of too many institutional buyers
+  - The risk that NSE closes on weekends
+  answer: Difficulty exiting a position near the quoted price due to thin buyer volume
+  explanation: Thin order books cause heavy slippage or inability to exit during lower-circuit
+    lock-ins.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l1_risk_08
+  level: 1
+  skill_area: risk
+  difficulty: 3
+  text: Why is comparing a stock's return to a benchmark like NIFTY 50 important?
+  options:
+  - It shows whether the return beat broad market movement or just rode a general
+    rally
+  - NIFTY 50 never falls
+  - Benchmarks predict next year's winners
+  - It removes brokerage charges
+  answer: It shows whether the return beat broad market movement or just rode a general
+    rally
+  explanation: Benchmarking separates stock-specific performance from overall market
+    beta.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l1_risk_09
+  level: 1
+  skill_area: risk
+  difficulty: 4
+  text: What does a lower Brier score (closer to 0.00) indicate about a learner's
+    judgments?
+  options:
+  - Better calibration between stated confidence and actual correctness
+  - Higher trading frequency
+  - Higher portfolio leverage
+  - Always guessing 100% confidence
+  answer: Better calibration between stated confidence and actual correctness
+  explanation: Brier score penalizes confident mistakes heavily and rewards well-calibrated
+    probability estimates.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l1_risk_10
+  level: 1
+  skill_area: risk
+  difficulty: 4
+  text: What is survivorship bias when studying historical stock winners?
+  options:
+  - Focusing only on companies that survived and thrived while ignoring delisted or
+    failed peers
+  - Tracking only NIFTY 50 companies
+  - Using adjusted closing prices
+  - Checking 10-year cash flows
+  answer: Focusing only on companies that survived and thrived while ignoring delisted
+    or failed peers
+  explanation: Ignoring failed stocks makes risky strategies look far safer in hindsight
+    than they actually were.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l2_basics_01
+  level: 2
+  skill_area: basics
+  difficulty: 2
+  text: What is the difference between a Bonus Issue and a Rights Issue?
+  options:
+  - Bonus shares are issued free from reserves to existing holders; Rights shares
+    require paying a subscription price
+  - Rights shares are always free
+  - Bonus issues require fresh cash from shareholders
+  - Both are identical to debt
+  answer: Bonus shares are issued free from reserves to existing holders; Rights shares
+    require paying a subscription price
+  explanation: Bonus issues capitalize existing reserves; rights issues raise fresh
+    equity capital from shareholders.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l2_basics_02
+  level: 2
+  skill_area: basics
+  difficulty: 2
+  text: What does 'ex-dividend date' mean on Indian exchanges?
+  options:
+  - Buyers purchasing on or after this date do not receive the declared dividend
+  - The company cancels the dividend
+  - The stock stops trading permanently
+  - Dividends are doubled on this date
+  answer: Buyers purchasing on or after this date do not receive the declared dividend
+  explanation: Dividend eligibility depends on holding the shares before the
+    ex-dividend date; buyers on or after that date do not receive the declared dividend.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l2_basics_03
+  level: 2
+  skill_area: basics
+  difficulty: 2
+  text: What is an ETF (Exchange-Traded Fund) tracking NIFTY 50?
+  options:
+  - A basket of all 50 NIFTY stocks traded on the exchange like a single share
+  - A single-stock futures contract
+  - A fixed-interest government bond
+  - An unlisted private equity fund
+  answer: A basket of all 50 NIFTY stocks traded on the exchange like a single share
+  explanation: Index ETFs offer low-cost, diversified exposure to a market benchmark.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l2_basics_04
+  level: 2
+  skill_area: basics
+  difficulty: 3
+  text: What does 'free-float market capitalisation' exclude?
+  options:
+  - Locked-in shares held by promoters, governments, or strategic holders not readily
+    traded
+  - Retail investor shares
+  - Mutual fund holdings
+  - Foreign institutional shares
+  answer: Locked-in shares held by promoters, governments, or strategic holders not
+    readily traded
+  explanation: Indices like NIFTY 50 weight companies by free-float market cap to
+    reflect tradeable liquidity.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l2_basics_05
+  level: 2
+  skill_area: basics
+  difficulty: 3
+  text: How do NSE's T2T (Trade-to-Trade) segment rules restrict trading?
+  options:
+  - Every trade must result in delivery; intraday squaring-off is disallowed
+  - Only foreign investors can trade
+  - Stocks trade only once a month
+  - Short selling gets 10x leverage
+  answer: Every trade must result in delivery; intraday squaring-off is disallowed
+  explanation: Exchanges move stocks to T2T as a surveillance measure to curb speculative
+    intraday swings.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l2_basics_06
+  level: 2
+  skill_area: basics
+  difficulty: 3
+  text: What is an Offer for Sale (OFS) inside an IPO?
+  options:
+  - Existing shareholders sell their shares; the proceeds go to selling shareholders,
+    not the company
+  - The company raises fresh cash for factories
+  - A mandatory buyback by SEBI
+  - Free shares given to employees
+  answer: Existing shareholders sell their shares; the proceeds go to selling shareholders,
+    not the company
+  explanation: Distinguishing fresh issue vs OFS reveals whether IPO capital funds
+    business growth or investor exits.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l2_basics_07
+  level: 2
+  skill_area: basics
+  difficulty: 3
+  text: What is equity dilution?
+  options:
+  - Issuing new shares reduces existing shareholders' percentage ownership unless
+    they participate
+  - Paying a cash dividend
+  - Splitting 1 share into 5 shares
+  - Repaying bank loans
+  answer: Issuing new shares reduces existing shareholders' percentage ownership unless
+    they participate
+  explanation: Fresh equity raises (QIPs, preferential allotments, ESOPs) increase
+    share count and dilute EPS.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l2_basics_08
+  level: 2
+  skill_area: basics
+  difficulty: 4
+  text: What does a share buyback via tender offer do to EPS, assuming profit stays
+    constant?
+  options:
+  - Increases EPS by reducing the total number of outstanding shares
+  - Decreases EPS
+  - Has zero effect on share count
+  - Increases corporate debt automatically
+  answer: Increases EPS by reducing the total number of outstanding shares
+  explanation: Extinguishing bought-back shares shrinks the denominator in Earnings
+    Per Share.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l2_basics_09
+  level: 2
+  skill_area: basics
+  difficulty: 4
+  text: Why do corporate actions like splits and dividends require 'adjusted' historical
+    prices when computing returns?
+  options:
+  - Unadjusted prices show artificial drops on split or bonus dates, distorting actual
+    investor returns
+  - Adjusted prices remove all market crashes
+  - NSE does not record unadjusted prices
+  - Adjusted prices add inflation automatically
+  answer: Unadjusted prices show artificial drops on split or bonus dates, distorting
+    actual investor returns
+  explanation: Total-return or split-adjusted price series ensure accurate historical
+    performance measurement.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l2_basics_10
+  level: 2
+  skill_area: basics
+  difficulty: 5
+  text: In Indian markets, what is the role of the clearing corporation (e.g., NCL
+    / ICCL)?
+  options:
+  - Acts as central counterparty guaranteeing trade settlement even if one broker
+    defaults
+  - Sets company quarterly profits
+  - Publishes stock tips for retail users
+  - Replaces SEBI as market regulator
+  answer: Acts as central counterparty guaranteeing trade settlement even if one broker
+    defaults
+  explanation: Clearing corporations novate trades and manage margin collateral to
+    eliminate bilateral counterparty default.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l2_reading_stock_01
+  level: 2
+  skill_area: reading_stock
+  difficulty: 2
+  text: What does EBITDA stand for in financial analysis?
+  options:
+  - Earnings Before Interest, Taxes, Depreciation, and Amortisation
+  - Equity Balance In Total Debt Assets
+  - Earnings Based In Total Dividend Allocation
+  - Exchange Benchmark Index Daily Average
+  answer: Earnings Before Interest, Taxes, Depreciation, and Amortisation
+  explanation: EBITDA approximates operating profit before financing, tax, and non-cash
+    depreciation charges.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l2_reading_stock_02
+  level: 2
+  skill_area: reading_stock
+  difficulty: 2
+  text: Why is Free Cash Flow (FCF = Operating Cash Flow - CapEx) closely watched?
+  options:
+  - It shows cash left over after maintaining/expanding assets, available for debt
+    reduction or dividends
+  - It ignores capital expenditure completely
+  - It equals total revenue
+  - It is always higher than net profit
+  answer: It shows cash left over after maintaining/expanding assets, available for
+    debt reduction or dividends
+  explanation: Sustained negative FCF despite accounting profits can signal heavy
+    capital intensity or cash strain.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l2_reading_stock_03
+  level: 2
+  skill_area: reading_stock
+  difficulty: 3
+  text: What does a sudden surge in Trade Receivables much faster than Revenue growth
+    suggest?
+  options:
+  - The company may be struggling to collect cash or aggressively pushing credit sales
+    (channel stuffing)
+  - Customers are prepaying in cash
+  - Operating margins doubled
+  - Debt was eliminated
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  explanation: Bloating receivables relative to sales is a classic forensic accounting
+    warning sign.
+  tags:
+  - reading_stock
+  - red_flag
+  data_origin: synthetic
+- id: q_l2_reading_stock_04
+  level: 2
+  skill_area: reading_stock
+  difficulty: 3
+  text: For banks and NBFCs in India, which metric measures loan book stress?
+  options:
+  - Gross and Net Non-Performing Assets (GNPA / NNPA)
+  - Inventory turnover ratio
+  - Factory capacity utilisation
+  - Same-store sales growth
+  answer: Gross and Net Non-Performing Assets (GNPA / NNPA)
+  explanation: Asset quality (GNPA/NNPA) and provisioning coverage are core health
+    indicators for lenders.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l2_reading_stock_05
+  level: 2
+  skill_area: reading_stock
+  difficulty: 3
+  text: Why is EV/EBITDA often preferred over P/E when comparing companies with very
+    different debt levels?
+  options:
+  - Enterprise Value (EV) includes net debt, putting leveraged and debt-free peers
+    on a comparable footing
+  - EV ignores market capitalisation
+  - EBITDA includes interest expenses
+  - P/E cannot be calculated for profitable firms
+  answer: Enterprise Value (EV) includes net debt, putting leveraged and debt-free
+    peers on a comparable footing
+  explanation: EV = Market Cap + Total Debt - Cash, capturing total firm value across
+    capital structures.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l2_reading_stock_06
+  level: 2
+  skill_area: reading_stock
+  difficulty: 3
+  text: What does an Interest Coverage Ratio (EBIT / Interest Expense) below 1.5x
+    warn about?
+  options:
+  - Operating profits barely cover annual interest payments, raising refinancing or
+    default risk
+  - The company has excess cash
+  - The company has zero debt
+  - Shareholders will receive a special dividend
+  answer: Operating profits barely cover annual interest payments, raising refinancing
+    or default risk
+  explanation: Low interest coverage leaves little cushion if earnings dip or borrowing
+    rates rise.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l2_reading_stock_07
+  level: 2
+  skill_area: reading_stock
+  difficulty: 4
+  text: What does a 'Qualified Opinion' or sudden statutory auditor resignation indicate?
+  options:
+  - Serious concern over financial statement reliability or scope limitations that
+    warrants caution
+  - A routine annual formality with no significance
+  - Guaranteed earnings beat next quarter
+  - SEBI approval of a bonus issue
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  explanation: Mid-term auditor resignations have historically preceded major Indian
+    corporate governance crises.
+  tags:
+  - reading_stock
+  - red_flag
+  data_origin: synthetic
+- id: q_l2_reading_stock_08
+  level: 2
+  skill_area: reading_stock
+  difficulty: 4
+  text: Why do analysts check Related Party Transactions (RPTs) in annual reports?
+  options:
+  - To detect whether company funds are being siphoned to promoter-controlled entities
+    on unfavorable terms
+  - RPTs are always illegal
+  - RPTs increase NIFTY 50 weight
+  - RPTs reduce corporate tax to zero
+  answer: To detect whether company funds are being siphoned to promoter-controlled
+    entities on unfavorable terms
+  explanation: Large, opaque loans or advances to related parties are a frequent corporate
+    governance red flag.
+  tags:
+  - reading_stock
+  - red_flag
+  data_origin: synthetic
+- id: q_l2_reading_stock_09
+  level: 2
+  skill_area: reading_stock
+  difficulty: 4
+  text: What happens to ROE if a company takes on large debt while keeping Return
+    on Assets (ROA) low?
+  options:
+  - ROE can look artificially high solely due to financial leverage, masking weak
+    underlying asset returns
+  - ROE drops to zero immediately
+  - ROA becomes higher than ROE
+  - Debt has no impact on ROE
+  answer: ROE can look artificially high solely due to financial leverage, masking
+    weak underlying asset returns
+  explanation: DuPont decomposition separates profitability, asset efficiency, and
+    leverage.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l2_reading_stock_10
+  level: 2
+  skill_area: reading_stock
+  difficulty: 5
+  text: How can 'Other Income' distort headline Net Profit growth?
+  options:
+  - One-time gains (e.g., land sale or treasury gains) can mask stagnant or declining
+    core operating profit
+  - Other Income is always recurring core sales
+  - Other Income is excluded from Net Profit
+  - Other Income only appears in Balance Sheets
+  answer: One-time gains (e.g., land sale or treasury gains) can mask stagnant or
+    declining core operating profit
+  explanation: Separating core operating profit from non-recurring other income prevents
+    misreading earnings quality.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l2_judging_info_01
+  level: 2
+  skill_area: judging_info
+  difficulty: 2
+  text: An influencer deletes past Telegram messages where their stock calls fell
+    40%. What red flag is this?
+  options:
+  - Deleted post / history tampering
+  - Transparent auditing
+  - SEBI compliance
+  - Normal market correction
+  answer: Deleted post / history tampering
+  explanation: Deleting losing calls artificially inflates perceived accuracy; immutable
+    logs prevent revisionism.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l2_judging_info_02
+  level: 2
+  skill_area: judging_info
+  difficulty: 2
+  text: A viral reel claims 'FIIs are secretly buying this penny stock!' with no filing
+    link. How do you check?
+  options:
+  - Inspect the latest quarterly Shareholding Pattern filed on NSE/BSE
+  - Trust the reel's view count
+  - Check YouTube comments
+  - Wait for another WhatsApp forward
+  answer: Inspect the latest quarterly Shareholding Pattern filed on NSE/BSE
+  explanation: Official shareholding disclosures on NSE/BSE show exact promoter, FII,
+    DII, and public stakes.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l2_judging_info_03
+  level: 2
+  skill_area: judging_info
+  difficulty: 3
+  text: Why is 'narrative without numbers' dangerous during sector hype cycles?
+  options:
+  - Exciting buzzwords (AI, EV, green energy) can distract from weak revenues, high
+    cash burn, or extreme valuations
+  - Narratives always guarantee profit
+  - Numbers are irrelevant for listed companies
+  - Hype cycles never reverse
+  answer: Exciting buzzwords (AI, EV, green energy) can distract from weak revenues,
+    high cash burn, or extreme valuations
+  explanation: Testing a story against audited financial statements separates durable
+    execution from hype.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l2_judging_info_04
+  level: 2
+  skill_area: judging_info
+  difficulty: 3
+  text: A YouTube video includes a tiny 'educational purposes only' disclaimer while
+    giving exact buy price and target price. Does the disclaimer make it safe advice?
+  options:
+  - No — specific buy/target calls from unregistered sources remain high-risk regardless
+    of disclaimers
+  - Yes — disclaimers make any tip SEBI-registered
+  - Yes — it guarantees returns
+  - No — only Telegram tips are risky
+  answer: No — specific buy/target calls from unregistered sources remain high-risk
+    regardless of disclaimers
+  explanation: Disclaimers do not verify competence, remove conflicts of interest,
+    or confer SEBI registration.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l2_judging_info_05
+  level: 2
+  skill_area: judging_info
+  difficulty: 3
+  text: What should you check first when a headline announces a 'massive Rs 500 crore
+    order win' for a micro-cap firm?
+  options:
+  - 'Exchange filing details: client credibility, execution timeline, margins, and
+    order size vs past revenue'
+  - Only the headline exclamation marks
+  - Social media likes
+  - Whether the stock hit 5% upper circuit
+  answer: 'Exchange filing details: client credibility, execution timeline, margins,
+    and order size vs past revenue'
+  explanation: Multi-year non-binding MoUs are often hyped as immediate revenue; filing
+    details clarify reality.
+  tags:
+  - judging_info
+  data_origin: synthetic
+- id: q_l2_judging_info_06
+  level: 2
+  skill_area: judging_info
+  difficulty: 3
+  text: Why can a stock's price rise sharply right before a bad news announcement
+    or fall right after great earnings?
+  options:
+  - Markets price in expectations ahead of announcements; 'buy the rumor, sell the
+    news' or priced-in expectations happen often
+  - Exchanges invert prices randomly
+  - Earnings never matter
+  - SEBI fixes prices
+  answer: Markets price in expectations ahead of announcements; 'buy the rumor, sell
+    the news' or priced-in expectations happen often
+  explanation: Stock reactions depend on actual results relative to prior market expectations,
+    not headlines alone.
+  tags:
+  - judging_info
+  data_origin: synthetic
+- id: q_l2_judging_info_07
+  level: 2
+  skill_area: judging_info
+  difficulty: 4
+  text: What does a 'bulk deal' or 'block deal' exchange disclosure tell you?
+  options:
+  - Large-volume institutional or major-holder transactions (>0.5% equity for bulk
+    deals), though buyer motive is not always bullish long-term
+  - Guaranteed multi-year promoter lock-in
+  - A company merger announcement
+  - Retail SIP inflows
+  answer: Large-volume institutional or major-holder transactions (>0.5% equity for
+    bulk deals), though buyer motive is not always bullish long-term
+  explanation: Bulk deals can include short-term operators flipping shares intraday;
+    check net delivery and buyer identity.
+  tags:
+  - judging_info
+  data_origin: synthetic
+- id: q_l2_judging_info_08
+  level: 2
+  skill_area: judging_info
+  difficulty: 4
+  text: A WhatsApp group claims an 'inside tip from an operator' about an upcoming
+    merger. What are the risks?
+  options:
+  - High likelihood of a pump-and-dump trap AND trading on unpublished price-sensitive
+    information is illegal under SEBI PIT regulations
+  - It is a safe shortcut to beat NIFTY
+  - Operator tips are regulated by RBI
+  - There is no legal or financial risk
+  answer: High likelihood of a pump-and-dump trap AND trading on unpublished price-sensitive
+    information is illegal under SEBI PIT regulations
+  explanation: So-called insider tips are frequently scams targeting retail liquidity,
+    and true insider trading is illegal.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l2_judging_info_09
+  level: 2
+  skill_area: judging_info
+  difficulty: 4
+  text: Why should corporate press releases be read more skeptically than audited
+    financial footnotes?
+  options:
+  - Press releases emphasize favorable highlights, while footnotes disclose contingent
+    liabilities, litigation, and accounting changes
+  - Press releases are audited daily
+  - Footnotes contain no numbers
+  - Press releases are written by SEBI
+  answer: Press releases emphasize favorable highlights, while footnotes disclose
+    contingent liabilities, litigation, and accounting changes
+  explanation: Footnotes and auditor remarks often surface risks omitted from promotional
+    headlines.
+  tags:
+  - judging_info
+  data_origin: synthetic
+- id: q_l2_judging_info_10
+  level: 2
+  skill_area: judging_info
+  difficulty: 5
+  text: How does a 'pump-and-dump' operator typically profit from retail followers?
+  options:
+  - Accumulates shares cheaply in an illiquid stock, promotes it heavily to drive
+    retail buying, then sells into that surge
+  - Holds the stock for 20 years for dividends
+  - Pays SEBI a commission per share
+  - Short-sells NIFTY 50 ETFs
+  answer: Accumulates shares cheaply in an illiquid stock, promotes it heavily to
+    drive retail buying, then sells into that surge
+  explanation: Late retail buyers become exit liquidity for early accumulators, often
+    getting trapped in lower circuits.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l2_risk_01
+  level: 2
+  skill_area: risk
+  difficulty: 2
+  text: What is position sizing?
+  options:
+  - Deciding what percentage of total capital to allocate to a single idea based on
+    its risk
+  - Choosing the font size on a trading chart
+  - Buying the exact same number of shares of every company
+  - Putting 100% into the highest-beta stock
+  answer: Deciding what percentage of total capital to allocate to a single idea based
+    on its risk
+  explanation: Prudent position sizing ensures no single thesis error causes catastrophic
+    portfolio damage.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l2_risk_02
+  level: 2
+  skill_area: risk
+  difficulty: 2
+  text: What is 'confirmation bias' in investing?
+  options:
+  - Seeking only news that supports your existing view while ignoring contradictory
+    evidence
+  - Confirming trade execution on your broker app
+  - Checking two exchange websites
+  - Calculating Brier score
+  answer: Seeking only news that supports your existing view while ignoring contradictory
+    evidence
+  explanation: Actively hunting for disconfirming clues counters confirmation bias.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l2_risk_03
+  level: 2
+  skill_area: risk
+  difficulty: 3
+  text: What is the 'sunk cost fallacy' when holding a deteriorating business?
+  options:
+  - Refusing to reassess a broken thesis solely because you already lost money on
+    it
+  - Calculating brokerage charges accurately
+  - Reinvesting dividends
+  - Rebalancing annually
+  answer: Refusing to reassess a broken thesis solely because you already lost money
+    on it
+  explanation: Past purchase price does not affect a company's future fundamentals;
+    decisions should reflect current evidence.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l2_risk_04
+  level: 2
+  skill_area: risk
+  difficulty: 3
+  text: What does 'maximum drawdown' measure?
+  options:
+  - The largest peak-to-trough percentage drop over a given period
+  - The highest single-day gain
+  - Average annual dividend
+  - Brokerage fee percentage
+  answer: The largest peak-to-trough percentage drop over a given period
+  explanation: Max drawdown captures worst-case historical downside pain an investor
+    would have endured.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l2_risk_05
+  level: 2
+  skill_area: risk
+  difficulty: 3
+  text: Why does owning 10 different small-cap IT stocks NOT provide strong diversification?
+  options:
+  - They share high correlation to the same sector and macro risks
+  - 10 stocks is too many to track
+  - Small-cap stocks have zero correlation
+  - IT stocks never move together
+  answer: They share high correlation to the same sector and macro risks
+  explanation: Effective diversification requires exposure across imperfectly correlated
+    sectors and risk drivers.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l2_risk_06
+  level: 2
+  skill_area: risk
+  difficulty: 3
+  text: What is 'anchoring bias' regarding a stock's 52-week high?
+  options:
+  - Assuming a stock down 60% from its peak is 'cheap' without checking whether fundamentals
+    broke
+  - Checking a stock's 52-week trading range
+  - Comparing P/E to sector median
+  - Using limit orders
+  answer: Assuming a stock down 60% from its peak is 'cheap' without checking whether
+    fundamentals broke
+  explanation: A prior peak price is irrelevant if earnings power, solvency, or governance
+    has permanently impaired.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l2_risk_07
+  level: 2
+  skill_area: risk
+  difficulty: 4
+  text: Suppose you answer 10 questions with 90% confidence each, but get only 5 right.
+    What is your Brier score?
+  options:
+  - '0.41'
+  - '0.01'
+  - '0.10'
+  - '0.25'
+  answer: '0.41'
+  explanation: '5 correct: (0.9-1)^2=0.01 each; 5 wrong: (0.9-0)^2=0.81 each. Mean
+    = (0.05 + 4.05)/10 = 0.41.'
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l2_risk_08
+  level: 2
+  skill_area: risk
+  difficulty: 4
+  text: Why can a stop-loss order fail to protect you at your exact trigger price
+    during a sharp overnight gap-down?
+  options:
+  - If the stock opens far below the trigger or locks at lower circuit, execution
+    occurs much lower or not at all
+  - Stop-losses are guaranteed by SEBI at the exact rupee
+  - Gaps only happen upward
+  - Brokers pay the difference
+  answer: If the stock opens far below the trigger or locks at lower circuit, execution
+    occurs much lower or not at all
+  explanation: Gap risk and circuit lock-ins mean stop-losses cannot guarantee exact
+    exit prices.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l2_risk_09
+  level: 2
+  skill_area: risk
+  difficulty: 4
+  text: What is 'sequence of returns risk' for someone needing their money in 1 year?
+  options:
+  - A sharp market drop right before a near-term cash need leaves no time to recover
+  - Returns occurring in alphabetical order
+  - Dividend dates shifting by 2 days
+  - NIFTY 50 rebalancing twice a year
+  answer: A sharp market drop right before a near-term cash need leaves no time to
+    recover
+  explanation: Short time horizons do not suit high-volatility equities because drawdowns
+    may coincide with cash needs.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l2_risk_10
+  level: 2
+  skill_area: risk
+  difficulty: 5
+  text: Why did SEBI's 2023-2024 F&O study warn retail participants about equity derivatives?
+  options:
+  - Over 90% of individual F&O traders incurred net losses after transaction costs
+  - F&O trading has zero leverage
+  - All retail traders beat NIFTY 50 in options
+  - Options have no expiry date
+  answer: Over 90% of individual F&O traders incurred net losses after transaction
+    costs
+  explanation: SEBI's empirical studies documented that the vast majority of individual
+    F&O traders lose money.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l3_basics_01
+  level: 3
+  skill_area: basics
+  difficulty: 3
+  text: How does a preferential allotment of warrants to promoters affect minority
+    shareholders?
+  options:
+  - It can dilute minority stakes if issued at favorable terms, though it injects
+    equity when converted
+  - It always cancels promoter shares
+  - It converts equity into bank deposits
+  - It requires no shareholder approval
+  answer: It can dilute minority stakes if issued at favorable terms, though it injects
+    equity when converted
+  explanation: Monitoring pricing formula, dilution, and warrant conversion behavior
+    is vital for governance analysis.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l3_basics_02
+  level: 3
+  skill_area: basics
+  difficulty: 3
+  text: What happens to a listed company's equity shareholders first during IBC (Insolvency
+    & Bankruptcy Code) liquidation or resolution?
+  options:
+  - Equity holders sit at the bottom of the waterfall and are frequently wiped out
+    or heavily diluted
+  - Equity holders are paid before secured banks
+  - SEBI refunds their IPO price
+  - Equity converts 1:1 into government bonds
+  answer: Equity holders sit at the bottom of the waterfall and are frequently wiped
+    out or heavily diluted
+  explanation: Under Section 53 of the IBC, secured creditors and operational dues
+    rank far ahead of equity shareholders.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l3_basics_03
+  level: 3
+  skill_area: basics
+  difficulty: 3
+  text: What is the purpose of a 'lock-in period' for pre-IPO anchor and promoter
+    investors?
+  options:
+  - Prevents immediate post-listing dumping; expiry dates can create significant supply
+    overhangs
+  - Guarantees the stock cannot fall
+  - Prevents retail investors from selling
+  - Fixes the P/E ratio for 3 years
+  answer: Prevents immediate post-listing dumping; expiry dates can create significant
+    supply overhangs
+  explanation: Tracking lock-in expiry calendars helps explain sudden post-IPO supply
+    and price pressure.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l3_basics_04
+  level: 3
+  skill_area: basics
+  difficulty: 4
+  text: What is the key difference between a Demerger and a Slump Sale?
+  options:
+  - In a demerger, existing shareholders receive shares of the newly carved-out entity;
+    in a slump sale, cash goes to the parent company
+  - A demerger always liquidates the company
+  - A slump sale issues free shares to retail holders
+  - They are identical
+  answer: In a demerger, existing shareholders receive shares of the newly carved-out
+    entity; in a slump sale, cash goes to the parent company
+  explanation: Structure determines whether value accrues directly to shareholders
+    or remains inside the parent.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l3_basics_05
+  level: 3
+  skill_area: basics
+  difficulty: 4
+  text: Why do Indian exchanges impose GSM (Graded Surveillance Measure) stages on
+    certain stocks?
+  options:
+  - To alert investors when price rises appear disconnected from financial fundamentals
+  - To reward high-growth startups
+  - To add stocks into NIFTY 50
+  - To lower margin requirements to 0%
+  answer: To alert investors when price rises appear disconnected from financial fundamentals
+  explanation: GSM progressively tightens trading restrictions (T2T, ASD deposits,
+    periodic call auctions) on flagged stocks.
+  tags:
+  - basics
+  - red_flag
+  data_origin: synthetic
+- id: q_l3_basics_06
+  level: 3
+  skill_area: basics
+  difficulty: 4
+  text: What is 'float squeeze' in a stock where 90%+ is tightly held or illiquid?
+  options:
+  - Small buying volumes can push prices sharply higher without fundamental backing,
+    followed by violent reversals
+  - The company pays 90% dividend
+  - Liquidity is exceptionally deep
+  - Institutional ownership is diversified
+  answer: Small buying volumes can push prices sharply higher without fundamental
+    backing, followed by violent reversals
+  explanation: Low effective free float makes price discovery fragile and vulnerable
+    to manipulation.
+  tags:
+  - basics
+  - red_flag
+  data_origin: synthetic
+- id: q_l3_basics_07
+  level: 3
+  skill_area: basics
+  difficulty: 4
+  text: What does SEBI's LODR (Listing Obligations and Disclosure Requirements) mandate
+    for material events?
+  options:
+  - Prompt, uniform disclosure to stock exchanges within prescribed timelines so all
+    investors have equal access
+  - Private disclosure only to top brokers
+  - Disclosure only once every 5 years
+  - Publishing price targets
+  answer: Prompt, uniform disclosure to stock exchanges within prescribed timelines
+    so all investors have equal access
+  explanation: LODR enforces fair, timely public disclosure of material corporate
+    developments.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l3_basics_08
+  level: 3
+  skill_area: basics
+  difficulty: 5
+  text: How does index inclusion (e.g., entering NIFTY 50 or MSCI India) affect short-term
+    trading?
+  options:
+  - Passive index funds must buy shares around the rebalance date, creating temporary
+    non-fundamental demand
+  - It permanently doubles company profits
+  - It eliminates downside risk
+  - It bans short selling
+  answer: Passive index funds must buy shares around the rebalance date, creating
+    temporary non-fundamental demand
+  explanation: Mechanical passive flows can move prices temporarily independent of
+    underlying earnings.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l3_basics_09
+  level: 3
+  skill_area: basics
+  difficulty: 5
+  text: What is a 'creeping acquisition' limit under SEBI Takeover Regulations?
+  options:
+  - Promoters holding 25%-75% can acquire up to 5% additional voting rights per financial
+    year without triggering an open offer
+  - Buying 1 share per day
+  - Hostile takeover of 100% overnight
+  - Employee stock option vesting
+  answer: Promoters holding 25%-75% can acquire up to 5% additional voting rights
+    per financial year without triggering an open offer
+  explanation: Understanding SAST rules clarifies when promoter buying triggers mandatory
+    open offers.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l3_basics_10
+  level: 3
+  skill_area: basics
+  difficulty: 5
+  text: Why can a 'delisting' or 'scheme of arrangement' create risk for minority
+    holders?
+  options:
+  - Exit pricing or swap ratios may not match minority expectations if governance
+    is weak
+  - Delisted shares remain liquid on NSE
+  - SEBI guarantees a 50% premium
+  - Minority holders set the price unilaterally
+  answer: Exit pricing or swap ratios may not match minority expectations if governance
+    is weak
+  explanation: Corporate restructurings require close review of valuation reports
+    and shareholder voting thresholds.
+  tags:
+  - basics
+  data_origin: synthetic
+- id: q_l3_reading_stock_01
+  level: 3
+  skill_area: reading_stock
+  difficulty: 3
+  text: What is a 'cash conversion ratio' (CFO / EBITDA) consistently below 50% over
+    5 years signaling?
+  options:
+  - Earnings are heavily tied up in working capital or questionable accruals rather
+    than generating real cash
+  - Exceptional cash generation
+  - Zero capital expenditure
+  - High dividend safety
+  answer: Earnings are heavily tied up in working capital or questionable accruals
+    rather than generating real cash
+  explanation: Persistent divergence between EBITDA and operating cash flow is a major
+    forensic red flag.
+  tags:
+  - reading_stock
+  - red_flag
+  data_origin: synthetic
+- id: q_l3_reading_stock_02
+  level: 3
+  skill_area: reading_stock
+  difficulty: 3
+  text: Why is checking 'Contingent Liabilities' in Balance Sheet footnotes critical?
+  options:
+  - Disputed tax demands, guarantees, or lawsuits off-balance-sheet can crystallize
+    into large cash outflows
+  - They are guaranteed future profits
+  - They are already paid in cash
+  - They only apply to software firms
+  answer: Disputed tax demands, guarantees, or lawsuits off-balance-sheet can crystallize
+    into large cash outflows
+  explanation: Large contingent liabilities relative to net worth represent hidden
+    balance-sheet fragility.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l3_reading_stock_03
+  level: 3
+  skill_area: reading_stock
+  difficulty: 4
+  text: A company reports large cash balances on its Balance Sheet yet simultaneously
+    borrows at 12% interest and earns tiny interest income on its cash. What forensic
+    question does this raise?
+  options:
+  - Whether the reported cash actually exists, is restricted, or is overstated
+  - That the company is exceptionally conservative
+  - That interest rates are negative
+  - Nothing unusual at all
+  answer: Whether the reported cash actually exists, is restricted, or is overstated
+  explanation: This exact anomaly (low yield on supposedly huge cash balances) was
+    a classic warning sign in the 2009 Satyam fraud.
+  tags:
+  - reading_stock
+  - red_flag
+  data_origin: synthetic
+- id: q_l3_reading_stock_04
+  level: 3
+  skill_area: reading_stock
+  difficulty: 4
+  text: What does Capitalizing Operating Expenses (moving regular costs to the Balance
+    Sheet as assets) temporarily do?
+  options:
+  - Artificially inflates current EBITDA and Net Profit while deferring expense recognition
+  - Reduces reported net profit immediately
+  - Increases operating cash flow genuinely
+  - Eliminates tax liability permanently
+  answer: Artificially inflates current EBITDA and Net Profit while deferring expense
+    recognition
+  explanation: Aggressive capitalization boosts short-term profits at the cost of
+    future write-downs.
+  tags:
+  - reading_stock
+  - red_flag
+  data_origin: synthetic
+- id: q_l3_reading_stock_05
+  level: 3
+  skill_area: reading_stock
+  difficulty: 4
+  text: Why is Net Interest Margin (NIM) plus Credit Cost evaluated together for an
+    Indian NBFC?
+  options:
+  - High NIM from risky lending can be completely wiped out when defaults (credit
+    costs) spike in a downturn
+  - NIM already subtracts all loan defaults
+  - Credit cost only affects IT firms
+  - High NIM guarantees zero NPAs
+  answer: High NIM from risky lending can be completely wiped out when defaults (credit
+    costs) spike in a downturn
+  explanation: Risk-adjusted return requires weighing yield against through-cycle
+    credit losses.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l3_reading_stock_06
+  level: 3
+  skill_area: reading_stock
+  difficulty: 4
+  text: What is an Asset-Liability Mismatch (ALM) risk for a housing finance company
+    (like DHFL in 2018)?
+  options:
+  - Funding 15-year home loans with 3-month short-term commercial paper creates acute
+    rollover/liquidity crisis if credit freezes
+  - Having more cash than loans
+  - Matching 10-year bonds with 10-year loans
+  - Holding excess government securities
+  answer: Funding 15-year home loans with 3-month short-term commercial paper creates
+    acute rollover/liquidity crisis if credit freezes
+  explanation: Short-term wholesale funding backing illiquid long-term loans can trigger
+    sudden liquidity collapse.
+  tags:
+  - reading_stock
+  - red_flag
+  data_origin: synthetic
+- id: q_l3_reading_stock_07
+  level: 3
+  skill_area: reading_stock
+  difficulty: 4
+  text: Why does ROCE (Return on Capital Employed) complement ROE?
+  options:
+  - ROCE measures returns on ALL capital (debt + equity), preventing leverage from
+    disguising poor operating returns
+  - ROCE ignores debt completely
+  - ROCE only uses share price
+  - ROCE is always lower than inflation
+  answer: ROCE measures returns on ALL capital (debt + equity), preventing leverage
+    from disguising poor operating returns
+  explanation: Comparing ROCE to cost of capital tests whether a business creates
+    or destroys economic value.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l3_reading_stock_08
+  level: 3
+  skill_area: reading_stock
+  difficulty: 5
+  text: When evaluating an Indian conglomerate, why must you read Consolidated rather
+    than only Standalone statements?
+  options:
+  - Debt, losses, or guarantees may sit inside subsidiaries that are invisible in
+    standalone parent accounts
+  - Standalone statements always include every subsidiary
+  - Consolidated statements omit revenue
+  - SEBI only requires standalone results
+  answer: Debt, losses, or guarantees may sit inside subsidiaries that are invisible
+    in standalone parent accounts
+  explanation: Consolidated accounts reveal group-wide leverage and operating performance.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l3_reading_stock_09
+  level: 3
+  skill_area: reading_stock
+  difficulty: 5
+  text: What does a sharp drop in Statutory Tax Rate paid vs headline corporate tax
+    rate (without valid SEZ/incentive explanation) warrant?
+  options:
+  - Checking whether reported profits are inflated or differ significantly from taxable
+    income
+  - Assuming the company is guaranteed to outperform
+  - Ignoring cash flow statements
+  - Buying immediately
+  answer: Checking whether reported profits are inflated or differ significantly from
+    taxable income
+  explanation: Tax reconciliation notes in annual reports help cross-verify real earnings.
+  tags:
+  - reading_stock
+  - red_flag
+  data_origin: synthetic
+- id: q_l3_reading_stock_10
+  level: 3
+  skill_area: reading_stock
+  difficulty: 5
+  text: What is 'Goodwill impairment' risk after debt-funded acquisitions?
+  options:
+  - If acquired businesses underperform, goodwill must be written down, hitting net
+    worth and debt covenants
+  - Goodwill generates cash flow automatically
+  - Impairment increases free cash flow
+  - Goodwill never changes
+  answer: If acquired businesses underperform, goodwill must be written down, hitting
+    net worth and debt covenants
+  explanation: Serial acquirers with bloated goodwill face balance-sheet write-down
+    risks when synergies fail.
+  tags:
+  - reading_stock
+  data_origin: synthetic
+- id: q_l3_judging_info_01
+  level: 3
+  skill_area: judging_info
+  difficulty: 3
+  text: How do you distinguish an objective source rating from a stock recommendation?
+  options:
+  - A source rating evaluates a publisher's historical accuracy and red flags; it
+    never tells you whether to buy or sell a stock
+  - A reliable source rating means you must buy every stock they mention
+  - They are identical
+  - Stock recommendations are safer than source ratings
+  answer: A source rating evaluates a publisher's historical accuracy and red flags;
+    it never tells you whether to buy or sell a stock
+  explanation: Aacharya evaluates information sources, never stocks; even credible
+    analysts can be wrong on any single thesis.
+  tags:
+  - judging_info
+  data_origin: synthetic
+- id: q_l3_judging_info_02
+  level: 3
+  skill_area: judging_info
+  difficulty: 3
+  text: A social media account has 400,000 followers and posts polished charts, yet
+    has only 2 verifiable past calls. What should its source reliability label be?
+  options:
+  - not_enough_history
+  - reliable
+  - guaranteed_safe
+  - sebi_approved
+  answer: not_enough_history
+  explanation: Follower count is not evidence of analytical accuracy; insufficient
+    scored history must be labeled honestly.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l3_judging_info_03
+  level: 3
+  skill_area: judging_info
+  difficulty: 4
+  text: A paid research report is commissioned and paid for by the listed company
+    itself ('issuer-paid research'). What is the key risk?
+  options:
+  - Inherent conflict of interest — issuer-paid coverage rarely highlights severe
+    downside risks
+  - Issuer-paid reports are guaranteed unbiased
+  - Exchanges endorse issuer-paid price targets
+  - It eliminates governance risk
+  answer: Inherent conflict of interest — issuer-paid coverage rarely highlights severe
+    downside risks
+  explanation: Always identify who paid for a research note before weighing its conclusions.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l3_judging_info_04
+  level: 3
+  skill_area: judging_info
+  difficulty: 4
+  text: Multiple anonymous accounts post nearly identical bullish paragraphs about
+    a micro-cap stock within the same hour. What does this signal?
+  options:
+  - Coordinated inorganic promotion / bot-driven hype
+  - Independent institutional consensus
+  - Official NSE disclosure
+  - Audited earnings release
+  answer: Coordinated inorganic promotion / bot-driven hype
+  explanation: Synchronized copy-paste messaging across accounts is a hallmark of
+    paid promotion campaigns.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l3_judging_info_05
+  level: 3
+  skill_area: judging_info
+  difficulty: 4
+  text: Why should a claim's outcome be evaluated against both absolute return AND
+    NIFTY 50?
+  options:
+  - In a roaring bull market where NIFTY rises 30%, a stock rising 5% actually underperformed
+    the broad market
+  - NIFTY 50 always falls when stocks rise
+  - Absolute returns are illegal to compute
+  - Index comparison guarantees future gains
+  answer: In a roaring bull market where NIFTY rises 30%, a stock rising 5% actually
+    underperformed the broad market
+  explanation: Relative performance separates market-wide tailwinds from company-specific
+    merit.
+  tags:
+  - judging_info
+  data_origin: synthetic
+- id: q_l3_judging_info_06
+  level: 3
+  skill_area: judging_info
+  difficulty: 4
+  text: A management interview claims 'strongest demand ever', while the latest quarterly
+    filing shows promoter stake dropped 8% and inventory doubled. Which source carries
+    higher weight?
+  options:
+  - The audited/exchange-filed numbers and shareholding disclosures
+  - The optimistic TV soundbite
+  - The anchor's enthusiasm
+  - Twitter commentary
+  answer: The audited/exchange-filed numbers and shareholding disclosures
+  explanation: Hard disclosed actions and financials carry far more evidentiary weight
+    than promotional commentary.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l3_judging_info_07
+  level: 3
+  skill_area: judging_info
+  difficulty: 4
+  text: What does SEBI's finfluencer regulation (2024) restrict regarding regulated
+    entities?
+  options:
+  - SEBI-regulated entities cannot associate with unregistered persons who provide
+    unauthorized investment advice or return claims
+  - Nobody can teach basic finance
+  - NSE cannot publish price data
+  - Annual reports are banned
+  answer: SEBI-regulated entities cannot associate with unregistered persons who provide
+    unauthorized investment advice or return claims
+  explanation: SEBI tightened rules to curb misleading advice and undisclosed referral
+    arrangements.
+  tags:
+  - judging_info
+  data_origin: synthetic
+- id: q_l3_judging_info_08
+  level: 3
+  skill_area: judging_info
+  difficulty: 5
+  text: A tipster posts 'Stock X up 20% from our call!' — what hidden flaw should
+    you audit first?
+  options:
+  - Whether the call was timestamped publicly before the move, and whether it beat
+    NIFTY and accounts for other losing calls
+  - Whether the font is bold
+  - Whether the emoji is green
+  - Whether the post got 10,000 likes
+  answer: Whether the call was timestamped publicly before the move, and whether it
+    beat NIFTY and accounts for other losing calls
+  explanation: Auditing timestamp integrity, denominator (all calls), and benchmark
+    reveals true track records.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l3_judging_info_09
+  level: 3
+  skill_area: judging_info
+  difficulty: 5
+  text: Why can short-seller or forensic reports also carry biases even when they
+    cite real data?
+  options:
+  - Short-sellers profit if the stock falls, so every claim must still be cross-checked
+    against primary filings and company rebuttals
+  - Forensic reports are always 100% false
+  - Forensic reports are always 100% true
+  - Short-selling is identical to auditing
+  answer: Short-sellers profit if the stock falls, so every claim must still be cross-checked
+    against primary filings and company rebuttals
+  explanation: 'Critical reading applies to both bullish and bearish commentators:
+    verify primary documents independently.'
+  tags:
+  - judging_info
+  data_origin: synthetic
+- id: q_l3_judging_info_10
+  level: 3
+  skill_area: judging_info
+  difficulty: 5
+  text: When a stock claim lacks an explicit timeframe (e.g., 'long term'), why is
+    it harder to hold the source accountable?
+  options:
+  - The source can declare victory on any brief bounce and dismiss any multi-year
+    drop as 'still early'
+  - Long-term claims always win
+  - Exchanges forbid timeframes
+  - It improves Brier calibration
+  answer: The source can declare victory on any brief bounce and dismiss any multi-year
+    drop as 'still early'
+  explanation: Falsifiability requires clear horizon and measurable criteria.
+  tags:
+  - judging_info
+  - red_flag
+  data_origin: synthetic
+- id: q_l3_risk_01
+  level: 3
+  skill_area: risk
+  difficulty: 3
+  text: Why is 'base rate neglect' costly when evaluating hyped IPOs or turnaround
+    stories?
+  options:
+  - Ignoring how rarely loss-making hyped IPOs or distressed turnarounds succeed leads
+    to overconfident bets
+  - Base rates guarantee every IPO fails
+  - Turnarounds always succeed
+  - Base rates only apply to cricket
+  answer: Ignoring how rarely loss-making hyped IPOs or distressed turnarounds succeed
+    leads to overconfident bets
+  explanation: Anchoring on historical base rates calibrates expectations before weighing
+    unique story claims.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l3_risk_02
+  level: 3
+  skill_area: risk
+  difficulty: 3
+  text: What is 'correlation breakdown' (correlation going to 1) during systemic market
+    panics like March 2020?
+  options:
+  - Assets that normally move independently fall together during liquidity panics,
+    reducing short-term equity diversification
+  - All stocks rise together during panics
+  - Cash loses all liquidity
+  - NIFTY 50 stops calculating
+  answer: Assets that normally move independently fall together during liquidity panics,
+    reducing short-term equity diversification
+  explanation: Cross-asset allocation (cash/debt buffers) matters because equity-only
+    diversification weakens in systemic crises.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l3_risk_03
+  level: 3
+  skill_area: risk
+  difficulty: 4
+  text: What is a 'pre-mortem' exercise before making any financial decision?
+  options:
+  - Imagining the decision failed badly a year from now and listing the most plausible
+    reasons why, before committing
+  - Celebrating profits in advance
+  - Ignoring downside scenarios
+  - Checking only bullish targets
+  answer: Imagining the decision failed badly a year from now and listing the most
+    plausible reasons why, before committing
+  explanation: Pre-mortems counteract overconfidence and surface hidden risks early.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l3_risk_04
+  level: 3
+  skill_area: risk
+  difficulty: 4
+  text: If you assign 50% confidence to every question when guessing blindly, what
+    is your expected Brier score?
+  options:
+  - '0.25'
+  - '0.00'
+  - '0.50'
+  - '1.00'
+  answer: '0.25'
+  explanation: At p=0.5, both (0.5-1)^2 and (0.5-0)^2 equal 0.25. A Brier score <=
+    0.25 is the baseline for skill above random guessing.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l3_risk_05
+  level: 3
+  skill_area: risk
+  difficulty: 4
+  text: Why is 'averaging down' dangerous in a company suffering governance fraud
+    or structural insolvency?
+  options:
+  - Putting more capital into a value-destroying or fraudulent firm compounds total
+    loss toward 100%
+  - Averaging down guarantees recovery
+  - Lower prices always mean higher safety
+  - Fraudulent firms always rebound
+  answer: Putting more capital into a value-destroying or fraudulent firm compounds
+    total loss toward 100%
+  explanation: Averaging down only makes sense if underlying business value is intact,
+    never on deteriorating solvency or fraud.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l3_risk_06
+  level: 3
+  skill_area: risk
+  difficulty: 4
+  text: What is 'concentration risk' when your employer's stock (ESOPs) is also 70%
+    of your net worth?
+  options:
+  - A downturn at your company simultaneously threatens both your job income and your
+    savings
+  - It eliminates all market risk
+  - ESOPs cannot fall in value
+  - It is optimal diversification
+  answer: A downturn at your company simultaneously threatens both your job income
+    and your savings
+  explanation: Human capital and financial capital tied to the same issuer double
+    exposure to one failure mode.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l3_risk_07
+  level: 3
+  skill_area: risk
+  difficulty: 4
+  text: What does 'asymmetric downside' (tail risk) mean in high-leverage or pledge-heavy
+    stocks?
+  options:
+  - Modest upside in normal times paired with sudden 70-95% permanent loss if a credit
+    or governance shock hits
+  - Unlimited guaranteed upside
+  - Zero volatility
+  - Equal probability of +5% and -5%
+  answer: Modest upside in normal times paired with sudden 70-95% permanent loss if
+    a credit or governance shock hits
+  explanation: Recognizing tail risk prevents picking up small gains in front of severe
+    structural hazards.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l3_risk_08
+  level: 3
+  skill_area: risk
+  difficulty: 5
+  text: How does maintaining a written 'decision journal' with confidence levels improve
+    investor discipline?
+  options:
+  - Records your exact thesis and confidence before the outcome, preventing hindsight
+    bias and exposing calibration errors
+  - Guarantees 100% winning picks
+  - Replaces financial statements
+  - Eliminates taxes
+  answer: Records your exact thesis and confidence before the outcome, preventing
+    hindsight bias and exposing calibration errors
+  explanation: Comparing pre-outcome reasoning and confidence to realized outcomes
+    builds measurable calibration.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l3_risk_09
+  level: 3
+  skill_area: risk
+  difficulty: 5
+  text: Why can high historical volatility (standard deviation) differ from permanent
+    capital loss risk?
+  options:
+  - A strong business can fluctuate 25% temporarily and recover, whereas an over-leveraged
+    or fraudulent business can permanently lose 90%+
+  - Volatility and permanent loss are identical
+  - Low-volatility stocks never fail
+  - High volatility guarantees fraud
+  answer: A strong business can fluctuate 25% temporarily and recover, whereas an
+    over-leveraged or fraudulent business can permanently lose 90%+
+  explanation: Distinguishing temporary price swings from permanent business impairment
+    is central to risk management.
+  tags:
+  - risk
+  data_origin: synthetic
+- id: q_l3_risk_10
+  level: 3
+  skill_area: risk
+  difficulty: 5
+  text: In a portfolio risk review, why should you track Brier score alongside raw
+    accuracy?
+  options:
+  - Someone 75% accurate at 99% confidence takes catastrophic oversized risks on their
+    25% misses, unlike a calibrated 75% thinker
+  - Brier score replaces accuracy completely
+  - Accuracy doesn't matter at all
+  - Higher confidence always lowers Brier score
+  answer: Someone 75% accurate at 99% confidence takes catastrophic oversized risks
+    on their 25% misses, unlike a calibrated 75% thinker
+  explanation: Calibration ensures confidence matches reality so risk sizing stays
+    proportional to true edge.
+  tags:
+  - risk
+  data_origin: synthetic

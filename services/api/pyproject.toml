@@ -27,6 +27,8 @@ dependencies = [
     "Pillow>=11,<13",
     "youtube-transcript-api>=1.2,<2",
     "rapidocr-onnxruntime>=1.4.4,<2",
+    "pyyaml>=6.0",
+    "scipy>=1.13",
 ]
 
 [project.optional-dependencies]
@@ -39,6 +41,8 @@ dev = [
     "respx>=0.21",
     "pandas-stubs>=2.2",
     "types-requests>=2.32",
+    "types-pyyaml",
+    "scipy-stubs",
 ]
 
 [tool.setuptools.packages.find]

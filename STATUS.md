@@ -9,7 +9,7 @@
 |---|---|---|---|---|
 | Hardhik | 80% | Phase 6/6 (Integration & Demo — Phases 1–5 complete; C1 live green) | docs/PRD.md export; Divyansh education routes for C2/C3 | 2026-11-21 |
 | Arnav | 76.25% | Phase 3/6 & Phase 6/6 open (Phases 1,2,4,5 done; grounding 59/59) | OpenRouter key for live F1; real-source dataset or Option B sign-off | 2026-11-20 |
-| Divyansh | 0% | Phase 1/6 (unblocked: core stubs & auth/db ready) | none | 2026-11-20 |
+| Divyansh | 100% | Phase 6/6 (Education complete; 20/20 tests pass) | none | 2026-11-20 |
 | Ananya | 0% | Phase 1/6 (unblocked: Next.js scaffold & contracts.ts ready) | none | 2026-11-20 |
 
 ## Checkpoint Targets
@@ -222,7 +222,76 @@ Blockers: Live FINNHUB_API_KEY not tested; gate inputs depend on education table
 
 ## Divyansh
 
-_Append updates here._
+```text
+[Divyansh] MAJOR | Contract gaps identified in SoT Section 7 before Phase 1 start
+Impact: Blocks frontend-backend integration for lesson completion (C2) and study mode (C3); minor ambiguity on 403 TOOL_LOCKED JSON nesting and scenario direction enum.
+Options: A) Add non-breaking extension endpoints (`POST /api/v1/lessons/{id}/check`, `POST /api/v1/study/start`, `POST /api/v1/study/{id}/submit`), standardize `direction` as `up|down|flat`, and include both `error: {code, message, required_level}` and top-level `code`/`required_level` on 403 TOOL_LOCKED; B) Freeze without lesson-completion/study endpoints and rely on client-side state. Recommend A.
+Need from: Hardhik (contract PR approval) & Ananya (UI confirmation).
+```
+
+```text
+[Divyansh] 10% | Phase 1/6: Models, Migration & Content Loader
+Done:
+- Implemented SQLAlchemy 2.0 models, Alembic migration (`20261120_01_education_tables.py`) + SQL DDL, and idempotent YAML loader with `data_origin` and `core.guardrails.check_output()` enforcement.
+- Verified with `unittest` (`test_phase1_models_loader.py`: 3/3 passed — fresh DB upgrade/downgrade, CHECK constraints, sample YAML import & guardrail block).
+Next: Phase 2 — Adaptive onboarding engine, Brier scoring, and 120-question bank across L1-L3.
+Minor: Built dual SQLAlchemy 2.0 + DB-API 2.0 repository so tests run cleanly with zero external DB server.
+Blockers: none
+```
+
+```text
+[Divyansh] 30% | Phase 2/6: Adaptive Onboarding & Question Bank
+Done:
+- Authored 120 non-advisory Indian market questions in `data/seed/education/questions.yaml` (>= 10 per skill area per level across L1-L3).
+- Implemented adaptive staircase onboarding (`onboarding.py`, 12-15 Qs across 4 skills, start medium=3) and exact Brier scoring (`scoring.py`).
+- Verified via `test_phase2_onboarding.py` (3/3 passed): simulated all-correct -> L4 (Brier 0.01), all-wrong -> L1 (Brier 0.64), random -> L1 (Brier 0.25), overconfident -> capped L1 (Brier 0.4484).
+Next: Phase 3 — Levels, tool unlocks, weakest-skill plan, and 12 micro-lessons.
+Minor: Tightened Brier calibration floor so blind 50% guessing (Brier >= 0.25) cannot place above L1.
+Blockers: none
+```
+
+```text
+[Divyansh] 45% | Phase 3/6: Levels, Unlocks, Learning Plan & Micro-Lessons
+Done:
+- Implemented SoT Section 8 cumulative unlocks, `get_user_unlocks()` for Hardhik's `GET /me`, and `ToolLockedError` (HTTP 403 `TOOL_LOCKED`).
+- Authored 12 micro-lessons (5-10 min, L1-L3, 3 check questions each) and weakest-skill-first plan generator (`learning.py`).
+- Verified via `test_phase3_unlocks_plan_lessons.py` (3/3 passed; 9/9 cumulative).
+Next: Phase 4 (Assessments) & Phase 5 (24 curated Indian stock scenarios with price-recomputed outcomes).
+Minor: none
+Blockers: none
+```
+
+```text
+[Divyansh] 60% | Phase 4/6: Level-Up Assessments & Tool-Lock Enforcement
+Done:
+- Implemented `assessments.py` (10 unseen questions + 2 unseen scenarios per level, configurable >=70% & Brier <=0.25 pass criteria, level-up unlocks, fail->plan update).
+- Verified via `test_phase4_assessments.py` (3/3 passed — unseen-item filtering, pass/level-up/unlock, fail->plan remediation, configurable Brier gate, duplicate-submission rejection).
+Next: Phase 5 — 24 curated 2005+ Indian stock scenarios with live price-data outcome recomputation.
+Minor: none
+Blockers: none
+```
+
+```text
+[Divyansh] 80% | Phase 5/6: Curated Historical Indian Stock Scenarios
+Done:
+- Generated 36 NSE + NIFTY50 historical OHLCV series (`market_prices_seed.json`) and 24 curated 2005+ Indian stock scenarios (`scenarios.yaml`) with zero lookahead and explicit historical disclaimers.
+- Verified via `test_phase5_scenarios.py` (2/2 passed; 14/14 cumulative): all 24 scenarios recomputed live from `core.market` with exact match to stored outcomes and NIFTY50 comparison.
+Next: Phase 6 — Explain a Stock (30 stocks), Skill Dashboard, Study Mode, 95% CI evidence export, and full FastAPI E2E/security QA.
+Minor: Seeded price series tagged `data_origin: synthetic` in offline build; swaps seamlessly to Hardhik's live NSE bhavcopy/yfinance `core.market`.
+Blockers: none
+```
+
+```text
+[Divyansh] 100% | Phase 6/6: Explain a Stock, Dashboard, Study Mode & Evidence Export
+Done:
+- Precomputed 30 NSE stocks x selected years (`explain_stocks.yaml`) with primary-source citations on every event and guardrailed summaries; implemented `GET /explain` (L2 gated) and `GET /me/dashboard` (L4 gated).
+- Implemented Study Mode (`study_pre` / `study_post` with disjoint unseen items) and `export_evidence.py` outputting CSV + JSON with 95% CIs on 40 seeded paired users (Score +32.75% [26.23, 39.27], Brier -0.2721 [-0.3141, -0.2301], Red-flag +45.50% [36.81, 54.19]).
+- Full test suite passed: 20/20 (`unittest discover -s services/api/tests/education -v`), including FastAPI HTTP E2E, auth/IDOR/SQLi security checks, and EN+Hinglish guardrail tests.
+- Upgraded for live Render + Supabase Postgres deployment: Pydantic v2 `pattern=` validation, dual-mode SQLAlchemy 2 ORM repository, and linear Alembic migration.
+Next: Open PR from `feat/education-backend` into `main` excluding dev stubs in `core/` and `main.py`; align with Hardhik on contract extensions in MAJOR update.
+Minor: Hardened `GET /explain` symbol parameter with strict allowlist regex after E2E SQLi test caught permissive fuzzy substring matching.
+Blockers: none
+```
 
 ## Ananya
 

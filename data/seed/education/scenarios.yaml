@@ -1,0 +1,2969 @@
+scenarios:
+- id: sc_satyam_2009
+  symbol: SATYAMCOMP
+  as_of_date: '2009-01-06'
+  window_days: 15
+  difficulty: 2
+  tags:
+  - governance_fraud
+  - accounting_red_flag
+  context:
+    company: Satyam Computer Services
+    chart:
+    - date: '2008-11-26'
+      close: 177.79
+      volume: 3500000
+    - date: '2008-11-27'
+      close: 178.32
+      volume: 4024999
+    - date: '2008-11-28'
+      close: 178.67
+      volume: 3237499
+    - date: '2008-12-01'
+      close: 178.33
+      volume: 3762500
+    - date: '2008-12-02'
+      close: 177.84
+      volume: 2975000
+    - date: '2008-12-03'
+      close: 177.88
+      volume: 3500000
+    - date: '2008-12-04'
+      close: 178.35
+      volume: 4024999
+    - date: '2008-12-05'
+      close: 178.55
+      volume: 3237499
+    - date: '2008-12-08'
+      close: 178.19
+      volume: 3762500
+    - date: '2008-12-09'
+      close: 177.84
+      volume: 2975000
+    - date: '2008-12-10'
+      close: 177.95
+      volume: 3500000
+    - date: '2008-12-11'
+      close: 178.33
+      volume: 4024999
+    - date: '2008-12-12'
+      close: 178.41
+      volume: 3237499
+    - date: '2008-12-15'
+      close: 178.09
+      volume: 3762500
+    - date: '2008-12-16'
+      close: 177.86
+      volume: 2975000
+    - date: '2008-12-17'
+      close: 178.01
+      volume: 3500000
+    - date: '2008-12-18'
+      close: 178.28
+      volume: 4024999
+    - date: '2008-12-19'
+      close: 178.28
+      volume: 3237499
+    - date: '2008-12-22'
+      close: 178.02
+      volume: 3762500
+    - date: '2008-12-23'
+      close: 177.91
+      volume: 2975000
+    - date: '2008-12-24'
+      close: 178.04
+      volume: 3500000
+    - date: '2008-12-25'
+      close: 178.19
+      volume: 4024999
+    - date: '2008-12-26'
+      close: 178.15
+      volume: 3237499
+    - date: '2008-12-29'
+      close: 177.99
+      volume: 3762500
+    - date: '2008-12-30'
+      close: 177.96
+      volume: 2975000
+    - date: '2008-12-31'
+      close: 178.03
+      volume: 3500000
+    - date: '2009-01-01'
+      close: 178.09
+      volume: 4024999
+    - date: '2009-01-02'
+      close: 178.05
+      volume: 3237499
+    - date: '2009-01-05'
+      close: 178.0
+      volume: 3762500
+    - date: '2009-01-06'
+      close: 178.0
+      volume: 15750000
+    headlines:
+    - Satyam board withdraws proposed $1.6B Maytas Properties & Maytas Infra buyout
+      after investor uproar
+    - Four independent directors resign from Satyam board within two weeks
+    - Analysts question low interest yield on Rs 5,300 Cr reported cash balances
+    numbers:
+      reported_cash_cr: 5300
+      promoter_pledge_pct: 100.0
+      pe_ratio: 9.8
+      surveillance: null
+  outcome:
+    stock_pct: -86.24
+    index_pct: -13.05
+    relative_pct: -73.19
+    actual_direction: down
+    entry_close: 178.0
+    exit_close: 24.5
+  key_clues:
+  - 100% promoter share pledging
+  - Abrupt withdrawal of related-party Maytas acquisition
+  - Mass independent director resignations
+  explanation: Satyam's chairman confessed to falsifying cash balances and revenues
+    on Jan 7, 2009, triggering a severe equity collapse.
+  data_origin: synthetic
+- id: sc_yesbank_2018
+  symbol: YESBANK
+  as_of_date: '2018-09-19'
+  window_days: 30
+  difficulty: 3
+  tags:
+  - regulatory_shock
+  - asset_quality_stress
+  context:
+    company: Yes Bank Ltd
+    chart:
+    - date: '2018-08-09'
+      close: 319.49
+      volume: 3237499
+    - date: '2018-08-10'
+      close: 318.93
+      volume: 3762500
+    - date: '2018-08-13'
+      close: 319.02
+      volume: 2975000
+    - date: '2018-08-14'
+      close: 319.55
+      volume: 3500000
+    - date: '2018-08-15'
+      close: 319.64
+      volume: 4024999
+    - date: '2018-08-16'
+      close: 319.14
+      volume: 3237499
+    - date: '2018-08-17'
+      close: 318.74
+      volume: 3762500
+    - date: '2018-08-20'
+      close: 318.9
+      volume: 2975000
+    - date: '2018-08-21'
+      close: 319.3
+      volume: 3500000
+    - date: '2018-08-22'
+      close: 319.28
+      volume: 4024999
+    - date: '2018-08-23'
+      close: 318.83
+      volume: 3237499
+    - date: '2018-08-24'
+      close: 318.58
+      volume: 3762500
+    - date: '2018-08-27'
+      close: 318.75
+      volume: 2975000
+    - date: '2018-08-28'
+      close: 319.02
+      volume: 3500000
+    - date: '2018-08-29'
+      close: 318.92
+      volume: 4024999
+    - date: '2018-08-30'
+      close: 318.57
+      volume: 3237499
+    - date: '2018-08-31'
+      close: 318.43
+      volume: 3762500
+    - date: '2018-09-03'
+      close: 318.57
+      volume: 2975000
+    - date: '2018-09-04'
+      close: 318.71
+      volume: 3500000
+    - date: '2018-09-05'
+      close: 318.58
+      volume: 4024999
+    - date: '2018-09-06'
+      close: 318.34
+      volume: 3237499
+    - date: '2018-09-07'
+      close: 318.29
+      volume: 3762500
+    - date: '2018-09-10'
+      close: 318.34
+      volume: 2975000
+    - date: '2018-09-11'
+      close: 318.38
+      volume: 3500000
+    - date: '2018-09-12'
+      close: 318.27
+      volume: 4024999
+    - date: '2018-09-13'
+      close: 318.15
+      volume: 3237499
+    - date: '2018-09-14'
+      close: 318.13
+      volume: 3762500
+    - date: '2018-09-17'
+      close: 318.08
+      volume: 2975000
+    - date: '2018-09-18'
+      close: 318.05
+      volume: 3500000
+    - date: '2018-09-19'
+      close: 318.0
+      volume: 15750000
+    headlines:
+    - RBI declines extension of founder MD & CEO Rana Kapoor's term beyond January
+      2019
+    - Prior RBI audits flagged multi-thousand-crore NPA divergences
+    - Corporate loan book shows rising exposure to stressed infrastructure borrowers
+    numbers:
+      gnpa_reported_pct: 1.31
+      rbi_divergence_flag: true
+      pe_ratio: 16.4
+      surveillance: null
+  outcome:
+    stock_pct: -33.96
+    index_pct: -8.41
+    relative_pct: -25.55
+    actual_direction: down
+    entry_close: 318.0
+    exit_close: 210.0
+  key_clues:
+  - Repeated RBI NPA divergence findings
+  - Regulatory refusal to extend CEO tenure
+  - Concentrated corporate lending book
+  explanation: Governance and asset-quality concerns accelerated after RBI declined
+    the CEO's extension, leading to sharp repricing.
+  data_origin: synthetic
+- id: sc_dhfl_2018
+  symbol: DHFL
+  as_of_date: '2018-09-21'
+  window_days: 30
+  difficulty: 3
+  tags:
+  - alm_liquidity_crisis
+  - leverage_risk
+  context:
+    company: Dewan Housing Finance Corp
+    chart:
+    - date: '2018-08-13'
+      close: 591.01
+      volume: 2975000
+    - date: '2018-08-14'
+      close: 592.06
+      volume: 3500000
+    - date: '2018-08-15'
+      close: 592.28
+      volume: 4024999
+    - date: '2018-08-16'
+      close: 591.33
+      volume: 3237499
+    - date: '2018-08-17'
+      close: 590.58
+      volume: 3762500
+    - date: '2018-08-20'
+      close: 590.97
+      volume: 2975000
+    - date: '2018-08-21'
+      close: 591.8
+      volume: 3500000
+    - date: '2018-08-22'
+      close: 591.77
+      volume: 4024999
+    - date: '2018-08-23'
+      close: 590.93
+      volume: 3237499
+    - date: '2018-08-24'
+      close: 590.46
+      volume: 3762500
+    - date: '2018-08-27'
+      close: 590.88
+      volume: 2975000
+    - date: '2018-08-28'
+      close: 591.46
+      volume: 3500000
+    - date: '2018-08-29'
+      close: 591.28
+      volume: 4024999
+    - date: '2018-08-30'
+      close: 590.6
+      volume: 3237499
+    - date: '2018-08-31'
+      close: 590.36
+      volume: 3762500
+    - date: '2018-09-03'
+      close: 590.72
+      volume: 2975000
+    - date: '2018-09-04'
+      close: 591.06
+      volume: 3500000
+    - date: '2018-09-05'
+      close: 590.83
+      volume: 4024999
+    - date: '2018-09-06'
+      close: 590.35
+      volume: 3237499
+    - date: '2018-09-07'
+      close: 590.27
+      volume: 3762500
+    - date: '2018-09-10'
+      close: 590.5
+      volume: 2975000
+    - date: '2018-09-11'
+      close: 590.63
+      volume: 3500000
+    - date: '2018-09-12'
+      close: 590.42
+      volume: 4024999
+    - date: '2018-09-13'
+      close: 590.16
+      volume: 3237499
+    - date: '2018-09-14'
+      close: 590.15
+      volume: 3762500
+    - date: '2018-09-17'
+      close: 590.2
+      volume: 2975000
+    - date: '2018-09-18'
+      close: 590.19
+      volume: 3500000
+    - date: '2018-09-19'
+      close: 590.08
+      volume: 4024999
+    - date: '2018-09-20'
+      close: 590.02
+      volume: 3237499
+    - date: '2018-09-21'
+      close: 590.0
+      volume: 15750000
+    headlines:
+    - IL&FS group defaults on short-term commercial paper obligations
+    - DSP Mutual Fund sells DHFL commercial paper at elevated 11% yield in secondary
+      market
+    - Wholesale short-term borrowings fund long-duration housing loans
+    numbers:
+      debt_to_equity: 10.6
+      short_term_cp_pct: 18.0
+      pe_ratio: 12.1
+      surveillance: null
+  outcome:
+    stock_pct: -60.16
+    index_pct: -7.53
+    relative_pct: -52.63
+    actual_direction: down
+    entry_close: 590.0
+    exit_close: 235.08
+  key_clues:
+  - Asset-liability mismatch with short-term commercial paper
+  - Contagion from IL&FS credit freeze
+  - Secondary CP yield spike
+  explanation: Credit-market liquidity froze for leveraged HFCs following the IL&FS
+    default, triggering an acute drawdown in DHFL.
+  data_origin: synthetic
+- id: sc_vakrangee_2018
+  symbol: VAKRANGEE
+  as_of_date: '2018-01-25'
+  window_days: 45
+  difficulty: 3
+  tags:
+  - pump_and_dump
+  - hype_no_fundamentals
+  - surveillance_list
+  context:
+    company: Vakrangee Ltd
+    chart:
+    - date: '2017-12-15'
+      close: 485.36
+      volume: 3762500
+    - date: '2017-12-18'
+      close: 485.77
+      volume: 2975000
+    - date: '2017-12-19'
+      close: 486.93
+      volume: 3500000
+    - date: '2017-12-20'
+      close: 488.74
+      volume: 4024999
+    - date: '2017-12-21'
+      close: 489.25
+      volume: 3237499
+    - date: '2017-12-22'
+      close: 488.48
+      volume: 3762500
+    - date: '2017-12-25'
+      close: 489.29
+      volume: 2975000
+    - date: '2017-12-26'
+      close: 490.54
+      volume: 3500000
+    - date: '2017-12-27'
+      close: 492.02
+      volume: 4024999
+    - date: '2017-12-28'
+      close: 492.29
+      volume: 3237499
+    - date: '2017-12-29'
+      close: 491.71
+      volume: 3762500
+    - date: '2018-01-01'
+      close: 492.85
+      volume: 2975000
+    - date: '2018-01-02'
+      close: 494.07
+      volume: 3500000
+    - date: '2018-01-03'
+      close: 495.21
+      volume: 4024999
+    - date: '2018-01-04'
+      close: 495.35
+      volume: 3237499
+    - date: '2018-01-05'
+      close: 495.05
+      volume: 3762500
+    - date: '2018-01-08'
+      close: 496.44
+      volume: 2975000
+    - date: '2018-01-09'
+      close: 497.51
+      volume: 3500000
+    - date: '2018-01-10'
+      close: 498.35
+      volume: 4024999
+    - date: '2018-01-11'
+      close: 498.48
+      volume: 3237499
+    - date: '2018-01-12'
+      close: 498.47
+      volume: 3762500
+    - date: '2018-01-15'
+      close: 500.0
+      volume: 2975000
+    - date: '2018-01-16'
+      close: 500.84
+      volume: 3500000
+    - date: '2018-01-17'
+      close: 501.45
+      volume: 4024999
+    - date: '2018-01-18'
+      close: 501.69
+      volume: 3237499
+    - date: '2018-01-19'
+      close: 501.97
+      volume: 3762500
+    - date: '2018-01-22'
+      close: 503.51
+      volume: 2975000
+    - date: '2018-01-23'
+      close: 504.09
+      volume: 3500000
+    - date: '2018-01-24'
+      close: 504.55
+      volume: 4024999
+    - date: '2018-01-25'
+      close: 505.0
+      volume: 15750000
+    headlines:
+    - Stock rallied 400%+ in 12 months with minimal institutional analyst coverage
+    - Media reports highlight regulatory inquiry into unusual trading patterns
+    - Statutory auditor later questions store-level cash and inventory verifications
+    numbers:
+      pe_ratio: 78.0
+      cfo_to_ebitda_pct: 38.0
+      surveillance: ASM Stage IV
+  outcome:
+    stock_pct: -58.81
+    index_pct: -7.59
+    relative_pct: -51.22
+    actual_direction: down
+    entry_close: 505.0
+    exit_close: 208.01
+  key_clues:
+  - Extreme P/E expansion without matching cash flow conversion
+  - Regulatory scrutiny and surveillance flags
+  - Thin institutional ownership
+  explanation: Rapid retail-driven rallies disconnected from cash flow and governance
+    clarity often reverse violently via lower circuits.
+  data_origin: synthetic
+- id: sc_pcjeweller_2018
+  symbol: PCJEWELLER
+  as_of_date: '2018-04-26'
+  window_days: 30
+  difficulty: 3
+  tags:
+  - governance_red_flag
+  - receivables_stress
+  context:
+    company: PC Jeweller Ltd
+    chart:
+    - date: '2018-03-16'
+      close: 251.85
+      volume: 3762500
+    - date: '2018-03-19'
+      close: 251.52
+      volume: 2975000
+    - date: '2018-03-20'
+      close: 251.12
+      volume: 3500000
+    - date: '2018-03-21'
+      close: 250.25
+      volume: 4024999
+    - date: '2018-03-22'
+      close: 249.77
+      volume: 3237499
+    - date: '2018-03-23'
+      close: 249.92
+      volume: 3762500
+    - date: '2018-03-26'
+      close: 249.43
+      volume: 2975000
+    - date: '2018-03-27'
+      close: 248.95
+      volume: 3500000
+    - date: '2018-03-28'
+      close: 248.2
+      volume: 4024999
+    - date: '2018-03-29'
+      close: 247.85
+      volume: 3237499
+    - date: '2018-03-30'
+      close: 247.95
+      volume: 3762500
+    - date: '2018-04-02'
+      close: 247.31
+      volume: 2975000
+    - date: '2018-04-03'
+      close: 246.8
+      volume: 3500000
+    - date: '2018-04-04'
+      close: 246.18
+      volume: 4024999
+    - date: '2018-04-05'
+      close: 245.92
+      volume: 3237499
+    - date: '2018-04-06'
+      close: 245.94
+      volume: 3762500
+    - date: '2018-04-09'
+      close: 245.17
+      volume: 2975000
+    - date: '2018-04-10'
+      close: 244.69
+      volume: 3500000
+    - date: '2018-04-11'
+      close: 244.2
+      volume: 4024999
+    - date: '2018-04-12'
+      close: 243.98
+      volume: 3237499
+    - date: '2018-04-13'
+      close: 243.89
+      volume: 3762500
+    - date: '2018-04-16'
+      close: 243.03
+      volume: 2975000
+    - date: '2018-04-17'
+      close: 242.61
+      volume: 3500000
+    - date: '2018-04-18'
+      close: 242.23
+      volume: 4024999
+    - date: '2018-04-19'
+      close: 242.01
+      volume: 3237499
+    - date: '2018-04-20'
+      close: 241.81
+      volume: 3762500
+    - date: '2018-04-23'
+      close: 240.91
+      volume: 2975000
+    - date: '2018-04-24'
+      close: 240.58
+      volume: 3500000
+    - date: '2018-04-25'
+      close: 240.28
+      volume: 4024999
+    - date: '2018-04-26'
+      close: 240.0
+      volume: 15750000
+    headlines:
+    - Fidelity funds sharply trim stake following corporate disclosure questions
+    - Promoter gifts shares to relatives without timely initial clarity
+    - Working capital days and export receivables remain elevated
+    numbers:
+      receivable_days: 145
+      pe_ratio: 18.5
+      surveillance: ASM Stage IV
+  outcome:
+    stock_pct: -52.08
+    index_pct: 0.02
+    relative_pct: -52.1
+    actual_direction: down
+    entry_close: 240.0
+    exit_close: 115.0
+  key_clues:
+  - Institutional exit on governance questions
+  - Elevated receivables and working capital strain
+  - Surveillance escalation
+  explanation: Governance doubts and institutional exits sparked severe volatility
+    and steep capital erosion.
+  data_origin: synthetic
+- id: sc_manpasand_2018
+  symbol: MANPASAND
+  as_of_date: '2018-05-27'
+  window_days: 30
+  difficulty: 2
+  tags:
+  - auditor_resignation
+  - governance_fraud
+  context:
+    company: Manpasand Beverages Ltd
+    chart:
+    - date: '2018-04-16'
+      close: 432.0
+      volume: 2975000
+    - date: '2018-04-17'
+      close: 431.07
+      volume: 3500000
+    - date: '2018-04-18'
+      close: 430.34
+      volume: 4024999
+    - date: '2018-04-19'
+      close: 430.79
+      volume: 3237499
+    - date: '2018-04-20'
+      close: 431.68
+      volume: 3762500
+    - date: '2018-04-23'
+      close: 431.59
+      volume: 2975000
+    - date: '2018-04-24'
+      close: 430.74
+      volume: 3500000
+    - date: '2018-04-25'
+      close: 430.27
+      volume: 4024999
+    - date: '2018-04-26'
+      close: 430.78
+      volume: 3237499
+    - date: '2018-04-27'
+      close: 431.44
+      volume: 3762500
+    - date: '2018-04-30'
+      close: 431.18
+      volume: 2975000
+    - date: '2018-05-01'
+      close: 430.48
+      volume: 3500000
+    - date: '2018-05-02'
+      close: 430.23
+      volume: 4024999
+    - date: '2018-05-03'
+      close: 430.71
+      volume: 3237499
+    - date: '2018-05-04'
+      close: 431.14
+      volume: 3762500
+    - date: '2018-05-07'
+      close: 430.8
+      volume: 2975000
+    - date: '2018-05-08'
+      close: 430.28
+      volume: 3500000
+    - date: '2018-05-09'
+      close: 430.19
+      volume: 4024999
+    - date: '2018-05-10'
+      close: 430.58
+      volume: 3237499
+    - date: '2018-05-11'
+      close: 430.81
+      volume: 3762500
+    - date: '2018-05-14'
+      close: 430.47
+      volume: 2975000
+    - date: '2018-05-15'
+      close: 430.14
+      volume: 3500000
+    - date: '2018-05-16'
+      close: 430.15
+      volume: 4024999
+    - date: '2018-05-17'
+      close: 430.38
+      volume: 3237499
+    - date: '2018-05-18'
+      close: 430.45
+      volume: 3762500
+    - date: '2018-05-21'
+      close: 430.19
+      volume: 2975000
+    - date: '2018-05-22'
+      close: 430.05
+      volume: 3500000
+    - date: '2018-05-23'
+      close: 430.07
+      volume: 4024999
+    - date: '2018-05-24'
+      close: 430.13
+      volume: 3237499
+    - date: '2018-05-25'
+      close: 430.1
+      volume: 3762500
+    headlines:
+    - Deloitte Haskins & Sells abruptly resigns as statutory auditor days before FY18
+      results
+    - Auditor cites lack of significant information required to complete audit
+    - Board cancels scheduled earnings meeting on short notice
+    numbers:
+      auditor_resigned: true
+      cfo_to_pat_pct: 42.0
+      pe_ratio: 44.0
+  outcome:
+    stock_pct: -65.59
+    index_pct: 1.56
+    relative_pct: -67.15
+    actual_direction: down
+    entry_close: 430.1
+    exit_close: 148.0
+  key_clues:
+  - Abrupt statutory auditor resignation right before results
+  - Auditor cited missing audit information
+  - Weak cash-to-profit conversion
+  explanation: Mid-term auditor resignations citing missing information are among
+    the strongest historical warning signs in Indian markets.
+  data_origin: synthetic
+- id: sc_paytm_2021
+  symbol: PAYTM
+  as_of_date: '2021-11-18'
+  window_days: 60
+  difficulty: 2
+  tags:
+  - ipo_valuation_reset
+  - hype_no_fundamentals
+  context:
+    company: One97 Communications (Paytm)
+    chart:
+    - date: '2021-10-08'
+      close: 1597.71
+      volume: 4024999
+    - date: '2021-10-11'
+      close: 1594.29
+      volume: 3237499
+    - date: '2021-10-12'
+      close: 1595.59
+      volume: 3762500
+    - date: '2021-10-13'
+      close: 1596.73
+      volume: 2975000
+    - date: '2021-10-14'
+      close: 1594.88
+      volume: 3500000
+    - date: '2021-10-15'
+      close: 1591.62
+      volume: 4024999
+    - date: '2021-10-18'
+      close: 1588.87
+      volume: 3237499
+    - date: '2021-10-19'
+      close: 1589.99
+      volume: 3762500
+    - date: '2021-10-20'
+      close: 1590.42
+      volume: 2975000
+    - date: '2021-10-21'
+      close: 1588.38
+      volume: 3500000
+    - date: '2021-10-22'
+      close: 1585.72
+      volume: 4024999
+    - date: '2021-10-25'
+      close: 1583.43
+      volume: 3237499
+    - date: '2021-10-26'
+      close: 1584.19
+      volume: 3762500
+    - date: '2021-10-27'
+      close: 1584.02
+      volume: 2975000
+    - date: '2021-10-28'
+      close: 1582.03
+      volume: 3500000
+    - date: '2021-10-29'
+      close: 1579.98
+      volume: 4024999
+    - date: '2021-11-01'
+      close: 1577.92
+      volume: 3237499
+    - date: '2021-11-02'
+      close: 1578.22
+      volume: 3762500
+    - date: '2021-11-03'
+      close: 1577.59
+      volume: 2975000
+    - date: '2021-11-04'
+      close: 1575.84
+      volume: 3500000
+    - date: '2021-11-05'
+      close: 1574.35
+      volume: 4024999
+    - date: '2021-11-08'
+      close: 1572.3
+      volume: 3237499
+    - date: '2021-11-09'
+      close: 1572.08
+      volume: 3762500
+    - date: '2021-11-10'
+      close: 1571.2
+      volume: 2975000
+    - date: '2021-11-11'
+      close: 1569.84
+      volume: 3500000
+    - date: '2021-11-12'
+      close: 1568.77
+      volume: 4024999
+    - date: '2021-11-15'
+      close: 1566.52
+      volume: 3237499
+    - date: '2021-11-16'
+      close: 1565.81
+      volume: 3762500
+    - date: '2021-11-17'
+      close: 1564.89
+      volume: 2975000
+    - date: '2021-11-18'
+      close: 1564.0
+      volume: 15750000
+    headlines:
+    - India's largest IPO lists at ~Rs 1.39 lakh crore valuation despite ongoing net
+      losses
+    - Over 54% of IPO proceeds are Offer for Sale (OFS) for existing investors
+    - Path to EBITDA profitability remains multi-year amid UPI zero-MDR rules
+    numbers:
+      ipo_ofs_pct: 54.6
+      net_loss_fy21_cr: -1701
+      price_to_sales: 49.0
+  outcome:
+    stock_pct: -34.78
+    index_pct: 3.06
+    relative_pct: -37.84
+    actual_direction: down
+    entry_close: 1564.0
+    exit_close: 1020.0
+  key_clues:
+  - Heavy OFS component in IPO
+  - Steep price-to-sales multiple with persistent net losses
+  - Monetisation headwinds in core payments
+  explanation: Expensive loss-making IPOs with large OFS supply often undergo sharp
+    valuation resets once listing hype fades.
+  data_origin: synthetic
+- id: sc_zomato_2023
+  symbol: ZOMATO
+  as_of_date: '2023-05-19'
+  window_days: 90
+  difficulty: 3
+  tags:
+  - earnings_surprise
+  - turnaround_execution
+  context:
+    company: Zomato Ltd
+    chart:
+    - date: '2023-04-10'
+      close: 63.81
+      volume: 2975000
+    - date: '2023-04-11'
+      close: 63.72
+      volume: 3500000
+    - date: '2023-04-12'
+      close: 63.62
+      volume: 4024999
+    - date: '2023-04-13'
+      close: 63.68
+      volume: 3237499
+    - date: '2023-04-14'
+      close: 63.84
+      volume: 3762500
+    - date: '2023-04-17'
+      close: 63.93
+      volume: 2975000
+    - date: '2023-04-18'
+      close: 63.84
+      volume: 3500000
+    - date: '2023-04-19'
+      close: 63.78
+      volume: 4024999
+    - date: '2023-04-20'
+      close: 63.86
+      volume: 3237499
+    - date: '2023-04-21'
+      close: 63.98
+      volume: 3762500
+    - date: '2023-04-24'
+      close: 64.04
+      volume: 2975000
+    - date: '2023-04-25'
+      close: 63.97
+      volume: 3500000
+    - date: '2023-04-26'
+      close: 63.95
+      volume: 4024999
+    - date: '2023-04-27'
+      close: 64.03
+      volume: 3237499
+    - date: '2023-04-28'
+      close: 64.12
+      volume: 3762500
+    - date: '2023-05-01'
+      close: 64.16
+      volume: 2975000
+    - date: '2023-05-02'
+      close: 64.12
+      volume: 3500000
+    - date: '2023-05-03'
+      close: 64.12
+      volume: 4024999
+    - date: '2023-05-04'
+      close: 64.19
+      volume: 3237499
+    - date: '2023-05-05'
+      close: 64.25
+      volume: 3762500
+    - date: '2023-05-08'
+      close: 64.29
+      volume: 2975000
+    - date: '2023-05-09'
+      close: 64.27
+      volume: 3500000
+    - date: '2023-05-10'
+      close: 64.29
+      volume: 4024999
+    - date: '2023-05-11'
+      close: 64.34
+      volume: 3237499
+    - date: '2023-05-12'
+      close: 64.38
+      volume: 3762500
+    - date: '2023-05-15'
+      close: 64.42
+      volume: 2975000
+    - date: '2023-05-16'
+      close: 64.43
+      volume: 3500000
+    - date: '2023-05-17'
+      close: 64.45
+      volume: 4024999
+    - date: '2023-05-18'
+      close: 64.48
+      volume: 3237499
+    - date: '2023-05-19'
+      close: 64.5
+      volume: 15750000
+    headlines:
+    - Food delivery segment turns adjusted-EBITDA positive ahead of street estimates
+    - Quick-commerce (Blinkit) contribution margin improves sharply quarter-on-quarter
+    - Management guides for consolidated net profit within next four quarters
+    numbers:
+      cash_balance_cr: 11300
+      food_ebitda_positive: true
+      yoy_rev_growth_pct: 70.0
+  outcome:
+    stock_pct: 43.26
+    index_pct: 6.38
+    relative_pct: 36.88
+    actual_direction: up
+    entry_close: 64.5
+    exit_close: 92.4
+  key_clues:
+  - Inflection to positive core unit economics
+  - Strong cash cushion with zero debt
+  - Accelerating revenue paired with narrowing losses
+  explanation: When a high-growth business demonstrably inflects toward profitability
+    with a strong balance sheet, market re-rating can follow.
+  data_origin: synthetic
+- id: sc_adanient_2023
+  symbol: ADANIENT
+  as_of_date: '2023-01-24'
+  window_days: 20
+  difficulty: 4
+  tags:
+  - short_seller_report
+  - leverage_risk
+  context:
+    company: Adani Enterprises Ltd
+    chart:
+    - date: '2022-12-14'
+      close: 3490.67
+      volume: 4024999
+    - date: '2022-12-15'
+      close: 3492.28
+      volume: 3237499
+    - date: '2022-12-16'
+      close: 3482.01
+      volume: 3762500
+    - date: '2022-12-19'
+      close: 3471.95
+      volume: 2975000
+    - date: '2022-12-20'
+      close: 3475.59
+      volume: 3500000
+    - date: '2022-12-21'
+      close: 3483.55
+      volume: 4024999
+    - date: '2022-12-22'
+      close: 3482.75
+      volume: 3237499
+    - date: '2022-12-23'
+      close: 3473.32
+      volume: 3762500
+    - date: '2022-12-26'
+      close: 3466.04
+      volume: 2975000
+    - date: '2022-12-27'
+      close: 3470.15
+      volume: 3500000
+    - date: '2022-12-28'
+      close: 3475.73
+      volume: 4024999
+    - date: '2022-12-29'
+      close: 3473.3
+      volume: 3237499
+    - date: '2022-12-30'
+      close: 3465.37
+      volume: 3762500
+    - date: '2023-01-02'
+      close: 3460.41
+      volume: 2975000
+    - date: '2023-01-03'
+      close: 3464.12
+      volume: 3500000
+    - date: '2023-01-04'
+      close: 3467.34
+      volume: 4024999
+    - date: '2023-01-05'
+      close: 3464.14
+      volume: 3237499
+    - date: '2023-01-06'
+      close: 3458.14
+      volume: 3762500
+    - date: '2023-01-09'
+      close: 3454.83
+      volume: 2975000
+    - date: '2023-01-10'
+      close: 3457.42
+      volume: 3500000
+    - date: '2023-01-11'
+      close: 3458.57
+      volume: 4024999
+    - date: '2023-01-12'
+      close: 3455.45
+      volume: 3237499
+    - date: '2023-01-13'
+      close: 3451.52
+      volume: 3762500
+    - date: '2023-01-16'
+      close: 3449.06
+      volume: 2975000
+    - date: '2023-01-17'
+      close: 3450.03
+      volume: 3500000
+    - date: '2023-01-18'
+      close: 3449.63
+      volume: 4024999
+    - date: '2023-01-19'
+      close: 3447.37
+      volume: 3237499
+    - date: '2023-01-20'
+      close: 3445.37
+      volume: 3762500
+    - date: '2023-01-23'
+      close: 3442.92
+      volume: 2975000
+    - date: '2023-01-24'
+      close: 3442.0
+      volume: 15750000
+    headlines:
+    - US short-seller Hindenburg Research publishes report alleging high leverage
+      and offshore related-party links
+    - Company is mid-way through a Rs 20,000 crore Follow-on Public Offer (FPO)
+    - Stock trades at over 120x trailing P/E after a multi-year parabolic rally
+    numbers:
+      pe_ratio: 135.0
+      group_leverage_focus: true
+      fpo_active: true
+  outcome:
+    stock_pct: -50.09
+    index_pct: -1.92
+    relative_pct: -48.17
+    actual_direction: down
+    entry_close: 3442.0
+    exit_close: 1718.0
+  key_clues:
+  - Extreme trailing valuation multiple (>120x P/E)
+  - Public forensic/short-seller scrutiny during capital raise
+  - High sensitivity to refinancing sentiment
+  explanation: Parabolic valuations leave minimal margin of safety when governance
+    or leverage concerns hit sentiment.
+  data_origin: synthetic
+- id: sc_tcs_2020
+  symbol: TCS
+  as_of_date: '2020-03-24'
+  window_days: 90
+  difficulty: 2
+  tags:
+  - macro_crash_recovery
+  - quality_balance_sheet
+  context:
+    company: Tata Consultancy Services
+    chart:
+    - date: '2020-02-12'
+      close: 1797.83
+      volume: 3500000
+    - date: '2020-02-13'
+      close: 1794.96
+      volume: 4024999
+    - date: '2020-02-14'
+      close: 1789.31
+      volume: 3237499
+    - date: '2020-02-17'
+      close: 1786.01
+      volume: 3762500
+    - date: '2020-02-18'
+      close: 1788.98
+      volume: 2975000
+    - date: '2020-02-19'
+      close: 1790.63
+      volume: 3500000
+    - date: '2020-02-20'
+      close: 1787.32
+      volume: 4024999
+    - date: '2020-02-21'
+      close: 1782.71
+      volume: 3237499
+    - date: '2020-02-24'
+      close: 1780.33
+      volume: 3762500
+    - date: '2020-02-25'
+      close: 1782.75
+      volume: 2975000
+    - date: '2020-02-26'
+      close: 1783.26
+      volume: 3500000
+    - date: '2020-02-27'
+      close: 1779.92
+      volume: 4024999
+    - date: '2020-02-28'
+      close: 1776.4
+      volume: 3237499
+    - date: '2020-03-02'
+      close: 1774.57
+      volume: 3762500
+    - date: '2020-03-03'
+      close: 1776.2
+      volume: 2975000
+    - date: '2020-03-04'
+      close: 1775.81
+      volume: 3500000
+    - date: '2020-03-05'
+      close: 1772.8
+      volume: 4024999
+    - date: '2020-03-06'
+      close: 1770.31
+      volume: 3237499
+    - date: '2020-03-09'
+      close: 1768.62
+      volume: 3762500
+    - date: '2020-03-10'
+      close: 1769.35
+      volume: 2975000
+    - date: '2020-03-11'
+      close: 1768.39
+      volume: 3500000
+    - date: '2020-03-12'
+      close: 1765.99
+      volume: 4024999
+    - date: '2020-03-13'
+      close: 1764.35
+      volume: 3237499
+    - date: '2020-03-16'
+      close: 1762.43
+      volume: 3762500
+    - date: '2020-03-17'
+      close: 1762.25
+      volume: 2975000
+    - date: '2020-03-18'
+      close: 1761.1
+      volume: 3500000
+    - date: '2020-03-19'
+      close: 1759.48
+      volume: 4024999
+    - date: '2020-03-20'
+      close: 1758.42
+      volume: 3237499
+    - date: '2020-03-23'
+      close: 1755.95
+      volume: 3762500
+    - date: '2020-03-24'
+      close: 1755.0
+      volume: 15750000
+    headlines:
+    - Nationwide COVID-19 lockdown triggers 30%+ NIFTY 50 panic sell-off
+    - TCS holds over Rs 40,000 Cr net cash with 25%+ operating margins
+    - Global enterprises accelerate cloud and digital remote-work transformation
+    numbers:
+      net_cash_cr: 43000
+      roe_pct: 37.5
+      debt_to_equity: 0.08
+  outcome:
+    stock_pct: 16.7
+    index_pct: 32.18
+    relative_pct: -15.48
+    actual_direction: up
+    entry_close: 1755.0
+    exit_close: 2048.0
+  key_clues:
+  - Fortress net-cash balance sheet during systemic panic
+  - High recurring enterprise contract visibility
+  - Structural digital tailwind
+  explanation: High-ROE, net-cash businesses frequently recover strongly once systemic
+    liquidity panics subside.
+  data_origin: synthetic
+- id: sc_hdfcbank_2020
+  symbol: HDFCBANK
+  as_of_date: '2020-03-24'
+  window_days: 90
+  difficulty: 2
+  tags:
+  - macro_crash_recovery
+  - asset_quality_strength
+  context:
+    company: HDFC Bank Ltd
+    chart:
+    - date: '2020-02-12'
+      close: 891.26
+      volume: 3500000
+    - date: '2020-02-13'
+      close: 889.5
+      volume: 4024999
+    - date: '2020-02-14'
+      close: 886.36
+      volume: 3237499
+    - date: '2020-02-17'
+      close: 883.69
+      volume: 3762500
+    - date: '2020-02-18'
+      close: 884.82
+      volume: 2975000
+    - date: '2020-02-19'
+      close: 885.29
+      volume: 3500000
+    - date: '2020-02-20'
+      close: 883.32
+      volume: 4024999
+    - date: '2020-02-21'
+      close: 880.69
+      volume: 3237499
+    - date: '2020-02-24'
+      close: 878.49
+      volume: 3762500
+    - date: '2020-02-25'
+      close: 879.34
+      volume: 2975000
+    - date: '2020-02-26'
+      close: 879.24
+      volume: 3500000
+    - date: '2020-02-27'
+      close: 877.25
+      volume: 4024999
+    - date: '2020-02-28'
+      close: 875.17
+      volume: 3237499
+    - date: '2020-03-02'
+      close: 873.23
+      volume: 3762500
+    - date: '2020-03-03'
+      close: 873.69
+      volume: 2975000
+    - date: '2020-03-04'
+      close: 873.15
+      volume: 3500000
+    - date: '2020-03-05'
+      close: 871.33
+      volume: 4024999
+    - date: '2020-03-06'
+      close: 869.76
+      volume: 3237499
+    - date: '2020-03-09'
+      close: 867.89
+      volume: 3762500
+    - date: '2020-03-10'
+      close: 867.9
+      volume: 2975000
+    - date: '2020-03-11'
+      close: 867.08
+      volume: 3500000
+    - date: '2020-03-12'
+      close: 865.56
+      volume: 4024999
+    - date: '2020-03-13'
+      close: 864.41
+      volume: 3237499
+    - date: '2020-03-16'
+      close: 862.42
+      volume: 3762500
+    - date: '2020-03-17'
+      close: 861.99
+      volume: 2975000
+    - date: '2020-03-18'
+      close: 861.07
+      volume: 3500000
+    - date: '2020-03-19'
+      close: 859.94
+      volume: 4024999
+    - date: '2020-03-20'
+      close: 859.06
+      volume: 3237499
+    - date: '2020-03-23'
+      close: 856.81
+      volume: 3762500
+    - date: '2020-03-24'
+      close: 856.0
+      volume: 15750000
+    headlines:
+    - Bank stocks plunge across India on pandemic moratorium fears
+    - HDFC Bank maintains industry-leading 1.26% GNPA and 18.5% capital adequacy
+    - CASA deposit franchise grows steadily as savers seek flight-to-safety banks
+    numbers:
+      gnpa_pct: 1.26
+      car_pct: 18.5
+      casa_pct: 42.2
+  outcome:
+    stock_pct: 20.33
+    index_pct: 32.18
+    relative_pct: -11.85
+    actual_direction: up
+    entry_close: 856.0
+    exit_close: 1030.0
+  key_clues:
+  - Strong capital adequacy and low historical GNPA
+  - Flight-to-safety deposit inflows
+  - Systemic panic rather than bank-specific fraud
+  explanation: Distinguishing systemic macro panics from idiosyncratic solvency crises
+    is a core analytical skill.
+  data_origin: synthetic
+- id: sc_itc_2022
+  symbol: ITC
+  as_of_date: '2022-02-02'
+  window_days: 120
+  difficulty: 2
+  tags:
+  - earnings_surprise
+  - defensive_re_rating
+  context:
+    company: ITC Ltd
+    chart:
+    - date: '2021-12-23'
+      close: 230.05
+      volume: 3762500
+    - date: '2021-12-24'
+      close: 229.71
+      volume: 2975000
+    - date: '2021-12-27'
+      close: 230.31
+      volume: 3500000
+    - date: '2021-12-28'
+      close: 230.92
+      volume: 4024999
+    - date: '2021-12-29'
+      close: 230.85
+      volume: 3237499
+    - date: '2021-12-30'
+      close: 230.29
+      volume: 3762500
+    - date: '2021-12-31'
+      close: 230.13
+      volume: 2975000
+    - date: '2022-01-03'
+      close: 230.72
+      volume: 3500000
+    - date: '2022-01-04'
+      close: 231.16
+      volume: 4024999
+    - date: '2022-01-05'
+      close: 231.01
+      volume: 3237499
+    - date: '2022-01-06'
+      close: 230.57
+      volume: 3762500
+    - date: '2022-01-07'
+      close: 230.55
+      volume: 2975000
+    - date: '2022-01-10'
+      close: 231.09
+      volume: 3500000
+    - date: '2022-01-11'
+      close: 231.38
+      volume: 4024999
+    - date: '2022-01-12'
+      close: 231.2
+      volume: 3237499
+    - date: '2022-01-13'
+      close: 230.9
+      volume: 3762500
+    - date: '2022-01-14'
+      close: 230.98
+      volume: 2975000
+    - date: '2022-01-17'
+      close: 231.41
+      volume: 3500000
+    - date: '2022-01-18'
+      close: 231.57
+      volume: 4024999
+    - date: '2022-01-19'
+      close: 231.42
+      volume: 3237499
+    - date: '2022-01-20'
+      close: 231.27
+      volume: 3762500
+    - date: '2022-01-21'
+      close: 231.38
+      volume: 2975000
+    - date: '2022-01-24'
+      close: 231.7
+      volume: 3500000
+    - date: '2022-01-25'
+      close: 231.77
+      volume: 4024999
+    - date: '2022-01-26'
+      close: 231.69
+      volume: 3237499
+    - date: '2022-01-27'
+      close: 231.66
+      volume: 3762500
+    - date: '2022-01-28'
+      close: 231.76
+      volume: 2975000
+    - date: '2022-01-31'
+      close: 231.94
+      volume: 3500000
+    - date: '2022-02-01'
+      close: 231.97
+      volume: 4024999
+    - date: '2022-02-02'
+      close: 232.0
+      volume: 15750000
+    headlines:
+    - Union Budget 2022 leaves cigarette taxes unchanged for second straight year
+    - FMCG-Others and Hotels segments post strong post-COVID margin recovery
+    - Stock trades near 17x P/E with ~5% dividend yield and zero debt
+    numbers:
+      pe_ratio: 17.2
+      dividend_yield_pct: 4.9
+      debt_to_equity: 0.0
+  outcome:
+    stock_pct: 18.1
+    index_pct: -6.48
+    relative_pct: 24.58
+    actual_direction: up
+    entry_close: 232.0
+    exit_close: 274.0
+  key_clues:
+  - Favorable tax stability in core cash-cow business
+  - Zero debt and ~5% dividend yield cushion
+  - Improving non-cigarette segment margins
+  explanation: Steady cash flows, tax clarity, and modest starting valuation supported
+    a durable re-rating through 2022.
+  data_origin: synthetic
+- id: sc_irctc_2021
+  symbol: IRCTC
+  as_of_date: '2021-10-19'
+  window_days: 30
+  difficulty: 3
+  tags:
+  - hype_no_fundamentals
+  - regulatory_shock
+  context:
+    company: IRCTC Ltd
+    chart:
+    - date: '2021-09-08'
+      close: 1132.03
+      volume: 2975000
+    - date: '2021-09-09'
+      close: 1134.41
+      volume: 3500000
+    - date: '2021-09-10'
+      close: 1134.26
+      volume: 4024999
+    - date: '2021-09-13'
+      close: 1135.62
+      volume: 3237499
+    - date: '2021-09-14'
+      close: 1136.83
+      volume: 3762500
+    - date: '2021-09-15'
+      close: 1139.67
+      volume: 2975000
+    - date: '2021-09-16'
+      close: 1141.5
+      volume: 3500000
+    - date: '2021-09-17'
+      close: 1141.28
+      volume: 4024999
+    - date: '2021-09-20'
+      close: 1143.14
+      volume: 3237499
+    - date: '2021-09-21'
+      close: 1144.65
+      volume: 3762500
+    - date: '2021-09-22'
+      close: 1147.17
+      volume: 2975000
+    - date: '2021-09-23'
+      close: 1148.55
+      volume: 3500000
+    - date: '2021-09-24'
+      close: 1148.42
+      volume: 4024999
+    - date: '2021-09-27'
+      close: 1150.77
+      volume: 3237499
+    - date: '2021-09-28'
+      close: 1152.41
+      volume: 3762500
+    - date: '2021-09-29'
+      close: 1154.52
+      volume: 2975000
+    - date: '2021-09-30'
+      close: 1155.59
+      volume: 3500000
+    - date: '2021-10-01'
+      close: 1155.69
+      volume: 4024999
+    - date: '2021-10-04'
+      close: 1158.47
+      volume: 3237499
+    - date: '2021-10-05'
+      close: 1160.07
+      volume: 3762500
+    - date: '2021-10-06'
+      close: 1161.76
+      volume: 2975000
+    - date: '2021-10-07'
+      close: 1162.67
+      volume: 3500000
+    - date: '2021-10-08'
+      close: 1163.11
+      volume: 4024999
+    - date: '2021-10-11'
+      close: 1166.19
+      volume: 3237499
+    - date: '2021-10-12'
+      close: 1167.6
+      volume: 3762500
+    - date: '2021-10-13'
+      close: 1168.91
+      volume: 2975000
+    - date: '2021-10-14'
+      close: 1169.82
+      volume: 3500000
+    - date: '2021-10-15'
+      close: 1170.64
+      volume: 4024999
+    - date: '2021-10-18'
+      close: 1173.9
+      volume: 3237499
+    - date: '2021-10-19'
+      close: 1175.0
+      volume: 15750000
+    headlines:
+    - Stock surges 200%+ in 6 months ahead of 1:5 stock split amid retail FOMO
+    - Trades at >200x trailing earnings on monopoly ticketing narrative
+    - Ministry of Railways later notifies 50% convenience-fee revenue sharing (subsequently
+      withdrawn after volatility)
+    numbers:
+      pe_ratio: 210.0
+      six_month_rally_pct: 215.0
+      split_event: '1:5'
+  outcome:
+    stock_pct: -23.83
+    index_pct: -3.55
+    relative_pct: -20.28
+    actual_direction: down
+    entry_close: 1175.0
+    exit_close: 895.0
+  key_clues:
+  - Stock split mistaken for fundamental value creation
+  - Extreme >200x trailing P/E
+  - Single-ministry regulatory concentration risk
+  explanation: Parabolic pre-split rallies priced for perfection are acutely vulnerable
+    to regulatory or profit-booking shocks.
+  data_origin: synthetic
+- id: sc_bcg_2022
+  symbol: BCG
+  as_of_date: '2022-03-01'
+  window_days: 60
+  difficulty: 4
+  tags:
+  - pump_and_dump
+  - surveillance_list
+  - governance_fraud
+  context:
+    company: Brightcom Group Ltd
+    chart:
+    - date: '2022-01-19'
+      close: 109.38
+      volume: 3237499
+    - date: '2022-01-20'
+      close: 109.08
+      volume: 3762500
+    - date: '2022-01-21'
+      close: 109.14
+      volume: 2975000
+    - date: '2022-01-24'
+      close: 109.33
+      volume: 3500000
+    - date: '2022-01-25'
+      close: 109.36
+      volume: 4024999
+    - date: '2022-01-26'
+      close: 109.1
+      volume: 3237499
+    - date: '2022-01-27'
+      close: 108.88
+      volume: 3762500
+    - date: '2022-01-28'
+      close: 108.97
+      volume: 2975000
+    - date: '2022-01-31'
+      close: 109.1
+      volume: 3500000
+    - date: '2022-02-01'
+      close: 109.07
+      volume: 4024999
+    - date: '2022-02-02'
+      close: 108.83
+      volume: 3237499
+    - date: '2022-02-03'
+      close: 108.69
+      volume: 3762500
+    - date: '2022-02-04'
+      close: 108.79
+      volume: 2975000
+    - date: '2022-02-07'
+      close: 108.85
+      volume: 3500000
+    - date: '2022-02-08'
+      close: 108.79
+      volume: 4024999
+    - date: '2022-02-09'
+      close: 108.59
+      volume: 3237499
+    - date: '2022-02-10'
+      close: 108.51
+      volume: 3762500
+    - date: '2022-02-11'
+      close: 108.6
+      volume: 2975000
+    - date: '2022-02-14'
+      close: 108.59
+      volume: 3500000
+    - date: '2022-02-15'
+      close: 108.51
+      volume: 4024999
+    - date: '2022-02-16'
+      close: 108.37
+      volume: 3237499
+    - date: '2022-02-17'
+      close: 108.33
+      volume: 3762500
+    - date: '2022-02-18'
+      close: 108.38
+      volume: 2975000
+    - date: '2022-02-21'
+      close: 108.32
+      volume: 3500000
+    - date: '2022-02-22'
+      close: 108.25
+      volume: 4024999
+    - date: '2022-02-23'
+      close: 108.17
+      volume: 3237499
+    - date: '2022-02-24'
+      close: 108.14
+      volume: 3762500
+    - date: '2022-02-25'
+      close: 108.14
+      volume: 2975000
+    - date: '2022-02-28'
+      close: 108.04
+      volume: 3500000
+    - date: '2022-03-01'
+      close: 108.0
+      volume: 15750000
+    headlines:
+    - Stock jumped over 2,000% in 18 months heavily promoted across social media
+    - SEBI initiates forensic audit into preferential allotments and accounting disclosures
+    - Exchanges place scrip under ASM surveillance with repeated circuit limits
+    numbers:
+      one_year_rally_pct: 1950.0
+      surveillance: ASM Stage IV
+      forensic_audit: true
+  outcome:
+    stock_pct: -36.12
+    index_pct: 1.82
+    relative_pct: -37.94
+    actual_direction: down
+    entry_close: 108.0
+    exit_close: 68.99
+  key_clues:
+  - SEBI forensic audit on preferential allotments
+  - Extreme social media promotion + surveillance flags
+  - Disconnected valuation surge
+  explanation: Forensic audit disclosures on heavily promoted high-flyers historically
+    trigger severe multi-month drawdowns.
+  data_origin: synthetic
+- id: sc_suzlon_2008
+  symbol: SUZLON
+  as_of_date: '2008-01-15'
+  window_days: 90
+  difficulty: 3
+  tags:
+  - leverage_risk
+  - macro_downturn
+  context:
+    company: Suzlon Energy Ltd
+    chart:
+    - date: '2007-12-05'
+      close: 413.34
+      volume: 4024999
+    - date: '2007-12-06'
+      close: 413.9
+      volume: 3237499
+    - date: '2007-12-07'
+      close: 412.93
+      volume: 3762500
+    - date: '2007-12-10'
+      close: 411.86
+      volume: 2975000
+    - date: '2007-12-11'
+      close: 412.17
+      volume: 3500000
+    - date: '2007-12-12'
+      close: 413.28
+      volume: 4024999
+    - date: '2007-12-13'
+      close: 413.52
+      volume: 3237499
+    - date: '2007-12-14'
+      close: 412.58
+      volume: 3762500
+    - date: '2007-12-17'
+      close: 411.84
+      volume: 2975000
+    - date: '2007-12-18'
+      close: 412.28
+      volume: 3500000
+    - date: '2007-12-19'
+      close: 413.13
+      volume: 4024999
+    - date: '2007-12-20'
+      close: 413.13
+      volume: 3237499
+    - date: '2007-12-21'
+      close: 412.31
+      volume: 3762500
+    - date: '2007-12-24'
+      close: 411.87
+      volume: 2975000
+    - date: '2007-12-25'
+      close: 412.32
+      volume: 3500000
+    - date: '2007-12-26'
+      close: 412.91
+      volume: 4024999
+    - date: '2007-12-27'
+      close: 412.75
+      volume: 3237499
+    - date: '2007-12-28'
+      close: 412.12
+      volume: 3762500
+    - date: '2007-12-31'
+      close: 411.92
+      volume: 2975000
+    - date: '2008-01-01'
+      close: 412.3
+      volume: 3500000
+    - date: '2008-01-02'
+      close: 412.62
+      volume: 4024999
+    - date: '2008-01-03'
+      close: 412.42
+      volume: 3237499
+    - date: '2008-01-04'
+      close: 412.02
+      volume: 3762500
+    - date: '2008-01-07'
+      close: 411.98
+      volume: 2975000
+    - date: '2008-01-08'
+      close: 412.19
+      volume: 3500000
+    - date: '2008-01-09'
+      close: 412.29
+      volume: 4024999
+    - date: '2008-01-10'
+      close: 412.15
+      volume: 3237499
+    - date: '2008-01-11'
+      close: 411.99
+      volume: 3762500
+    - date: '2008-01-14'
+      close: 412.0
+      volume: 2975000
+    - date: '2008-01-15'
+      close: 412.0
+      volume: 15750000
+    headlines:
+    - Heavy debt taken on to acquire European wind turbine maker REpower
+    - US blade-cracking warranty issues trigger costly retrofits
+    - Global credit conditions tighten sharply in early 2008
+    numbers:
+      debt_to_equity: 1.85
+      pe_ratio: 52.0
+      warranty_provisions_rising: true
+  outcome:
+    stock_pct: -38.11
+    index_pct: -19.67
+    relative_pct: -18.44
+    actual_direction: down
+    entry_close: 412.0
+    exit_close: 255.0
+  key_clues:
+  - Debt-funded overseas acquisition
+  - Product warranty cost escalations
+  - High valuation multiple entering credit downturn
+  explanation: Debt-funded acquisitions combined with operational defects amplify
+    downside when global liquidity tightens.
+  data_origin: synthetic
+- id: sc_jetairways_2018
+  symbol: JETAIRWAYS
+  as_of_date: '2018-08-09'
+  window_days: 45
+  difficulty: 3
+  tags:
+  - leverage_risk
+  - auditor_delay
+  context:
+    company: Jet Airways (India) Ltd
+    chart:
+    - date: '2018-06-29'
+      close: 308.22
+      volume: 3762500
+    - date: '2018-07-02'
+      close: 307.25
+      volume: 2975000
+    - date: '2018-07-03'
+      close: 307.28
+      volume: 3500000
+    - date: '2018-07-04'
+      close: 307.71
+      volume: 4024999
+    - date: '2018-07-05'
+      close: 307.69
+      volume: 3237499
+    - date: '2018-07-06'
+      close: 307.06
+      volume: 3762500
+    - date: '2018-07-09'
+      close: 306.26
+      volume: 2975000
+    - date: '2018-07-10'
+      close: 306.35
+      volume: 3500000
+    - date: '2018-07-11'
+      close: 306.66
+      volume: 4024999
+    - date: '2018-07-12'
+      close: 306.51
+      volume: 3237499
+    - date: '2018-07-13'
+      close: 305.94
+      volume: 3762500
+    - date: '2018-07-16'
+      close: 305.3
+      volume: 2975000
+    - date: '2018-07-17'
+      close: 305.4
+      volume: 3500000
+    - date: '2018-07-18'
+      close: 305.57
+      volume: 4024999
+    - date: '2018-07-19'
+      close: 305.35
+      volume: 3237499
+    - date: '2018-07-20'
+      close: 304.87
+      volume: 3762500
+    - date: '2018-07-23'
+      close: 304.34
+      volume: 2975000
+    - date: '2018-07-24'
+      close: 304.41
+      volume: 3500000
+    - date: '2018-07-25'
+      close: 304.45
+      volume: 4024999
+    - date: '2018-07-26'
+      close: 304.2
+      volume: 3237499
+    - date: '2018-07-27'
+      close: 303.84
+      volume: 3762500
+    - date: '2018-07-30'
+      close: 303.39
+      volume: 2975000
+    - date: '2018-07-31'
+      close: 303.38
+      volume: 3500000
+    - date: '2018-08-01'
+      close: 303.31
+      volume: 4024999
+    - date: '2018-08-02'
+      close: 303.08
+      volume: 3237499
+    - date: '2018-08-03'
+      close: 302.84
+      volume: 3762500
+    - date: '2018-08-06'
+      close: 302.42
+      volume: 2975000
+    - date: '2018-08-07'
+      close: 302.31
+      volume: 3500000
+    - date: '2018-08-08'
+      close: 302.16
+      volume: 4024999
+    - date: '2018-08-09'
+      close: 302.0
+      volume: 15750000
+    headlines:
+    - Board unexpectedly defers Q1 FY19 financial results citing audit committee review
+    - Rising Brent crude oil and weak rupee squeeze airline operating cash flows
+    - Negative net worth with over Rs 8,000 Cr debt and vendor payment delays
+    numbers:
+      net_debt_cr: 8400
+      results_deferred: true
+      negative_net_worth: true
+  outcome:
+    stock_pct: -27.8
+    index_pct: -4.16
+    relative_pct: -23.64
+    actual_direction: down
+    entry_close: 302.0
+    exit_close: 218.03
+  key_clues:
+  - Unexplained deferral of quarterly results
+  - High debt and negative net worth in fuel-sensitive industry
+  - Cash crunch and lease arrears
+  explanation: Deferring quarterly results amid negative net worth and fuel spikes
+    signals acute solvency danger.
+  data_origin: synthetic
+- id: sc_kfa_2011
+  symbol: KFA
+  as_of_date: '2011-11-08'
+  window_days: 45
+  difficulty: 2
+  tags:
+  - leverage_risk
+  - solvency_crisis
+  context:
+    company: Kingfisher Airlines Ltd
+    chart:
+    - date: '2011-09-28'
+      close: 26.79
+      volume: 3237499
+    - date: '2011-09-29'
+      close: 26.81
+      volume: 3762500
+    - date: '2011-09-30'
+      close: 26.85
+      volume: 2975000
+    - date: '2011-10-03'
+      close: 26.82
+      volume: 3500000
+    - date: '2011-10-04'
+      close: 26.77
+      volume: 4024999
+    - date: '2011-10-05'
+      close: 26.74
+      volume: 3237499
+    - date: '2011-10-06'
+      close: 26.76
+      volume: 3762500
+    - date: '2011-10-07'
+      close: 26.79
+      volume: 2975000
+    - date: '2011-10-10'
+      close: 26.76
+      volume: 3500000
+    - date: '2011-10-11'
+      close: 26.71
+      volume: 4024999
+    - date: '2011-10-12'
+      close: 26.69
+      volume: 3237499
+    - date: '2011-10-13'
+      close: 26.71
+      volume: 3762500
+    - date: '2011-10-14'
+      close: 26.73
+      volume: 2975000
+    - date: '2011-10-17'
+      close: 26.69
+      volume: 3500000
+    - date: '2011-10-18'
+      close: 26.66
+      volume: 4024999
+    - date: '2011-10-19'
+      close: 26.65
+      volume: 3237499
+    - date: '2011-10-20'
+      close: 26.66
+      volume: 3762500
+    - date: '2011-10-21'
+      close: 26.66
+      volume: 2975000
+    - date: '2011-10-24'
+      close: 26.63
+      volume: 3500000
+    - date: '2011-10-25'
+      close: 26.6
+      volume: 4024999
+    - date: '2011-10-26'
+      close: 26.6
+      volume: 3237499
+    - date: '2011-10-27'
+      close: 26.6
+      volume: 3762500
+    - date: '2011-10-28'
+      close: 26.6
+      volume: 2975000
+    - date: '2011-10-31'
+      close: 26.57
+      volume: 3500000
+    - date: '2011-11-01'
+      close: 26.55
+      volume: 4024999
+    - date: '2011-11-02'
+      close: 26.55
+      volume: 3237499
+    - date: '2011-11-03'
+      close: 26.54
+      volume: 3762500
+    - date: '2011-11-04'
+      close: 26.54
+      volume: 2975000
+    - date: '2011-11-07'
+      close: 26.51
+      volume: 3500000
+    - date: '2011-11-08'
+      close: 26.5
+      volume: 15750000
+    headlines:
+    - Airline cancels dozens of daily flights due to unpaid fuel and airport dues
+    - Cumulative losses erode entire net worth; lenders restructure debt
+    - Promoter shares heavily pledged to consortium of PSU banks
+    numbers:
+      promoter_pledge_pct: 90.0
+      net_worth_negative: true
+      debt_cr: 7000
+  outcome:
+    stock_pct: -31.32
+    index_pct: -10.87
+    relative_pct: -20.45
+    actual_direction: down
+    entry_close: 26.5
+    exit_close: 18.2
+  key_clues:
+  - Flight cancellations from unpaid fuel bills
+  - 90% promoter share pledge
+  - Eroded net worth and chronic operating losses
+  explanation: Operational shutdown signals combined with negative net worth point
+    directly toward equity distress.
+  data_origin: synthetic
+- id: sc_coffeeday_2019
+  symbol: COFFEEDAY
+  as_of_date: '2019-07-29'
+  window_days: 30
+  difficulty: 3
+  tags:
+  - promoter_pledge
+  - leverage_risk
+  context:
+    company: Coffee Day Enterprises Ltd
+    chart:
+    - date: '2019-06-18'
+      close: 194.05
+      volume: 3500000
+    - date: '2019-06-19'
+      close: 194.38
+      volume: 4024999
+    - date: '2019-06-20'
+      close: 194.57
+      volume: 3237499
+    - date: '2019-06-21'
+      close: 194.28
+      volume: 3762500
+    - date: '2019-06-24'
+      close: 193.77
+      volume: 2975000
+    - date: '2019-06-25'
+      close: 193.74
+      volume: 3500000
+    - date: '2019-06-26'
+      close: 194.02
+      volume: 4024999
+    - date: '2019-06-27'
+      close: 194.11
+      volume: 3237499
+    - date: '2019-06-28'
+      close: 193.81
+      volume: 3762500
+    - date: '2019-07-01'
+      close: 193.39
+      volume: 2975000
+    - date: '2019-07-02'
+      close: 193.42
+      volume: 3500000
+    - date: '2019-07-03'
+      close: 193.63
+      volume: 4024999
+    - date: '2019-07-04'
+      close: 193.63
+      volume: 3237499
+    - date: '2019-07-05'
+      close: 193.36
+      volume: 3762500
+    - date: '2019-07-08'
+      close: 193.03
+      volume: 2975000
+    - date: '2019-07-09'
+      close: 193.08
+      volume: 3500000
+    - date: '2019-07-10'
+      close: 193.22
+      volume: 4024999
+    - date: '2019-07-11'
+      close: 193.16
+      volume: 3237499
+    - date: '2019-07-12'
+      close: 192.93
+      volume: 3762500
+    - date: '2019-07-15'
+      close: 192.69
+      volume: 2975000
+    - date: '2019-07-16'
+      close: 192.73
+      volume: 3500000
+    - date: '2019-07-17'
+      close: 192.78
+      volume: 4024999
+    - date: '2019-07-18'
+      close: 192.7
+      volume: 3237499
+    - date: '2019-07-19'
+      close: 192.53
+      volume: 3762500
+    - date: '2019-07-22'
+      close: 192.35
+      volume: 2975000
+    - date: '2019-07-23'
+      close: 192.35
+      volume: 3500000
+    - date: '2019-07-24'
+      close: 192.33
+      volume: 4024999
+    - date: '2019-07-25'
+      close: 192.25
+      volume: 3237499
+    - date: '2019-07-26'
+      close: 192.15
+      volume: 3762500
+    - date: '2019-07-29'
+      close: 192.0
+      volume: 15750000
+    headlines:
+    - Founder V.G. Siddhartha reported missing; letter cites severe debt and lender
+      pressure
+    - Over 75% of promoter shareholding is pledged across group entities
+    - Complex web of holding-company debt and subsidiary loans
+    numbers:
+      promoter_pledge_pct: 75.7
+      group_debt_cr: 6500
+      key_person_risk: true
+  outcome:
+    stock_pct: -66.67
+    index_pct: -1.28
+    relative_pct: -65.39
+    actual_direction: down
+    entry_close: 192.0
+    exit_close: 64.0
+  key_clues:
+  - High promoter pledging (>75%)
+  - Opaque holding-company debt structure
+  - Acute key-person and lender-invocation risk
+  explanation: High promoter pledging and complex group leverage create severe tail
+    risk when leadership shocks occur.
+  data_origin: synthetic
+- id: sc_rcom_2017
+  symbol: RCOM
+  as_of_date: '2017-05-26'
+  window_days: 45
+  difficulty: 3
+  tags:
+  - leverage_risk
+  - industry_disruption
+  context:
+    company: Reliance Communications Ltd
+    chart:
+    - date: '2017-04-17'
+      close: 26.42
+      volume: 3500000
+    - date: '2017-04-18'
+      close: 26.36
+      volume: 4024999
+    - date: '2017-04-19'
+      close: 26.37
+      volume: 3237499
+    - date: '2017-04-20'
+      close: 26.41
+      volume: 3762500
+    - date: '2017-04-21'
+      close: 26.4
+      volume: 2975000
+    - date: '2017-04-24'
+      close: 26.3
+      volume: 3500000
+    - date: '2017-04-25'
+      close: 26.26
+      volume: 4024999
+    - date: '2017-04-26'
+      close: 26.27
+      volume: 3237499
+    - date: '2017-04-27'
+      close: 26.3
+      volume: 3762500
+    - date: '2017-04-28'
+      close: 26.27
+      volume: 2975000
+    - date: '2017-05-01'
+      close: 26.18
+      volume: 3500000
+    - date: '2017-05-02'
+      close: 26.16
+      volume: 4024999
+    - date: '2017-05-03'
+      close: 26.17
+      volume: 3237499
+    - date: '2017-05-04'
+      close: 26.18
+      volume: 3762500
+    - date: '2017-05-05'
+      close: 26.15
+      volume: 2975000
+    - date: '2017-05-08'
+      close: 26.07
+      volume: 3500000
+    - date: '2017-05-09'
+      close: 26.05
+      volume: 4024999
+    - date: '2017-05-10'
+      close: 26.06
+      volume: 3237499
+    - date: '2017-05-11'
+      close: 26.06
+      volume: 3762500
+    - date: '2017-05-12'
+      close: 26.03
+      volume: 2975000
+    - date: '2017-05-15'
+      close: 25.96
+      volume: 3500000
+    - date: '2017-05-16'
+      close: 25.95
+      volume: 4024999
+    - date: '2017-05-17'
+      close: 25.95
+      volume: 3237499
+    - date: '2017-05-18'
+      close: 25.94
+      volume: 3762500
+    - date: '2017-05-19'
+      close: 25.91
+      volume: 2975000
+    - date: '2017-05-22'
+      close: 25.86
+      volume: 3500000
+    - date: '2017-05-23'
+      close: 25.85
+      volume: 4024999
+    - date: '2017-05-24'
+      close: 25.83
+      volume: 3237499
+    - date: '2017-05-25'
+      close: 25.82
+      volume: 3762500
+    - date: '2017-05-26'
+      close: 25.8
+      volume: 15750000
+    headlines:
+    - Rating agencies downgrade RCom debt to default/junk grades after missed loan
+      servicing
+    - Industry tariff war slashes wireless ARPU and EBITDA
+    - Total debt exceeds Rs 45,000 Cr — over 8x annual EBITDA
+    numbers:
+      debt_to_ebitda: 8.4
+      credit_rating_downgrade: true
+      surveillance: ASM Stage IV
+  outcome:
+    stock_pct: -17.83
+    index_pct: 1.83
+    relative_pct: -19.66
+    actual_direction: down
+    entry_close: 25.8
+    exit_close: 21.2
+  key_clues:
+  - Credit rating downgrade to default grade
+  - Unsustainable >8x Debt/EBITDA
+  - Structural sector tariff disruption
+  explanation: Credit downgrades and debt servicing delays rarely leave equity holders
+    unscathed.
+  data_origin: synthetic
+- id: sc_infibeam_2018
+  symbol: INFIBEAM
+  as_of_date: '2018-09-27'
+  window_days: 15
+  difficulty: 4
+  tags:
+  - governance_red_flag
+  - rumor_volatility
+  context:
+    company: Infibeam Avenues Ltd
+    chart:
+    - date: '2018-08-17'
+      close: 195.82
+      volume: 3762500
+    - date: '2018-08-20'
+      close: 196.0
+      volume: 2975000
+    - date: '2018-08-21'
+      close: 196.34
+      volume: 3500000
+    - date: '2018-08-22'
+      close: 196.34
+      volume: 4024999
+    - date: '2018-08-23'
+      close: 196.02
+      volume: 3237499
+    - date: '2018-08-24'
+      close: 195.84
+      volume: 3762500
+    - date: '2018-08-27'
+      close: 196.05
+      volume: 2975000
+    - date: '2018-08-28'
+      close: 196.3
+      volume: 3500000
+    - date: '2018-08-29'
+      close: 196.24
+      volume: 4024999
+    - date: '2018-08-30'
+      close: 195.97
+      volume: 3237499
+    - date: '2018-08-31'
+      close: 195.88
+      volume: 3762500
+    - date: '2018-09-03'
+      close: 196.08
+      volume: 2975000
+    - date: '2018-09-04'
+      close: 196.25
+      volume: 3500000
+    - date: '2018-09-05'
+      close: 196.16
+      volume: 4024999
+    - date: '2018-09-06'
+      close: 195.95
+      volume: 3237499
+    - date: '2018-09-07'
+      close: 195.93
+      volume: 3762500
+    - date: '2018-09-10'
+      close: 196.08
+      volume: 2975000
+    - date: '2018-09-11'
+      close: 196.17
+      volume: 3500000
+    - date: '2018-09-12'
+      close: 196.08
+      volume: 4024999
+    - date: '2018-09-13'
+      close: 195.95
+      volume: 3237499
+    - date: '2018-09-14'
+      close: 195.96
+      volume: 3762500
+    - date: '2018-09-17'
+      close: 196.07
+      volume: 2975000
+    - date: '2018-09-18'
+      close: 196.1
+      volume: 3500000
+    - date: '2018-09-19'
+      close: 196.03
+      volume: 4024999
+    - date: '2018-09-20'
+      close: 195.97
+      volume: 3237499
+    - date: '2018-09-21'
+      close: 195.99
+      volume: 3762500
+    - date: '2018-09-24'
+      close: 196.02
+      volume: 2975000
+    - date: '2018-09-25'
+      close: 196.02
+      volume: 3500000
+    - date: '2018-09-26'
+      close: 196.0
+      volume: 4024999
+    - date: '2018-09-27'
+      close: 196.0
+      volume: 15750000
+    headlines:
+    - WhatsApp messages circulate raising questions over interest-free loans to a
+      subsidiary
+    - High F&O open interest and thin institutional ownership amplify intraday swings
+    - Company clarifies accounting treatment after steep single-day plunge
+    numbers:
+      pe_ratio: 92.0
+      fo_leverage_high: true
+      institutional_pct: 6.5
+  outcome:
+    stock_pct: -72.45
+    index_pct: -4.6
+    relative_pct: -67.85
+    actual_direction: down
+    entry_close: 196.0
+    exit_close: 54.0
+  key_clues:
+  - Elevated valuation multiple with low institutional base
+  - Related-party loan questions
+  - F&O margin-call cascade risk
+  explanation: Low institutional ownership plus high valuation and governance rumors
+    can trigger violent liquidity air-pockets.
+  data_origin: synthetic
+- id: sc_infosys_2017
+  symbol: INFY
+  as_of_date: '2017-08-18'
+  window_days: 20
+  difficulty: 3
+  tags:
+  - governance_dispute
+  - leadership_exit
+  context:
+    company: Infosys Ltd
+    chart:
+    - date: '2017-07-10'
+      close: 464.51
+      volume: 3500000
+    - date: '2017-07-11'
+      close: 465.32
+      volume: 4024999
+    - date: '2017-07-12'
+      close: 465.27
+      volume: 3237499
+    - date: '2017-07-13'
+      close: 464.37
+      volume: 3762500
+    - date: '2017-07-14'
+      close: 463.85
+      volume: 2975000
+    - date: '2017-07-17'
+      close: 464.19
+      volume: 3500000
+    - date: '2017-07-18'
+      close: 464.78
+      volume: 4024999
+    - date: '2017-07-19'
+      close: 464.57
+      volume: 3237499
+    - date: '2017-07-20'
+      close: 463.8
+      volume: 3762500
+    - date: '2017-07-21'
+      close: 463.5
+      volume: 2975000
+    - date: '2017-07-24'
+      close: 463.81
+      volume: 3500000
+    - date: '2017-07-25'
+      close: 464.19
+      volume: 4024999
+    - date: '2017-07-26'
+      close: 463.89
+      volume: 3237499
+    - date: '2017-07-27'
+      close: 463.29
+      volume: 3762500
+    - date: '2017-07-28'
+      close: 463.16
+      volume: 2975000
+    - date: '2017-07-31'
+      close: 463.38
+      volume: 3500000
+    - date: '2017-08-01'
+      close: 463.56
+      volume: 4024999
+    - date: '2017-08-02'
+      close: 463.25
+      volume: 3237499
+    - date: '2017-08-03'
+      close: 462.84
+      volume: 3762500
+    - date: '2017-08-04'
+      close: 462.81
+      volume: 2975000
+    - date: '2017-08-07'
+      close: 462.89
+      volume: 3500000
+    - date: '2017-08-08'
+      close: 462.92
+      volume: 4024999
+    - date: '2017-08-09'
+      close: 462.67
+      volume: 3237499
+    - date: '2017-08-10'
+      close: 462.43
+      volume: 3762500
+    - date: '2017-08-11'
+      close: 462.42
+      volume: 2975000
+    - date: '2017-08-14'
+      close: 462.34
+      volume: 3500000
+    - date: '2017-08-15'
+      close: 462.27
+      volume: 4024999
+    - date: '2017-08-16'
+      close: 462.14
+      volume: 3237499
+    - date: '2017-08-17'
+      close: 462.05
+      volume: 3762500
+    - date: '2017-08-18'
+      close: 462.0
+      volume: 15750000
+    headlines:
+    - CEO Vishal Sikka resigns abruptly citing sustained public friction with founders
+    - Stock had been range-bound amid US visa and revenue-growth moderation
+    - Board announces Rs 13,000 Cr share buyback the same weekend
+    numbers:
+      net_cash_cr: 39000
+      ceo_resigned: true
+      pe_ratio: 15.8
+  outcome:
+    stock_pct: -4.55
+    index_pct: 0.94
+    relative_pct: -5.49
+    actual_direction: down
+    entry_close: 462.0
+    exit_close: 441.0
+  key_clues:
+  - Sudden CEO resignation amid public board-founder dispute
+  - Near-term leadership vacuum
+  - Strong cash cushion limits solvency risk
+  explanation: Sudden CEO exits trigger immediate governance uncertainty and sharp
+    short-term sell-offs even in cash-rich firms.
+  data_origin: synthetic
+- id: sc_bajfinance_2020
+  symbol: BAJFINANCE
+  as_of_date: '2020-05-26'
+  window_days: 90
+  difficulty: 3
+  tags:
+  - macro_crash_recovery
+  - earnings_surprise
+  context:
+    company: Bajaj Finance Ltd
+    chart:
+    - date: '2020-04-15'
+      close: 1952.87
+      volume: 3500000
+    - date: '2020-04-16'
+      close: 1948.51
+      volume: 4024999
+    - date: '2020-04-17'
+      close: 1949.69
+      volume: 3237499
+    - date: '2020-04-20'
+      close: 1950.67
+      volume: 3762500
+    - date: '2020-04-21'
+      close: 1949.72
+      volume: 2975000
+    - date: '2020-04-22'
+      close: 1944.87
+      volume: 3500000
+    - date: '2020-04-23'
+      close: 1941.74
+      volume: 4024999
+    - date: '2020-04-24'
+      close: 1943.19
+      volume: 3237499
+    - date: '2020-04-27'
+      close: 1943.09
+      volume: 3762500
+    - date: '2020-04-28'
+      close: 1941.4
+      volume: 2975000
+    - date: '2020-04-29'
+      close: 1937.19
+      volume: 3500000
+    - date: '2020-04-30'
+      close: 1935.11
+      volume: 4024999
+    - date: '2020-05-01'
+      close: 1936.44
+      volume: 3237499
+    - date: '2020-05-04'
+      close: 1935.26
+      volume: 3762500
+    - date: '2020-05-05'
+      close: 1933.2
+      volume: 2975000
+    - date: '2020-05-06'
+      close: 1929.82
+      volume: 3500000
+    - date: '2020-05-07'
+      close: 1928.5
+      volume: 4024999
+    - date: '2020-05-08'
+      close: 1929.41
+      volume: 3237499
+    - date: '2020-05-11'
+      close: 1927.27
+      volume: 3762500
+    - date: '2020-05-12'
+      close: 1925.2
+      volume: 2975000
+    - date: '2020-05-13'
+      close: 1922.71
+      volume: 3500000
+    - date: '2020-05-14'
+      close: 1921.83
+      volume: 4024999
+    - date: '2020-05-15'
+      close: 1922.07
+      volume: 3237499
+    - date: '2020-05-18'
+      close: 1919.2
+      volume: 3762500
+    - date: '2020-05-19'
+      close: 1917.46
+      volume: 2975000
+    - date: '2020-05-20'
+      close: 1915.81
+      volume: 3500000
+    - date: '2020-05-21'
+      close: 1915.0
+      volume: 4024999
+    - date: '2020-05-22'
+      close: 1914.46
+      volume: 3237499
+    - date: '2020-05-25'
+      close: 1911.14
+      volume: 3762500
+    - date: '2020-05-26'
+      close: 1910.0
+      volume: 15750000
+    headlines:
+    - Stock fell 60% from Feb 2020 peak during lockdown moratorium fears
+    - Management raises Rs 8,500 Cr equity buffer before crisis and cuts operating
+      costs rapidly
+    - Moratorium book shrinks faster than feared as unlock phases begin
+    numbers:
+      capital_adequacy_pct: 25.0
+      drawdown_from_peak_pct: -60.0
+      roe_pre_covid_pct: 20.2
+  outcome:
+    stock_pct: 82.2
+    index_pct: 26.99
+    relative_pct: 55.21
+    actual_direction: up
+    entry_close: 1910.0
+    exit_close: 3480.0
+  key_clues:
+  - Pre-crisis equity capital cushion (25% CAR)
+  - Rapidly declining moratorium book
+  - High-ROE consumer franchise recovering post-lockdown
+  explanation: Well-capitalized lenders that proactively build equity buffers often
+    rebound rapidly once credit-loss fears peak.
+  data_origin: synthetic
+- id: sc_tatamotors_2020
+  symbol: TATAMOTORS
+  as_of_date: '2020-10-27'
+  window_days: 90
+  difficulty: 3
+  tags:
+  - turnaround_execution
+  - earnings_surprise
+  context:
+    company: Tata Motors Ltd
+    chart:
+    - date: '2020-09-16'
+      close: 135.24
+      volume: 3500000
+    - date: '2020-09-17'
+      close: 135.07
+      volume: 4024999
+    - date: '2020-09-18'
+      close: 134.88
+      volume: 3237499
+    - date: '2020-09-21'
+      close: 134.99
+      volume: 3762500
+    - date: '2020-09-22'
+      close: 135.21
+      volume: 2975000
+    - date: '2020-09-23'
+      close: 135.28
+      volume: 3500000
+    - date: '2020-09-24'
+      close: 135.11
+      volume: 4024999
+    - date: '2020-09-25'
+      close: 134.98
+      volume: 3237499
+    - date: '2020-09-28'
+      close: 135.11
+      volume: 3762500
+    - date: '2020-09-29'
+      close: 135.29
+      volume: 2975000
+    - date: '2020-09-30'
+      close: 135.31
+      volume: 3500000
+    - date: '2020-10-01'
+      close: 135.16
+      volume: 4024999
+    - date: '2020-10-02'
+      close: 135.09
+      volume: 3237499
+    - date: '2020-10-05'
+      close: 135.23
+      volume: 3762500
+    - date: '2020-10-06'
+      close: 135.36
+      volume: 2975000
+    - date: '2020-10-07'
+      close: 135.34
+      volume: 3500000
+    - date: '2020-10-08'
+      close: 135.23
+      volume: 4024999
+    - date: '2020-10-09'
+      close: 135.21
+      volume: 3237499
+    - date: '2020-10-12'
+      close: 135.33
+      volume: 3762500
+    - date: '2020-10-13'
+      close: 135.41
+      volume: 2975000
+    - date: '2020-10-14'
+      close: 135.39
+      volume: 3500000
+    - date: '2020-10-15'
+      close: 135.32
+      volume: 4024999
+    - date: '2020-10-16'
+      close: 135.33
+      volume: 3237499
+    - date: '2020-10-19'
+      close: 135.42
+      volume: 3762500
+    - date: '2020-10-20'
+      close: 135.46
+      volume: 2975000
+    - date: '2020-10-21'
+      close: 135.44
+      volume: 3500000
+    - date: '2020-10-22'
+      close: 135.42
+      volume: 4024999
+    - date: '2020-10-23'
+      close: 135.44
+      volume: 3237499
+    - date: '2020-10-26'
+      close: 135.49
+      volume: 3762500
+    - date: '2020-10-27'
+      close: 135.5
+      volume: 15750000
+    headlines:
+    - JLR posts positive free cash flow and strong China luxury demand recovery
+    - Domestic passenger vehicle market share climbs on new SUV and EV launches
+    - Management commits to becoming net-auto-debt-free over three years
+    numbers:
+      jlr_fcf_positive: true
+      pv_market_share_rising: true
+      deleveraging_plan: true
+  outcome:
+    stock_pct: 105.17
+    index_pct: 19.76
+    relative_pct: 85.41
+    actual_direction: up
+    entry_close: 135.5
+    exit_close: 278.0
+  key_clues:
+  - Free cash flow inflection at JLR
+  - Explicit debt-reduction roadmap
+  - Domestic PV & EV market share momentum
+  explanation: Credible deleveraging paired with positive free cash flow often drives
+    powerful cyclical turnarounds.
+  data_origin: synthetic
+- id: sc_asianpaint_2024
+  symbol: ASIANPAINT
+  as_of_date: '2024-11-08'
+  window_days: 30
+  difficulty: 3
+  tags:
+  - earnings_surprise
+  - competitive_disruption
+  context:
+    company: Asian Paints Ltd
+    chart:
+    - date: '2024-09-30'
+      close: 2789.07
+      volume: 2975000
+    - date: '2024-10-01'
+      close: 2788.72
+      volume: 3500000
+    - date: '2024-10-02'
+      close: 2783.79
+      volume: 4024999
+    - date: '2024-10-03'
+      close: 2780.9
+      volume: 3237499
+    - date: '2024-10-04'
+      close: 2783.41
+      volume: 3762500
+    - date: '2024-10-07'
+      close: 2785.68
+      volume: 2975000
+    - date: '2024-10-08'
+      close: 2784.45
+      volume: 3500000
+    - date: '2024-10-09'
+      close: 2780.2
+      volume: 4024999
+    - date: '2024-10-10'
+      close: 2778.5
+      volume: 3237499
+    - date: '2024-10-11'
+      close: 2780.94
+      volume: 3762500
+    - date: '2024-10-14'
+      close: 2782.01
+      volume: 2975000
+    - date: '2024-10-15'
+      close: 2780.3
+      volume: 3500000
+    - date: '2024-10-16'
+      close: 2776.95
+      volume: 4024999
+    - date: '2024-10-17'
+      close: 2776.15
+      volume: 3237499
+    - date: '2024-10-18'
+      close: 2778.17
+      volume: 3762500
+    - date: '2024-10-21'
+      close: 2778.15
+      volume: 2975000
+    - date: '2024-10-22'
+      close: 2776.37
+      volume: 3500000
+    - date: '2024-10-23'
+      close: 2774.0
+      volume: 4024999
+    - date: '2024-10-24'
+      close: 2773.75
+      volume: 3237499
+    - date: '2024-10-25'
+      close: 2775.08
+      volume: 3762500
+    - date: '2024-10-28'
+      close: 2774.18
+      volume: 2975000
+    - date: '2024-10-29'
+      close: 2772.7
+      volume: 3500000
+    - date: '2024-10-30'
+      close: 2771.28
+      volume: 4024999
+    - date: '2024-10-31'
+      close: 2771.2
+      volume: 3237499
+    - date: '2024-11-01'
+      close: 2771.67
+      volume: 3762500
+    - date: '2024-11-04'
+      close: 2770.22
+      volume: 2975000
+    - date: '2024-11-05'
+      close: 2769.34
+      volume: 3500000
+    - date: '2024-11-06'
+      close: 2768.72
+      volume: 4024999
+    - date: '2024-11-07'
+      close: 2768.42
+      volume: 3237499
+    - date: '2024-11-08'
+      close: 2768.0
+      volume: 15750000
+    headlines:
+    - Q2 FY25 consolidated net profit drops 43% YoY with decorative volume decline
+    - New deep-pocketed competitor (Birla Opus) intensifies dealer discounting
+    - Stock still traded at ~55x trailing P/E heading into the earnings miss
+    numbers:
+      pe_ratio: 55.0
+      q2_pat_yoy_pct: -43.0
+      new_entrant_pressure: true
+  outcome:
+    stock_pct: -12.75
+    index_pct: 2.18
+    relative_pct: -14.93
+    actual_direction: down
+    entry_close: 2768.0
+    exit_close: 2415.19
+  key_clues:
+  - Sharp 43% YoY profit contraction
+  - Intensifying industry competition threatening moat
+  - Rich ~55x starting P/E multiple
+  explanation: When a richly valued market leader faces simultaneous earnings contraction
+    and structural competition, multiples compress.
+  data_origin: synthetic

@@ -1,0 +1,539 @@
+lessons:
+- id: les_l1_basics
+  level: 1
+  skill_area: basics
+  title: How Indian Stock Markets Actually Work
+  minutes: 7
+  sections:
+  - heading: Exchanges, Depositories & SEBI
+    body: In India, equities trade on NSE and BSE, shares are held electronically
+      in NSDL/CDSL Demat accounts, and SEBI regulates market integrity. Trades settle
+      on a T+1 cycle.
+    takeaway: Always verify your broker and depository statements rather than relying
+      on informal screenshots.
+  - heading: Order Types & Liquidity
+    body: Market orders execute immediately at prevailing prices, while limit orders
+      cap your execution price. Thin bid-ask liquidity increases hidden trading costs.
+    takeaway: Use limit orders in less liquid stocks to avoid unexpected slippage.
+  - heading: Market Cap & Corporate Actions
+    body: Market capitalisation equals share price times total shares. Splits and
+      bonus issues adjust share count and per-share price without creating instant
+      free wealth.
+    takeaway: Never judge a stock as 'cheap' solely by a low rupee share price.
+  check_questions:
+  - id: chk_l1_b_1
+    text: Which body regulates NSE, BSE, and stock brokers in India?
+    options:
+    - SEBI
+    - TRAI
+    - FSSAI
+    answer: SEBI
+    explanation: SEBI is India's capital markets regulator.
+  - id: chk_l1_b_2
+    text: After a 1:5 stock split, what happens to total business value immediately?
+    options:
+    - Unchanged
+    - Increases 5x
+    - Drops 80%
+    answer: Unchanged
+    explanation: Splits divide the same ownership pie into more slices.
+  - id: chk_l1_b_3
+    text: Which order type lets you specify your maximum purchase price?
+    options:
+    - Limit order
+    - Market order
+    - GTT cancel
+    answer: Limit order
+    explanation: Limit orders enforce price discipline.
+  data_origin: synthetic
+- id: les_l1_reading_stock
+  level: 1
+  skill_area: reading_stock
+  title: Reading the Three Core Financial Statements
+  minutes: 8
+  sections:
+  - heading: P&L vs Balance Sheet vs Cash Flow
+    body: The Profit & Loss statement tracks sales and profits over a period; the
+      Balance Sheet captures assets, debt, and equity at a date; the Cash Flow statement
+      verifies actual cash generated.
+    takeaway: Never evaluate a business from headline net profit alone.
+  - heading: EPS, P/E and Debt-to-Equity
+    body: EPS divides net profit by shares; P/E compares share price to EPS. Debt-to-Equity
+      shows financial leverage relative to shareholder capital.
+    takeaway: Pair valuation ratios with balance-sheet leverage checks.
+  - heading: Promoter Pledging
+    body: When promoters pledge shares as loan collateral, price drops can trigger
+      forced lender selling, accelerating declines.
+    takeaway: Check quarterly NSE/BSE shareholding filings for promoter pledge trends.
+  check_questions:
+  - id: chk_l1_rs_1
+    text: Which statement confirms whether accounting profits turned into real cash?
+    options:
+    - Cash Flow Statement
+    - Press Release
+    - Logo Filing
+    answer: Cash Flow Statement
+    explanation: Operating Cash Flow tracks actual cash collected.
+  - id: chk_l1_rs_2
+    text: What risk arises from very high promoter share pledging?
+    options:
+    - Forced selling on price drops
+    - Guaranteed bonus shares
+    - Zero debt
+    answer: Forced selling on price drops
+    explanation: Lenders can liquidate pledged shares during downturns.
+  - id: chk_l1_rs_3
+    text: How is P/E calculated?
+    options:
+    - Share price / EPS
+    - Debt / Cash
+    - Revenue / Employees
+    answer: Share price / EPS
+    explanation: P/E expresses price per rupee of earnings.
+  data_origin: synthetic
+- id: les_l1_judging_info
+  level: 1
+  skill_area: judging_info
+  title: Spotting Stock Tip Red Flags & Finfluencer Traps
+  minutes: 6
+  sections:
+  - heading: Guaranteed Returns & Urgency
+    body: No legitimate equity source can promise returns. Tips marketed as certain
+      winners, or pressure to act within minutes before an upper circuit, are classic
+      manipulation tactics.
+    takeaway: Treat guaranteed-return claims as immediate disqualifiers.
+  - heading: SEBI Registration Checks
+    body: Registered Research Analysts carry INH numbers and Investment Advisers carry
+      INA numbers. Always verify registration on SEBI's official registry.
+    takeaway: Unregistered tips carry zero regulatory accountability.
+  - heading: Primary Filings Beat Forwards
+    body: Cross-check any viral claim against official NSE/BSE corporate announcements,
+      ASM/GSM surveillance lists, and quarterly filings.
+    takeaway: If a claim is not in official filings, treat it as unverified rumor.
+  check_questions:
+  - id: chk_l1_ji_1
+    text: What prefix identifies a SEBI-registered Research Analyst?
+    options:
+    - INH
+    - PAN
+    - GST
+    answer: INH
+    explanation: SEBI Research Analysts use INH registration numbers.
+  - id: chk_l1_ji_2
+    text: Why do pump-and-dump messages use extreme urgency?
+    options:
+    - To stop you from verifying facts
+    - Because NSE closes at 10 AM
+    - SEBI requires urgency
+    answer: To stop you from verifying facts
+    explanation: Urgency short-circuits critical thinking.
+  - id: chk_l1_ji_3
+    text: Where should you verify a company's official earnings?
+    options:
+    - NSE/BSE corporate filings
+    - WhatsApp forwards
+    - Anonymous reels
+    answer: NSE/BSE corporate filings
+    explanation: Exchange filings are the primary legal record.
+  data_origin: synthetic
+- id: les_l1_risk
+  level: 1
+  skill_area: risk
+  title: Drawdown Math, Diversification & Calibration Basics
+  minutes: 7
+  sections:
+  - heading: Asymmetry of Losses
+    body: A 50% fall requires a 100% gain to recover; an 80% fall requires a 400%
+      gain. Protecting against catastrophic loss matters more than chasing hype.
+    takeaway: Avoiding large permanent losses is the foundation of risk discipline.
+  - heading: Liquidity & Circuit Risk
+    body: Illiquid small-caps can lock at lower circuits for days with no buyers,
+      trapping holders regardless of stop-loss plans.
+    takeaway: Check daily traded value and surveillance status before assuming easy
+      exits.
+  - heading: Confidence Calibration (Brier Score)
+    body: Being 95% confident on guesses you get wrong half the time produces terrible
+      calibration. A Brier score below 0.25 shows disciplined judgment.
+    takeaway: Match your confidence level honestly to the strength of your evidence.
+  check_questions:
+  - id: chk_l1_r_1
+    text: After a 50% drop, what gain is needed to break even?
+    options:
+    - 100%
+    - 50%
+    - 25%
+    answer: 100%
+    explanation: From 50 back to 100 is a 100% gain.
+  - id: chk_l1_r_2
+    text: What does a lower Brier score indicate?
+    options:
+    - Better confidence calibration
+    - Higher leverage
+    - More frequent trading
+    answer: Better confidence calibration
+    explanation: Brier score ranges from 0 (perfect) to 1 (worst).
+  - id: chk_l1_r_3
+    text: Why should emergency funds stay outside volatile equities?
+    options:
+    - Avoids forced selling during market drops
+    - Equities are illegal for emergencies
+    - Banks forbid Demat accounts
+    answer: Avoids forced selling during market drops
+    explanation: Liquid reserves protect you from selling at downturn lows.
+  data_origin: synthetic
+- id: les_l2_basics
+  level: 2
+  skill_area: basics
+  title: IPOs, OFS, Free Float & Surveillance Segments
+  minutes: 8
+  sections:
+  - heading: Fresh Issue vs Offer for Sale (OFS)
+    body: In an IPO, fresh issue proceeds fund the business, while OFS proceeds go
+      to exiting shareholders. Reading the DRHP clarifies who is cashing out.
+    takeaway: Always inspect the OFS ratio and use-of-proceeds table.
+  - heading: Free Float & T2T Surveillance
+    body: Low free float can exaggerate price swings. Exchanges place volatile stocks
+      in Trade-to-Trade (T2T) or ASM/GSM segments to require 100% delivery.
+    takeaway: Surveillance tags are risk warnings, not badges of strength.
+  - heading: Adjusted Historical Prices
+    body: Historical charts must adjust for splits and bonuses so past returns reflect
+      reality accurately.
+    takeaway: Always analyze split-adjusted series when studying historical episodes.
+  check_questions:
+  - id: chk_l2_b_1
+    text: Where do proceeds from an IPO Offer for Sale (OFS) go?
+    options:
+    - Exiting shareholders
+    - Company factory capex
+    - SEBI fund
+    answer: Exiting shareholders
+    explanation: OFS transfers shares from existing holders to new investors.
+  - id: chk_l2_b_2
+    text: What does the T2T segment prohibit?
+    options:
+    - Intraday squaring-off
+    - Long-term holding
+    - Reading annual reports
+    answer: Intraday squaring-off
+    explanation: T2T mandates delivery on every trade.
+  - id: chk_l2_b_3
+    text: Why are historical price charts adjusted for stock splits?
+    options:
+    - Prevent artificial price-drop distortions
+    - Hide bear markets
+    - Increase market cap
+    answer: Prevent artificial price-drop distortions
+    explanation: Adjusted prices keep return math accurate.
+  data_origin: synthetic
+- id: les_l2_reading_stock
+  level: 2
+  skill_area: reading_stock
+  title: Cash Flow Quality, Leverage & Forensic Red Flags
+  minutes: 9
+  sections:
+  - heading: Operating Cash Flow & Receivables
+    body: When trade receivables grow far faster than sales, reported profit may not
+      be collectible cash. Compare CFO to EBITDA over 3-5 years.
+    takeaway: Cash flow divergence is an early warning sign of earnings stress.
+  - heading: Bank/NBFC Asset Quality
+    body: For lenders, track Gross/Net NPAs, provisioning coverage, and funding maturity
+      profiles rather than standard manufacturing ratios.
+    takeaway: Use sector-appropriate metrics when reading financial statements.
+  - heading: Auditor Resignations & Related Parties
+    body: Sudden auditor exits, qualified opinions, and large related-party loans
+      have preceded numerous Indian wealth-destruction episodes.
+    takeaway: Never dismiss an unexplained auditor resignation.
+  check_questions:
+  - id: chk_l2_rs_1
+    text: What does receivables growing much faster than revenue suggest?
+    options:
+    - Collection stress or aggressive credit sales
+    - Instant cash windfall
+    - Zero risk
+    answer: Collection stress or aggressive credit sales
+    explanation: Uncollected receivables raise earnings-quality concerns.
+  - id: chk_l2_rs_2
+    text: Which metric is central to judging a bank's loan book health?
+    options:
+    - Gross/Net NPA ratio
+    - Factory utilisation
+    - Store count
+    answer: Gross/Net NPA ratio
+    explanation: NPAs measure non-performing loans.
+  - id: chk_l2_rs_3
+    text: Why does EV/EBITDA help compare peers with different debt?
+    options:
+    - EV incorporates net debt
+    - EBITDA ignores sales
+    - P/E includes debt
+    answer: EV incorporates net debt
+    explanation: Enterprise Value normalizes across capital structures.
+  data_origin: synthetic
+- id: les_l2_judging_info
+  level: 2
+  skill_area: judging_info
+  title: Auditing Claims, Timestamps & Pump-and-Dump Patterns
+  minutes: 7
+  sections:
+  - heading: Anatomy of a Pump-and-Dump
+    body: Operators accumulate an illiquid stock, blast coordinated SMS/Telegram/reel
+      hype, trigger a sudden volume spike, and dump into retail demand.
+    takeaway: Sudden volume spikes + unsolicited hype in illiquid stocks = high alert.
+  - heading: Cherry-Picking & Deleted Posts
+    body: Many social accounts highlight 1 winning screenshot while deleting 10 losing
+      posts. A reliable track record logs every claim immutably.
+    takeaway: Demand complete, timestamped history—never isolated screenshots.
+  - heading: Reading Beyond Headlines
+    body: A 'Rs 500 Cr order' headline might be a non-binding MoU spread over 8 years.
+      Primary exchange filings reveal the fine print.
+    takeaway: Always read the underlying exchange PDF before reacting to a headline.
+  check_questions:
+  - id: chk_l2_ji_1
+    text: What is the main flaw with judging a tipster from viral winning screenshots?
+    options:
+    - Losing calls may be hidden or deleted
+    - Screenshots are always illegal
+    - Winners never repeat
+    answer: Losing calls may be hidden or deleted
+    explanation: Survivorship/cherry-picking hides the true hit rate.
+  - id: chk_l2_ji_2
+    text: Does an 'educational only' disclaimer make an unregistered price target
+      safe?
+    options:
+    - 'No'
+    - Yes, always
+    - Only on weekends
+    answer: 'No'
+    explanation: Disclaimers do not verify competence or remove conflicts.
+  - id: chk_l2_ji_3
+    text: What signals a possible pump-and-dump in a micro-cap?
+    options:
+    - Unsolicited bulk messages + abrupt volume spike
+    - Annual AGM notice
+    - Quarterly index rebalance
+    answer: Unsolicited bulk messages + abrupt volume spike
+    explanation: Coordinated promotion plus abnormal volume is a classic manipulation
+      pattern.
+  data_origin: synthetic
+- id: les_l2_risk
+  level: 2
+  skill_area: risk
+  title: Behavioral Biases & Portfolio Position Sizing
+  minutes: 8
+  sections:
+  - heading: Confirmation, Anchoring & Sunk Cost
+    body: Anchoring to a 52-week high or refusing to reassess a losing thesis traps
+      investors in deteriorating businesses.
+    takeaway: Evaluate every situation on today's facts, not yesterday's entry price.
+  - heading: Sector Correlation & Drawdowns
+    body: Owning 8 stocks in the same cyclical industry concentrates risk. Measure
+      portfolio exposure by shared risk factors.
+    takeaway: True diversification spans distinct sectors and asset classes.
+  - heading: Derivatives & Leverage Reality
+    body: SEBI studies show over 90% of individual F&O traders lose money net of costs
+      due to leverage, decay, and overtrading.
+    takeaway: Understand empirical base rates before touching leveraged instruments.
+  check_questions:
+  - id: chk_l2_r_1
+    text: Refusing to revisit a broken thesis because you already lost money is called?
+    options:
+    - Sunk cost fallacy
+    - Diversification
+    - Free float
+    answer: Sunk cost fallacy
+    explanation: Past losses cannot be recovered by ignoring new facts.
+  - id: chk_l2_r_2
+    text: Why did SEBI's F&O study urge caution for retail traders?
+    options:
+    - Over 90% of individual F&O traders incurred net losses
+    - F&O has zero risk
+    - Margins are free
+    answer: Over 90% of individual F&O traders incurred net losses
+    explanation: Empirical data shows heavy retail losses in derivatives.
+  - id: chk_l2_r_3
+    text: Assuming a stock down 70% from its peak must be cheap is an example of?
+    options:
+    - Anchoring bias
+    - Brier calibration
+    - T+1 settlement
+    answer: Anchoring bias
+    explanation: A prior peak price says nothing about current intrinsic health.
+  data_origin: synthetic
+- id: les_l3_basics
+  level: 3
+  skill_area: basics
+  title: Corporate Restructurings, IBC Waterfalls & Governance
+  minutes: 9
+  sections:
+  - heading: IBC & Equity Waterfall Risk
+    body: In insolvency proceedings under India's IBC, secured creditors rank first
+      and equity shareholders sit last—often facing near-total wipeout.
+    takeaway: Distressed stocks trading at low rupee prices can still go to zero.
+  - heading: Lock-in Expiries & Preferential Warrants
+    body: Pre-IPO lock-in expiries create supply waves, while preferential warrants
+      can dilute minority stakes.
+    takeaway: Track shareholding structure and upcoming supply events.
+  - heading: LODR & Surveillance Escalation
+    body: SEBI LODR rules mandate timely disclosure; GSM stages warn when price decouples
+      from fundamentals.
+    takeaway: Governance hygiene protects minority shareholders over full cycles.
+  check_questions:
+  - id: chk_l3_b_1
+    text: Where do equity shareholders rank in an IBC insolvency waterfall?
+    options:
+    - Last, after creditors
+    - First, before banks
+    - Equal to secured lenders
+    answer: Last, after creditors
+    explanation: Equity absorbs losses first in bankruptcy.
+  - id: chk_l3_b_2
+    text: Why do pre-IPO lock-in expiry dates matter?
+    options:
+    - Large early-investor supply can hit the market
+    - They double company profits
+    - They ban trading
+    answer: Large early-investor supply can hit the market
+    explanation: Unlocked shares can increase selling pressure.
+  - id: chk_l3_b_3
+    text: What does GSM (Graded Surveillance Measure) warn about?
+    options:
+    - Price moves disconnected from fundamentals
+    - High dividend yield
+    - NIFTY 50 inclusion
+    answer: Price moves disconnected from fundamentals
+    explanation: GSM flags abnormal price-fundamental divergence.
+  data_origin: synthetic
+- id: les_l3_reading_stock
+  level: 3
+  skill_area: reading_stock
+  title: 'Forensic Financial Analysis: Spotting Hidden Fragility'
+  minutes: 10
+  sections:
+  - heading: Cash Yield Anomalies & Capitalization
+    body: Huge reported cash earning negligible interest alongside high-cost borrowing
+      was a signature warning sign in the 2009 Satyam scandal. Aggressive cost capitalization
+      similarly inflates EBITDA.
+    takeaway: Cross-check cash interest yield and CFO/EBITDA consistency.
+  - heading: Asset-Liability Mismatch (ALM)
+    body: NBFCs borrowing via short-term commercial paper to fund 15-year loans face
+      sudden rollover crises when credit markets tighten (e.g., 2018 IL&FS/DHFL episode).
+    takeaway: Match liability maturity against asset duration in financial firms.
+  - heading: Consolidated Accounts & Contingent Liabilities
+    body: Subsidiary debt and off-balance-sheet guarantees hide in standalone filings.
+      Always audit consolidated statements and footnote disclosures.
+    takeaway: Footnotes often reveal the exact risk missing from headline slides.
+  check_questions:
+  - id: chk_l3_rs_1
+    text: Why is funding 15-year loans with 3-month commercial paper risky?
+    options:
+    - Rollover/liquidity freeze risk (ALM mismatch)
+    - Too much equity
+    - Zero interest cost
+    answer: Rollover/liquidity freeze risk (ALM mismatch)
+    explanation: Short-term funding can dry up overnight during credit stress.
+  - id: chk_l3_rs_2
+    text: What happens when a firm aggressively capitalizes regular operating costs?
+    options:
+    - Current profit is artificially inflated
+    - Cash flow genuinely doubles
+    - Debt disappears
+    answer: Current profit is artificially inflated
+    explanation: Deferring costs to the balance sheet masks true ongoing expenses.
+  - id: chk_l3_rs_3
+    text: Why must conglomerates be read on a consolidated basis?
+    options:
+    - Subsidiary debt and losses appear in consolidated accounts
+    - Standalone is always larger
+    - Consolidated omits debt
+    answer: Subsidiary debt and losses appear in consolidated accounts
+    explanation: Standalone accounts can hide subsidiary leverage.
+  data_origin: synthetic
+- id: les_l3_judging_info
+  level: 3
+  skill_area: judging_info
+  title: Evaluating Research Sources, Conflicts & Benchmarks
+  minutes: 8
+  sections:
+  - heading: Source Reliability vs Stock Advice
+    body: Rating a source measures historical transparency, SEBI registration, and
+      scored accuracy—never whether a specific stock will rise.
+    takeaway: Treat source reliability as a filter for information quality, not a
+      buy signal.
+  - heading: Incentives on Both Sides
+    body: Issuer-paid reports have bullish conflicts; activist short reports have
+      bearish incentives. Primary filings remain the arbiter.
+    takeaway: Check who profits from your belief before trusting any narrative.
+  - heading: Benchmarking & Falsifiability
+    body: A claim without timeframe or benchmark cannot be audited. Measure outcomes
+      against both absolute return and NIFTY 50.
+    takeaway: Hold every information source to falsifiable, benchmarked standards.
+  check_questions:
+  - id: chk_l3_ji_1
+    text: What does a 'reliable' source label in Aacharya mean?
+    options:
+    - Strong verified track record and low red flags — not a buy recommendation
+    - Guaranteed stock profit
+    - SEBI insurance
+    answer: Strong verified track record and low red flags — not a buy recommendation
+    explanation: Source ratings evaluate sources, never stocks.
+  - id: chk_l3_ji_2
+    text: Why compare a call's return against NIFTY 50?
+    options:
+    - Separates broad market rally from stock-specific outperformance
+    - NIFTY never moves
+    - Removes taxes
+    answer: Separates broad market rally from stock-specific outperformance
+    explanation: Benchmarking distinguishes alpha from beta.
+  - id: chk_l3_ji_3
+    text: How should an account with 500k followers but only 2 scorable calls be labeled?
+    options:
+    - not_enough_history
+    - reliable
+    - top_analyst
+    answer: not_enough_history
+    explanation: Popularity is not an audited track record.
+  data_origin: synthetic
+- id: les_l3_risk
+  level: 3
+  skill_area: risk
+  title: Pre-Mortems, Tail Risk & Decision Journals
+  minutes: 8
+  sections:
+  - heading: Base Rates & Pre-Mortems
+    body: Before committing to any thesis, check historical base rates and run a pre-mortem
+      imagining how the thesis could fail completely.
+    takeaway: Structured skepticism outperforms gut optimism.
+  - heading: Tail Risk & Correlation Spikes
+    body: During systemic panics (e.g., 2008, 2020), equity correlations spike toward
+      1. Avoiding fragile leverage and concentrated employer-stock risk protects survival.
+    takeaway: Design risk limits for crisis regimes, not calm markets.
+  - heading: Decision Journals & Calibration
+    body: Logging your thesis, key clues, and numeric confidence (50-100%) before
+      outcomes arrive eliminates hindsight bias and improves Brier score over time.
+    takeaway: What gets measured and calibrated gets improved.
+  check_questions:
+  - id: chk_l3_r_1
+    text: What is the goal of a pre-mortem exercise?
+    options:
+    - Identify plausible failure modes before committing
+    - Predict exact price targets
+    - Ignore risks
+    answer: Identify plausible failure modes before committing
+    explanation: Pre-mortems expose blind spots early.
+  - id: chk_l3_r_2
+    text: What happens to equity correlations during a systemic market panic?
+    options:
+    - They spike sharply higher as most stocks fall together
+    - They drop to zero
+    - Only one stock moves
+    answer: They spike sharply higher as most stocks fall together
+    explanation: Systemic liquidity shocks hit broad equities simultaneously.
+  - id: chk_l3_r_3
+    text: Why log confidence levels in a decision journal?
+    options:
+    - Prevents hindsight bias and tracks calibration
+    - Guarantees profits
+    - Replaces SEBI filings
+    answer: Prevents hindsight bias and tracks calibration
+    explanation: Recorded probabilities allow objective Brier auditing.
+  data_origin: synthetic

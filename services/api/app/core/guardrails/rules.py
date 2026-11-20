@@ -70,7 +70,9 @@ _BENIGN_CONCEPT_PHRASES_RE = re.compile(
     r"is\b|means\b|refers\s+to)|"
     r"stop[- ]?loss\s+(?:order|orders|level|levels|mechanism|rule|is\b|helps?\b|limits?\b)|"
     r"(?:target\s+prices?|price\s+targets?)\s+"
-    r"(?:are|is|represent|refer\s+to|estimates?|not\s+guarantees)|"
+    r"(?:are|is|represent|refer\s+to|estimates?|not\s+guarantees)"
+    # ...but not when the verb is followed by a figure ("price target is Rs 2500").
+    r"(?!\s*(?:of\s+|at\s+)?(?:₹|rs\.?|inr)?\s*\d)|"
     r"multibagger\s+(?:is\s+a\s+term|refers\s+to|means|coined\s+by)|"
     r"upper\s+circuit\s+(?:limit|limits|band|mechanism|is\b|halts?\b)"
     r")\b",
