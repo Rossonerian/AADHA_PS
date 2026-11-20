@@ -3544,3 +3544,183 @@ button {
 .looseleaf-button {
   min-height: 44px;
 }
+:root[data-theme="light"] {
+  --background: var(--canvas);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--green);
+  --primary-foreground: #fff;
+  --secondary: var(--green-soft);
+  --secondary-foreground: var(--ink);
+  --muted: var(--canvas);
+  --muted-foreground: var(--muted);
+  --accent: var(--accent-100);
+  --accent-foreground: var(--ink);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--accent-600);
+}
+:root[data-theme="dark"] {
+  --background: var(--canvas);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--green);
+  --primary-foreground: #071307;
+  --secondary: #1b464b;
+  --secondary-foreground: var(--ink);
+  --muted: #14291a;
+  --muted-foreground: var(--muted);
+  --accent: #1b384b;
+  --accent-foreground: var(--ink);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: #8ebad7;
+  --ll-desk: var(--canvas);
+  --ll-desk-deep: #102114;
+  --ll-paper: var(--surface);
+  --ll-paper-shade: #102114;
+  --ll-slip: #1a3320;
+  --ll-card: var(--surface);
+  --ll-graph: #102114;
+  --ll-ink: var(--ink);
+  --ll-ink-soft: var(--ink-soft);
+  --ll-ink-muted: var(--muted);
+  --ll-pencil-text: #c3d5c5;
+  --ll-pencil-mark: #76937b;
+  --ll-marker: #8fd78e;
+  --ll-hi: #296970;
+  --ll-hi-deep: #8fcfd6;
+  --ll-focus: #8ebad7;
+  --ll-paper-light: linear-gradient(160deg, rgb(255 255 255 / 0.035), transparent 58%);
+  --ll-tex-paper: none;
+}
+html,
+body {
+  min-height: 100%;
+  background: var(--canvas);
+  color: var(--ink);
+}
+html[data-theme="dark"] body {
+  background: var(--canvas);
+  color: var(--ink);
+}
+.app-shell[data-theme="dark"] .sidebar,
+.app-shell[data-theme="dark"] .topbar,
+.app-shell[data-theme="dark"] .panel,
+.app-shell[data-theme="dark"] .signin-panel,
+.app-shell[data-theme="dark"] .chart-card,
+.app-shell[data-theme="dark"] .home-action-card,
+.app-shell[data-theme="dark"] .level-card,
+.app-shell[data-theme="dark"] .lesson-row,
+.app-shell[data-theme="dark"] .search-panel,
+.app-shell[data-theme="dark"] .scenario-chart-panel,
+.app-shell[data-theme="dark"] .assessment-question,
+.app-shell[data-theme="dark"] .assessment-callout,
+.app-shell[data-theme="dark"] .reading-panel,
+.app-shell[data-theme="dark"] .lesson-check,
+.app-shell[data-theme="dark"] .verifier-form-panel,
+.app-shell[data-theme="dark"] .source-summary,
+.app-shell[data-theme="dark"] .source-history,
+.app-shell[data-theme="dark"] .checked-list,
+.app-shell[data-theme="dark"] .results-empty,
+.app-shell[data-theme="dark"] .quiz-panel,
+.app-shell[data-theme="dark"] .assessment-result {
+  background-color: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+}
+.app-shell[data-theme="dark"] input,
+.app-shell[data-theme="dark"] textarea,
+.app-shell[data-theme="dark"] select,
+.app-shell[data-theme="dark"] .quiz-option,
+.app-shell[data-theme="dark"] .theme-toggle {
+  background-color: #102114;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.app-shell[data-theme="dark"] input::placeholder,
+.app-shell[data-theme="dark"] textarea::placeholder {
+  color: #a8bfaa;
+}
+.app-shell[data-theme="dark"] .nav-link,
+.app-shell[data-theme="dark"] .breadcrumb,
+.app-shell[data-theme="dark"] .section-heading,
+.app-shell[data-theme="dark"] .eyebrow,
+.app-shell[data-theme="dark"] .lesson-info p,
+.app-shell[data-theme="dark"] .panel p,
+.app-shell[data-theme="dark"] .muted {
+  color: var(--ink-soft);
+}
+.app-shell[data-theme="dark"] .main-column,
+.app-shell[data-theme="dark"] .page-content {
+  background: transparent;
+}
+.welcome-brand {
+  justify-content: space-between;
+}
+.welcome-brand-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.welcome-copy {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid rgb(237 249 237 / 0.2);
+  border-radius: 24px;
+  background: rgb(6 19 7 / 0.82);
+  box-shadow: 0 24px 64px rgb(0 0 0 / 0.24);
+  backdrop-filter: blur(10px);
+}
+.welcome-copy h1 {
+  color: #fff;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.welcome-copy h1 em {
+  color: #c9efc9;
+}
+.welcome-copy > p {
+  color: #e0eee1;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.welcome-points {
+  color: #f0f7f0;
+  font-size: 0.92rem;
+}
+.welcome-points i {
+  color: #b3e6b5;
+  font-size: 0.82rem;
+}
+.welcome-disclaimer {
+  color: #d0dfd1;
+  font-size: 0.8rem;
+}
+.welcome-footer {
+  color: #e0eee1;
+  font-size: 0.8rem;
+  text-shadow: 0 1px 4px rgb(0 0 0 / 0.6);
+}
+.welcome-theme-toggle {
+  flex: 0 0 44px;
+}
+@media (max-width: 700px) {
+  .welcome-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 2rem 0;
+  }
+  .welcome-copy {
+    width: 100%;
+  }
+  .welcome-brand {
+    margin-bottom: 1rem;
+  }
+}

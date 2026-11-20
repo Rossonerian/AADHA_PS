@@ -102,6 +102,17 @@ export default function PaisaProofApp() {
   const [submissions, setSubmissions] = useState<SubmissionSummary[]>([]);
   const [assessment, setAssessment] = useState<Assessment | null>(null);
   const [assessmentResult, setAssessmentResult] = useState<AssessmentResult | null>(null);
+
+  useEffect(() => {
+    const storedTheme = window.localStorage.getItem("paisaproof-theme");
+    if (storedTheme === "light" || storedTheme === "dark") setTheme(storedTheme);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    window.localStorage.setItem("paisaproof-theme", theme);
+  }, [theme]);
   const [toast, setToast] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -488,8 +499,18 @@ export default function PaisaProofApp() {
       <main className="welcome-screen" data-theme={theme}>
         <div className="welcome-noise" aria-hidden="true" />
         <div className="welcome-brand">
-          <span className="brand-mark">P</span>
-          <span>PaisaProof</span>
+          <div className="welcome-brand-name">
+            <span className="brand-mark">P</span>
+            <span>PaisaProof</span>
+          </div>
+          <button
+            className="theme-toggle welcome-theme-toggle"
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
+            aria-pressed={theme === "dark"}
+          >
+            {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}
+          </button>
         </div>
         <div className="welcome-content">
           <div className="welcome-copy">
@@ -650,6 +671,7 @@ export default function PaisaProofApp() {
               className="theme-toggle"
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
               aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
+              aria-pressed={theme === "dark"}
             >
               {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}
             </button>
