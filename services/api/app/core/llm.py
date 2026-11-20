@@ -139,6 +139,8 @@ def _build_payload(
         "temperature": temperature,
         "max_tokens": max_tokens,
     }
+    if model.lower().startswith("nvidia/nemotron"):
+        payload["reasoning"] = {"effort": "none"}
 
     if schema is not None:
         if isinstance(schema, type) and issubclass(schema, BaseModel):
@@ -259,6 +261,13 @@ def _extract_content(response: httpx.Response) -> tuple[str, dict[str, Any]]:
     first = choices[0]
     message = first.get("message") if isinstance(first, dict) else None
     content = message.get("content") if isinstance(message, dict) else None
+    if isinstance(content, list):
+        text_parts = [
+            part.get("text", "")
+            for part in content
+            if isinstance(part, dict) and isinstance(part.get("text"), str)
+        ]
+        content = "".join(text_parts) if text_parts else None
     if not isinstance(content, str):
         raise _RetryableLLMError("OpenRouter response missing assistant content string")
 

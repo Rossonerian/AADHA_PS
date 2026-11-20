@@ -286,3 +286,39 @@ def test_complete_free_nemotron_models_log_zero_cost(
         summary = get_usage_summary()
         assert summary["total_cost_usd"] == 0.0
         assert summary["by_model"][model_name]["cost_usd"] == 0.0
+
+
+@respx.mock
+def test_complete_nemotron_sets_reasoning_effort_none() -> None:
+    """Nemotron models disable reasoning token overhead so JSON content fits cleanly."""
+    payload_json = '{"symbol": "RELIANCE", "direction": "up", "confidence": 0.9}'
+    route = respx.post("https://openrouter.ai/api/v1/chat/completions").mock(
+        return_value=httpx.Response(
+            200,
+            json={
+                "choices": [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "content": [{"type": "text", "text": payload_json}],
+                        }
+                    }
+                ],
+                "usage": {"prompt_tokens": 120, "completion_tokens": 40},
+            },
+        )
+    )
+
+    parsed = complete(
+        "Extract claim",
+        schema=ClaimExtraction,
+        model="nvidia/nemotron-3.5-lightning:free",
+    )
+
+    assert route.called
+    sent_body = json.loads(route.calls[0].request.content.decode("utf-8"))
+    assert sent_body["reasoning"] == {"effort": "none"}
+    assert isinstance(parsed, ClaimExtraction)
+    assert parsed.symbol == "RELIANCE"
+    assert parsed.direction == "up"
+    assert parsed.confidence == pytest.approx(0.9)
