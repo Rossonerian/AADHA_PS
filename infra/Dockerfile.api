@@ -1,0 +1,25 @@
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PYTHONPATH=/app/services/api
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY services/api/pyproject.toml /app/services/api/pyproject.toml
+COPY services/api/app /app/services/api/app
+RUN pip install --upgrade pip && pip install /app/services/api
+
+COPY db /app/db
+COPY data /app/data
+COPY infra /app/infra
+
+EXPOSE 8000
+
+CMD ["sh", "-c", "alembic -c /app/db/alembic.ini upgrade head && exec uvicorn app.main:app --app-dir /app/services/api --host 0.0.0.0 --port ${PORT:-8000}"]

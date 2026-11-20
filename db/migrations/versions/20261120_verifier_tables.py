@@ -1,17 +1,19 @@
-"""Add the four Verifier-owned tables as an independent Alembic root.
+"""Add the four Verifier-owned tables to the platform Alembic history.
 
-The platform's users migration and final user ID type are not available. Join
-revision histories and add the submissions.user_id foreign key in a subsequent
-platform-owned integration revision, after existing owners are reconciled.
+Joins `0001_initial_platform` as a single linear head; adding a foreign key from
+`submissions.user_id` to `users.id` can follow in a platform reconciliation revision
+once existing owner UUID handling is aligned.
 """
+
+from collections.abc import Sequence
 
 import sqlalchemy as sa
 from alembic import op
 
-revision = "20261120_verifier"
-down_revision = None
-branch_labels = ("verifier",)
-depends_on = None
+revision: str = "20261120_verifier"
+down_revision: str | Sequence[str] | None = "0001_initial_platform"
+branch_labels: str | Sequence[str] | None = None
+depends_on: str | Sequence[str] | None = None
 
 
 def upgrade() -> None:
@@ -26,10 +28,14 @@ def upgrade() -> None:
         sa.Column("label", sa.String(24), nullable=False),
         sa.Column("scored_claims", sa.Integer(), nullable=False),
         sa.Column("data_origin", sa.String(9), nullable=False),
-        sa.UniqueConstraint("platform", "handle", "data_origin", name="uq_sources_identity"),
+        sa.UniqueConstraint(
+            "platform", "handle", "data_origin", name="uq_sources_identity"
+        ),
         sa.CheckConstraint("score BETWEEN 0 AND 100", name="ck_sources_score"),
         sa.CheckConstraint("scored_claims >= 0", name="ck_sources_scored_claims"),
-        sa.CheckConstraint("data_origin IN ('real', 'synthetic')", name="ck_sources_origin"),
+        sa.CheckConstraint(
+            "data_origin IN ('real', 'synthetic')", name="ck_sources_origin"
+        ),
         sa.CheckConstraint(
             "label IN ('reliable', 'semi_reliable', 'not_reliable', 'not_enough_history')",
             name="ck_sources_label",
@@ -50,16 +56,30 @@ def upgrade() -> None:
         sa.Column("user_confidence", sa.Integer()),
         sa.Column("red_flags", sa.JSON(), nullable=False),
         sa.Column("data_origin", sa.String(9), nullable=False),
-        sa.UniqueConstraint("user_id", "content_hash", name="uq_submissions_user_content"),
-        sa.CheckConstraint("data_origin IN ('real', 'synthetic')", name="ck_submissions_origin"),
-        sa.CheckConstraint("user_confidence BETWEEN 50 AND 100", name="ck_submissions_confidence"),
+        sa.UniqueConstraint(
+            "user_id", "content_hash", name="uq_submissions_user_content"
+        ),
+        sa.CheckConstraint(
+            "data_origin IN ('real', 'synthetic')", name="ck_submissions_origin"
+        ),
+        sa.CheckConstraint(
+            "user_confidence BETWEEN 50 AND 100", name="ck_submissions_confidence"
+        ),
     )
-    op.create_index("ix_submissions_user_capture", "submissions", ["user_id", "captured_at"])
+    op.create_index(
+        "ix_submissions_user_capture", "submissions", ["user_id", "captured_at"]
+    )
     op.create_index("ix_submissions_source", "submissions", ["source_id"])
     op.create_table(
         "claims",
         sa.Column("id", sa.Uuid(), primary_key=True),
-        sa.Column("submission_id", sa.Uuid(), sa.ForeignKey("submissions.id"), unique=True, nullable=False),
+        sa.Column(
+            "submission_id",
+            sa.Uuid(),
+            sa.ForeignKey("submissions.id"),
+            unique=True,
+            nullable=False,
+        ),
         sa.Column("symbol", sa.String(32)),
         sa.Column("rating_eligible", sa.Boolean(), nullable=False),
         sa.Column("direction", sa.String(4)),
@@ -72,11 +92,16 @@ def upgrade() -> None:
         sa.Column("status", sa.String(12), nullable=False),
         sa.Column("outcome", sa.JSON()),
         sa.Column("data_origin", sa.String(9), nullable=False),
-        sa.CheckConstraint("data_origin IN ('real', 'synthetic')", name="ck_claims_origin"),
-        sa.CheckConstraint("direction IN ('up', 'down')", name="ck_claims_direction"),
-        sa.CheckConstraint("window_days BETWEEN 1 AND 252", name="ck_claims_window_days"),
         sa.CheckConstraint(
-            "status IN ('open', 'scored', 'needs_review', 'unscorable')", name="ck_claims_status"
+            "data_origin IN ('real', 'synthetic')", name="ck_claims_origin"
+        ),
+        sa.CheckConstraint("direction IN ('up', 'down')", name="ck_claims_direction"),
+        sa.CheckConstraint(
+            "window_days BETWEEN 1 AND 252", name="ck_claims_window_days"
+        ),
+        sa.CheckConstraint(
+            "status IN ('open', 'scored', 'needs_review', 'unscorable')",
+            name="ck_claims_status",
         ),
     )
     op.create_index("ix_claims_status_id", "claims", ["status", "id"])
@@ -89,15 +114,22 @@ def upgrade() -> None:
         sa.Column("reason", sa.String(255), nullable=False),
         sa.Column("changed_at", sa.DateTime(timezone=True), nullable=False),
         sa.Column("data_origin", sa.String(9), nullable=False),
-        sa.CheckConstraint("score BETWEEN 0 AND 100", name="ck_source_rating_history_score"),
-        sa.CheckConstraint("data_origin IN ('real', 'synthetic')", name="ck_source_rating_history_origin"),
+        sa.CheckConstraint(
+            "score BETWEEN 0 AND 100", name="ck_source_rating_history_score"
+        ),
+        sa.CheckConstraint(
+            "data_origin IN ('real', 'synthetic')",
+            name="ck_source_rating_history_origin",
+        ),
         sa.CheckConstraint(
             "label IN ('reliable', 'semi_reliable', 'not_reliable', 'not_enough_history')",
             name="ck_source_rating_history_label",
         ),
     )
     op.create_index(
-        "ix_source_rating_history_source_time", "source_rating_history", ["source_id", "changed_at"]
+        "ix_source_rating_history_source_time",
+        "source_rating_history",
+        ["source_id", "changed_at"],
     )
 
 

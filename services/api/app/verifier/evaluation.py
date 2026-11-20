@@ -40,8 +40,14 @@ def evaluate_file(path: Path, core: VerifierCore) -> ExtractionMetrics:
             else:
                 parsed = extract_claim(text, core)
                 if parsed.status == ClaimStatus.OPEN:
-                    actual = {"symbol": parsed.symbol, "direction": parsed.direction, "entry": parsed.entry,
-                              "target": parsed.target, "stop": parsed.stop, "window_days": parsed.window_days}
+                    actual = {
+                        "symbol": parsed.symbol,
+                        "direction": parsed.direction,
+                        "entry": parsed.entry,
+                        "target": parsed.target,
+                        "stop": parsed.stop,
+                        "window_days": parsed.window_days,
+                    }
             if expected is not None and actual == expected:
                 tp += 1
             elif actual != expected:

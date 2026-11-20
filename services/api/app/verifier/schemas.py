@@ -58,7 +58,10 @@ class VerifyRequest(BaseModel):
 
     @model_validator(mode="after")
     def one_input(self) -> "VerifyRequest":
-        if sum(value is not None for value in (self.text, self.url, self.image_base64)) != 1:
+        if (
+            sum(value is not None for value in (self.text, self.url, self.image_base64))
+            != 1
+        ):
             raise ValueError("Provide exactly one of url, text or image_base64.")
         return self
 

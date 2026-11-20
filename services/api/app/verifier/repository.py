@@ -12,9 +12,13 @@ from .schemas import DataOrigin, SourceFacts, SourceLabel, SourceView
 from .scoring import rate_source
 
 
-def source_for(session: Session, platform: str, handle: str, origin: DataOrigin) -> Source:
+def source_for(
+    session: Session, platform: str, handle: str, origin: DataOrigin
+) -> Source:
     query = select(Source).where(
-        Source.platform == platform, Source.handle == handle, Source.data_origin == origin
+        Source.platform == platform,
+        Source.handle == handle,
+        Source.data_origin == origin,
     )
     existing = session.scalar(query.with_for_update())
     if existing is not None:
@@ -32,16 +36,23 @@ def source_for(session: Session, platform: str, handle: str, origin: DataOrigin)
     return source
 
 
-def submission_for(session: Session, owner: UUID, digest: str) -> tuple[Submission, Claim] | None:
+def submission_for(
+    session: Session, owner: UUID, digest: str
+) -> tuple[Submission, Claim] | None:
     pair = session.execute(
-        select(Submission, Claim).join(Claim, Claim.submission_id == Submission.id).where(
-            Submission.user_id == owner, Submission.content_hash == digest,
+        select(Submission, Claim)
+        .join(Claim, Claim.submission_id == Submission.id)
+        .where(
+            Submission.user_id == owner,
+            Submission.content_hash == digest,
         )
     ).one_or_none()
     return (pair[0], pair[1]) if pair is not None else None
 
 
-def save_submission(session: Session, submission: Submission, claim: Claim) -> tuple[Submission, Claim]:
+def save_submission(
+    session: Session, submission: Submission, claim: Claim
+) -> tuple[Submission, Claim]:
     try:
         with session.begin_nested():
             session.add(submission)
@@ -59,8 +70,12 @@ def save_submission(session: Session, submission: Submission, claim: Claim) -> t
 
 def rating_evidence(session: Session, source: Source) -> tuple[SourceFacts, int, int]:
     rows = session.execute(
-        select(Submission, Claim).join(Claim, Claim.submission_id == Submission.id)
-        .where(Submission.source_id == source.id, Submission.data_origin == source.data_origin)
+        select(Submission, Claim)
+        .join(Claim, Claim.submission_id == Submission.id)
+        .where(
+            Submission.source_id == source.id,
+            Submission.data_origin == source.data_origin,
+        )
         .order_by(Submission.captured_at, Submission.id)
     )
     seen: dict[str, tuple[bool, bool, bool | None]] = {}
@@ -74,23 +89,35 @@ def rating_evidence(session: Session, source: Source) -> tuple[SourceFacts, int,
         seen[key] = (
             deleted or submission.deleted_at is not None,
             flagged or bool(submission.red_flags),
-            correct if correct is not None else observed if isinstance(observed, bool) else None,
+            (
+                correct
+                if correct is not None
+                else observed if isinstance(observed, bool) else None
+            ),
         )
     facts = SourceFacts(
-        calls_tracked=len(seen), correct=sum(correct is True for _, _, correct in seen.values()),
+        calls_tracked=len(seen),
+        correct=sum(correct is True for _, _, correct in seen.values()),
         deleted=sum(deleted for deleted, _, _ in seen.values()),
-        sebi_registered=source.sebi_registered, sebi_reg_no=source.sebi_reg_no,
+        sebi_registered=source.sebi_registered,
+        sebi_reg_no=source.sebi_reg_no,
     )
-    return facts, sum(correct is not None for _, _, correct in seen.values()), sum(
-        flagged or deleted for deleted, flagged, _ in seen.values()
+    return (
+        facts,
+        sum(correct is not None for _, _, correct in seen.values()),
+        sum(flagged or deleted for deleted, flagged, _ in seen.values()),
     )
 
 
 def update_rating(session: Session, source: Source) -> None:
     facts, scored, flagged = rating_evidence(session, source)
     score, label = rate_source(
-        scored=scored, correct=facts.correct, tracked=facts.calls_tracked, deleted=facts.deleted,
-        registered=facts.sebi_registered, flagged=flagged,
+        scored=scored,
+        correct=facts.correct,
+        tracked=facts.calls_tracked,
+        deleted=facts.deleted,
+        registered=facts.sebi_registered,
+        flagged=flagged,
     )
     changed = (source.score, source.label) != (score, label)
     source.scored_claims = scored
@@ -98,27 +125,40 @@ def update_rating(session: Session, source: Source) -> None:
     if changed:
         # All writers hold the source lock. Ensure ordering on clocks with coarse resolution.
         last = session.scalar(
-            select(SourceRatingHistory.changed_at).where(SourceRatingHistory.source_id == source.id)
-            .order_by(SourceRatingHistory.changed_at.desc()).limit(1)
+            select(SourceRatingHistory.changed_at)
+            .where(SourceRatingHistory.source_id == source.id)
+            .order_by(SourceRatingHistory.changed_at.desc())
+            .limit(1)
         )
         changed_at = datetime.now(UTC)
         if last is not None:
             last = last.replace(tzinfo=UTC) if last.tzinfo is None else last
             changed_at = max(changed_at, last + timedelta(microseconds=1))
-        session.add(SourceRatingHistory(
-            source_id=source.id, score=score, label=label,
-            reason="Updated from tracked claims and source evidence.",
-            changed_at=changed_at, data_origin=source.data_origin,
-        ))
+        session.add(
+            SourceRatingHistory(
+                source_id=source.id,
+                score=score,
+                label=label,
+                reason="Updated from tracked claims and source evidence.",
+                changed_at=changed_at,
+                data_origin=source.data_origin,
+            )
+        )
 
 
 def source_view(session: Session, source: Source, *, basic: bool = False) -> SourceView:
     facts = None if basic else rating_evidence(session, source)[0]
     label = SourceLabel(source.label)
     return SourceView(
-        id=source.id, platform=source.platform,
-        handle="unattributed" if source.handle.startswith("private-") else source.handle,
+        id=source.id,
+        platform=source.platform,
+        handle=(
+            "unattributed" if source.handle.startswith("private-") else source.handle
+        ),
         label=None if basic else label,
-        score=None if basic or label == SourceLabel.NOT_ENOUGH_HISTORY else source.score,
-        facts=facts, data_origin=DataOrigin(source.data_origin),
+        score=(
+            None if basic or label == SourceLabel.NOT_ENOUGH_HISTORY else source.score
+        ),
+        facts=facts,
+        data_origin=DataOrigin(source.data_origin),
     )

@@ -21,8 +21,16 @@ class ScoringResult:
 
 
 def _sessions(frame: pd.DataFrame) -> pd.DatetimeIndex:
-    # Retain the exchange-local date of a timezone-aware daily label.
-    return pd.DatetimeIndex(pd.to_datetime(frame.index, errors="coerce")).tz_localize(None).normalize()
+    # Retain the exchange-local date whether exposed as a `date` column or DatetimeIndex.
+    date_col = next(
+        (col for col in frame.columns if str(col).strip().lower() == "date"), None
+    )
+    raw = frame[date_col] if date_col is not None else frame.index
+    return (
+        pd.DatetimeIndex(pd.to_datetime(raw, errors="coerce"))
+        .tz_localize(None)
+        .normalize()
+    )
 
 
 def _align(
@@ -54,7 +62,9 @@ def _return_pct(bars: pd.DataFrame, *, single_session: bool) -> float | None:
     if single_session:
         opening = bars.get("open")
         if not isinstance(opening, pd.Series) or "adj close" in bars:
-            return None  # Do not compare a nominal open with a separately adjusted close.
+            return (
+                None  # Do not compare a nominal open with a separately adjusted close.
+            )
         first = _price(opening.iloc[0])
     else:
         first = _price(close.iloc[0])
@@ -119,7 +129,8 @@ def evaluate_claim(
     """Score the first ``window_days`` benchmark sessions strictly after ``start``.
 
     Without both barriers, use adjusted first-to-last session closes for both
-    returns (session open-to-close for a one-session claim) and require strictly positive signed excess. With both barriers,
+    returns (session open-to-close for a one-session claim) and require strictly
+    positive signed excess. With both barriers,
     require an ordered positive bracket (and entry inside it if supplied), then
     use the first observable barrier touch. Entry is not a fill condition.
 
@@ -132,7 +143,9 @@ def evaluate_claim(
         return None
     posted = pd.Timestamp(start)
     benchmark_dates = _sessions(benchmark)
-    window = benchmark_dates[benchmark_dates > posted].unique().sort_values()[:window_days]
+    window = (
+        benchmark_dates[benchmark_dates > posted].unique().sort_values()[:window_days]
+    )
     if len(window) != window_days:
         return None
     window_end = window[-1].date()
@@ -143,7 +156,9 @@ def evaluate_claim(
         if target_price is None or stop_price is None:
             return None
         lower, upper = (
-            (stop_price, target_price) if direction == Direction.UP else (target_price, stop_price)
+            (stop_price, target_price)
+            if direction == Direction.UP
+            else (target_price, stop_price)
         )
         if lower >= upper:
             return None
@@ -157,23 +172,44 @@ def evaluate_claim(
         if _known_basis_mismatch(basis_bars):
             return None
         correct = _bracket_outcome(
-            basis_bars.iloc[1:], direction=direction, target=target_price, stop=stop_price
+            basis_bars.iloc[1:],
+            direction=direction,
+            target=target_price,
+            stop=stop_price,
         )
         if correct == "ambiguous":
             return ScoringResult(window_end, None, "ambiguous_barrier_order")
-        return ScoringResult(window_end, correct, "target_stop") if isinstance(correct, bool) else None
+        return (
+            ScoringResult(window_end, correct, "target_stop")
+            if isinstance(correct, bool)
+            else None
+        )
 
     endpoints = window[[0, -1]].unique()
-    stock_pct = _return_pct(_align(stock, stock_dates, endpoints), single_session=window_days == 1)
-    index_pct = _return_pct(_align(benchmark, benchmark_dates, endpoints), single_session=window_days == 1)
+    stock_pct = _return_pct(
+        _align(stock, stock_dates, endpoints), single_session=window_days == 1
+    )
+    index_pct = _return_pct(
+        _align(benchmark, benchmark_dates, endpoints), single_session=window_days == 1
+    )
     if stock_pct is None or index_pct is None:
         return None
-    correct = stock_pct > index_pct if direction == Direction.UP else stock_pct < index_pct
-    return ScoringResult(window_end, correct, "benchmark_relative", stock_pct, index_pct)
+    correct = (
+        stock_pct > index_pct if direction == Direction.UP else stock_pct < index_pct
+    )
+    return ScoringResult(
+        window_end, correct, "benchmark_relative", stock_pct, index_pct
+    )
 
 
 def rate_source(
-    *, scored: int, correct: int, tracked: int, deleted: int, registered: bool | None, flagged: int
+    *,
+    scored: int,
+    correct: int,
+    tracked: int,
+    deleted: int,
+    registered: bool | None,
+    flagged: int,
 ) -> tuple[int, SourceLabel]:
     """Return a rounded 0–100 score and its history-gated label.
 
@@ -187,10 +223,20 @@ def rate_source(
     scored, tracked = max(0, scored), max(0, tracked)
     track_record = Fraction(2 + min(scored, max(0, correct)), scored + 4)
     neutral = Fraction(1, 2)
-    retention = Fraction(tracked - min(tracked, max(0, deleted)), tracked) if tracked else neutral
-    clean = Fraction(tracked - min(tracked, max(0, flagged)), tracked) if tracked else neutral
+    retention = (
+        Fraction(tracked - min(tracked, max(0, deleted)), tracked)
+        if tracked
+        else neutral
+    )
+    clean = (
+        Fraction(tracked - min(tracked, max(0, flagged)), tracked)
+        if tracked
+        else neutral
+    )
     registration = neutral if registered is None else Fraction(int(registered))
-    score = round(60 * track_record + Fraction(25, 2) * (retention + registration) + 15 * clean)
+    score = round(
+        60 * track_record + Fraction(25, 2) * (retention + registration) + 15 * clean
+    )
 
     if scored < 5:
         label = SourceLabel.NOT_ENOUGH_HISTORY

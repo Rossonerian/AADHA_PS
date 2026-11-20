@@ -15,7 +15,7 @@ from xml.etree.ElementTree import ParseError
 
 import requests
 from bs4 import BeautifulSoup, ParserRejectedMarkup, SoupStrainer
-from defusedxml.common import DefusedXmlException
+from defusedxml.common import DefusedXmlException  # type: ignore[import-untyped]
 from PIL import Image, ImageOps
 from youtube_transcript_api import (
     NoTranscriptFound,
@@ -53,12 +53,14 @@ _NETWORK_BUDGET_SECONDS = 8.0
 _TELEGRAM_HOST = "t.me"
 _YOUTUBE_HOST = "www.youtube.com"
 _YOUTUBE_HOSTS = frozenset({"youtube.com", _YOUTUBE_HOST, "m.youtube.com"})
-_YOUTUBE_REQUESTS = frozenset({
-    ("GET", "/watch"),
-    ("GET", "/api/timedtext"),
-    ("GET", "/oembed"),
-    ("POST", "/youtubei/v1/player"),
-})
+_YOUTUBE_REQUESTS = frozenset(
+    {
+        ("GET", "/watch"),
+        ("GET", "/api/timedtext"),
+        ("GET", "/oembed"),
+        ("POST", "/youtubei/v1/player"),
+    }
+)
 _PASTE_ONLY_HOSTS = {
     "x.com": "X",
     "www.x.com": "X",
@@ -77,8 +79,12 @@ _PASTE_ONLY_HOSTS = {
     "chat.whatsapp.com": "WhatsApp",
     "wa.me": "WhatsApp",
 }
-_TELEGRAM_POST = re.compile(r"/(?:s/)?([a-z][a-z0-9_]{3,31})/([1-9][0-9]{0,9})/?", re.IGNORECASE | re.ASCII)
-_TELEGRAM_RESERVED = frozenset({"addlist", "addstickers", "boost", "joinchat", "login", "proxy", "share", "socks"})
+_TELEGRAM_POST = re.compile(
+    r"/(?:s/)?([a-z][a-z0-9_]{3,31})/([1-9][0-9]{0,9})/?", re.IGNORECASE | re.ASCII
+)
+_TELEGRAM_RESERVED = frozenset(
+    {"addlist", "addstickers", "boost", "joinchat", "login", "proxy", "share", "socks"}
+)
 _YOUTUBE_ID = re.compile(r"[A-Za-z0-9_-]{11}")
 _YOUTUBE_CHANNEL_ID = re.compile(r"/channel/(UC[A-Za-z0-9_-]{22})/?")
 _YOUTUBE_HANDLE = re.compile(r"/(@[\w.-]{3,30})/?")
@@ -128,7 +134,10 @@ _WHATSAPP_HEADER = re.compile(
 )
 _NUMERIC_SENDER = re.compile(r"[+\d().~\s\-\u2010\u2011\u2013]+")
 _INVISIBLE_MARKS = dict.fromkeys(
-    map(ord, "\u061c\u200b\u200e\u200f\u202a\u202b\u202c\u202d\u202e\u2060\u2066\u2067\u2068\u2069\ufeff"),
+    map(
+        ord,
+        "\u061c\u200b\u200e\u200f\u202a\u202b\u202c\u202d\u202e\u2060\u2066\u2067\u2068\u2069\ufeff",
+    ),
 )
 
 
@@ -147,7 +156,7 @@ def redact_phone_numbers(text: str) -> str:
 
     def redact(match: re.Match[str]) -> str:
         number = match[0]
-        before = text[max(0, match.start() - 32):match.start()]
+        before = text[max(0, match.start() - 32) : match.start()]
         # Preserve plausible stock ranges only when they do not also look
         # like an Indian mobile number (national format starts with 6–9).
         if (prices := _PRICE_RANGE.fullmatch(number)) and _PRICE_CUE.search(before):
@@ -175,7 +184,11 @@ def _whatsapp_source(text: str, default_platform: str) -> tuple[str, str | None]
 
 
 def _split_url(url: str, *, limit: int = _MAX_URL_CHARS) -> SplitResult:
-    if len(url) > limit or "\\" in url or any(ch.isspace() or ord(ch) < 33 or ord(ch) == 127 for ch in url):
+    if (
+        len(url) > limit
+        or "\\" in url
+        or any(ch.isspace() or ord(ch) < 33 or ord(ch) == 127 for ch in url)
+    ):
         raise ValueError("Invalid URL")
     return urlsplit(url)
 
@@ -207,10 +220,15 @@ class _PublicSession(requests.Session):
             raise requests.RequestException("Invalid provider URL") from None
         if parsed.scheme != "https" or parsed.netloc.lower() != self._host:
             raise requests.RequestException("Unapproved provider origin")
-        if self._host == _YOUTUBE_HOST and (method, parsed.path) not in _YOUTUBE_REQUESTS:
+        if (
+            self._host == _YOUTUBE_HOST
+            and (method, parsed.path) not in _YOUTUBE_REQUESTS
+        ):
             raise requests.RequestException("Unapproved YouTube endpoint")
 
-    def send(self, request: requests.PreparedRequest, **kwargs: Any) -> requests.Response:
+    def send(
+        self, request: requests.PreparedRequest, **kwargs: Any
+    ) -> requests.Response:
         if request.url is None:
             raise requests.RequestException("Invalid provider URL")
         self._validate_target(request.method, request.url)
@@ -218,17 +236,23 @@ class _PublicSession(requests.Session):
         if remaining <= 0:
             raise requests.Timeout("Provider time limit exceeded")
         kwargs.update(
-            allow_redirects=False, stream=True, timeout=(min(2.0, remaining), min(2.5, remaining)),
+            allow_redirects=False,
+            stream=True,
+            timeout=(min(2.0, remaining), min(2.5, remaining)),
         )
         with super().send(request, **kwargs) as response:
             if response.status_code != 200:
-                raise requests.RequestException("Provider did not return public content")
+                raise requests.RequestException(
+                    "Provider did not return public content"
+                )
             with BytesIO() as body:
                 for chunk in response.iter_content(16_384):
                     if monotonic() >= self._deadline:
                         raise requests.Timeout("Provider time limit exceeded")
                     if body.tell() + len(chunk) > _MAX_DOWNLOAD_BYTES:
-                        raise requests.RequestException("Provider response exceeds the size limit")
+                        raise requests.RequestException(
+                            "Provider response exceeds the size limit"
+                        )
                     body.write(chunk)
                 # iter_content exhausts the stream; cache those bytes for the transcript library.
                 response._content = body.getvalue()
@@ -241,15 +265,22 @@ class _YouTubeSession(_PublicSession):
         self._watch_url = watch_url
         self.watch_html: bytes | None = None
 
-    def send(self, request: requests.PreparedRequest, **kwargs: Any) -> requests.Response:
+    def send(
+        self, request: requests.PreparedRequest, **kwargs: Any
+    ) -> requests.Response:
         response = super().send(request, **kwargs)
         if request.method == "GET" and request.url == self._watch_url:
             self.watch_html = response.content
         return response
 
 
-def _telegram_post(handle: str, post_id: str, post_url: str) -> tuple[str, datetime | None, bool]:
-    unavailable = "The public Telegram post could not be read. Paste its text or upload a screenshot."
+def _telegram_post(
+    handle: str, post_id: str, post_url: str
+) -> tuple[str, datetime | None, bool]:
+    unavailable = (
+        "The public Telegram post could not be read. "
+        "Paste its text or upload a screenshot."
+    )
     try:
         with _PublicSession(_TELEGRAM_HOST) as client:
             page = BeautifulSoup(client.get(post_url).content, "html.parser")
@@ -260,7 +291,9 @@ def _telegram_post(handle: str, post_id: str, post_url: str) -> tuple[str, datet
     def matches_post(value: str | None) -> bool:
         return value is not None and value.lower() == wanted
 
-    post = page.find(None, attrs={"data-post": matches_post}, class_="tgme_widget_message")
+    post = page.find(
+        None, attrs={"data-post": matches_post}, class_="tgme_widget_message"
+    )
     if post is None:
         raise IngestionError("TELEGRAM_UNAVAILABLE", unavailable)
     body = post.select_one(".tgme_widget_message_text")
@@ -272,13 +305,23 @@ def _telegram_post(handle: str, post_id: str, post_url: str) -> tuple[str, datet
     if not text:
         raise IngestionError("TELEGRAM_UNAVAILABLE", unavailable)
     # A forwarded or replied-to quote is not evidence that this channel made the call.
-    own_message = post.select_one(
-        ".tgme_widget_message_forwarded_from, .tgme_widget_message_reply, blockquote"
-    ) is None
+    own_message = (
+        post.select_one(
+            ".tgme_widget_message_forwarded_from, .tgme_widget_message_reply, blockquote"
+        )
+        is None
+    )
     published_at = None
     stamp = post.select_one(".tgme_widget_message_date time[datetime]")
-    if post.select_one(".tgme_widget_message_edited, .tgme_widget_message_edit") is not None:
-        return text, None, False  # Original publication time does not identify the edited text.
+    if (
+        post.select_one(".tgme_widget_message_edited, .tgme_widget_message_edit")
+        is not None
+    ):
+        return (
+            text,
+            None,
+            False,
+        )  # Original publication time does not identify the edited text.
     if stamp is not None:
         value = stamp.get("datetime")
         if isinstance(value, str):
@@ -296,7 +339,9 @@ def _youtube_publication_date(html: bytes | None) -> datetime | None:
         return None
     fields = ("datePublished", "uploadDate")
     try:
-        metadata = BeautifulSoup(html, "html.parser", parse_only=SoupStrainer("meta", itemprop=fields))
+        metadata = BeautifulSoup(
+            html, "html.parser", parse_only=SoupStrainer("meta", itemprop=fields)
+        )
     except ParserRejectedMarkup:
         return None
     for field in fields:
@@ -320,7 +365,8 @@ def _youtube_publication_date(html: bytes | None) -> datetime | None:
 def _youtube_author(client: _PublicSession, post_url: str) -> str | None:
     try:
         metadata = client.get(
-            f"https://{_YOUTUBE_HOST}/oembed", params={"url": post_url, "format": "json"},
+            f"https://{_YOUTUBE_HOST}/oembed",
+            params={"url": post_url, "format": "json"},
         ).json()
         author_url = metadata.get("author_url") if isinstance(metadata, dict) else None
         if not isinstance(author_url, str):
@@ -334,13 +380,19 @@ def _youtube_author(client: _PublicSession, post_url: str) -> str | None:
         return channel[1]
     if handle := _YOUTUBE_HANDLE.fullmatch(unquote(author.path)):
         result = handle[1]
-        if redact_phone_numbers(result) == result and any(ch.isalpha() for ch in result):
+        if redact_phone_numbers(result) == result and any(
+            ch.isalpha() for ch in result
+        ):
             return result.casefold()
     return None
 
 
-def _youtube_transcript(video_id: str, post_url: str) -> tuple[str, str | None, datetime | None]:
-    unavailable = "No accessible YouTube transcript. Paste the transcript or upload a screenshot."
+def _youtube_transcript(
+    video_id: str, post_url: str
+) -> tuple[str, str | None, datetime | None]:
+    unavailable = (
+        "No accessible YouTube transcript. Paste the transcript or upload a screenshot."
+    )
     with _YouTubeSession(post_url) as client:
         try:
             tracks = YouTubeTranscriptApi(http_client=client).list(video_id)
@@ -353,10 +405,18 @@ def _youtube_transcript(video_id: str, post_url: str) -> tuple[str, str | None, 
                 selected = alternative
             text = " ".join(snippet.text for snippet in selected.fetch()).strip()
         except (
-            YouTubeTranscriptApiException, requests.RequestException, DefusedXmlException,
-            ParseError, ValueError, KeyError, TypeError, AttributeError,
+            YouTubeTranscriptApiException,
+            requests.RequestException,
+            DefusedXmlException,
+            ParseError,
+            ValueError,
+            KeyError,
+            TypeError,
+            AttributeError,
         ):
-            raise IngestionError("YOUTUBE_TRANSCRIPT_UNAVAILABLE", unavailable) from None
+            raise IngestionError(
+                "YOUTUBE_TRANSCRIPT_UNAVAILABLE", unavailable
+            ) from None
         if not text:
             raise IngestionError("YOUTUBE_TRANSCRIPT_UNAVAILABLE", unavailable)
         author = _youtube_author(client, post_url)
@@ -377,8 +437,8 @@ def _video_id(url: SplitResult) -> str | None:
 
 
 @cache
-def _ocr_engine():
-    from rapidocr_onnxruntime import RapidOCR
+def _ocr_engine() -> Any:
+    from rapidocr_onnxruntime import RapidOCR  # type: ignore[import-untyped]
 
     # The 1.4.4 wheel bundles ONNX models; no network or local temp files.
     return RapidOCR(intra_op_num_threads=2, inter_op_num_threads=1)
@@ -389,8 +449,12 @@ def _read_ocr(image: Image.Image) -> str:
         with _OCR_LOCK:
             rows, _ = _ocr_engine()(image)
         return "\n".join(row[1] for row in rows) if rows else ""
-    except Exception:  # noqa: BLE001 - OpenCV and ONNX runtime errors have no shared library base.
-        raise IngestionError("OCR_FAILED", "The screenshot could not be read. Paste its text instead.") from None
+    except (
+        Exception
+    ):  # noqa: BLE001 - OpenCV and ONNX runtime errors have no shared library base.
+        raise IngestionError(
+            "OCR_FAILED", "The screenshot could not be read. Paste its text instead."
+        ) from None
 
 
 def _image_text(encoded: str) -> str:
@@ -411,7 +475,10 @@ def _image_text(encoded: str) -> str:
             width, height = image.size
             if width * height > _MAX_PIXELS or max(width, height) > _MAX_IMAGE_SIDE:
                 raise IngestionError("IMAGE_TOO_LARGE", too_large)
-            if getattr(image, "is_animated", False) or max(width, height) > min(width, height) * 60:
+            if (
+                getattr(image, "is_animated", False)
+                or max(width, height) > min(width, height) * 60
+            ):
                 raise IngestionError("INVALID_IMAGE", invalid)
             ImageOps.exif_transpose(image, in_place=True)
             if image.mode == "RGB":
@@ -427,17 +494,30 @@ def _image_text(encoded: str) -> str:
 
 
 def ingest(
-    *, text: str | None, url: str | None, image_base64: str | None, now: datetime | None = None,
+    *,
+    text: str | None,
+    url: str | None,
+    image_base64: str | None,
+    now: datetime | None = None,
 ) -> CapturedTip:
     """Capture exactly one input; hash the redacted text, not the URL or source metadata."""
     if sum(value is not None for value in (text, url, image_base64)) != 1:
-        raise IngestionError("INVALID_INPUT", "Provide exactly one link, pasted tip or screenshot.")
+        raise IngestionError(
+            "INVALID_INPUT", "Provide exactly one link, pasted tip or screenshot."
+        )
     captured_at = now if now is not None else datetime.now(UTC)
-    captured_at = captured_at.replace(tzinfo=UTC) if captured_at.tzinfo is None else captured_at.astimezone(UTC)
+    captured_at = (
+        captured_at.replace(tzinfo=UTC)
+        if captured_at.tzinfo is None
+        else captured_at.astimezone(UTC)
+    )
     published_at = post_url = handle = None
     author_verified = False
     if url is not None:
-        unsupported = "Use a public Telegram post or YouTube video link, or paste the tip or upload a screenshot."
+        unsupported = (
+            "Use a public Telegram post or YouTube video link, "
+            "or paste the tip or upload a screenshot."
+        )
         try:
             link = _split_url(url.strip())
         except ValueError:
@@ -446,7 +526,10 @@ def ingest(
         if link.scheme not in {"http", "https"}:
             raise IngestionError("UNSUPPORTED_URL", unsupported)
         if service := _PASTE_ONLY_HOSTS.get(host):
-            raise IngestionError("PASTE_OR_SCREENSHOT_REQUIRED", f"For {service}, paste the tip or upload a screenshot.")
+            raise IngestionError(
+                "PASTE_OR_SCREENSHOT_REQUIRED",
+                f"For {service}, paste the tip or upload a screenshot.",
+            )
         if host == _TELEGRAM_HOST:
             post = _TELEGRAM_POST.fullmatch(link.path)
             if post is None or post[1].lower() in _TELEGRAM_RESERVED:
@@ -454,7 +537,9 @@ def ingest(
             handle, post_id = post[1].lower(), post[2]
             platform = "telegram"
             post_url = f"https://{_TELEGRAM_HOST}/s/{handle}/{post_id}"
-            text, published_at, author_verified = _telegram_post(handle, post_id, post_url)
+            text, published_at, author_verified = _telegram_post(
+                handle, post_id, post_url
+            )
         elif host in _YOUTUBE_HOSTS or host == "youtu.be":
             video_id = _video_id(link)
             if video_id is None:
@@ -475,10 +560,19 @@ def ingest(
     assert text is not None
     text = redact_phone_numbers(text.replace("\r\n", "\n").replace("\r", "\n")).strip()
     if not text:
-        raise IngestionError("NO_TEXT", "No text was found. Paste the tip or upload a clearer screenshot.")
+        raise IngestionError(
+            "NO_TEXT",
+            "No text was found. Paste the tip or upload a clearer screenshot.",
+        )
     if platform in {"text", "screenshot"}:
         platform, handle = _whatsapp_source(text, platform)
     return CapturedTip(
-        text, platform, handle, sha256(text.encode("utf-8")).hexdigest(),
-        captured_at, published_at, post_url, author_verified,
+        text,
+        platform,
+        handle,
+        sha256(text.encode("utf-8")).hexdigest(),
+        captured_at,
+        published_at,
+        post_url,
+        author_verified,
     )

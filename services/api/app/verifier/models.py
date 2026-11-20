@@ -28,10 +28,14 @@ class Base(DeclarativeBase):
 class Source(Base):
     __tablename__ = "sources"
     __table_args__ = (
-        UniqueConstraint("platform", "handle", "data_origin", name="uq_sources_identity"),
+        UniqueConstraint(
+            "platform", "handle", "data_origin", name="uq_sources_identity"
+        ),
         CheckConstraint("score BETWEEN 0 AND 100", name="ck_sources_score"),
         CheckConstraint("scored_claims >= 0", name="ck_sources_scored_claims"),
-        CheckConstraint("data_origin IN ('real', 'synthetic')", name="ck_sources_origin"),
+        CheckConstraint(
+            "data_origin IN ('real', 'synthetic')", name="ck_sources_origin"
+        ),
         CheckConstraint(
             "label IN ('reliable', 'semi_reliable', 'not_reliable', 'not_enough_history')",
             name="ck_sources_label",
@@ -53,8 +57,12 @@ class Submission(Base):
     __tablename__ = "submissions"
     __table_args__ = (
         UniqueConstraint("user_id", "content_hash", name="uq_submissions_user_content"),
-        CheckConstraint("data_origin IN ('real', 'synthetic')", name="ck_submissions_origin"),
-        CheckConstraint("user_confidence BETWEEN 50 AND 100", name="ck_submissions_confidence"),
+        CheckConstraint(
+            "data_origin IN ('real', 'synthetic')", name="ck_submissions_origin"
+        ),
+        CheckConstraint(
+            "user_confidence BETWEEN 50 AND 100", name="ck_submissions_confidence"
+        ),
         Index("ix_submissions_user_capture", "user_id", "captured_at"),
         Index("ix_submissions_source", "source_id"),
     )
@@ -77,17 +85,22 @@ class Submission(Base):
 class Claim(Base):
     __tablename__ = "claims"
     __table_args__ = (
-        CheckConstraint("data_origin IN ('real', 'synthetic')", name="ck_claims_origin"),
+        CheckConstraint(
+            "data_origin IN ('real', 'synthetic')", name="ck_claims_origin"
+        ),
         CheckConstraint("direction IN ('up', 'down')", name="ck_claims_direction"),
         CheckConstraint("window_days BETWEEN 1 AND 252", name="ck_claims_window_days"),
         CheckConstraint(
-            "status IN ('open', 'scored', 'needs_review', 'unscorable')", name="ck_claims_status"
+            "status IN ('open', 'scored', 'needs_review', 'unscorable')",
+            name="ck_claims_status",
         ),
         Index("ix_claims_status_id", "status", "id"),
     )
 
     id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
-    submission_id: Mapped[UUID] = mapped_column(ForeignKey("submissions.id"), unique=True)
+    submission_id: Mapped[UUID] = mapped_column(
+        ForeignKey("submissions.id"), unique=True
+    )
     rating_eligible: Mapped[bool] = mapped_column(Boolean, default=False)
     symbol: Mapped[str | None] = mapped_column(String(32))
     direction: Mapped[str | None] = mapped_column(String(4))
@@ -105,8 +118,13 @@ class Claim(Base):
 class SourceRatingHistory(Base):
     __tablename__ = "source_rating_history"
     __table_args__ = (
-        CheckConstraint("score BETWEEN 0 AND 100", name="ck_source_rating_history_score"),
-        CheckConstraint("data_origin IN ('real', 'synthetic')", name="ck_source_rating_history_origin"),
+        CheckConstraint(
+            "score BETWEEN 0 AND 100", name="ck_source_rating_history_score"
+        ),
+        CheckConstraint(
+            "data_origin IN ('real', 'synthetic')",
+            name="ck_source_rating_history_origin",
+        ),
         CheckConstraint(
             "label IN ('reliable', 'semi_reliable', 'not_reliable', 'not_enough_history')",
             name="ck_source_rating_history_label",

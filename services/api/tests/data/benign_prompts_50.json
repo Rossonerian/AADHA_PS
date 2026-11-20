@@ -1,0 +1,252 @@
+[
+  {
+    "id": 1,
+    "category": "concept_definition",
+    "text": "A stop-loss order is a risk management mechanism that automatically places a sell order if a security reaches a predefined price threshold."
+  },
+  {
+    "id": 2,
+    "category": "concept_definition",
+    "text": "Buy-and-hold is a long-term passive strategy where investors maintain diversified positions through market cycles to reduce transaction costs."
+  },
+  {
+    "id": 3,
+    "category": "concept_definition",
+    "text": "Target prices are analyst estimates based on valuation assumptions, not guarantees of future market performance."
+  },
+  {
+    "id": 4,
+    "category": "concept_definition",
+    "text": "Additional Surveillance Measure (ASM) is an exchange framework used by NSE and BSE to alert market participants to unusual price or volume volatility."
+  },
+  {
+    "id": 5,
+    "category": "concept_definition",
+    "text": "Graded Surveillance Measure (GSM) applies heightened trading restrictions on companies whose market valuations appear disconnected from underlying fundamentals."
+  },
+  {
+    "id": 6,
+    "category": "concept_definition",
+    "text": "A Brier score measures the calibration accuracy of probabilistic predictions, ranging from 0 for perfect calibration to 1 for worst-case miscalibration."
+  },
+  {
+    "id": 7,
+    "category": "verifier_meta",
+    "text": "This Telegram post claimed 'Buy XYZ at 100 for target 150'; Aacharya marks such urgency claims as red flags."
+  },
+  {
+    "id": 8,
+    "category": "verifier_meta",
+    "text": "Source reliability rating: not_reliable. Across 18 scored claims over the past 12 months, only 4 met their stated price window."
+  },
+  {
+    "id": 9,
+    "category": "verifier_meta",
+    "text": "Source verification summary: SEBI Research Analyst registration was not found in the public registry for this channel handle."
+  },
+  {
+    "id": 10,
+    "category": "verifier_meta",
+    "text": "The finfluencer message wrote 'Kal upper circuit pakka, utha lo sab'; Aacharya flags this language under guaranteed_returns and urgency."
+  },
+  {
+    "id": 11,
+    "category": "historical_fact",
+    "text": "Reliance Industries rose 12% in Q3 2024 following telecom tariff revisions and steady retail margin expansion."
+  },
+  {
+    "id": 12,
+    "category": "historical_fact",
+    "text": "TCS touched ₹4,250 in September 2024 before consolidating near ₹3,950 over the following quarter."
+  },
+  {
+    "id": 13,
+    "category": "historical_fact",
+    "text": "Between March 2020 and December 2023, the Nifty 50 index more than doubled from its pandemic-era lows."
+  },
+  {
+    "id": 14,
+    "category": "historical_fact",
+    "text": "Infosys gained 8.4% in FY24 while overall IT sector revenue growth moderated amid cautious global enterprise spending."
+  },
+  {
+    "id": 15,
+    "category": "historical_fact",
+    "text": "HDFC Bank shares fell 11% in January 2024 after quarterly net interest margin compression was reported in Q3 results."
+  },
+  {
+    "id": 16,
+    "category": "red_flag_education",
+    "text": "Guaranteed-return claims are a classic hallmark of unregulated investment scams and violate SEBI investor protection rules."
+  },
+  {
+    "id": 17,
+    "category": "red_flag_education",
+    "text": "Never trust social media tips promising sure-shot profits, risk-free gains, or 100% accuracy in stock trading."
+  },
+  {
+    "id": 18,
+    "category": "red_flag_education",
+    "text": "SEBI cautions retail investors against unverified channels that use phrases like 'pakka profit' or 'kal upper circuit' to manufacture urgency."
+  },
+  {
+    "id": 19,
+    "category": "red_flag_education",
+    "text": "Pre-post volume spikes on illiquid small-cap counters often indicate coordinated pump activity rather than broad institutional demand."
+  },
+  {
+    "id": 20,
+    "category": "red_flag_education",
+    "text": "Deleted posts after a prediction misses its window artificially inflate a creator's apparent track record when claims are not archived."
+  },
+  {
+    "id": 21,
+    "category": "platform_policy",
+    "text": "Aacharya is an educational platform and does not provide buy, sell, or hold recommendations, price targets, or stock picks."
+  },
+  {
+    "id": 22,
+    "category": "platform_policy",
+    "text": "Our platform never issues stock recommendations, target prices, or portfolio allocation advice for individual securities."
+  },
+  {
+    "id": 23,
+    "category": "concept_definition",
+    "text": "Price-to-earnings (P/E) compares a company's share price to its earnings per share, while 2x P/B reflects twice book value."
+  },
+  {
+    "id": 24,
+    "category": "concept_definition",
+    "text": "Free cash flow represents the cash generated from operations after subtracting capital expenditures required to maintain assets."
+  },
+  {
+    "id": 25,
+    "category": "concept_definition",
+    "text": "Promoter pledging indicates the percentage of promoter-held shares encumbered as collateral for loans, which can increase forced-selling risk."
+  },
+  {
+    "id": 26,
+    "category": "concept_definition",
+    "text": "An upper circuit limit is a daily price band ceiling imposed by exchanges to curb disorderly volatility during single trading sessions."
+  },
+  {
+    "id": 27,
+    "category": "concept_definition",
+    "text": "Intraday trading involves opening and closing positions within the same market session, carrying higher execution and slippage costs."
+  },
+  {
+    "id": 28,
+    "category": "concept_definition",
+    "text": "Short sellers borrow shares to sell them and later return shares bought in the market, exposing them to theoretically uncapped upside risk."
+  },
+  {
+    "id": 29,
+    "category": "concept_definition",
+    "text": "Return on equity (ROE) measures net income divided by shareholders' equity, though high leverage can artificially elevate the ratio."
+  },
+  {
+    "id": 30,
+    "category": "concept_definition",
+    "text": "Market capitalization equals share price multiplied by total outstanding shares and classifies companies into large-cap, mid-cap, and small-cap."
+  },
+  {
+    "id": 31,
+    "category": "concept_definition",
+    "text": "A multibagger is a term coined by Peter Lynch to describe an equity that returned multiples of its original cost over time."
+  },
+  {
+    "id": 32,
+    "category": "concept_definition",
+    "text": "Systematic investment plans spread contributions across fixed intervals so investors purchase more units when prices dip and fewer when prices rise."
+  },
+  {
+    "id": 33,
+    "category": "concept_definition",
+    "text": "Debt-to-equity gauges financial leverage by comparing total borrowings against shareholders' equity on the balance sheet."
+  },
+  {
+    "id": 34,
+    "category": "concept_definition",
+    "text": "Operating profit margin shows how much profit a business retains from revenue after variable production and overhead expenses."
+  },
+  {
+    "id": 35,
+    "category": "concept_definition",
+    "text": "Beta measures how sensitive a stock's historical price movements have been relative to fluctuations in a broad benchmark index."
+  },
+  {
+    "id": 36,
+    "category": "concept_definition",
+    "text": "Liquidity risk arises when low daily trading volume makes entering or exiting a position difficult without moving the market price."
+  },
+  {
+    "id": 37,
+    "category": "verifier_meta",
+    "text": "Claim extracted from @market_buzz: 'Target ₹2400 on Reliance within 15 days'. Historical resolution: did not reach target before window_end."
+  },
+  {
+    "id": 38,
+    "category": "verifier_meta",
+    "text": "When auditing claims that say '100% sure shot profit', check whether entry, stop, and exit window were disclosed transparently."
+  },
+  {
+    "id": 39,
+    "category": "verifier_meta",
+    "text": "This source has 2 scored claims and falls under not_enough_history; wait for a larger sample before interpreting its calibration score."
+  },
+  {
+    "id": 40,
+    "category": "verifier_meta",
+    "text": "Example of a red-flag claim: 'Buy ABC Pharma at CMP 220 for 2x return in 10 days'; such posts combine urgency with unverified upside."
+  },
+  {
+    "id": 41,
+    "category": "red_flag_education",
+    "text": "No investment offers risk-free profit or guaranteed 2x returns; higher expected returns almost always involve higher uncertainty or drawdown risk."
+  },
+  {
+    "id": 42,
+    "category": "red_flag_education",
+    "text": "Warning signs include vague claims without verifiable timeframes, missing SEBI registration numbers, and pressure to act before market open."
+  },
+  {
+    "id": 43,
+    "category": "red_flag_education",
+    "text": "Avoid messages saying 'kal upper circuit' or 'jackpot call' because genuine fundamental analysis weighs downside scenarios alongside potential catalysts."
+  },
+  {
+    "id": 44,
+    "category": "historical_fact",
+    "text": "ITC delivered steady dividend payouts across FY22 and FY23 while its FMCG business gradually expanded operating margins."
+  },
+  {
+    "id": 45,
+    "category": "historical_fact",
+    "text": "In 2023, PSU banking indices rallied strongly compared with the previous five-year period as gross non-performing assets declined."
+  },
+  {
+    "id": 46,
+    "category": "historical_fact",
+    "text": "Tata Motors saw a sharp 45% decline in 2018-2019 amid weaker overseas sales before restructuring debt over subsequent years."
+  },
+  {
+    "id": 47,
+    "category": "concept_definition",
+    "text": "Buy-side analysts work for asset managers and mutual funds, whereas sell-side analysts publish research reports for brokerage clients."
+  },
+  {
+    "id": 48,
+    "category": "concept_definition",
+    "text": "Stop-loss hunting refers to volatile price swings around obvious technical support levels that trigger clustered protective orders."
+  },
+  {
+    "id": 49,
+    "category": "concept_definition",
+    "text": "A smart investor always verifies primary exchange filings, cash flow statements, and governance disclosures before trusting commentary."
+  },
+  {
+    "id": 50,
+    "category": "concept_definition",
+    "text": "निवेश से पहले कंपनी के कर्ज, नकदी प्रवाह और प्रमोटर हिस्सेदारी की जांच करना बुनियादी वित्तीय समझ का हिस्सा है।"
+  }
+]

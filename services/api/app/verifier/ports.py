@@ -1,9 +1,9 @@
 """Bindings supplied by Hardhik's shared core at integration."""
 
-from collections.abc import Callable, Mapping
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import date, timedelta, timezone
-from typing import Protocol, TypedDict
+from typing import Any, Protocol, TypedDict
 from uuid import UUID
 
 from pandas import DataFrame
@@ -43,7 +43,7 @@ class Market(Protocol):
 
 
 class Complete(Protocol):
-    def __call__(self, prompt: str, schema: Mapping[str, object] | None = None) -> object: ...
+    def __call__(self, prompt: str, schema: dict[str, Any] | None = None) -> object: ...
 
 
 @dataclass(frozen=True, slots=True)
@@ -59,3 +59,55 @@ class VerifierCore:
 
 
 SessionFactory = Callable[[], Session]
+
+
+class _PlatformMarket:
+    """Adapter bridging `app.core.market` into the typed `Market` protocol."""
+
+    def prices(self, symbol: str, start: date, end: date) -> DataFrame:
+        from app.core import market
+
+        return market.prices(symbol, start, end)
+
+    def index(self, name: str, start: date, end: date) -> DataFrame:
+        from app.core import market
+
+        return market.index(name, start, end)
+
+    def resolve_symbol(self, text: str) -> str | None:
+        from app.core import market
+
+        return market.resolve_symbol(text)
+
+    def surveillance(self, symbol: str, date: date) -> str | int | None:
+        from app.core import market
+
+        return market.surveillance(symbol, date)
+
+    def sebi_registered(self, name_or_reg_no: str) -> Registration:
+        from app.core import market
+
+        raw = market.sebi_registered(name_or_reg_no)
+        reg_type = raw.get("type")
+        reg_no = raw.get("reg_no")
+        return {
+            "found": bool(raw.get("found")),
+            "type": str(reg_type) if reg_type is not None else None,
+            "reg_no": str(reg_no) if reg_no is not None else None,
+        }
+
+
+def platform_core() -> VerifierCore:
+    """Bind Verifier dependencies to Hardhik's shared `app.core` modules."""
+    from app.core import guardrails, llm
+
+    def _complete(prompt: str, schema: dict[str, Any] | None = None) -> object:
+        if schema is None:
+            return llm.complete(prompt)
+        return llm.complete(prompt, schema)
+
+    return VerifierCore(
+        complete=_complete,
+        check_output=guardrails.check_output,
+        market=_PlatformMarket(),
+    )

@@ -1,0 +1,30 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node / Next.js
+apps/web/node_modules/
+apps/web/.next/
+apps/web/next-env.d.ts
+*.tsbuildinfo
+
+# Local databases & caches
+*.db
+*.sqlite*
+data/market_cache/
+
+# OS
+.DS_Store
+.neon
+node_modules/
+/bun.lock
