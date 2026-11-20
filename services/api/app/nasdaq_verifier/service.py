@@ -13,7 +13,7 @@ from app.core.guardrails import check_output
 from app.nasdaq_verifier.models import NasdaqChallenge
 
 DISCLAIMER = (
-    "Educational literacy check only — Aacharya never recommends buying, selling, "
+    "Educational literacy check only — PaisaProof never recommends buying, selling, "
     "or holding any security."
 )
 CHALLENGE_TTL = 1800

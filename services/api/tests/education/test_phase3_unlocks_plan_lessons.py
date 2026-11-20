@@ -6,7 +6,7 @@ import sqlite3
 import unittest
 
 from app.education.enums import LessonStatus, ToolName
-from app.education.exceptions import ToolLockedError
+from app.education.exceptions import ToolLockedError, ValidationDomainError
 from app.education.learning import (
     build_or_update_plan,
     get_lesson_detail,
@@ -104,6 +104,38 @@ class TestPhase3UnlocksPlanLessons(unittest.TestCase):
             self.assertGreaterEqual(lsn["minutes"], 5)
             self.assertLessEqual(lsn["minutes"], 10)
             self.assertEqual(len(lsn["check_questions"]), 3)
+
+    def test_lesson_check_rejects_duplicate_or_missing_item_ids(self) -> None:
+        self.repo.ensure_user("u_duplicate_lesson", level=1)
+        lesson = self.repo.list_lessons(level=1)[0]
+        questions = lesson["check_questions"]
+        duplicate_answers = [
+            {"question_id": questions[0]["id"], "answer": questions[0]["answer"]}
+            for _ in questions
+        ]
+        with self.assertRaises(ValidationDomainError) as duplicate:
+            submit_lesson_check(
+                self.repo, "u_duplicate_lesson", lesson["id"], duplicate_answers
+            )
+        self.assertEqual(duplicate.exception.code, "DUPLICATE_ITEM")
+        with self.assertRaises(ValidationDomainError) as missing:
+            submit_lesson_check(
+                self.repo,
+                "u_duplicate_lesson",
+                lesson["id"],
+                [
+                    {
+                        "question_id": item["id"],
+                        "answer": item["answer"],
+                    }
+                    for item in questions[:-1]
+                ],
+            )
+        self.assertEqual(missing.exception.code, "INCOMPLETE_SUBMISSION")
+        self.assertEqual(
+            self.repo.list_attempts(user_id="u_duplicate_lesson", context="lesson"),
+            [],
+        )
 
 
 if __name__ == "__main__":

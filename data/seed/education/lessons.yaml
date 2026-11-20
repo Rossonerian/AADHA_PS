@@ -33,7 +33,7 @@ lessons:
     text: After a 1:5 stock split, what happens to total business value immediately?
     options:
     - Unchanged
-    - Increases 5x
+    - Becomes five times its starting size
     - Drops 80%
     answer: Unchanged
     explanation: Splits divide the same ownership pie into more slices.
@@ -97,7 +97,7 @@ lessons:
   title: Spotting Stock Tip Red Flags & Finfluencer Traps
   minutes: 6
   sections:
-  - heading: Guaranteed Returns & Urgency
+  - heading: Promises and Pressure Tactics
     body: No legitimate equity source can promise returns. Tips marketed as certain
       winners, or pressure to act within minutes before an upper circuit, are classic
       manipulation tactics.
@@ -469,7 +469,7 @@ lessons:
     takeaway: Hold every information source to falsifiable, benchmarked standards.
   check_questions:
   - id: chk_l3_ji_1
-    text: What does a 'reliable' source label in Aacharya mean?
+    text: What does a 'reliable' source label in PaisaProof mean?
     options:
     - Strong verified track record and low red flags — not a buy recommendation
     - Guaranteed stock profit

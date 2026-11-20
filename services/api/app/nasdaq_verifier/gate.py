@@ -26,7 +26,13 @@ class GateInputs:
 
 
 def read_gate_inputs(db: Session, user: User) -> GateInputs:
-    """Read plan progress and mean Brier from `plans` / `skill_scores` if they exist."""
+    """Read calculated plan completion and latest mean Brier from Education tables.
+
+    `plans.progress` is a map of lesson ID to status, not a stored percentage. Derive
+    completion from the plan's nonempty unique lesson list and status map so the gate
+    consumes progress written by actual lesson checks. Missing or malformed rows fail
+    closed.
+    """
     inspector = inspect(db.get_bind())
     progress: float | None = None
     brier: float | None = None

@@ -18,6 +18,14 @@ SCENARIO_DISCLAIMER = (
 )
 
 
+def _series_is_real(frame: Any) -> bool:
+    """Treat a market series as real only when its rows explicitly say so."""
+    if frame.empty or "data_origin" not in frame.columns:
+        return False
+    origins = {str(value).strip().lower() for value in frame["data_origin"].dropna()}
+    return origins == {"real"}
+
+
 def recompute_scenario_outcome(
     symbol: str,
     as_of_date: str,
@@ -44,23 +52,27 @@ def recompute_scenario_outcome(
 
     start_ts = stock_df["date"].iloc[0].__class__(start_dt)
     target_ts = stock_df["date"].iloc[0].__class__(target_dt)
+    index_start_ts = idx_df["date"].iloc[0].__class__(start_dt)
+    index_target_ts = idx_df["date"].iloc[0].__class__(target_dt)
 
     s_entry_rows = stock_df[stock_df["date"] <= start_ts]
     s_exit_rows = stock_df[stock_df["date"] >= target_ts]
-    if s_entry_rows.empty:
-        s_entry_rows = stock_df.iloc[:1]
-    if s_exit_rows.empty:
-        s_exit_rows = stock_df.iloc[-1:]
+    if s_entry_rows.empty or s_exit_rows.empty:
+        raise ValidationDomainError(
+            "MARKET_DATA_MISSING",
+            f"Price data does not cover the complete scenario window for {symbol}.",
+        )
 
     s_entry = float(s_entry_rows.iloc[-1]["close"])
     s_exit = float(s_exit_rows.iloc[0]["close"])
 
-    i_entry_rows = idx_df[idx_df["date"] <= start_ts]
-    i_exit_rows = idx_df[idx_df["date"] >= target_ts]
-    if i_entry_rows.empty:
-        i_entry_rows = idx_df.iloc[:1]
-    if i_exit_rows.empty:
-        i_exit_rows = idx_df.iloc[-1:]
+    i_entry_rows = idx_df[idx_df["date"] <= index_start_ts]
+    i_exit_rows = idx_df[idx_df["date"] >= index_target_ts]
+    if i_entry_rows.empty or i_exit_rows.empty:
+        raise ValidationDomainError(
+            "MARKET_DATA_MISSING",
+            f"Benchmark data does not cover the complete scenario window for {symbol}.",
+        )
 
     i_entry = float(i_entry_rows.iloc[-1]["close"])
     i_exit = float(i_exit_rows.iloc[0]["close"])
@@ -83,10 +95,40 @@ def recompute_scenario_outcome(
         "actual_direction": actual_direction,
         "entry_close": round(s_entry, 2),
         "exit_close": round(s_exit, 2),
+        "data_origin": (
+            "real"
+            if _series_is_real(stock_df) and _series_is_real(idx_df)
+            else "synthetic"
+        ),
     }
 
 
-def build_public_scenario(sc: dict[str, Any]) -> dict[str, Any]:
+def scenario_outcome(
+    sc: dict[str, Any], cfg: EducationConfig = DEFAULT_CONFIG
+) -> tuple[dict[str, Any], str]:
+    """Use adjusted market prices when complete; otherwise retain a synthetic seed outcome."""
+    try:
+        outcome = recompute_scenario_outcome(
+            symbol=sc["symbol"],
+            as_of_date=sc["as_of_date"],
+            window_days=sc["window_days"],
+            cfg=cfg,
+        )
+    except ValidationDomainError as exc:
+        if exc.code != "MARKET_DATA_MISSING":
+            raise
+        return sc["outcome"], "synthetic"
+    origin = (
+        "real"
+        if sc.get("data_origin") == "real" and outcome["data_origin"] == "real"
+        else "synthetic"
+    )
+    return outcome, origin
+
+
+def build_public_scenario(
+    sc: dict[str, Any], *, series_data_origin: str | None = None
+) -> dict[str, Any]:
     """Formats scenario context with zero lookahead beyond as_of_date.
 
     Always includes the explicit disclaimer.
@@ -110,7 +152,11 @@ def build_public_scenario(sc: dict[str, Any]) -> dict[str, Any]:
             "headlines": ctx.get("headlines", []),
             "numbers": ctx.get("numbers", {}),
         },
-        "data_origin": sc["data_origin"],
+        "data_origin": (
+            "real"
+            if sc.get("data_origin") == "real" and series_data_origin == "real"
+            else "synthetic"
+        ),
     }
 
 
@@ -131,7 +177,8 @@ def get_next_scenario(
         candidates = repo.list_scenarios(difficulty=difficulty) or repo.list_scenarios()
     if not candidates:
         raise NotFoundError("NO_SCENARIOS", "No historical scenarios are loaded.")
-    return build_public_scenario(candidates[0])
+    _, series_origin = scenario_outcome(candidates[0])
+    return build_public_scenario(candidates[0], series_data_origin=series_origin)
 
 
 def answer_scenario(
@@ -154,12 +201,7 @@ def answer_scenario(
         )
 
     # Always recompute live from core.market when price series is available (no hand-typed outcomes)
-    outcome = recompute_scenario_outcome(
-        symbol=sc["symbol"],
-        as_of_date=sc["as_of_date"],
-        window_days=sc["window_days"],
-        cfg=cfg,
-    )
+    outcome, data_origin = scenario_outcome(sc, cfg=cfg)
     actual_dir = outcome["actual_direction"]
     is_correct = str(direction).lower() == actual_dir
 
@@ -192,5 +234,5 @@ def answer_scenario(
         },
         "key_clues": sc.get("key_clues", []),
         "explanation": safe_explanation,
-        "data_origin": sc["data_origin"],
+        "data_origin": data_origin,
     }

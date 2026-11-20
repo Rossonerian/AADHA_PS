@@ -5,7 +5,14 @@ import type {
   NasdaqSubmitResponse,
   UserLevel,
 } from "./contracts";
-import { mockNasdaqChallenge, mockNasdaqSubmit } from "./mock-nasdaq";
+
+// Fixtures are required lazily and only outside production, so the branch (and the
+// mock-nasdaq module) is removed from production bundles.
+/* eslint-disable @typescript-eslint/no-require-imports */
+const mockNasdaq = (
+  process.env.NODE_ENV !== "production" ? require("./mock-nasdaq") : null
+) as typeof import("./mock-nasdaq");
+/* eslint-enable @typescript-eslint/no-require-imports */
 
 export class ApiClientError extends Error {
   readonly status: number;
@@ -147,6 +154,19 @@ export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): 
       );
     }
 
+    const bare = parsedBody as { code?: unknown; required_level?: unknown } | undefined;
+    if (bare && typeof bare === "object" && typeof bare.code === "string") {
+      throw new ApiClientError(
+        response.status,
+        bare.code,
+        bare.code === "TOOL_LOCKED"
+          ? "This tool is not unlocked yet."
+          : `Request failed with status ${response.status}`,
+        typeof bare.required_level === "number" ? (bare.required_level as UserLevel) : undefined,
+        parsedBody,
+      );
+    }
+
     throw new ApiClientError(
       response.status,
       "HTTP_ERROR",
@@ -174,13 +194,19 @@ export async function getNasdaqChallenge(
   symbol: string,
   token?: string | null,
 ): Promise<NasdaqChallengeResponse> {
+  if (process.env.NODE_ENV !== "production" && process.env.NEXT_PUBLIC_USE_MOCKS === "true") {
+    // Dev-only: mock mode has no backend, so skip the request (avoids a console 404).
+    return mockNasdaq.mockNasdaqChallenge(symbol);
+  }
   try {
     return await apiFetch<NasdaqChallengeResponse>("/nasdaq-verifier/challenge", {
       token,
       query: { symbol },
     });
   } catch (err) {
-    if (isBackendAbsent(err)) return mockNasdaqChallenge(symbol);
+    if (process.env.NODE_ENV !== "production" && isBackendAbsent(err)) {
+      return mockNasdaq.mockNasdaqChallenge(symbol);
+    }
     throw err;
   }
 }
@@ -189,7 +215,13 @@ export async function submitNasdaqVerifier(
   req: NasdaqSubmitRequest,
   token?: string | null,
 ): Promise<NasdaqSubmitResponse> {
-  if (req.challenge_id.startsWith("mock_")) return mockNasdaqSubmit(req);
+  if (
+    process.env.NODE_ENV !== "production" &&
+    process.env.NEXT_PUBLIC_USE_MOCKS === "true" &&
+    req.challenge_id.startsWith("mock_")
+  ) {
+    return mockNasdaq.mockNasdaqSubmit(req);
+  }
   return apiFetch<NasdaqSubmitResponse>("/nasdaq-verifier/submit", {
     method: "POST",
     token,

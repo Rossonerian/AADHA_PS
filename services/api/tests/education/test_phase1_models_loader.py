@@ -7,7 +7,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from app.education.loader import load_yaml_file
+from app.core import guardrails
+from app.education.loader import load_seed_directory, load_yaml_file
 from app.education.repository import (
     EducationRepository,
     apply_migrations,
@@ -141,6 +142,41 @@ questions:
             )
             with self.assertRaises(ValueError):
                 load_yaml_file(self.repo, bad)
+
+    def test_all_seeded_education_copy_passes_guardrails(self) -> None:
+        load_seed_directory(self.repo)
+        texts: list[tuple[str, str]] = []
+        for question in self.repo.list_questions():
+            texts.append((question["id"], question["text"]))
+            texts.extend((question["id"], option) for option in question["options"])
+            texts.append((question["id"], question["explanation"]))
+
+        for lesson in self.repo.list_lessons():
+            texts.append((lesson["id"], lesson["title"]))
+            for section in lesson["sections"]:
+                texts.extend(
+                    (lesson["id"], section[field])
+                    for field in ("heading", "body", "takeaway")
+                    if section.get(field)
+                )
+            for question in lesson["check_questions"]:
+                texts.append((lesson["id"], question["text"]))
+                texts.extend((lesson["id"], option) for option in question["options"])
+                texts.append((lesson["id"], question["explanation"]))
+
+        for record in self.repo.list_explain_records():
+            detail = self.repo.get_explain(record["symbol"], record["year"])
+            assert detail is not None
+            texts.append((f"{record['symbol']}:{record['year']}", detail["summary"]))
+            texts.extend(
+                (f"{record['symbol']}:{record['year']}", event["text"])
+                for move in detail["moves"]
+                for event in move["events"]
+            )
+
+        for record_id, text in texts:
+            result = guardrails.check_output(text)
+            self.assertTrue(result.ok, f"{record_id}: {text!r}: {result.reasons}")
 
 
 if __name__ == "__main__":

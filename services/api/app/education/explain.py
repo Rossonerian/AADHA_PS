@@ -7,7 +7,10 @@ from __future__ import annotations
 
 import uuid
 from collections import defaultdict
+from datetime import date, timedelta
 from typing import Any
+
+import pandas as pd
 
 from ..core import guardrails, market
 from .config import DEFAULT_CONFIG, EducationConfig
@@ -15,8 +18,72 @@ from .enums import AttemptContext, AttemptItemType, ToolName
 from .exceptions import NotFoundError, ValidationDomainError
 from .learning import get_user_unlocks, require_tool_unlocked
 from .repository import EducationRepository
-from .scenarios import build_public_scenario, recompute_scenario_outcome
+from .scenarios import (
+    build_public_scenario,
+    recompute_scenario_outcome,
+    scenario_outcome,
+)
 from .scoring import compute_brier_score
+
+
+def _real_explain_series(
+    rec: dict[str, Any],
+    moves_in: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]] | None:
+    """Rebuild chart closes and event-day moves from adjusted core.market prices."""
+    year = int(rec["year"])
+    history = market.prices(
+        rec["symbol"], date(year, 1, 1) - timedelta(days=7), date(year, 12, 31)
+    )
+    if history.empty or "data_origin" not in history.columns:
+        return None
+    origins = {str(value).strip().lower() for value in history["data_origin"].dropna()}
+    if origins != {"real"}:
+        return None
+
+    year_rows = history[
+        (history["date"] >= f"{year}-01-01") & (history["date"] <= f"{year}-12-31")
+    ].reset_index(drop=True)
+    if year_rows.empty:
+        return None
+
+    dates = history["date"]
+
+    def latest_at_or_before(iso_date: str) -> int | None:
+        match = history.index[dates <= pd.Timestamp(iso_date)]
+        return int(match[-1]) if len(match) else None
+
+    chart: list[dict[str, Any]] = []
+    step = max(1, len(year_rows) // 26)
+    sample_positions = list(range(0, len(year_rows), step))
+    if sample_positions[-1] != len(year_rows) - 1:
+        sample_positions.append(len(year_rows) - 1)
+    for position in sample_positions:
+        row = year_rows.iloc[position]
+        chart.append(
+            {
+                "date": row["date"].date().isoformat(),
+                "close": round(float(row["close"]), 2),
+                "volume": int(row["volume"]),
+            }
+        )
+
+    moves: list[dict[str, Any]] = []
+    for move in moves_in:
+        event_position = latest_at_or_before(str(move["date"]))
+        if event_position is None or event_position == 0:
+            return None
+        before = float(history.iloc[event_position - 1]["close"])
+        after = float(history.iloc[event_position]["close"])
+        if before <= 0:
+            return None
+        moves.append(
+            {
+                **move,
+                "pct": round(100.0 * (after - before) / before, 2),
+            }
+        )
+    return chart, moves
 
 
 def explain_stock(
@@ -63,13 +130,19 @@ def explain_stock(
         )
 
     safe_summary = guardrails.check_output(rec["summary"]).text
+    rebuilt = _real_explain_series(rec, validated_moves)
+    origin = "synthetic"
+    chart = rec["chart"]
+    if rebuilt is not None and rec.get("data_origin") == "real":
+        chart, validated_moves = rebuilt
+        origin = "real"
     return {
         "symbol": rec["symbol"],
         "year": int(rec["year"]),
-        "chart": rec["chart"],
+        "chart": chart,
         "moves": validated_moves,
         "summary": safe_summary,
-        "data_origin": rec["data_origin"],
+        "data_origin": origin,
     }
 
 
@@ -200,11 +273,12 @@ def start_study_session(
         )
 
     for sc in unseen_scens:
+        _, series_origin = scenario_outcome(sc, cfg=cfg)
         items_public.append(
             {
                 "item_id": sc["id"],
                 "item_type": AttemptItemType.SCENARIO.value,
-                "prompt": build_public_scenario(sc),
+                "prompt": build_public_scenario(sc, series_data_origin=series_origin),
             }
         )
         specs.append(
@@ -264,6 +338,16 @@ def submit_study_session(
     if len(answers) != len(spec_map):
         raise ValidationDomainError(
             "INCOMPLETE_SUBMISSION", f"Expected {len(spec_map)} answers."
+        )
+    submitted_ids = [str(answer.get("item_id", "")) for answer in answers]
+    if len(set(submitted_ids)) != len(submitted_ids):
+        raise ValidationDomainError(
+            "DUPLICATE_ITEM", "Each study item must be answered exactly once."
+        )
+    if set(submitted_ids) != set(spec_map):
+        raise ValidationDomainError(
+            "INVALID_SUBMISSION_ITEMS",
+            "Answers must match the items issued for this study session.",
         )
 
     correct = 0
