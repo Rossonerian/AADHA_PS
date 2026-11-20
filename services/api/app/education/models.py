@@ -1,4 +1,4 @@
-"""SQLAlchemy 2.0 ORM models for Aacharya Education tables (SoT Section 6).
+"""SQLAlchemy 2.0 ORM models for PaisaProof Education tables (SoT Section 6).
 
 Designed for Supabase Postgres (SQLAlchemy 2.0 + Alembic).
 """

@@ -6,24 +6,29 @@ import {
   ChartNoAxesCombined,
   CircleHelp,
   House,
+  Landmark,
+  Lock,
+  LogOut,
   Moon,
   Search,
   Sparkles,
   Sun,
 } from "lucide-react";
-import { DashboardCharts, ExplainChart, ScenarioChart } from "@/components/charts";
+import { DashboardCharts, ExplainChart, ScenarioChart, chartHasIndex } from "@/components/charts";
 import {
+  Alert,
   Avatar,
   AvatarFallback,
   Button,
   Checkbox,
+  ChoiceOption,
+  ConfidenceControl,
   DataBadge,
   Input,
   LockNotice,
   Panel,
   ProgressBar,
   RadioGroup,
-  RadioGroupItem,
   SectionHeading,
   Slider,
   Tabs,
@@ -32,7 +37,8 @@ import {
   Textarea,
   Toast,
 } from "@/components/ui";
-import { api, isToolLocked } from "@/lib/api";
+import { api, isToolLocked, mocksEnabled } from "@/lib/api";
+import { ApiClientError } from "@/lib/api-client";
 import type {
   Assessment,
   AssessmentResult,
@@ -51,6 +57,8 @@ import type {
   VerifyResult,
 } from "@/lib/types";
 import { authClient } from "@/lib/neon-auth-client";
+import type { LessonCheckResponse } from "@/lib/contracts";
+import { NasdaqVerifier } from "@/components/nasdaq-verifier";
 
 type View =
   | "home"
@@ -61,7 +69,8 @@ type View =
   | "scenario"
   | "explain"
   | "verifier"
-  | "progress";
+  | "progress"
+  | "nasdaq";
 type NavItem = { id: View; label: string; icon: typeof House; tool?: string; level?: number };
 const navItems: NavItem[] = [
   { id: "home", label: "Overview", icon: House },
@@ -70,12 +79,24 @@ const navItems: NavItem[] = [
   { id: "explain", label: "Explain a stock", icon: Search, tool: "explain_stock", level: 2 },
   { id: "verifier", label: "Source verifier", icon: CircleHelp, tool: "verifier", level: 3 },
   { id: "progress", label: "My progress", icon: ChartNoAxesCombined, tool: "dashboard", level: 4 },
+  { id: "nasdaq", label: "Nasdaq capstone", icon: Landmark, level: 4 },
 ];
+
+const verifierLevel = navItems.find((item) => item.id === "verifier")?.level ?? 3;
+const sentenceCase = (value: string) => {
+  const text = value.replace(/_/g, " ").trim().toLowerCase();
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};
 
 function friendlyError(error: unknown): string {
   if (isToolLocked(error)) return `This tool opens at Level ${error.requiredLevel ?? 3}.`;
   if (error instanceof Error) return error.message;
   return "That did not load. Check your connection and try again.";
+}
+
+function greeting() {
+  const hour = new Date().getHours();
+  return hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 }
 
 function formatLabel(value: string | null | undefined) {
@@ -123,8 +144,11 @@ export default function PaisaProofApp() {
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [authMode, setAuthMode] = useState<"in" | "up">("in");
   const [authMessage, setAuthMessage] = useState("");
   const [verifyProgress, setVerifyProgress] = useState(0);
+  const [verifyUnavailable, setVerifyUnavailable] = useState(false);
   const [onboarding, setOnboarding] = useState<{
     sessionId: string;
     question: Question;
@@ -134,14 +158,16 @@ export default function PaisaProofApp() {
     data_origin: DataOrigin;
   } | null>(null);
   const [onboardingResult, setOnboardingResult] = useState<OnboardingResult | null>(null);
-  const [lessonCheck, setLessonCheck] = useState("");
+  const [lessonCheck, setLessonCheck] = useState<Record<string, string>>({});
+  const [lessonSaved, setLessonSaved] = useState("");
+  const [lessonResult, setLessonResult] = useState<LessonCheckResponse | null>(null);
   const [assessmentAnswers, setAssessmentAnswers] = useState<
     Record<string, { answer: string; confidence: number }>
   >({});
   const [scenarioAnswer, setScenarioAnswer] = useState<"up" | "down" | "">("");
   const [scenarioConfidence, setScenarioConfidence] = useState(65);
   const [selectedClues, setSelectedClues] = useState<string[]>([]);
-  const [symbol, setSymbol] = useState("DEMO");
+  const [symbol, setSymbol] = useState("");
   const [year, setYear] = useState("2025");
   const [verifyText, setVerifyText] = useState("");
   const [verifyUrl, setVerifyUrl] = useState("");
@@ -151,6 +177,7 @@ export default function PaisaProofApp() {
 
   useEffect(() => {
     let cancelled = false;
+    if (mocksEnabled) return;
     void authClient
       .getSession()
       .then((session) => {
@@ -194,37 +221,51 @@ export default function PaisaProofApp() {
   const clearError = () => setError("");
   const showError = (reason: unknown) => setError(friendlyError(reason));
 
-  async function enterDemo() {
-    clearError();
-    setBusy(true);
-    try {
-      const [me] = await Promise.all([api.me(), api.health()]);
-      setProfile(me);
-      setAuthMessage("");
-    } catch (reason) {
-      showError(reason);
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  async function signInWithEmail(event: React.FormEvent<HTMLFormElement>) {
+  async function submitAuth(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     clearError();
-    if (!email || !password) {
-      setError("Enter your email and password to continue.");
+    if (!email || !password || (authMode === "up" && !fullName.trim())) {
+      setError(
+        authMode === "up"
+          ? "Enter your name, email and a password to create your account."
+          : "Enter your email and password to continue.",
+      );
+      return;
+    }
+    if (authMode === "up" && password.length < 8) {
+      setError("Use a password with at least 8 characters.");
       return;
     }
     setBusy(true);
     try {
-      const result = await authClient.signIn.email({ email, password });
-      if (result.error) throw result.error;
+      if (!mocksEnabled) {
+        const result =
+          authMode === "up"
+            ? await authClient.signUp.email({ email, password, name: fullName.trim() })
+            : await authClient.signIn.email({ email, password });
+        if (result.error) throw new Error(result.error.message ?? "Authentication failed.");
+      }
       setProfile(await api.me());
       setAuthMessage("");
     } catch (reason) {
       setError(friendlyError(reason));
     } finally {
       setBusy(false);
+    }
+  }
+
+  async function signOut() {
+    try {
+      if (!mocksEnabled) await authClient.signOut();
+    } finally {
+      setProfile(null);
+      setPlan(null);
+      setDashboard(null);
+      setSubmissions([]);
+      setVerification(null);
+      setPassword("");
+      setView("home");
+      setError("");
     }
   }
 
@@ -293,7 +334,9 @@ export default function PaisaProofApp() {
     setView("lesson");
     setBusy(true);
     setError("");
-    setLessonCheck("");
+    setLessonCheck({});
+    setLessonSaved("");
+    setLessonResult(null);
     try {
       setLesson(await api.lesson(id));
     } catch (reason) {
@@ -303,7 +346,36 @@ export default function PaisaProofApp() {
     }
   }
 
+  async function finishLesson() {
+    if (!lesson) return;
+    const answers = lesson.check_questions
+      .filter((question) => lessonCheck[question.id])
+      .map((question) => ({ question_id: question.id, answer: lessonCheck[question.id] }));
+    if (answers.length === 0) {
+      setError("Answer at least one quick-check question to continue.");
+      return;
+    }
+    setBusy(true);
+    setError("");
+    try {
+      const result = await api.lessonCheck(lesson.id, answers);
+      setLessonResult(result);
+      setLessonSaved(
+        `${Math.round(result.score_pct)}% on the quick check. Your learning path is now ${Math.round(result.plan_progress_pct)}% complete.`,
+      );
+      setPlan(await api.plan());
+    } catch (reason) {
+      showError(reason);
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function beginAssessment() {
+    if ((profile?.level ?? 1) >= 4) {
+      setToast("You have completed every level. Try the Nasdaq capstone next.");
+      return;
+    }
     setBusy(true);
     setError("");
     setAssessmentResult(null);
@@ -393,7 +465,11 @@ export default function PaisaProofApp() {
     try {
       setExplain(await api.explain(symbol.trim().toUpperCase(), Number(year)));
     } catch (reason) {
-      showError(reason);
+      if (reason instanceof ApiClientError && reason.code === "EXPLAIN_NOT_FOUND")
+        setError(
+          "We don’t have a prepared walkthrough for that company and year yet. Try another symbol or year.",
+        );
+      else showError(reason);
     } finally {
       setBusy(false);
     }
@@ -419,6 +495,7 @@ export default function PaisaProofApp() {
     }
     setBusy(true);
     setError("");
+    setVerifyUnavailable(false);
     setVerification(null);
     setSourceDetail(null);
     setVerifyProgress(1);
@@ -443,7 +520,13 @@ export default function PaisaProofApp() {
         setError(
           `The verifier opens at Level ${reason.requiredLevel ?? 3}. Continue your learning path to unlock it.`,
         );
-      else showError(reason);
+      else if (
+        reason instanceof ApiClientError &&
+        (reason.code === "CONFIGURATION_ERROR" || reason.status >= 500)
+      ) {
+        setVerifyProgress(0);
+        setVerifyUnavailable(true);
+      } else showError(reason);
     } finally {
       setBusy(false);
     }
@@ -485,12 +568,10 @@ export default function PaisaProofApp() {
 
   function navigate(target: View) {
     const entry = navItems.find((item) => item.id === target);
-    if (entry?.level && (profile?.level ?? 1) < entry.level) {
-      setError(`${entry.label} opens at Level ${entry.level}.`);
-      return;
-    }
+    const locked = Boolean(entry?.level && (profile?.level ?? 0) < entry.level);
     setError("");
     setView(target);
+    if (locked) return;
     if (target === "scenario") void openScenario();
     if (target === "progress") void openDashboard();
     if (target === "learn" && !plan) void api.plan().then(setPlan).catch(showError);
@@ -545,28 +626,79 @@ export default function PaisaProofApp() {
           <Panel className="signin-panel">
             <div className="signin-icon">✳</div>
             <span className="eyebrow">YOUR LEARNING SPACE</span>
-            <h2>Start with a quick check-in</h2>
-            <p>We’ll shape a learning path around what you already know.</p>
-            <form onSubmit={signInWithEmail} className="signin-form">
-              <label htmlFor="email">Email address</label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                autoComplete="email"
-              />
-              <label htmlFor="password">Password</label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                autoComplete="current-password"
-              />
+            <h2>{authMode === "in" ? "Welcome back" : "Create your account"}</h2>
+            <p>
+              {authMode === "in"
+                ? "Pick up your learning path where you left it."
+                : "Start with a short check-in. We’ll shape a path around what you already know."}
+            </p>
+            <div className="signin-tabs" role="tablist" aria-label="Account">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={authMode === "in"}
+                className={`signin-tab ${authMode === "in" ? "active" : ""}`}
+                onClick={() => {
+                  setAuthMode("in");
+                  clearError();
+                }}
+              >
+                Sign in
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={authMode === "up"}
+                className={`signin-tab ${authMode === "up" ? "active" : ""}`}
+                onClick={() => {
+                  setAuthMode("up");
+                  clearError();
+                }}
+              >
+                Create account
+              </button>
+            </div>
+            <form onSubmit={submitAuth} className="signin-form">
+              {authMode === "up" && (
+                <div className="field-group">
+                  <label htmlFor="full-name">Your name</label>
+                  <Input
+                    id="full-name"
+                    value={fullName}
+                    onChange={(event) => setFullName(event.target.value)}
+                    autoComplete="name"
+                  />
+                </div>
+              )}
+              <div className="field-group">
+                <label htmlFor="email">Email address</label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  autoComplete="email"
+                />
+              </div>
+              <div className="field-group">
+                <label htmlFor="password">Password</label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  autoComplete={authMode === "in" ? "current-password" : "new-password"}
+                />
+              </div>
               <Button type="submit" disabled={busy}>
-                {busy ? "Signing in…" : "Sign in with email"}
+                {busy
+                  ? authMode === "in"
+                    ? "Signing in…"
+                    : "Creating account…"
+                  : authMode === "in"
+                    ? "Sign in"
+                    : "Create account"}
                 <span aria-hidden="true">→</span>
               </Button>
             </form>
@@ -580,15 +712,7 @@ export default function PaisaProofApp() {
                 {error}
               </p>
             )}
-            <div className="signin-divider">
-              <span>OR</span>
-            </div>
-            <Button variant="secondary" onClick={enterDemo} disabled={busy}>
-              Explore the demo workspace <span aria-hidden="true">↗</span>
-            </Button>
-            <small>
-              Demo data is labeled so it’s easy to tell sample information from live data.
-            </small>
+            <small>PaisaProof is a learning tool. It never tells you what to buy or sell.</small>
           </Panel>
         </div>
         <footer className="welcome-footer">
@@ -632,7 +756,7 @@ export default function PaisaProofApp() {
                 <item.icon size={19} strokeWidth={1.8} />
               </span>
               <span>{item.label}</span>
-              {isLocked(item) && <span className="nav-level">L{item.level}</span>}
+              {isLocked(item) && <span className="nav-level">Level {item.level}</span>}
             </Button>
           ))}
         </nav>
@@ -656,7 +780,11 @@ export default function PaisaProofApp() {
           <Button
             variant="quiet"
             className="sidebar-help"
-            onClick={() => setToast("Your progress is saved to this demo session.")}
+            onClick={() =>
+              setToast(
+                "Questions or feedback? Tell your team lead; it goes straight to the builders.",
+              )
+            }
           >
             <CircleHelp size={17} aria-hidden="true" /> Help & feedback
           </Button>
@@ -683,17 +811,26 @@ export default function PaisaProofApp() {
               {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}
             </Button>
             <span className="streak-chip">
-              <span aria-hidden="true">✦</span> 4 day streak
+              <span aria-hidden="true">✦</span> Level {profile.level} of 4
             </span>
             <Button
               variant="quiet"
               className="avatar-button"
               aria-label={`${profile.name} profile`}
-              onClick={() => setToast("You’re signed in to the demo workspace.")}
+              title={profile.name}
             >
               <Avatar>
                 <AvatarFallback>{profile.name.slice(0, 1).toUpperCase()}</AvatarFallback>
               </Avatar>
+            </Button>
+            <Button
+              variant="quiet"
+              className="theme-toggle"
+              onClick={() => void signOut()}
+              aria-label="Sign out"
+              title="Sign out"
+            >
+              <LogOut size={17} />
             </Button>
           </div>
         </header>
@@ -752,9 +889,12 @@ export default function PaisaProofApp() {
               lesson={lesson}
               check={lessonCheck}
               setCheck={setLessonCheck}
+              saved={lessonSaved}
+              result={lessonResult}
               busy={busy}
               onBack={() => setView("learn")}
-              onContinue={beginAssessment}
+              onContinue={finishLesson}
+              onAssess={beginAssessment}
             />
           )}
           {view === "assessment" && (
@@ -778,7 +918,7 @@ export default function PaisaProofApp() {
           )}
           {view === "scenario" &&
             (profile.level < 1 ? (
-              <LockNotice level={1} />
+              <LockNotice level={1} current={profile.level} onLearn={() => navigate("learn")} />
             ) : (
               <ScenarioView
                 scenario={scenario}
@@ -796,7 +936,7 @@ export default function PaisaProofApp() {
             ))}
           {view === "explain" &&
             (profile.level < 2 ? (
-              <LockNotice level={2} />
+              <LockNotice level={2} current={profile.level} onLearn={() => navigate("learn")} />
             ) : (
               <ExplainView
                 symbol={symbol}
@@ -810,7 +950,7 @@ export default function PaisaProofApp() {
             ))}
           {view === "verifier" &&
             (profile.level < 3 ? (
-              <LockNotice level={3} />
+              <LockNotice level={3} current={profile.level} onLearn={() => navigate("learn")} />
             ) : (
               <VerifierView
                 text={verifyText}
@@ -826,20 +966,68 @@ export default function PaisaProofApp() {
                 submissions={submissions}
                 busy={busy}
                 verifyProgress={verifyProgress}
+                unavailable={verifyUnavailable}
+                level={profile.level}
                 searchSource={searchSource}
                 setSearchSource={setSearchSource}
                 onSubmit={runVerify}
                 onScreenshot={onScreenshot}
               />
             ))}
+          {view === "nasdaq" &&
+            (profile.level < 4 ? (
+              <LockNotice level={4} current={profile.level} onLearn={() => navigate("learn")} />
+            ) : (
+              <NasdaqVerifier />
+            ))}
           {view === "progress" &&
-            (profile.level < 4 ? <LockNotice level={4} /> : <ProgressView data={dashboard} />)}
+            (profile.level < 4 ? (
+              <LockNotice level={4} current={profile.level} onLearn={() => navigate("learn")} />
+            ) : (
+              <ProgressView data={dashboard} />
+            ))}
         </main>
         <footer className="app-footer">
           <span>PaisaProof · Learn to read the signal</span>
           <span>Progress is personal. The market is uncertain.</span>
         </footer>
       </div>
+      <nav className="mobile-nav" aria-label="Mobile navigation">
+        {navItems.map((item) => {
+          const current =
+            view === item.id ||
+            ((view === "lesson" || view === "assessment") && item.id === "learn");
+          return (
+            <Button
+              variant="quiet"
+              key={item.id}
+              className={`mobile-nav-item ${current ? "selected" : ""} ${isLocked(item) ? "locked" : ""}`}
+              onClick={() => navigate(item.id)}
+              aria-current={view === item.id ? "page" : undefined}
+              aria-label={
+                isLocked(item) ? `${item.label} (unlocks at Level ${item.level})` : item.label
+              }
+            >
+              <item.icon size={18} strokeWidth={1.8} aria-hidden="true" />
+              <span>{item.label.split(" ")[0]}</span>
+              {isLocked(item) && (
+                <em role="img" aria-label={`Unlocks at Level ${item.level}`}>
+                  L{item.level}
+                </em>
+              )}
+            </Button>
+          );
+        })}
+        <Button
+          variant="quiet"
+          className="mobile-nav-item"
+          onClick={() => void signOut()}
+          aria-label="Sign out"
+        >
+          <LogOut size={18} strokeWidth={1.8} aria-hidden="true" />
+          <span>Sign out</span>
+        </Button>
+      </nav>
       {toast && <Toast message={toast} onClose={() => setToast("")} />}
     </div>
   );
@@ -869,24 +1057,12 @@ function HomeView({
     <>
       <div className="home-greeting">
         <div>
-          <span className="eyebrow">
-            YOUR LEARNING SPACE <span className="data-origin-inline">DEMO</span>
-          </span>
+          <span className="eyebrow">YOUR LEARNING SPACE</span>
           <h1>
-            Good morning, {profile.name} <span className="wave">✳</span>
+            {greeting()}, {profile.name} <span className="wave">✳</span>
           </h1>
           <p>A little practice today can make the next big claim easier to question.</p>
         </div>
-        <Button
-          variant="quiet"
-          className="avatar-large"
-          onClick={onLearn}
-          aria-label="Open your learning path"
-        >
-          <Avatar size="lg">
-            <AvatarFallback>{profile.name.slice(0, 1).toUpperCase()}</AvatarFallback>
-          </Avatar>
-        </Button>
       </div>
       <div className="hero-card">
         <div className="hero-illustration" aria-hidden="true">
@@ -904,13 +1080,13 @@ function HomeView({
             <br />
             <em>learning check-in.</em>
           </h2>
-          <p>Three short questions help us find the right place for you to begin.</p>
+          <p>A short set of questions helps us find the right place for you to begin.</p>
           <Button onClick={onStart}>
             Begin check-in <span aria-hidden="true">→</span>
           </Button>
         </div>
         <div className="hero-side-note">
-          <span>ABOUT 3 MIN</span>
+          <span>ABOUT 5 MIN</span>
           <i /> No score to pass
         </div>
       </div>
@@ -954,11 +1130,15 @@ function HomeView({
         <Button variant="quiet" className="home-action-card" onClick={onVerifier}>
           <span className="card-icon lilac">⌕</span>
           <span className="card-meta">SOURCE VERIFIER</span>
-          <strong>{hasVerifier ? "Check a claim" : "Unlock at Level 3"}</strong>
+          <strong>{hasVerifier ? "Check a claim" : `Unlocks at Level ${verifierLevel}`}</strong>
           <span className="card-foot">
             Look into a shared message <b>↗</b>
           </span>
-          <span className="lock-dash">{hasVerifier ? "Available now" : "2 levels to go"}</span>
+          <span className="lock-dash">
+            {hasVerifier
+              ? "Available now"
+              : `${Math.max(1, verifierLevel - profile.level)} level${verifierLevel - profile.level > 1 ? "s" : ""} to go`}
+          </span>
         </Button>
       </div>
       <div className="home-lower">
@@ -1036,7 +1216,7 @@ function OnboardingView({
         <SectionHeading eyebrow="YOUR STARTING POINT" title="A learning path that fits." />
         <Panel className="result-panel">
           <div className="result-orbit">✳</div>
-          <span className="eyebrow">CHECK-IN COMPLETE</span>
+          <span className="eyebrow">QUICK CHECK COMPLETE</span>
           <h2>Level {result.level} · Reading a stock</h2>
           <p>
             Your answers suggest a good next focus: checking who is behind a claim and how strong
@@ -1067,9 +1247,9 @@ function OnboardingView({
   if (!state)
     return (
       <div className="narrow-view">
-        <SectionHeading eyebrow="A QUICK CHECK-IN" title="Find your starting point." />
+        <SectionHeading eyebrow="QUICK CHECK" title="Find your starting point." />
         <Panel>
-          <p>Three short questions will help shape your learning plan.</p>
+          <p>A short set of questions will help shape your learning plan.</p>
           <Button onClick={onStart} disabled={busy}>
             Start check-in
           </Button>
@@ -1083,15 +1263,16 @@ function OnboardingView({
           ← Overview
         </Button>
         <span className="flow-step">
-          Question {state.index + 1} <span>/ 3</span>
+          Question {state.index + 1} <span>of about 12</span>
         </span>
       </div>
-      <ProgressBar value={((state.index + 1) / 3) * 100} label="Check-in progress" />
+      <ProgressBar
+        value={Math.min(100, ((state.index + 1) / 12) * 100)}
+        label="Check-in progress"
+      />
       <Panel className="quiz-panel">
         <div className="panel-heading">
-          <span className="eyebrow">
-            A QUICK CHECK-IN · {formatLabel(state.question.skill_area)}
-          </span>
+          <span className="eyebrow">QUICK CHECK · {formatLabel(state.question.skill_area)}</span>
           <DataBadge origin="synthetic" />
         </div>
         <h2 id="onboarding-question">{state.question.text}</h2>
@@ -1102,13 +1283,9 @@ function OnboardingView({
           className="quiz-options"
         >
           {state.question.options.map((option) => (
-            <RadioGroupItem
-              key={option}
-              value={option}
-              className={`quiz-option ${state.answer === option ? "chosen" : ""}`}
-            >
+            <ChoiceOption key={option} value={option} selected={state.answer === option}>
               {option}
-            </RadioGroupItem>
+            </ChoiceOption>
           ))}
         </RadioGroup>
         <ConfidenceControl
@@ -1122,37 +1299,6 @@ function OnboardingView({
         </Button>
       </Panel>
       <p className="centered-note">Your answers help us choose a useful next lesson.</p>
-    </div>
-  );
-}
-
-function ConfidenceControl({
-  value,
-  onChange,
-  label,
-}: {
-  value: number;
-  onChange: (value: number) => void;
-  label: string;
-}) {
-  return (
-    <div className="confidence-control">
-      <div>
-        <label>{label}</label>
-        <strong>{value}%</strong>
-      </div>
-      <Slider
-        min={50}
-        max={100}
-        step={5}
-        value={[value]}
-        onValueChange={(next) => onChange(next[0] ?? value)}
-        aria-label={`${label} ${value} percent`}
-      />
-      <div className="range-labels">
-        <span>Not sure yet</span>
-        <span>Very sure</span>
-      </div>
     </div>
   );
 }
@@ -1182,7 +1328,6 @@ function LearningView({
         </div>
         <ProgressBar value={plan?.progress_pct ?? 0} />
         <span className="level-pill">LEVEL {plan?.level ?? 2}</span>
-        <DataBadge origin="synthetic" />
       </div>
       <div className="lesson-list">
         {(plan?.lessons ?? []).map((item, index) => (
@@ -1192,17 +1337,16 @@ function LearningView({
             </div>
             <div className="lesson-info">
               <span className="eyebrow">
-                {item.minutes} MIN ·{" "}
-                {item.status === "in_progress" ? "PICK UP HERE" : formatLabel(item.status)}
+                {item.minutes} min ·{" "}
+                {item.status === "in_progress" ? "Pick up here" : sentenceCase(item.status)}
               </span>
               <h3>{item.title}</h3>
               <p>
                 {item.status === "locked"
-                  ? "Complete the current learning check to open this lesson."
+                  ? "Complete the current quick check to open this lesson."
                   : "A short guide with clear examples and a quick knowledge check."}
               </p>
             </div>
-            <DataBadge origin="synthetic" />
             <Button
               variant="quiet"
               className="lesson-open"
@@ -1210,7 +1354,7 @@ function LearningView({
               disabled={busy || item.status === "locked"}
               aria-label={`Open ${item.title}`}
             >
-              {item.status === "locked" ? "⌑" : "→"}
+              {item.status === "locked" ? <Lock size={16} aria-hidden="true" /> : "→"}
             </Button>
           </Panel>
         ))}
@@ -1233,18 +1377,28 @@ function LessonView({
   lesson,
   check,
   setCheck,
+  saved,
+  result,
   busy,
   onBack,
   onContinue,
+  onAssess,
 }: {
   lesson: Lesson | null;
-  check: string;
-  setCheck: (value: string) => void;
+  check: Record<string, string>;
+  setCheck: (value: Record<string, string>) => void;
+  saved: string;
+  result: LessonCheckResponse | null;
   busy: boolean;
   onBack: () => void;
   onContinue: () => void;
+  onAssess: () => void;
 }) {
-  const question = lesson?.check_questions[0];
+  const questions = lesson?.check_questions ?? [];
+  const answered = Object.values(check).filter(Boolean).length;
+  const feedbackFor = (id: string) => result?.feedback?.find((item) => item.question_id === id);
+  const total = result?.total_count ?? questions.length;
+  const hasCounts = result?.correct_count !== undefined && total > 0;
   return (
     <div className="lesson-reader">
       <Button variant="quiet" className="back-button" onClick={onBack}>
@@ -1254,9 +1408,11 @@ function LessonView({
       {lesson && (
         <>
           <div className="lesson-reader-head">
-            <span className="eyebrow">LEVEL 2 · 8 MIN READ</span>
+            <span className="eyebrow">
+              {lesson.level ? `LEVEL ${lesson.level}` : "LESSON"}
+              {lesson.minutes ? ` · ${lesson.minutes} MIN READ` : ""}
+            </span>
             <h1>{lesson.title}</h1>
-            <p>Learn to slow down, compare, and find the story behind a chart.</p>
           </div>
           <Panel className="reading-panel">
             <DataBadge origin="synthetic" />
@@ -1266,48 +1422,75 @@ function LessonView({
                 <div>
                   <h3>{section.heading}</h3>
                   <p>{section.body}</p>
-                  {section.example && <p className="muted">Example: {section.example}</p>}
+                  {(section.takeaway ?? section.example) && (
+                    <p className="muted">Takeaway: {section.takeaway ?? section.example}</p>
+                  )}
                 </div>
               </div>
             ))}
           </Panel>
-          {question && (
-            <Panel className="lesson-check">
+          {questions.map((question, qIndex) => (
+            <Panel className="lesson-check" key={question.id}>
               <div className="panel-heading">
-                <span className="eyebrow">QUICK CHECK</span>
-                <DataBadge origin="synthetic" />
+                <span className="eyebrow">
+                  QUICK CHECK · {qIndex + 1} OF {questions.length}
+                </span>
+                <DataBadge origin={lesson.data_origin} />
               </div>
-              <h3 id="lesson-question">{question.text}</h3>
+              <h3 id={`lesson-question-${qIndex}`}>{question.text}</h3>
               <RadioGroup
-                value={check}
-                onValueChange={setCheck}
-                aria-labelledby="lesson-question"
+                value={check[question.id] ?? ""}
+                onValueChange={(value) => setCheck({ ...check, [question.id]: value })}
+                aria-labelledby={`lesson-question-${qIndex}`}
                 className="quiz-options"
               >
                 {question.options.map((option) => (
-                  <RadioGroupItem
+                  <ChoiceOption
                     key={option}
                     value={option}
-                    className={`quiz-option ${check === option ? "chosen" : ""}`}
+                    selected={check[question.id] === option}
                   >
                     {option}
-                  </RadioGroupItem>
+                  </ChoiceOption>
                 ))}
               </RadioGroup>
-              {check && (
-                <div className="inline-feedback" role="status">
-                  Answer selected. Continue when you’re ready.
-                </div>
-              )}
+              {(() => {
+                const item = feedbackFor(question.id);
+                if (!item || item.correct === undefined) return null;
+                return (
+                  <div
+                    className={`fb-answer-feedback ${item.correct ? "correct" : "incorrect"}`}
+                    role="status"
+                  >
+                    <strong>{item.correct ? "Correct" : "Not quite"}</strong>
+                    {item.explanation && <p>{item.explanation}</p>}
+                  </div>
+                );
+              })()}
             </Panel>
+          ))}
+          {saved && (
+            <div className="inline-feedback" role="status">
+              {hasCounts && (
+                <strong className="fb-lesson-score">
+                  {result!.correct_count} of {total} correct.{" "}
+                </strong>
+              )}
+              {saved}
+            </div>
           )}
           <div className="reader-actions">
             <Button variant="secondary" onClick={onBack}>
               Save and leave
             </Button>
-            <Button onClick={onContinue} disabled={busy || !check}>
-              Continue to assessment <span>→</span>
+            <Button onClick={onContinue} disabled={busy || answered === 0 || Boolean(saved)}>
+              {saved ? "Saved" : "Check my answers"} <span>→</span>
             </Button>
+            {saved && (
+              <Button onClick={onAssess}>
+                Continue to assessment <span>→</span>
+              </Button>
+            )}
           </div>
         </>
       )}
@@ -1342,7 +1525,7 @@ function AssessmentView({
     return (
       <div className="narrow-view">
         <SectionHeading
-          eyebrow="LEARNING CHECK"
+          eyebrow="QUICK CHECK"
           title={
             result.passed ? "You’re ready for the next level." : "Keep building your confidence."
           }
@@ -1391,7 +1574,7 @@ function AssessmentView({
   if (!assessment)
     return (
       <div className="narrow-view">
-        <SectionHeading eyebrow="LEARNING CHECK" title="A few questions to reflect." />
+        <SectionHeading eyebrow="QUICK CHECK" title="A few questions to reflect." />
         <Panel>
           <p>Loading your questions…</p>
           {busy && <div className="skeleton-line" />}
@@ -1407,7 +1590,7 @@ function AssessmentView({
         <span className="flow-step">{assessment.items.length} questions</span>
       </div>
       <SectionHeading
-        eyebrow={`LEVEL ${level} · CHECK-IN`}
+        eyebrow={`LEVEL ${level} · QUICK CHECK`}
         title="Show what you have learned."
         action={<DataBadge origin="synthetic" />}
       />
@@ -1432,13 +1615,13 @@ function AssessmentView({
             className="quiz-options"
           >
             {item.options.map((option) => (
-              <RadioGroupItem
+              <ChoiceOption
                 key={option}
                 value={option}
-                className={`quiz-option ${answers[item.id]?.answer === option ? "chosen" : ""}`}
+                selected={answers[item.id]?.answer === option}
               >
                 {option}
-              </RadioGroupItem>
+              </ChoiceOption>
             ))}
           </RadioGroup>
           <ConfidenceControl
@@ -1506,9 +1689,9 @@ function ScenarioView({
         title="Read the clues. Make a call."
         action={<DataBadge origin={scenario.data_origin} />}
       />
-      <div className="scenario-layout">
+      <div className="scenario-layout fb-chart-first">
         <div className="scenario-main">
-          <Panel className="scenario-chart-panel">
+          <Panel className="scenario-chart-panel fb-chart-first-chart">
             <div className="panel-heading">
               <div>
                 <span className="eyebrow">{scenario.context.company}</span>
@@ -1521,9 +1704,11 @@ function ScenarioView({
               <span>
                 <i className="line-solid" /> Company
               </span>
-              <span>
-                <i className="line-dashed" /> Index
-              </span>
+              {chartHasIndex(scenario.context.chart) && (
+                <span>
+                  <i className="line-dashed" /> Index
+                </span>
+              )}
               <small>Data shown up to {scenario.as_of_date}</small>
             </div>
           </Panel>
@@ -1569,12 +1754,12 @@ function ScenarioView({
                 aria-labelledby="scenario-direction-question"
                 className="direction-options"
               >
-                <RadioGroupItem value="up" className={answer === "up" ? "selected" : ""}>
-                  <span>↗</span>Outperform the index
-                </RadioGroupItem>
-                <RadioGroupItem value="down" className={answer === "down" ? "selected" : ""}>
-                  <span>↘</span>Underperform the index
-                </RadioGroupItem>
+                <ChoiceOption value="up" selected={answer === "up"}>
+                  <span aria-hidden="true">↗</span> Outperform the index
+                </ChoiceOption>
+                <ChoiceOption value="down" selected={answer === "down"}>
+                  <span aria-hidden="true">↘</span> Underperform the index
+                </ChoiceOption>
               </RadioGroup>
               <ConfidenceControl
                 label="How confident are you?"
@@ -1685,7 +1870,7 @@ function ExplainView({
             <Input
               value={symbol}
               onChange={(event) => setSymbol(event.target.value)}
-              placeholder="e.g. DEMO"
+              placeholder="e.g. INFY"
               aria-label="Company or symbol"
             />
           </label>
@@ -1705,6 +1890,21 @@ function ExplainView({
             <span>→</span>
           </Button>
         </form>
+        <div className="fb-example-chips" role="group" aria-label="Example symbols">
+          <span>Try:</span>
+          {["INFY", "TCS", "RELIANCE"].map((example) => (
+            <Button
+              key={example}
+              type="button"
+              variant="secondary"
+              className="fb-example-chip"
+              aria-pressed={symbol.toUpperCase() === example}
+              onClick={() => setSymbol(example)}
+            >
+              {example}
+            </Button>
+          ))}
+        </div>
         <p className="search-hint">
           We’ll show dated events alongside the company price chart. This tool explains history, not
           what comes next.
@@ -1727,9 +1927,11 @@ function ExplainView({
               <span>
                 <i className="line-solid" /> Company
               </span>
-              <span>
-                <i className="line-dashed" /> Index
-              </span>
+              {chartHasIndex(result.chart) && (
+                <span>
+                  <i className="line-dashed" /> Index
+                </span>
+              )}
             </div>
           </Panel>
           <Panel>
@@ -1778,6 +1980,8 @@ function VerifierView({
   submissions,
   busy,
   verifyProgress,
+  unavailable,
+  level,
   searchSource,
   setSearchSource,
   onSubmit,
@@ -1796,6 +2000,8 @@ function VerifierView({
   submissions: SubmissionSummary[];
   busy: boolean;
   verifyProgress: number;
+  unavailable: boolean;
+  level: number;
   searchSource: boolean;
   setSearchSource: (value: boolean) => void;
   onSubmit: (payload?: { image_base64?: string }) => void;
@@ -1813,7 +2019,9 @@ function VerifierView({
         eyebrow="SOURCE VERIFIER"
         title="Look closer at a shared claim."
         action={
-          <span className="mode-pill">{(result?.mode ?? "full").toUpperCase()} MODE · LEVEL 3</span>
+          <span className="mode-pill">
+            {(result?.mode ?? "full").toUpperCase()} MODE · LEVEL {level}
+          </span>
         }
       />
       <div className="verifier-layout">
@@ -1888,6 +2096,11 @@ function VerifierView({
                 <span className="drop-link">Browse files</span>
               </label>
             )}
+            {unavailable && (
+              <Alert variant="warning" role="alert" className="fb-verifier-unavailable">
+                The source verifier is temporarily unavailable. Try again later.
+              </Alert>
+            )}
             <div className="verify-steps">
               {["Find the source", "Check the clues", "Show what we know"].map((step, index) => (
                 <span
@@ -1922,7 +2135,7 @@ function VerifierView({
                 <div className="checked-item" key={item.submission_id}>
                   <DataBadge origin={item.data_origin} />
                   <strong>{item.claim?.symbol ?? "Shared message"}</strong>
-                  <span className={`status-tag ${item.status}`}>{formatLabel(item.status)}</span>
+                  <span className={`status-tag ${item.status}`}>{sentenceCase(item.status)}</span>
                   {outcomePercentages(item.outcome) && (
                     <small>
                       Company {outcomePercentages(item.outcome)!.company}% · Index{" "}
@@ -1934,7 +2147,7 @@ function VerifierView({
             </Panel>
           )}
         </div>
-        <div className="verifier-results">
+        <div className={`verifier-results ${result ? "" : "fb-verifier-empty"}`}>
           {result ? (
             <>
               <Panel className="source-summary">
@@ -1991,7 +2204,7 @@ function VerifierView({
                     {result.claim?.direction === "up" ? "Expected to rise" : "Expected to fall"}
                   </strong>
                   <span>Scoring status</span>
-                  <strong>{formatLabel(result.claim?.status ?? "needs_review")}</strong>
+                  <strong>{sentenceCase(result.claim?.status ?? "needs_review")}</strong>
                 </div>
                 {outcomePercentages(result.claim?.outcome) && (
                   <div className="outcome-pair compact">
@@ -2063,7 +2276,7 @@ function VerifierView({
                       <div key={`${item.symbol}-${index}`}>
                         <span>{item.symbol}</span>
                         <small>
-                          {formatLabel(item.status)} · {formatFact(item.outcome)}
+                          {sentenceCase(item.status)} · {formatFact(item.outcome)}
                         </small>
                       </div>
                     ))}
@@ -2143,11 +2356,12 @@ function ProgressView({ data }: { data: DashboardData | null }) {
       <Panel className="evidence-note">
         <div className="evidence-icon">i</div>
         <div>
-          <span className="eyebrow">ABOUT THIS DEMO DATA</span>
+          <span className="eyebrow">ABOUT THE DATA LABELS</span>
           <h3>Learning progress is not a market score.</h3>
           <p>
-            These sample charts show how the dashboard will work. A study before-and-after
-            comparison with confidence intervals will appear when the research export is connected.
+            Every chart and card here carries a Real or Synthetic label, so you can always tell
+            measured data from practice material. Your level reflects what you have shown so far,
+            not how any stock will perform.
           </p>
         </div>
         <DataBadge origin={data.data_origin} />

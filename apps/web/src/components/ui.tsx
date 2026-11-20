@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, ComponentProps, ReactNode } from "react";
+import { useId, type ButtonHTMLAttributes, type ComponentProps, type ReactNode } from "react";
 import { Button as LooseleafButton } from "@/components/ui/button";
 import { Alert as LooseleafAlert } from "@/components/ui/alert";
 import {
@@ -42,6 +42,29 @@ export function Button({
     >
       {children}
     </LooseleafButton>
+  );
+}
+
+/** A Looseleaf radio with its own visible label; use inside RadioGroup. */
+export function ChoiceOption({
+  value,
+  selected,
+  className = "",
+  children,
+}: {
+  value: string;
+  selected: boolean;
+  className?: string;
+  children: ReactNode;
+}) {
+  const id = useId();
+  return (
+    <div className={`choice-option ${selected ? "chosen" : ""} ${className}`}>
+      <LooseleafRadioGroupItem value={value} id={id} />
+      <label htmlFor={id} data-slot="label">
+        {children}
+      </label>
+    </div>
   );
 }
 
@@ -130,7 +153,16 @@ export function Toast({ message, onClose }: { message: string; onClose: () => vo
   );
 }
 
-export function LockNotice({ level }: { level: number }) {
+export function LockNotice({
+  level,
+  current,
+  onLearn,
+}: {
+  level: number;
+  current?: number;
+  onLearn?: () => void;
+}) {
+  const away = current !== undefined ? Math.max(1, level - current) : undefined;
   return (
     <LooseleafAlert className="lock-notice" variant="warning">
       <span className="lock-icon" aria-hidden="true">
@@ -138,9 +170,50 @@ export function LockNotice({ level }: { level: number }) {
       </span>
       <div>
         <strong>Unlocks at Level {level}</strong>
-        <p>Complete the next learning check to access this tool.</p>
+        <p>
+          {away !== undefined
+            ? `You are ${away} level${away > 1 ? "s" : ""} away. Pass the level check on your learning path to open this tool.`
+            : "Pass the level check on your learning path to open this tool."}
+        </p>
+        {onLearn && (
+          <LooseleafButton variant="secondary" onClick={onLearn}>
+            Go to learning path <span aria-hidden="true">→</span>
+          </LooseleafButton>
+        )}
       </div>
     </LooseleafAlert>
+  );
+}
+
+/** Shared "how sure are you?" slider used by Practice, Verifier and the Nasdaq check. */
+export function ConfidenceControl({
+  value,
+  onChange,
+  label,
+}: {
+  value: number;
+  onChange: (value: number) => void;
+  label: string;
+}) {
+  return (
+    <div className="confidence-control">
+      <div>
+        <label>{label}</label>
+        <strong>{value}%</strong>
+      </div>
+      <LooseleafSlider
+        min={50}
+        max={100}
+        step={5}
+        value={[value]}
+        onValueChange={(next) => onChange(next[0] ?? value)}
+        aria-label={`${label} ${value} percent`}
+      />
+      <div className="range-labels">
+        <span>Not sure yet</span>
+        <span>Very sure</span>
+      </div>
+    </div>
   );
 }
 

@@ -4,7 +4,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "PaisaProof",
-  description: "Investor literacy & claim verification platform — web scaffold",
+  description:
+    "Learn to judge financial claims. PaisaProof teaches calibration and checks tips, and never tells you what to buy or sell.",
 };
 
 export default function RootLayout({
