@@ -1,8 +1,9 @@
 """Phase 5: Curated 2005+ Indian stock historical scenarios with price-recomputed outcomes."""
+
 from __future__ import annotations
 
 from datetime import date, timedelta
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from ..core import guardrails, market
 from .config import DEFAULT_CONFIG, EducationConfig
@@ -12,7 +13,8 @@ from .learning import require_tool_unlocked
 from .repository import EducationRepository
 
 SCENARIO_DISCLAIMER = (
-    "Historical learning exercise only — based on past market data, not investment advice or a future price prediction."
+    "Historical learning exercise only — based on past market data, "
+    "not investment advice or a future price prediction."
 )
 
 
@@ -21,8 +23,11 @@ def recompute_scenario_outcome(
     as_of_date: str,
     window_days: int,
     cfg: EducationConfig = DEFAULT_CONFIG,
-) -> Dict[str, Any]:
-    """Recomputes stock_pct, index_pct (NIFTY50), relative_pct, and actual_direction from core.market."""
+) -> dict[str, Any]:
+    """Recomputes stock_pct, index_pct (NIFTY50), relative_pct, and actual_direction.
+
+    Prices come from core.market.
+    """
     start_dt = date.fromisoformat(str(as_of_date))
     # Pad window slightly to handle weekends/holidays cleanly
     end_dt = start_dt + timedelta(days=int(window_days) + 10)
@@ -81,8 +86,11 @@ def recompute_scenario_outcome(
     }
 
 
-def build_public_scenario(sc: Dict[str, Any]) -> Dict[str, Any]:
-    """Formats scenario context ensuring zero lookahead beyond as_of_date and explicit disclaimer."""
+def build_public_scenario(sc: dict[str, Any]) -> dict[str, Any]:
+    """Formats scenario context with zero lookahead beyond as_of_date.
+
+    Always includes the explicit disclaimer.
+    """
     ctx = dict(sc["context"])
     as_of = str(sc["as_of_date"])
     # Enforce strict no-lookahead filter on chart points
@@ -110,8 +118,8 @@ def get_next_scenario(
     repo: EducationRepository,
     user_id: str,
     user_level: int,
-    difficulty: Optional[int] = None,
-) -> Dict[str, Any]:
+    difficulty: int | None = None,
+) -> dict[str, Any]:
     """Returns next unseen historical scenario (enforcing L1 `scenarios` unlock)."""
     require_tool_unlocked(repo, user_id, ToolName.SCENARIOS, user_level=user_level)
     seen = repo.list_seen_item_ids(user_id, AttemptItemType.SCENARIO.value)
@@ -133,15 +141,17 @@ def answer_scenario(
     scenario_id: str,
     direction: str,
     confidence: int,
-    clues: List[str],
+    clues: list[str],
     context: str = AttemptContext.PRACTICE.value,
     cfg: EducationConfig = DEFAULT_CONFIG,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Scores a scenario answer against price-recomputed outcome & NIFTY50, passing guardrails."""
     require_tool_unlocked(repo, user_id, ToolName.SCENARIOS, user_level=user_level)
     sc = repo.get_scenario(scenario_id)
     if not sc:
-        raise NotFoundError("SCENARIO_NOT_FOUND", f"Scenario '{scenario_id}' not found.")
+        raise NotFoundError(
+            "SCENARIO_NOT_FOUND", f"Scenario '{scenario_id}' not found."
+        )
 
     # Always recompute live from core.market when price series is available (no hand-typed outcomes)
     outcome = recompute_scenario_outcome(
@@ -164,8 +174,10 @@ def answer_scenario(
     )
 
     explanation_text = (
-        f"{sc['explanation']} Over the {sc['window_days']}-day historical window from {sc['as_of_date']}, "
-        f"{sc['symbol']} moved {outcome['stock_pct']:+.2f}% while NIFTY50 moved {outcome['index_pct']:+.2f}% "
+        f"{sc['explanation']} Over the {sc['window_days']}-day historical window "
+        f"from {sc['as_of_date']}, "
+        f"{sc['symbol']} moved {outcome['stock_pct']:+.2f}% "
+        f"while NIFTY50 moved {outcome['index_pct']:+.2f}% "
         f"(relative: {outcome['relative_pct']:+.2f}%). {SCENARIO_DISCLAIMER}"
     )
     safe_explanation = guardrails.check_output(explanation_text).text

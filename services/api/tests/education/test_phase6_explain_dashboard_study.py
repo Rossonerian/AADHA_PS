@@ -1,4 +1,8 @@
-"""Phase 6 tests: 30 Explain-a-Stock records with cited sources, Dashboard, Study Mode, 95% CI Export."""
+"""Phase 6 tests: 30 Explain-a-Stock records with cited sources and Dashboard.
+
+Also covers Study Mode and the 95% CI evidence export.
+"""
+
 from __future__ import annotations
 
 import csv
@@ -8,23 +12,24 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from services.api.app.core import guardrails, market
-from services.api.app.education.exceptions import ToolLockedError
-from services.api.app.education.explain import (
+from app.core import guardrails
+from app.education.exceptions import ToolLockedError
+from app.education.explain import (
     explain_stock,
     get_dashboard,
     start_study_session,
     submit_study_session,
 )
-from services.api.app.education.loader import load_seed_directory
-from services.api.app.education.repository import EducationRepository, apply_migrations
-from services.api.app.education.scenarios import recompute_scenario_outcome
-from services.api.app.education.scripts.export_evidence import export_evidence_files
+from app.education.loader import load_seed_directory
+from app.education.repository import EducationRepository, apply_migrations
+from app.education.scenarios import recompute_scenario_outcome
+from app.education.scripts.export_evidence import export_evidence_files
+from tests.education._market_seed import use_education_price_seed
 
 
 class TestPhase6ExplainDashboardStudy(unittest.TestCase):
     def setUp(self) -> None:
-        market.load_price_store()
+        self.addCleanup(use_education_price_seed())
         self.conn = sqlite3.connect(":memory:")
         self.conn.row_factory = sqlite3.Row
         apply_migrations(self.conn)
@@ -34,7 +39,9 @@ class TestPhase6ExplainDashboardStudy(unittest.TestCase):
     def tearDown(self) -> None:
         self.conn.close()
 
-    def test_all_30_explain_stocks_have_sourced_events_and_pass_guardrails(self) -> None:
+    def test_all_30_explain_stocks_have_sourced_events_and_pass_guardrails(
+        self,
+    ) -> None:
         recs = self.repo.list_explain_records()
         self.assertGreaterEqual(len(recs), 30)
 
@@ -57,7 +64,10 @@ class TestPhase6ExplainDashboardStudy(unittest.TestCase):
             for mv in res["moves"]:
                 self.assertGreater(len(mv["events"]), 0)
                 for ev in mv["events"]:
-                    self.assertTrue(ev["source"].strip(), f"Missing source in {r['symbol']} {r['year']}")
+                    self.assertTrue(
+                        ev["source"].strip(),
+                        f"Missing source in {r['symbol']} {r['year']}",
+                    )
 
     def test_dashboard_requires_level_4_and_returns_time_series(self) -> None:
         self.repo.ensure_user("u_dash_l3", level=3)
@@ -72,7 +82,9 @@ class TestPhase6ExplainDashboardStudy(unittest.TestCase):
             brier=0.14,
             measured_at="2026-11-19T10:00:00Z",
         )
-        self.repo.record_attempt("u_dash_l4", "scenario", "sc_satyam_2009", "down", 85, True, "practice")
+        self.repo.record_attempt(
+            "u_dash_l4", "scenario", "sc_satyam_2009", "down", 85, True, "practice"
+        )
         dash = get_dashboard(self.repo, "u_dash_l4", 4)
         self.assertEqual(dash["level"], 4)
         self.assertEqual(len(dash["skills_over_time"]), 1)
@@ -94,18 +106,28 @@ class TestPhase6ExplainDashboardStudy(unittest.TestCase):
                 else:
                     sc = self.repo.get_scenario(item["item_id"])
                     assert sc is not None
-                    ans = recompute_scenario_outcome(sc["symbol"], sc["as_of_date"], sc["window_days"])["actual_direction"]
-                out.append({"item_id": item["item_id"], "answer": ans, "confidence": conf})
+                    ans = recompute_scenario_outcome(
+                        sc["symbol"], sc["as_of_date"], sc["window_days"]
+                    )["actual_direction"]
+                out.append(
+                    {"item_id": item["item_id"], "answer": ans, "confidence": conf}
+                )
             return out
 
-        res_pre = submit_study_session(self.repo, "u_study_live", pre["session_id"], answer_all(pre["items"], 70))
+        res_pre = submit_study_session(
+            self.repo, "u_study_live", pre["session_id"], answer_all(pre["items"], 70)
+        )
         self.assertEqual(res_pre["context"], "study_pre")
 
         post = start_study_session(self.repo, "u_study_live", "study_post")
         post_ids = {i["item_id"] for i in post["items"]}
-        self.assertEqual(len(pre_ids & post_ids), 0, "study_post must never reuse study_pre items")
+        self.assertEqual(
+            len(pre_ids & post_ids), 0, "study_post must never reuse study_pre items"
+        )
 
-        res_post = submit_study_session(self.repo, "u_study_live", post["session_id"], answer_all(post["items"], 85))
+        res_post = submit_study_session(
+            self.repo, "u_study_live", post["session_id"], answer_all(post["items"], 85)
+        )
         self.assertEqual(res_post["context"], "study_post")
 
     def test_evidence_export_script_produces_csv_json_and_95_cis(self) -> None:
@@ -120,7 +142,8 @@ class TestPhase6ExplainDashboardStudy(unittest.TestCase):
             brier_ci = data["metrics"]["brier_score"]["delta"]
             rf_ci = data["metrics"]["red_flag_detection_pct"]["delta"]
 
-            # Seeded cohort shows positive learning gain, lower (improved) Brier, higher red-flag detection
+            # Seeded cohort shows positive learning gain, lower (improved) Brier,
+            # and higher red-flag detection
             self.assertGreater(score_ci["mean"], 0)
             self.assertLess(score_ci["ci_low"], score_ci["mean"])
             self.assertGreater(score_ci["ci_high"], score_ci["mean"])

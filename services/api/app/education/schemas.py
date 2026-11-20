@@ -1,14 +1,15 @@
 """Pydantic request/response schemas matching SoT Section 7 verbatim (v1 + v2 compatible)."""
+
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field
 
 from .enums import DataOrigin, Direction, LessonStatus, SkillArea
 
-
 # ---- Onboarding (Phase 2) ----
+
 
 class QuestionPublic(BaseModel):
     id: str
@@ -16,7 +17,7 @@ class QuestionPublic(BaseModel):
     skill_area: SkillArea
     difficulty: int
     text: str
-    options: List[str]
+    options: list[str]
     data_origin: DataOrigin = DataOrigin.SYNTHETIC
 
 
@@ -34,41 +35,42 @@ class OnboardingAnswerRequest(BaseModel):
 
 class OnboardingResult(BaseModel):
     level: int = Field(..., ge=1, le=4)
-    skills: Dict[str, float]
+    skills: dict[str, float]
     brier: float = Field(..., ge=0.0, le=1.0)
 
 
 class OnboardingAnswerResponse(BaseModel):
-    next_question: Optional[QuestionPublic] = None
-    result: Optional[OnboardingResult] = None
+    next_question: QuestionPublic | None = None
+    result: OnboardingResult | None = None
 
 
 # ---- Plan & Lessons (Phase 3) ----
+
 
 class PlanLessonItem(BaseModel):
     id: str
     title: str
     status: LessonStatus
     minutes: int
-    skill_area: Optional[SkillArea] = None
+    skill_area: SkillArea | None = None
 
 
 class PlanResponse(BaseModel):
     level: int
     progress_pct: float
-    lessons: List[PlanLessonItem]
+    lessons: list[PlanLessonItem]
 
 
 class LessonSection(BaseModel):
     heading: str
     body: str
-    takeaway: Optional[str] = None
+    takeaway: str | None = None
 
 
 class LessonCheckQuestion(BaseModel):
     id: str
     text: str
-    options: List[str]
+    options: list[str]
 
 
 class LessonDetailResponse(BaseModel):
@@ -77,8 +79,8 @@ class LessonDetailResponse(BaseModel):
     level: int
     skill_area: SkillArea
     minutes: int
-    sections: List[LessonSection]
-    check_questions: List[LessonCheckQuestion]
+    sections: list[LessonSection]
+    check_questions: list[LessonCheckQuestion]
     data_origin: DataOrigin = DataOrigin.SYNTHETIC
 
 
@@ -89,7 +91,7 @@ class LessonCheckAnswerItem(BaseModel):
 
 
 class LessonCheckRequest(BaseModel):
-    answers: List[LessonCheckAnswerItem] = Field(min_length=1)
+    answers: list[LessonCheckAnswerItem] = Field(min_length=1)
 
 
 class LessonCheckResponse(BaseModel):
@@ -99,15 +101,16 @@ class LessonCheckResponse(BaseModel):
     correct_count: int
     total_count: int
     plan_progress_pct: float
-    feedback: List[Dict[str, Any]]
+    feedback: list[dict[str, Any]]
 
 
 # ---- Scenarios (Phase 5) ----
 
+
 class ScenarioChartPoint(BaseModel):
     date: str
     close: float
-    volume: Optional[int] = None
+    volume: int | None = None
 
 
 class ScenarioContextPublic(BaseModel):
@@ -116,9 +119,9 @@ class ScenarioContextPublic(BaseModel):
     disclaimer: str = (
         "Historical learning exercise only — not investment advice or a price prediction."
     )
-    chart: List[ScenarioChartPoint]
-    headlines: List[str]
-    numbers: Dict[str, Any]
+    chart: list[ScenarioChartPoint]
+    headlines: list[str]
+    numbers: dict[str, Any]
 
 
 class ScenarioNextResponse(BaseModel):
@@ -126,7 +129,7 @@ class ScenarioNextResponse(BaseModel):
     as_of_date: str
     window_days: int
     difficulty: int
-    tags: List[str]
+    tags: list[str]
     context: ScenarioContextPublic
     data_origin: DataOrigin
 
@@ -134,7 +137,7 @@ class ScenarioNextResponse(BaseModel):
 class ScenarioAnswerRequest(BaseModel):
     direction: Direction
     confidence: int = Field(..., ge=50, le=100)
-    clues: List[str] = Field(default_factory=list)
+    clues: list[str] = Field(default_factory=list)
 
 
 class ScenarioOutcomePublic(BaseModel):
@@ -147,23 +150,24 @@ class ScenarioOutcomePublic(BaseModel):
 class ScenarioAnswerResponse(BaseModel):
     correct: bool
     outcome: ScenarioOutcomePublic
-    key_clues: List[str]
+    key_clues: list[str]
     explanation: str
     data_origin: DataOrigin
 
 
 # ---- Assessments (Phase 4) ----
 
+
 class AssessmentItemPublic(BaseModel):
     item_id: str
     item_type: str  # "question" | "scenario"
-    prompt: Dict[str, Any]
+    prompt: dict[str, Any]
 
 
 class AssessmentStartResponse(BaseModel):
     assessment_id: str
     level: int
-    items: List[AssessmentItemPublic]
+    items: list[AssessmentItemPublic]
 
 
 class AssessmentAnswerInput(BaseModel):
@@ -173,18 +177,19 @@ class AssessmentAnswerInput(BaseModel):
 
 
 class AssessmentSubmitRequest(BaseModel):
-    answers: List[AssessmentAnswerInput] = Field(min_length=1)
+    answers: list[AssessmentAnswerInput] = Field(min_length=1)
 
 
 class AssessmentSubmitResponse(BaseModel):
     passed: bool
     score: float
     brier: float
-    new_level: Optional[int] = None
-    unlocked: List[str] = Field(default_factory=list)
+    new_level: int | None = None
+    unlocked: list[str] = Field(default_factory=list)
 
 
 # ---- Explain a Stock & Dashboard & Study Mode (Phase 6) ----
+
 
 class ExplainEvent(BaseModel):
     text: str
@@ -194,24 +199,24 @@ class ExplainEvent(BaseModel):
 class ExplainMove(BaseModel):
     date: str
     pct: float
-    events: List[ExplainEvent]
+    events: list[ExplainEvent]
 
 
 class ExplainStockResponse(BaseModel):
     symbol: str
     year: int
-    chart: List[ScenarioChartPoint]
-    moves: List[ExplainMove]
+    chart: list[ScenarioChartPoint]
+    moves: list[ExplainMove]
     summary: str
     data_origin: DataOrigin
 
 
 class DashboardResponse(BaseModel):
     level: int
-    unlocks: List[str]
-    skills_over_time: List[Dict[str, Any]]
-    brier_over_time: List[Dict[str, Any]]
-    scenario_accuracy: List[Dict[str, Any]]
+    unlocks: list[str]
+    skills_over_time: list[dict[str, Any]]
+    brier_over_time: list[dict[str, Any]]
+    scenario_accuracy: list[dict[str, Any]]
 
 
 class StudyStartRequest(BaseModel):
@@ -221,11 +226,11 @@ class StudyStartRequest(BaseModel):
 class StudyStartResponse(BaseModel):
     session_id: str
     context: str
-    items: List[AssessmentItemPublic]
+    items: list[AssessmentItemPublic]
 
 
 class StudySubmitRequest(BaseModel):
-    answers: List[AssessmentAnswerInput] = Field(min_length=1)
+    answers: list[AssessmentAnswerInput] = Field(min_length=1)
 
 
 class StudySubmitResponse(BaseModel):

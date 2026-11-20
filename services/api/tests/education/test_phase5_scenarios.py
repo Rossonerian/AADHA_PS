@@ -1,23 +1,25 @@
 """Phase 5 tests: >=20 curated Indian stock scenarios, zero lookahead, live price recomputation."""
+
 from __future__ import annotations
 
 import sqlite3
 import unittest
 
-from services.api.app.core import guardrails, market
-from services.api.app.education.loader import load_seed_directory
-from services.api.app.education.repository import EducationRepository, apply_migrations
-from services.api.app.education.scenarios import (
+from app.core import guardrails
+from app.education.loader import load_seed_directory
+from app.education.repository import EducationRepository, apply_migrations
+from app.education.scenarios import (
     answer_scenario,
     build_public_scenario,
     get_next_scenario,
     recompute_scenario_outcome,
 )
+from tests.education._market_seed import use_education_price_seed
 
 
 class TestPhase5Scenarios(unittest.TestCase):
     def setUp(self) -> None:
-        market.load_price_store()
+        self.addCleanup(use_education_price_seed())
         self.conn = sqlite3.connect(":memory:")
         self.conn.row_factory = sqlite3.Row
         apply_migrations(self.conn)
@@ -27,7 +29,9 @@ class TestPhase5Scenarios(unittest.TestCase):
     def tearDown(self) -> None:
         self.conn.close()
 
-    def test_at_least_20_scenarios_and_every_outcome_recomputed_from_price_data(self) -> None:
+    def test_at_least_20_scenarios_and_every_outcome_recomputed_from_price_data(
+        self,
+    ) -> None:
         scenarios = self.repo.list_scenarios()
         self.assertGreaterEqual(len(scenarios), 20)
 
@@ -45,11 +49,19 @@ class TestPhase5Scenarios(unittest.TestCase):
             self.assertIn("Historical learning exercise", pub["context"]["disclaimer"])
 
             # CRITICAL Phase 5 "Done when" check: recompute from core.market and assert exact match
-            live = recompute_scenario_outcome(sc["symbol"], sc["as_of_date"], sc["window_days"])
+            live = recompute_scenario_outcome(
+                sc["symbol"], sc["as_of_date"], sc["window_days"]
+            )
             stored = sc["outcome"]
-            self.assertAlmostEqual(stored["stock_pct"], live["stock_pct"], places=2, msg=sc["id"])
-            self.assertAlmostEqual(stored["index_pct"], live["index_pct"], places=2, msg=sc["id"])
-            self.assertEqual(stored["actual_direction"], live["actual_direction"], msg=sc["id"])
+            self.assertAlmostEqual(
+                stored["stock_pct"], live["stock_pct"], places=2, msg=sc["id"]
+            )
+            self.assertAlmostEqual(
+                stored["index_pct"], live["index_pct"], places=2, msg=sc["id"]
+            )
+            self.assertEqual(
+                stored["actual_direction"], live["actual_direction"], msg=sc["id"]
+            )
 
     def test_get_next_and_answer_scenario_scores_vs_actual_and_nifty50(self) -> None:
         self.repo.ensure_user("u_scen", level=1)

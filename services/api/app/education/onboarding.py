@@ -1,8 +1,9 @@
 """Phase 2: Adaptive onboarding engine (12-15 questions, 4 skills, confidence 50-100, Brier)."""
+
 from __future__ import annotations
 
 import uuid
-from typing import Any, Dict, List, Optional, Set
+from typing import Any
 
 from .config import DEFAULT_CONFIG, EducationConfig
 from .enums import AttemptContext, AttemptItemType, SkillArea
@@ -16,7 +17,7 @@ from .scoring import (
     next_adaptive_difficulty,
 )
 
-SKILL_ROTATION: List[str] = [
+SKILL_ROTATION: list[str] = [
     SkillArea.BASICS.value,
     SkillArea.READING_STOCK.value,
     SkillArea.JUDGING_INFO.value,
@@ -24,7 +25,7 @@ SKILL_ROTATION: List[str] = [
 ]
 
 
-def _public_question(q: Dict[str, Any]) -> Dict[str, Any]:
+def _public_question(q: dict[str, Any]) -> dict[str, Any]:
     return {
         "id": q["id"],
         "level": q["level"],
@@ -40,15 +41,20 @@ def _select_next_question(
     repo: EducationRepository,
     target_skill: str,
     target_difficulty: int,
-    asked_ids: Set[str],
-) -> Optional[Dict[str, Any]]:
-    """Selects an unseen question matching target_skill and closest difficulty to target_difficulty."""
+    asked_ids: set[str],
+) -> dict[str, Any] | None:
+    """Selects an unseen question matching target_skill.
+
+    Prefers the difficulty closest to target_difficulty.
+    """
     candidates = repo.list_questions(skill_area=target_skill, exclude_ids=asked_ids)
     if not candidates:
         candidates = repo.list_questions(exclude_ids=asked_ids)
     if not candidates:
         return None
-    candidates.sort(key=lambda q: (abs(int(q["difficulty"]) - target_difficulty), q["id"]))
+    candidates.sort(
+        key=lambda q: (abs(int(q["difficulty"]) - target_difficulty), q["id"])
+    )
     return candidates[0]
 
 
@@ -57,7 +63,7 @@ def start_onboarding(
     user_id: str,
     user_name: str = "Learner",
     cfg: EducationConfig = DEFAULT_CONFIG,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Starts an adaptive onboarding quiz session starting at medium difficulty (3)."""
     repo.ensure_user(user_id, name=user_name)
     first_skill = SKILL_ROTATION[0]
@@ -94,7 +100,9 @@ def start_onboarding(
     }
 
 
-def _should_stop_onboarding(responses: List[Dict[str, Any]], min_q: int, max_q: int) -> bool:
+def _should_stop_onboarding(
+    responses: list[dict[str, Any]], min_q: int, max_q: int
+) -> bool:
     """Stops between min_q (12) and max_q (15) once skill coverage & signal stabilize."""
     n = len(responses)
     if n >= max_q:
@@ -103,9 +111,7 @@ def _should_stop_onboarding(responses: List[Dict[str, Any]], min_q: int, max_q: 
         return False
     # Check if all 4 skills have >= 3 questions and performance is decisive (very high or very low)
     acc = sum(1 for r in responses if r["correct"]) / n
-    if acc >= 0.85 or acc <= 0.25:
-        return True
-    return False
+    return acc >= 0.85 or acc <= 0.25
 
 
 def answer_onboarding(
@@ -116,26 +122,38 @@ def answer_onboarding(
     answer: str,
     confidence: int,
     cfg: EducationConfig = DEFAULT_CONFIG,
-) -> Dict[str, Any]:
-    """Records an onboarding answer, adapts difficulty, and either returns next_question or final result."""
+) -> dict[str, Any]:
+    """Records an onboarding answer and adapts difficulty.
+
+    Returns either the next_question or the final result.
+    """
     session = repo.get_session(session_id)
     if not session or session["session_type"] != "onboarding":
-        raise NotFoundError("SESSION_NOT_FOUND", f"Onboarding session '{session_id}' not found.")
+        raise NotFoundError(
+            "SESSION_NOT_FOUND", f"Onboarding session '{session_id}' not found."
+        )
     if session["user_id"] != user_id:
-        raise NotFoundError("SESSION_NOT_FOUND", "Onboarding session does not belong to current user.")
+        raise NotFoundError(
+            "SESSION_NOT_FOUND", "Onboarding session does not belong to current user."
+        )
     if session["completed"]:
-        raise ValidationDomainError("SESSION_COMPLETED", "Onboarding session is already completed.")
+        raise ValidationDomainError(
+            "SESSION_COMPLETED", "Onboarding session is already completed."
+        )
 
     state = session["state"]
     if state.get("current_question_id") != question_id:
         raise ValidationDomainError(
             "QUESTION_MISMATCH",
-            f"Expected answer for question '{state.get('current_question_id')}', got '{question_id}'.",
+            f"Expected answer for question '{state.get('current_question_id')}', "
+            f"got '{question_id}'.",
         )
 
     question = repo.get_question(question_id)
     if not question:
-        raise NotFoundError("QUESTION_NOT_FOUND", f"Question '{question_id}' not found.")
+        raise NotFoundError(
+            "QUESTION_NOT_FOUND", f"Question '{question_id}' not found."
+        )
 
     is_correct = str(answer).strip() == str(question["answer"]).strip()
     repo.record_attempt(
@@ -148,7 +166,7 @@ def answer_onboarding(
         context=AttemptContext.ONBOARDING.value,
     )
 
-    responses: List[Dict[str, Any]] = state["responses"]
+    responses: list[dict[str, Any]] = state["responses"]
     responses.append(
         {
             "question_id": question_id,
@@ -175,10 +193,13 @@ def answer_onboarding(
             repo.update_session(session_id, state, completed=False)
             return {"next_question": _public_question(next_q), "result": None}
 
-    # Finalize onboarding: compute per-skill scores, Brier, level, unlocks, and initial learning plan
+    # Finalize onboarding: compute per-skill scores, Brier, level, unlocks,
+    # and initial learning plan
     brier = compute_brier_score([(r["confidence"], r["correct"]) for r in responses])
     skills = compute_skill_scores(responses)
-    accuracy_pct = 100.0 * sum(1 for r in responses if r["correct"]) / max(1, len(responses))
+    accuracy_pct = (
+        100.0 * sum(1 for r in responses if r["correct"]) / max(1, len(responses))
+    )
     correct_diffs = [r["difficulty"] for r in responses if r["correct"]]
     avg_diff_correct = sum(correct_diffs) / len(correct_diffs) if correct_diffs else 1.0
     level = determine_onboarding_level(accuracy_pct, brier, avg_diff_correct)
@@ -186,7 +207,9 @@ def answer_onboarding(
     repo.set_user_level(user_id, level)
     repo.record_skill_scores(user_id, skills, brier)
     ensure_level_unlocks(repo, user_id, level)
-    build_or_update_plan(repo, user_id, level=level, skill_scores=skills, preserve_completed=False)
+    build_or_update_plan(
+        repo, user_id, level=level, skill_scores=skills, preserve_completed=False
+    )
 
     state["current_question_id"] = None
     state["result"] = {"level": level, "skills": skills, "brier": brier}

@@ -707,8 +707,8 @@ questions:
   - The stock stops trading permanently
   - Dividends are doubled on this date
   answer: Buyers purchasing on or after this date do not receive the declared dividend
-  explanation: To be eligible for a dividend, you must hold the shares before the
-    ex-dividend date.
+  explanation: Dividend eligibility depends on holding the shares before the
+    ex-dividend date; buyers on or after that date do not receive the declared dividend.
   tags:
   - basics
   data_origin: synthetic

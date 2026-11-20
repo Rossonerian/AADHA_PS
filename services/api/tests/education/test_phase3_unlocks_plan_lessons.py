@@ -1,12 +1,13 @@
 """Phase 3 tests: SoT Section 8 unlocks, weakest-skill learning plan, and 12 micro-lessons."""
+
 from __future__ import annotations
 
 import sqlite3
 import unittest
 
-from services.api.app.education.enums import LessonStatus, ToolName
-from services.api.app.education.exceptions import ToolLockedError
-from services.api.app.education.learning import (
+from app.education.enums import LessonStatus, ToolName
+from app.education.exceptions import ToolLockedError
+from app.education.learning import (
     build_or_update_plan,
     get_lesson_detail,
     get_plan,
@@ -14,8 +15,8 @@ from services.api.app.education.learning import (
     require_tool_unlocked,
     submit_lesson_check,
 )
-from services.api.app.education.loader import load_seed_directory
-from services.api.app.education.repository import EducationRepository, apply_migrations
+from app.education.loader import load_seed_directory
+from app.education.repository import EducationRepository, apply_migrations
 
 
 class TestPhase3UnlocksPlanLessons(unittest.TestCase):
@@ -31,9 +32,13 @@ class TestPhase3UnlocksPlanLessons(unittest.TestCase):
 
     def test_level_unlock_progression_matches_sot_section_8(self) -> None:
         self.repo.ensure_user("u_l1", level=1)
-        self.assertEqual(get_user_unlocks(self.repo, "u_l1", 1), ["scenarios", "red_flag_check"])
+        self.assertEqual(
+            get_user_unlocks(self.repo, "u_l1", 1), ["scenarios", "red_flag_check"]
+        )
         with self.assertRaises(ToolLockedError) as ctx:
-            require_tool_unlocked(self.repo, "u_l1", ToolName.EXPLAIN_STOCK, user_level=1)
+            require_tool_unlocked(
+                self.repo, "u_l1", ToolName.EXPLAIN_STOCK, user_level=1
+            )
         self.assertEqual(ctx.exception.required_level, 2)
         self.assertEqual(ctx.exception.status_code, 403)
 
@@ -53,7 +58,9 @@ class TestPhase3UnlocksPlanLessons(unittest.TestCase):
             ["scenarios", "red_flag_check", "explain_stock", "verifier", "dashboard"],
         )
 
-    def test_plan_targets_weakest_skill_first_and_tracks_lesson_completion(self) -> None:
+    def test_plan_targets_weakest_skill_first_and_tracks_lesson_completion(
+        self,
+    ) -> None:
         self.repo.ensure_user("u_plan", level=1)
         self.repo.record_skill_scores(
             "u_plan",
@@ -83,16 +90,20 @@ class TestPhase3UnlocksPlanLessons(unittest.TestCase):
         self.assertGreater(chk["plan_progress_pct"], 0.0)
 
         refreshed = get_plan(self.repo, "u_plan")
-        self.assertEqual(refreshed["lessons"][0]["status"], LessonStatus.COMPLETED.value)
+        self.assertEqual(
+            refreshed["lessons"][0]["status"], LessonStatus.COMPLETED.value
+        )
 
-    def test_lesson_bank_has_at_least_8_lessons_for_l1_to_l3_with_3_checks_each(self) -> None:
+    def test_lesson_bank_has_at_least_8_lessons_for_l1_to_l3_with_3_checks_each(
+        self,
+    ) -> None:
         lessons = self.repo.list_lessons()
         self.assertGreaterEqual(len(lessons), 8)
-        for l in lessons:
-            self.assertIn(l["level"], (1, 2, 3))
-            self.assertGreaterEqual(l["minutes"], 5)
-            self.assertLessEqual(l["minutes"], 10)
-            self.assertEqual(len(l["check_questions"]), 3)
+        for lsn in lessons:
+            self.assertIn(lsn["level"], (1, 2, 3))
+            self.assertGreaterEqual(lsn["minutes"], 5)
+            self.assertLessEqual(lsn["minutes"], 10)
+            self.assertEqual(len(lsn["check_questions"]), 3)
 
 
 if __name__ == "__main__":

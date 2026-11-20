@@ -1,9 +1,13 @@
-"""Phase 6: Explain a Stock (~30 stocks), Skill Dashboard, and Study Mode (study_pre / study_post)."""
+"""Phase 6: Explain a Stock (~30 stocks), Skill Dashboard, and Study Mode.
+
+Study Mode covers the study_pre / study_post contexts.
+"""
+
 from __future__ import annotations
 
 import uuid
 from collections import defaultdict
-from typing import Any, Dict, List
+from typing import Any
 
 from ..core import guardrails, market
 from .config import DEFAULT_CONFIG, EducationConfig
@@ -21,14 +25,19 @@ def explain_stock(
     user_level: int,
     symbol: str,
     year: int,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Returns precomputed historical stock explanation with cited events & guardrailed summary.
 
     Requires Level 2 unlock (`explain_stock`) per SoT Section 8.
     """
     require_tool_unlocked(repo, user_id, ToolName.EXPLAIN_STOCK, user_level=user_level)
-    resolved = market.resolve_symbol(symbol) or symbol.strip().upper().replace(".NS", "")
+    # Historical explanations are keyed by the ticker in use that year (e.g. TATAMOTORS),
+    # which alias resolution may map to a successor (TMPV); try the given ticker first.
+    resolved = symbol.strip().upper().replace(".NS", "")
     rec = repo.get_explain(resolved, int(year))
+    if not rec:
+        resolved = market.resolve_symbol(symbol) or resolved
+        rec = repo.get_explain(resolved, int(year))
     if not rec:
         raise NotFoundError(
             "EXPLAIN_NOT_FOUND",
@@ -36,7 +45,7 @@ def explain_stock(
         )
 
     # Verify every event has a non-empty source and pass summary through core.guardrails
-    validated_moves: List[Dict[str, Any]] = []
+    validated_moves: list[dict[str, Any]] = []
     for mv in rec["moves"]:
         events = []
         for ev in mv.get("events", []):
@@ -46,8 +55,12 @@ def explain_stock(
                     "MISSING_EVENT_SOURCE",
                     f"Event on {mv.get('date')} for {resolved} is missing a source citation.",
                 )
-            events.append({"text": guardrails.check_output(ev["text"]).text, "source": src})
-        validated_moves.append({"date": mv["date"], "pct": float(mv["pct"]), "events": events})
+            events.append(
+                {"text": guardrails.check_output(ev["text"]).text, "source": src}
+            )
+        validated_moves.append(
+            {"date": mv["date"], "pct": float(mv["pct"]), "events": events}
+        )
 
     safe_summary = guardrails.check_output(rec["summary"]).text
     return {
@@ -64,7 +77,7 @@ def get_dashboard(
     repo: EducationRepository,
     user_id: str,
     user_level: int,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Returns GET /me/dashboard skill progression, Brier history, and scenario accuracy.
 
     Requires Level 4 unlock (`dashboard`) per SoT Section 8.
@@ -74,7 +87,7 @@ def get_dashboard(
 
     # 1. Group skill_scores by measurement timestamp for clean time-series charts
     history = repo.get_skill_history(user_id)
-    by_ts: Dict[str, Dict[str, Any]] = {}
+    by_ts: dict[str, dict[str, Any]] = {}
     for row in history:
         ts = row["measured_at"]
         if ts not in by_ts:
@@ -83,17 +96,17 @@ def get_dashboard(
         by_ts[ts]["brier"] = round(float(row["brier"]), 4)
 
     skills_over_time = [
-        {"measured_at": ts, **data["skills"]}
-        for ts, data in by_ts.items()
+        {"measured_at": ts, **data["skills"]} for ts, data in by_ts.items()
     ]
     brier_over_time = [
-        {"measured_at": ts, "brier": data["brier"]}
-        for ts, data in by_ts.items()
+        {"measured_at": ts, "brier": data["brier"]} for ts, data in by_ts.items()
     ]
 
     # 2. Scenario accuracy breakdown by difficulty and overall
-    scen_attempts = repo.list_attempts(user_id=user_id, item_type=AttemptItemType.SCENARIO.value)
-    by_diff: Dict[int, List[bool]] = defaultdict(list)
+    scen_attempts = repo.list_attempts(
+        user_id=user_id, item_type=AttemptItemType.SCENARIO.value
+    )
+    by_diff: dict[int, list[bool]] = defaultdict(list)
     for att in scen_attempts:
         sc = repo.get_scenario(att["item_id"])
         diff = int(sc["difficulty"]) if sc else 0
@@ -125,10 +138,13 @@ def start_study_session(
     user_id: str,
     context: str,
     cfg: EducationConfig = DEFAULT_CONFIG,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Starts a study_pre or study_post evaluation session strictly from unseen items."""
     if context not in (AttemptContext.STUDY_PRE.value, AttemptContext.STUDY_POST.value):
-        raise ValidationDomainError("INVALID_STUDY_CONTEXT", "Study context must be 'study_pre' or 'study_post'.")
+        raise ValidationDomainError(
+            "INVALID_STUDY_CONTEXT",
+            "Study context must be 'study_pre' or 'study_post'.",
+        )
 
     repo.ensure_user(user_id)
     seen_q = repo.list_seen_item_ids(user_id, AttemptItemType.QUESTION.value)
@@ -139,14 +155,24 @@ def start_study_session(
     red_flag_qs = [q for q in unseen_qs if "red_flag" in q.get("tags", [])]
     other_qs = [q for q in unseen_qs if "red_flag" not in q.get("tags", [])]
     half = cfg.study_question_count // 2
-    selected_qs = red_flag_qs[:half] + other_qs[: (cfg.study_question_count - len(red_flag_qs[:half]))]
+    selected_qs = (
+        red_flag_qs[:half]
+        + other_qs[: (cfg.study_question_count - len(red_flag_qs[:half]))]
+    )
     if len(selected_qs) < cfg.study_question_count:
-        remaining = [q for q in unseen_qs if q["id"] not in {x["id"] for x in selected_qs}]
+        remaining = [
+            q for q in unseen_qs if q["id"] not in {x["id"] for x in selected_qs}
+        ]
         selected_qs.extend(remaining[: (cfg.study_question_count - len(selected_qs))])
 
     unseen_scens = repo.list_scenarios(exclude_ids=seen_s)[: cfg.study_scenario_count]
-    if len(selected_qs) < cfg.study_question_count or len(unseen_scens) < cfg.study_scenario_count:
-        raise ValidationDomainError("INSUFFICIENT_STUDY_ITEMS", "Not enough unseen items for study session.")
+    if (
+        len(selected_qs) < cfg.study_question_count
+        or len(unseen_scens) < cfg.study_scenario_count
+    ):
+        raise ValidationDomainError(
+            "INSUFFICIENT_STUDY_ITEMS", "Not enough unseen items for study session."
+        )
 
     items_public = []
     specs = []
@@ -186,7 +212,14 @@ def start_study_session(
                 "item_id": sc["id"],
                 "item_type": AttemptItemType.SCENARIO.value,
                 "is_red_flag": bool(
-                    set(sc.get("tags", [])) & {"pump_and_dump", "governance_fraud", "surveillance_list", "hype_no_fundamentals", "auditor_resignation"}
+                    set(sc.get("tags", []))
+                    & {
+                        "pump_and_dump",
+                        "governance_fraud",
+                        "surveillance_list",
+                        "hype_no_fundamentals",
+                        "auditor_resignation",
+                    }
                 ),
             }
         )
@@ -205,25 +238,33 @@ def submit_study_session(
     repo: EducationRepository,
     user_id: str,
     session_id: str,
-    answers: List[Dict[str, Any]],
+    answers: list[dict[str, Any]],
     cfg: EducationConfig = DEFAULT_CONFIG,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Grades a study_pre or study_post session and stores attempts for evidence export."""
     session = repo.get_session(session_id)
     if not session or session["session_type"] not in (
         AttemptContext.STUDY_PRE.value,
         AttemptContext.STUDY_POST.value,
     ):
-        raise NotFoundError("STUDY_SESSION_NOT_FOUND", f"Study session '{session_id}' not found.")
+        raise NotFoundError(
+            "STUDY_SESSION_NOT_FOUND", f"Study session '{session_id}' not found."
+        )
     if session["user_id"] != user_id:
-        raise NotFoundError("STUDY_SESSION_NOT_FOUND", "Study session does not belong to current user.")
+        raise NotFoundError(
+            "STUDY_SESSION_NOT_FOUND", "Study session does not belong to current user."
+        )
     if session["completed"]:
-        raise ValidationDomainError("STUDY_ALREADY_SUBMITTED", "Study session already submitted.")
+        raise ValidationDomainError(
+            "STUDY_ALREADY_SUBMITTED", "Study session already submitted."
+        )
 
     context = session["state"]["context"]
     spec_map = {item["item_id"]: item for item in session["state"]["items"]}
     if len(answers) != len(spec_map):
-        raise ValidationDomainError("INCOMPLETE_SUBMISSION", f"Expected {len(spec_map)} answers.")
+        raise ValidationDomainError(
+            "INCOMPLETE_SUBMISSION", f"Expected {len(spec_map)} answers."
+        )
 
     correct = 0
     rf_correct = 0
@@ -234,19 +275,27 @@ def submit_study_session(
         item_id = ans["item_id"]
         spec = spec_map.get(item_id)
         if not spec:
-            raise ValidationDomainError("UNKNOWN_ITEM", f"Unknown study item '{item_id}'.")
+            raise ValidationDomainError(
+                "UNKNOWN_ITEM", f"Unknown study item '{item_id}'."
+            )
         conf = int(ans["confidence"])
         user_ans = str(ans["answer"]).strip()
         if spec["item_type"] == AttemptItemType.QUESTION.value:
             q = repo.get_question(item_id)
             if not q:
-                raise NotFoundError("QUESTION_NOT_FOUND", f"Question '{item_id}' not found.")
+                raise NotFoundError(
+                    "QUESTION_NOT_FOUND", f"Question '{item_id}' not found."
+                )
             is_correct = user_ans == str(q["answer"]).strip()
         else:
             sc = repo.get_scenario(item_id)
             if not sc:
-                raise NotFoundError("SCENARIO_NOT_FOUND", f"Scenario '{item_id}' not found.")
-            out = recompute_scenario_outcome(sc["symbol"], sc["as_of_date"], sc["window_days"], cfg=cfg)
+                raise NotFoundError(
+                    "SCENARIO_NOT_FOUND", f"Scenario '{item_id}' not found."
+                )
+            out = recompute_scenario_outcome(
+                sc["symbol"], sc["as_of_date"], sc["window_days"], cfg=cfg
+            )
             is_correct = user_ans.lower() == out["actual_direction"]
 
         if is_correct:
@@ -272,7 +321,11 @@ def submit_study_session(
     rf_pct = round(100.0 * rf_correct / rf_total, 2) if rf_total > 0 else 0.0
 
     state = dict(session["state"])
-    state["result"] = {"score_pct": score_pct, "brier": brier, "red_flag_accuracy_pct": rf_pct}
+    state["result"] = {
+        "score_pct": score_pct,
+        "brier": brier,
+        "red_flag_accuracy_pct": rf_pct,
+    }
     repo.update_session(session_id, state, completed=True)
 
     return {

@@ -1,8 +1,11 @@
 """Public package surface for Aacharya Education module.
 
 Hardhik's app/main.py and GET /me can import directly:
-    from app.education import router as education_router, register_exception_handlers, get_user_unlocks
+    from app.education import (
+        router as education_router, register_exception_handlers, get_user_unlocks,
+    )
 """
+
 from .exceptions import ToolLockedError, register_exception_handlers
 from .learning import ensure_level_unlocks, get_user_unlocks, require_tool_unlocked
 from .loader import load_seed_directory, load_yaml_file

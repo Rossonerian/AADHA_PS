@@ -1,15 +1,16 @@
 """Pure mathematical scoring functions: Brier score, adaptive difficulty, placement, 95% CIs."""
+
 from __future__ import annotations
 
 import math
-from typing import Dict, Sequence, Tuple
+from collections.abc import Sequence
 
 from scipy import stats
 
 from .enums import SkillArea
 
 
-def compute_brier_score(attempts: Sequence[Tuple[int, bool]]) -> float:
+def compute_brier_score(attempts: Sequence[tuple[int, bool]]) -> float:
     """Computes Brier score for (confidence_50_to_100, is_correct) pairs.
 
     p = confidence / 100.0 in [0.5, 1.0], y = 1.0 if correct else 0.0.
@@ -35,14 +36,14 @@ def next_adaptive_difficulty(current_difficulty: int, was_correct: bool) -> int:
 
 
 def compute_skill_scores(
-    records: Sequence[Dict[str, object]],
-) -> Dict[str, float]:
+    records: Sequence[dict[str, object]],
+) -> dict[str, float]:
     """Computes 0-100 score per skill area weighted by question difficulty.
 
     Each record has keys: skill_area (str), difficulty (int 1-5), correct (bool).
     """
-    weighted_hits: Dict[str, float] = {s.value: 0.0 for s in SkillArea}
-    weighted_total: Dict[str, float] = {s.value: 0.0 for s in SkillArea}
+    weighted_hits: dict[str, float] = {s.value: 0.0 for s in SkillArea}
+    weighted_total: dict[str, float] = {s.value: 0.0 for s in SkillArea}
     for rec in records:
         area = str(rec["skill_area"])
         diff = float(str(rec.get("difficulty", 3)))
@@ -51,7 +52,7 @@ def compute_skill_scores(
         if rec.get("correct"):
             weighted_hits[area] = weighted_hits.get(area, 0.0) + weight
 
-    out: Dict[str, float] = {}
+    out: dict[str, float] = {}
     for area in [s.value for s in SkillArea]:
         denom = weighted_total.get(area, 0.0)
         if denom <= 0:
@@ -96,8 +97,8 @@ def determine_onboarding_level(
     return max(1, min(4, level))
 
 
-def paired_ci_95(deltas: Sequence[float]) -> Dict[str, float]:
-    """Computes mean, std, n, and two-sided 95% Student's t confidence interval for paired deltas."""
+def paired_ci_95(deltas: Sequence[float]) -> dict[str, float]:
+    """Computes mean, std, n, and a two-sided 95% Student's t CI for paired deltas."""
     n = len(deltas)
     if n == 0:
         return {"n": 0, "mean": 0.0, "ci_low": 0.0, "ci_high": 0.0, "std": 0.0}

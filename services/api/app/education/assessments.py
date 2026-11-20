@@ -1,8 +1,9 @@
 """Phase 4: Level-up assessments (10 unseen Qs + 2 unseen scenarios, >=70% & Brier <= 0.25)."""
+
 from __future__ import annotations
 
 import uuid
-from typing import Any, Dict, List
+from typing import Any
 
 from .config import DEFAULT_CONFIG, EducationConfig
 from .enums import AttemptContext, AttemptItemType, SkillArea
@@ -18,7 +19,7 @@ def start_assessment(
     user_id: str,
     target_level: int,
     cfg: EducationConfig = DEFAULT_CONFIG,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Starts a level-up assessment with 10 unseen questions + 2 unseen scenarios."""
     if not (1 <= int(target_level) <= 3):
         raise ValidationDomainError(
@@ -31,9 +32,11 @@ def start_assessment(
     seen_s_ids = repo.list_seen_item_ids(user_id, AttemptItemType.SCENARIO.value)
 
     # Pick 10 unseen questions balanced across the 4 skill areas for target_level
-    selected_qs: List[Dict[str, Any]] = []
+    selected_qs: list[dict[str, Any]] = []
     per_skill_pools = {
-        s.value: repo.list_questions(level=target_level, skill_area=s.value, exclude_ids=seen_q_ids)
+        s.value: repo.list_questions(
+            level=target_level, skill_area=s.value, exclude_ids=seen_q_ids
+        )
         for s in SkillArea
     }
     # Round-robin pick up to cfg.assessment_question_count (10)
@@ -65,17 +68,23 @@ def start_assessment(
     # Pick 2 unseen scenarios calibrated to level difficulty
     unseen_scenarios = repo.list_scenarios(exclude_ids=seen_s_ids)
     # Prefer scenarios near target_level + 1 difficulty
-    unseen_scenarios.sort(key=lambda s: (abs(int(s["difficulty"]) - (target_level + 1)), s["id"]))
+    unseen_scenarios.sort(
+        key=lambda s: (abs(int(s["difficulty"]) - (target_level + 1)), s["id"])
+    )
     selected_scenarios = unseen_scenarios[: cfg.assessment_scenario_count]
 
-    if len(selected_qs) < cfg.assessment_question_count or len(selected_scenarios) < cfg.assessment_scenario_count:
+    if (
+        len(selected_qs) < cfg.assessment_question_count
+        or len(selected_scenarios) < cfg.assessment_scenario_count
+    ):
         raise ValidationDomainError(
             "INSUFFICIENT_UNSEEN_ITEMS",
-            f"Need {cfg.assessment_question_count} unseen questions and {cfg.assessment_scenario_count} unseen scenarios.",
+            f"Need {cfg.assessment_question_count} unseen questions and "
+            f"{cfg.assessment_scenario_count} unseen scenarios.",
         )
 
-    items_public: List[Dict[str, Any]] = []
-    item_specs: List[Dict[str, Any]] = []
+    items_public: list[dict[str, Any]] = []
+    item_specs: list[dict[str, Any]] = []
 
     for q in selected_qs:
         items_public.append(
@@ -138,9 +147,9 @@ def submit_assessment(
     repo: EducationRepository,
     user_id: str,
     assessment_id: str,
-    answers: List[Dict[str, Any]],
+    answers: list[dict[str, Any]],
     cfg: EducationConfig = DEFAULT_CONFIG,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Grades an assessment: pass = >=70% correct AND Brier <= 0.25.
 
     On pass: promotes user level, grants new unlocks, builds next-level plan.
@@ -148,11 +157,17 @@ def submit_assessment(
     """
     session = repo.get_session(assessment_id)
     if not session or session["session_type"] != "assessment":
-        raise NotFoundError("ASSESSMENT_NOT_FOUND", f"Assessment '{assessment_id}' not found.")
+        raise NotFoundError(
+            "ASSESSMENT_NOT_FOUND", f"Assessment '{assessment_id}' not found."
+        )
     if session["user_id"] != user_id:
-        raise NotFoundError("ASSESSMENT_NOT_FOUND", "Assessment does not belong to current user.")
+        raise NotFoundError(
+            "ASSESSMENT_NOT_FOUND", "Assessment does not belong to current user."
+        )
     if session["completed"]:
-        raise ValidationDomainError("ASSESSMENT_ALREADY_SUBMITTED", "Assessment was already submitted.")
+        raise ValidationDomainError(
+            "ASSESSMENT_ALREADY_SUBMITTED", "Assessment was already submitted."
+        )
 
     spec_map = {item["item_id"]: item for item in session["state"]["items"]}
     if len(answers) != len(spec_map):
@@ -161,28 +176,36 @@ def submit_assessment(
             f"Expected {len(spec_map)} answers, received {len(answers)}.",
         )
 
-    graded_records: List[Dict[str, Any]] = []
-    brier_pairs: List[tuple[int, bool]] = []
+    graded_records: list[dict[str, Any]] = []
+    brier_pairs: list[tuple[int, bool]] = []
     correct_count = 0
 
     for ans in answers:
         item_id = ans["item_id"]
         spec = spec_map.get(item_id)
         if not spec:
-            raise ValidationDomainError("UNKNOWN_ITEM", f"Item '{item_id}' is not part of this assessment.")
+            raise ValidationDomainError(
+                "UNKNOWN_ITEM", f"Item '{item_id}' is not part of this assessment."
+            )
         conf = int(ans["confidence"])
         user_ans = str(ans["answer"]).strip()
 
         if spec["item_type"] == AttemptItemType.QUESTION.value:
             q = repo.get_question(item_id)
             if not q:
-                raise NotFoundError("QUESTION_NOT_FOUND", f"Question '{item_id}' missing.")
+                raise NotFoundError(
+                    "QUESTION_NOT_FOUND", f"Question '{item_id}' missing."
+                )
             is_correct = user_ans == str(q["answer"]).strip()
         else:
             sc = repo.get_scenario(item_id)
             if not sc:
-                raise NotFoundError("SCENARIO_NOT_FOUND", f"Scenario '{item_id}' missing.")
-            outcome = recompute_scenario_outcome(sc["symbol"], sc["as_of_date"], sc["window_days"], cfg=cfg)
+                raise NotFoundError(
+                    "SCENARIO_NOT_FOUND", f"Scenario '{item_id}' missing."
+                )
+            outcome = recompute_scenario_outcome(
+                sc["symbol"], sc["as_of_date"], sc["window_days"], cfg=cfg
+            )
             is_correct = user_ans.lower() == outcome["actual_direction"]
 
         if is_correct:
@@ -212,12 +235,14 @@ def submit_assessment(
     skills = compute_skill_scores(graded_records)
     repo.record_skill_scores(user_id, skills, brier)
 
-    passed = (score_ratio >= cfg.assessment_pass_accuracy) and (brier <= cfg.assessment_max_brier)
+    passed = (score_ratio >= cfg.assessment_pass_accuracy) and (
+        brier <= cfg.assessment_max_brier
+    )
     current_level = repo.get_user_level(user_id, default_level=1)
     target_level = int(session["target_level"] or current_level)
 
     new_level = None
-    newly_unlocked: List[str] = []
+    newly_unlocked: list[str] = []
 
     if passed:
         promoted = min(cfg.max_level, max(current_level, target_level + 1))
@@ -225,10 +250,18 @@ def submit_assessment(
             repo.set_user_level(user_id, promoted)
         new_level = promoted
         newly_unlocked = ensure_level_unlocks(repo, user_id, promoted)
-        build_or_update_plan(repo, user_id, level=promoted, skill_scores=skills, preserve_completed=False)
+        build_or_update_plan(
+            repo, user_id, level=promoted, skill_scores=skills, preserve_completed=False
+        )
     else:
         # Fail updates the learning plan to remediate weakest skills from the assessment
-        build_or_update_plan(repo, user_id, level=current_level, skill_scores=skills, preserve_completed=True)
+        build_or_update_plan(
+            repo,
+            user_id,
+            level=current_level,
+            skill_scores=skills,
+            preserve_completed=True,
+        )
 
     state = dict(session["state"])
     state["result"] = {

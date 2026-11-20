@@ -1,4 +1,5 @@
 """Standardized Education exceptions and FastAPI error handlers (SoT Section 7)."""
+
 from __future__ import annotations
 
 from fastapi import FastAPI, Request
@@ -8,7 +9,9 @@ from fastapi.responses import JSONResponse
 class EducationError(Exception):
     """Base application error for Education endpoints."""
 
-    def __init__(self, code: str, message: str, status_code: int = 400, extra: dict | None = None):
+    def __init__(
+        self, code: str, message: str, status_code: int = 400, extra: dict | None = None
+    ):
         super().__init__(message)
         self.code = code
         self.message = message
@@ -54,7 +57,9 @@ def register_exception_handlers(app: FastAPI) -> None:
     """
 
     @app.exception_handler(ToolLockedError)
-    async def _handle_tool_locked(_request: Request, exc: ToolLockedError) -> JSONResponse:
+    async def _handle_tool_locked(
+        _request: Request, exc: ToolLockedError
+    ) -> JSONResponse:
         return JSONResponse(
             status_code=403,
             content={

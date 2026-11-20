@@ -1,8 +1,8 @@
 """FastAPI APIRouter implementing all Education endpoints per SoT Section 7."""
+
 from __future__ import annotations
 
-import sqlite3
-from typing import Any, Optional
+from typing import Any
 
 from fastapi import APIRouter, Depends, Query
 
@@ -55,6 +55,7 @@ def _effective_level(repo: EducationRepository, user: User) -> int:
 
 # ---- Phase 2: Onboarding ----
 
+
 @router.post("/onboarding/start", response_model=OnboardingStartResponse)
 def api_onboarding_start(
     user: User = Depends(current_user),
@@ -80,6 +81,7 @@ def api_onboarding_answer(
 
 
 # ---- Phase 3: Plan & Lessons ----
+
 
 @router.get("/plan", response_model=PlanResponse)
 def api_get_plan(
@@ -111,20 +113,26 @@ def api_submit_lesson_check(
         repo,
         user_id=user.id,
         lesson_id=lesson_id,
-        answers=[(a.model_dump() if hasattr(a, "model_dump") else a.dict()) for a in body.answers],
+        answers=[
+            (a.model_dump() if hasattr(a, "model_dump") else a.dict())
+            for a in body.answers
+        ],
     )
 
 
 # ---- Phase 5: Historical Scenarios ----
 
+
 @router.get("/scenarios/next", response_model=ScenarioNextResponse)
 def api_scenarios_next(
-    difficulty: Optional[int] = Query(default=None, ge=1, le=5),
+    difficulty: int | None = Query(default=None, ge=1, le=5),
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
 ):
     lvl = _effective_level(repo, user)
-    return get_next_scenario(repo, user_id=user.id, user_level=lvl, difficulty=difficulty)
+    return get_next_scenario(
+        repo, user_id=user.id, user_level=lvl, difficulty=difficulty
+    )
 
 
 @router.post("/scenarios/{scenario_id}/answer", response_model=ScenarioAnswerResponse)
@@ -148,6 +156,7 @@ def api_scenarios_answer(
 
 # ---- Phase 4: Level-Up Assessments ----
 
+
 @router.post("/assessments/{level}/start", response_model=AssessmentStartResponse)
 def api_assessments_start(
     level: int,
@@ -158,7 +167,9 @@ def api_assessments_start(
     return start_assessment(repo, user_id=user.id, target_level=level)
 
 
-@router.post("/assessments/{assessment_id}/submit", response_model=AssessmentSubmitResponse)
+@router.post(
+    "/assessments/{assessment_id}/submit", response_model=AssessmentSubmitResponse
+)
 def api_assessments_submit(
     assessment_id: str,
     body: AssessmentSubmitRequest,
@@ -169,21 +180,29 @@ def api_assessments_submit(
         repo,
         user_id=user.id,
         assessment_id=assessment_id,
-        answers=[(a.model_dump() if hasattr(a, "model_dump") else a.dict()) for a in body.answers],
+        answers=[
+            (a.model_dump() if hasattr(a, "model_dump") else a.dict())
+            for a in body.answers
+        ],
     )
 
 
 # ---- Phase 6: Explain a Stock, Dashboard & Study Mode ----
 
+
 @router.get("/explain", response_model=ExplainStockResponse)
 def api_explain_stock(
-    symbol: str = Query(..., min_length=1, max_length=40, pattern=r"^[A-Za-z0-9 &.\-]+$"),
+    symbol: str = Query(
+        ..., min_length=1, max_length=40, pattern=r"^[A-Za-z0-9 &.\-]+$"
+    ),
     year: int = Query(..., ge=2005, le=2030),
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
 ):
     lvl = _effective_level(repo, user)
-    return explain_stock(repo, user_id=user.id, user_level=lvl, symbol=symbol, year=year)
+    return explain_stock(
+        repo, user_id=user.id, user_level=lvl, symbol=symbol, year=year
+    )
 
 
 @router.get("/me/dashboard", response_model=DashboardResponse)
@@ -216,5 +235,8 @@ def api_study_submit(
         repo,
         user_id=user.id,
         session_id=session_id,
-        answers=[(a.model_dump() if hasattr(a, "model_dump") else a.dict()) for a in body.answers],
+        answers=[
+            (a.model_dump() if hasattr(a, "model_dump") else a.dict())
+            for a in body.answers
+        ],
     )

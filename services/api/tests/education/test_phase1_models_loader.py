@@ -1,4 +1,5 @@
 """Phase 1 tests: fresh DB migration upgrade/downgrade, constraints, and YAML loader."""
+
 from __future__ import annotations
 
 import sqlite3
@@ -6,8 +7,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from services.api.app.education.loader import load_yaml_file
-from services.api.app.education.repository import (
+from app.education.loader import load_yaml_file
+from app.education.repository import (
     EducationRepository,
     apply_migrations,
     revert_migrations,
@@ -43,7 +44,9 @@ class TestPhase1ModelsAndLoader(unittest.TestCase):
             "edu_sessions",
             "edu_explain_cache",
         }
-        self.assertTrue(expected.issubset(tables), f"Missing tables: {expected - tables}")
+        self.assertTrue(
+            expected.issubset(tables), f"Missing tables: {expected - tables}"
+        )
 
         revert_migrations(self.conn)
         remaining = {
@@ -58,23 +61,33 @@ class TestPhase1ModelsAndLoader(unittest.TestCase):
 
         # Re-apply cleanly
         apply_migrations(self.conn)
-        self.assertIn("questions", {
-            r["name"]
-            for r in self.conn.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall()
-        })
+        self.assertIn(
+            "questions",
+            {
+                r["name"]
+                for r in self.conn.execute(
+                    "SELECT name FROM sqlite_master WHERE type='table'"
+                ).fetchall()
+            },
+        )
 
     def test_check_constraints_enforce_sot_invariants(self) -> None:
         self.repo.ensure_user("u1")
         # Confidence out of 50-100 range must fail
         with self.assertRaises(sqlite3.IntegrityError):
-            self.repo.record_attempt("u1", "question", "q1", "A", 40, True, "onboarding")
+            self.repo.record_attempt(
+                "u1", "question", "q1", "A", 40, True, "onboarding"
+            )
         # Invalid tool unlock must fail
         with self.assertRaises(sqlite3.IntegrityError):
-            self.conn.execute("INSERT INTO unlocks (user_id, tool) VALUES ('u1', 'invalid_tool')")
+            self.conn.execute(
+                "INSERT INTO unlocks (user_id, tool) VALUES ('u1', 'invalid_tool')"
+            )
         # Invalid data_origin must fail
         with self.assertRaises(sqlite3.IntegrityError):
             self.conn.execute(
-                "INSERT INTO questions (id, level, skill_area, difficulty, text, options, answer, explanation, data_origin) "
+                "INSERT INTO questions (id, level, skill_area, difficulty, text, options, "
+                "answer, explanation, data_origin) "
                 "VALUES ('q_bad', 1, 'basics', 3, 't', '[\"a\"]', 'a', 'exp', 'unknown')"
             )
 
@@ -89,7 +102,8 @@ questions:
     skill_area: basics
     difficulty: 3
     text: "What does NSE stand for?"
-    options: ["National Stock Exchange", "New Securities Entity", "National Savings Exchange", "None"]
+    options: ["National Stock Exchange", "New Securities Entity",
+              "National Savings Exchange", "None"]
     answer: "National Stock Exchange"
     explanation: "NSE stands for National Stock Exchange of India."
     tags: ["basics"]

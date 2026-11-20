@@ -12,6 +12,9 @@ from app.core.db import check_db_health, get_db
 from app.core.errors import register_exception_handlers
 from app.core.logging import RequestLoggingMiddleware
 from app.core.market import get_market_data_as_of
+from app.education.exceptions import (
+    register_exception_handlers as register_education_exception_handlers,
+)
 from app.education.router import router as education_router
 from app.education.unlocks import get_user_unlocks
 from app.verifier.router import router as verifier_router
@@ -35,6 +38,7 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
     register_exception_handlers(application)
+    register_education_exception_handlers(application)
 
     @application.get("/api/v1/health", tags=["platform"])
     def health() -> dict[str, Any]:

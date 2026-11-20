@@ -4,17 +4,20 @@ Dual-mode architecture:
 - Supabase Postgres / SQLAlchemy 2.0 Session (Render production with Hardhik's core.db.get_db())
 - Parameterized DB-API / SQLite (offline test harnesses & standalone dev)
 """
+
 from __future__ import annotations
 
 import json
 import sqlite3
 import uuid
-from datetime import date, datetime, timezone
+from collections.abc import Sequence
+from datetime import UTC, date, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Set, Union
+from typing import Any
 
-from sqlalchemy import func, select, text
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
+
 from .models import (
     Attempt,
     EduSession,
@@ -30,7 +33,7 @@ from .models import (
 
 
 def utc_now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def _migration_sql_dir() -> Path:
@@ -48,6 +51,7 @@ def apply_migrations(conn: Any) -> None:
             conn.commit()
     elif hasattr(conn, "get_bind"):
         from .models import Base
+
         Base.metadata.create_all(bind=conn.get_bind())
 
 
@@ -61,6 +65,7 @@ def revert_migrations(conn: Any) -> None:
             conn.commit()
     elif hasattr(conn, "get_bind"):
         from .models import Base
+
         Base.metadata.drop_all(bind=conn.get_bind())
 
 
@@ -70,16 +75,24 @@ class EducationRepository:
     def __init__(self, conn: Any):
         self.conn = conn
         self.is_orm: bool = isinstance(conn, Session) or (
-            hasattr(conn, "scalars") and hasattr(conn, "commit") and not isinstance(conn, sqlite3.Connection)
+            hasattr(conn, "scalars")
+            and hasattr(conn, "commit")
+            and not isinstance(conn, sqlite3.Connection)
         )
 
     # ---- Users (read/upsert helper for Hardhik's users table) ----
 
-    def ensure_user(self, user_id: str, name: str = "Learner", level: int = 1) -> Dict[str, Any]:
+    def ensure_user(
+        self, user_id: str, name: str = "Learner", level: int = 1
+    ) -> dict[str, Any]:
         if self.is_orm:
             user = self.conn.get(User, user_id)
             if user:
-                return {"id": user.id, "name": user.name, "current_level": user.current_level}
+                return {
+                    "id": user.id,
+                    "name": user.name,
+                    "current_level": user.current_level,
+                }
             user = User(id=user_id, name=name, current_level=int(level))
             self.conn.add(user)
             self.conn.commit()
@@ -128,9 +141,13 @@ class EducationRepository:
 
     # ---- Unlocks ----
 
-    def list_unlocks(self, user_id: str) -> List[str]:
+    def list_unlocks(self, user_id: str) -> list[str]:
         if self.is_orm:
-            stmt = select(Unlock.tool).where(Unlock.user_id == user_id).order_by(Unlock.id.asc())
+            stmt = (
+                select(Unlock.tool)
+                .where(Unlock.user_id == user_id)
+                .order_by(Unlock.id.asc())
+            )
             return list(self.conn.scalars(stmt).all())
 
         rows = self.conn.execute(
@@ -139,11 +156,11 @@ class EducationRepository:
         ).fetchall()
         return [r["tool"] for r in rows]
 
-    def grant_unlocks(self, user_id: str, tools: Sequence[str]) -> List[str]:
+    def grant_unlocks(self, user_id: str, tools: Sequence[str]) -> list[str]:
         """Idempotently grants tools and returns only newly granted tools."""
         self.ensure_user(user_id)
         existing = set(self.list_unlocks(user_id))
-        newly_granted: List[str] = []
+        newly_granted: list[str] = []
 
         if self.is_orm:
             for tool in tools:
@@ -172,13 +189,17 @@ class EducationRepository:
     def record_skill_scores(
         self,
         user_id: str,
-        skill_scores: Dict[str, float],
+        skill_scores: dict[str, float],
         brier: float,
-        measured_at: Optional[str] = None,
+        measured_at: str | None = None,
     ) -> None:
         self.ensure_user(user_id)
         if self.is_orm:
-            m_dt = datetime.fromisoformat(measured_at) if measured_at else datetime.now(timezone.utc)
+            m_dt = (
+                datetime.fromisoformat(measured_at)
+                if measured_at
+                else datetime.now(UTC)
+            )
             for area, score in skill_scores.items():
                 sc = SkillScore(
                     user_id=user_id,
@@ -200,7 +221,7 @@ class EducationRepository:
             )
         self.conn.commit()
 
-    def get_latest_skill_scores(self, user_id: str) -> Dict[str, float]:
+    def get_latest_skill_scores(self, user_id: str) -> dict[str, float]:
         if self.is_orm:
             subq = (
                 select(SkillScore.skill_area, func.max(SkillScore.id).label("max_id"))
@@ -208,7 +229,9 @@ class EducationRepository:
                 .group_by(SkillScore.skill_area)
                 .subquery()
             )
-            stmt = select(SkillScore.skill_area, SkillScore.score).join(subq, SkillScore.id == subq.c.max_id)
+            stmt = select(SkillScore.skill_area, SkillScore.score).join(
+                subq, SkillScore.id == subq.c.max_id
+            )
             rows = self.conn.execute(stmt).all()
             return {r[0]: float(r[1]) for r in rows}
 
@@ -227,7 +250,7 @@ class EducationRepository:
         ).fetchall()
         return {r["skill_area"]: float(r["score"]) for r in rows}
 
-    def get_skill_history(self, user_id: str) -> List[Dict[str, Any]]:
+    def get_skill_history(self, user_id: str) -> list[dict[str, Any]]:
         if self.is_orm:
             stmt = (
                 select(SkillScore)
@@ -240,7 +263,11 @@ class EducationRepository:
                     "skill_area": s.skill_area,
                     "score": s.score,
                     "brier": s.brier,
-                    "measured_at": s.measured_at.isoformat() if hasattr(s.measured_at, "isoformat") else str(s.measured_at),
+                    "measured_at": (
+                        s.measured_at.isoformat()
+                        if hasattr(s.measured_at, "isoformat")
+                        else str(s.measured_at)
+                    ),
                 }
                 for s in scores
             ]
@@ -254,7 +281,7 @@ class EducationRepository:
 
     # ---- Questions ----
 
-    def upsert_question(self, q: Dict[str, Any]) -> None:
+    def upsert_question(self, q: dict[str, Any]) -> None:
         if self.is_orm:
             existing = self.conn.get(Question, q["id"])
             if existing:
@@ -286,7 +313,10 @@ class EducationRepository:
 
         self.conn.execute(
             """
-            INSERT INTO questions (id, level, skill_area, difficulty, text, options, answer, explanation, tags, data_origin)
+            INSERT INTO questions (
+                id, level, skill_area, difficulty, text, options, answer,
+                explanation, tags, data_origin
+            )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET
                 level=excluded.level,
@@ -314,13 +344,15 @@ class EducationRepository:
         )
         self.conn.commit()
 
-    def _hydrate_question(self, row: sqlite3.Row) -> Dict[str, Any]:
+    def _hydrate_question(self, row: sqlite3.Row) -> dict[str, Any]:
         d = dict(row)
-        d["options"] = json.loads(d["options"]) if isinstance(d["options"], str) else d["options"]
+        d["options"] = (
+            json.loads(d["options"]) if isinstance(d["options"], str) else d["options"]
+        )
         d["tags"] = json.loads(d["tags"]) if isinstance(d["tags"], str) else d["tags"]
         return d
 
-    def get_question(self, question_id: str) -> Optional[Dict[str, Any]]:
+    def get_question(self, question_id: str) -> dict[str, Any] | None:
         if self.is_orm:
             q = self.conn.get(Question, question_id)
             if not q:
@@ -338,16 +370,18 @@ class EducationRepository:
                 "data_origin": q.data_origin,
             }
 
-        row = self.conn.execute("SELECT * FROM questions WHERE id = ?", (question_id,)).fetchone()
+        row = self.conn.execute(
+            "SELECT * FROM questions WHERE id = ?", (question_id,)
+        ).fetchone()
         return self._hydrate_question(row) if row else None
 
     def list_questions(
         self,
-        level: Optional[int] = None,
-        skill_area: Optional[str] = None,
-        difficulty: Optional[int] = None,
-        exclude_ids: Optional[Set[str]] = None,
-    ) -> List[Dict[str, Any]]:
+        level: int | None = None,
+        skill_area: str | None = None,
+        difficulty: int | None = None,
+        exclude_ids: set[str] | None = None,
+    ) -> list[dict[str, Any]]:
         if self.is_orm:
             stmt = select(Question)
             if level is not None:
@@ -377,8 +411,8 @@ class EducationRepository:
                 out = [x for x in out if x["id"] not in exclude_ids]
             return out
 
-        clauses: List[str] = []
-        params: List[Any] = []
+        clauses: list[str] = []
+        params: list[Any] = []
         if level is not None:
             clauses.append("level = ?")
             params.append(int(level))
@@ -408,12 +442,14 @@ class EducationRepository:
         confidence: int,
         correct: bool,
         context: str,
-        created_at: Optional[str] = None,
+        created_at: str | None = None,
     ) -> str:
         self.ensure_user(user_id)
         aid = f"att_{uuid.uuid4().hex[:16]}"
         if self.is_orm:
-            c_dt = datetime.fromisoformat(created_at) if created_at else datetime.now(timezone.utc)
+            c_dt = (
+                datetime.fromisoformat(created_at) if created_at else datetime.now(UTC)
+            )
             att = Attempt(
                 id=aid,
                 user_id=user_id,
@@ -431,7 +467,10 @@ class EducationRepository:
 
         self.conn.execute(
             """
-            INSERT INTO attempts (id, user_id, item_type, item_id, answer, confidence, correct, context, created_at)
+            INSERT INTO attempts (
+                id, user_id, item_type, item_id, answer, confidence, correct,
+                context, created_at
+            )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
@@ -449,9 +488,13 @@ class EducationRepository:
         self.conn.commit()
         return aid
 
-    def list_seen_item_ids(self, user_id: str, item_type: str) -> Set[str]:
+    def list_seen_item_ids(self, user_id: str, item_type: str) -> set[str]:
         if self.is_orm:
-            stmt = select(Attempt.item_id).where(Attempt.user_id == user_id, Attempt.item_type == item_type).distinct()
+            stmt = (
+                select(Attempt.item_id)
+                .where(Attempt.user_id == user_id, Attempt.item_type == item_type)
+                .distinct()
+            )
             return set(self.conn.scalars(stmt).all())
 
         rows = self.conn.execute(
@@ -462,10 +505,10 @@ class EducationRepository:
 
     def list_attempts(
         self,
-        user_id: Optional[str] = None,
-        context: Optional[str] = None,
-        item_type: Optional[str] = None,
-    ) -> List[Dict[str, Any]]:
+        user_id: str | None = None,
+        context: str | None = None,
+        item_type: str | None = None,
+    ) -> list[dict[str, Any]]:
         if self.is_orm:
             stmt = select(Attempt)
             if user_id is not None:
@@ -486,13 +529,17 @@ class EducationRepository:
                     "confidence": a.confidence,
                     "correct": bool(a.correct),
                     "context": a.context,
-                    "created_at": a.created_at.isoformat() if hasattr(a.created_at, "isoformat") else str(a.created_at),
+                    "created_at": (
+                        a.created_at.isoformat()
+                        if hasattr(a.created_at, "isoformat")
+                        else str(a.created_at)
+                    ),
                 }
                 for a in atts
             ]
 
-        clauses: List[str] = []
-        params: List[Any] = []
+        clauses: list[str] = []
+        params: list[Any] = []
         if user_id is not None:
             clauses.append("user_id = ?")
             params.append(user_id)
@@ -516,7 +563,7 @@ class EducationRepository:
 
     # ---- Lessons & Plans ----
 
-    def upsert_lesson(self, lesson: Dict[str, Any]) -> None:
+    def upsert_lesson(self, lesson: dict[str, Any]) -> None:
         if self.is_orm:
             existing = self.conn.get(Lesson, lesson["id"])
             if existing:
@@ -544,7 +591,10 @@ class EducationRepository:
 
         self.conn.execute(
             """
-            INSERT INTO lessons (id, level, skill_area, title, minutes, sections, check_questions, data_origin)
+            INSERT INTO lessons (
+                id, level, skill_area, title, minutes, sections, check_questions,
+                data_origin
+            )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET
                 level=excluded.level,
@@ -568,32 +618,44 @@ class EducationRepository:
         )
         self.conn.commit()
 
-    def _hydrate_lesson(self, row: sqlite3.Row) -> Dict[str, Any]:
+    def _hydrate_lesson(self, row: sqlite3.Row) -> dict[str, Any]:
         d = dict(row)
-        d["sections"] = json.loads(d["sections"]) if isinstance(d["sections"], str) else d["sections"]
-        d["check_questions"] = json.loads(d["check_questions"]) if isinstance(d["check_questions"], str) else d["check_questions"]
+        d["sections"] = (
+            json.loads(d["sections"])
+            if isinstance(d["sections"], str)
+            else d["sections"]
+        )
+        d["check_questions"] = (
+            json.loads(d["check_questions"])
+            if isinstance(d["check_questions"], str)
+            else d["check_questions"]
+        )
         return d
 
-    def get_lesson(self, lesson_id: str) -> Optional[Dict[str, Any]]:
+    def get_lesson(self, lesson_id: str) -> dict[str, Any] | None:
         if self.is_orm:
-            l = self.conn.get(Lesson, lesson_id)
-            if not l:
+            lsn = self.conn.get(Lesson, lesson_id)
+            if not lsn:
                 return None
             return {
-                "id": l.id,
-                "level": l.level,
-                "skill_area": l.skill_area,
-                "title": l.title,
-                "minutes": l.minutes,
-                "sections": l.sections,
-                "check_questions": l.check_questions,
-                "data_origin": l.data_origin,
+                "id": lsn.id,
+                "level": lsn.level,
+                "skill_area": lsn.skill_area,
+                "title": lsn.title,
+                "minutes": lsn.minutes,
+                "sections": lsn.sections,
+                "check_questions": lsn.check_questions,
+                "data_origin": lsn.data_origin,
             }
 
-        row = self.conn.execute("SELECT * FROM lessons WHERE id = ?", (lesson_id,)).fetchone()
+        row = self.conn.execute(
+            "SELECT * FROM lessons WHERE id = ?", (lesson_id,)
+        ).fetchone()
         return self._hydrate_lesson(row) if row else None
 
-    def list_lessons(self, level: Optional[int] = None, skill_area: Optional[str] = None) -> List[Dict[str, Any]]:
+    def list_lessons(
+        self, level: int | None = None, skill_area: str | None = None
+    ) -> list[dict[str, Any]]:
         if self.is_orm:
             stmt = select(Lesson)
             if level is not None:
@@ -604,20 +666,20 @@ class EducationRepository:
             items = self.conn.scalars(stmt).all()
             return [
                 {
-                    "id": l.id,
-                    "level": l.level,
-                    "skill_area": l.skill_area,
-                    "title": l.title,
-                    "minutes": l.minutes,
-                    "sections": l.sections,
-                    "check_questions": l.check_questions,
-                    "data_origin": l.data_origin,
+                    "id": lsn.id,
+                    "level": lsn.level,
+                    "skill_area": lsn.skill_area,
+                    "title": lsn.title,
+                    "minutes": lsn.minutes,
+                    "sections": lsn.sections,
+                    "check_questions": lsn.check_questions,
+                    "data_origin": lsn.data_origin,
                 }
-                for l in items
+                for lsn in items
             ]
 
-        clauses: List[str] = []
-        params: List[Any] = []
+        clauses: list[str] = []
+        params: list[Any] = []
         if level is not None:
             clauses.append("level = ?")
             params.append(int(level))
@@ -630,7 +692,9 @@ class EducationRepository:
         ).fetchall()
         return [self._hydrate_lesson(r) for r in rows]
 
-    def upsert_plan(self, user_id: str, level: int, lesson_ids: List[str], progress: Dict[str, str]) -> None:
+    def upsert_plan(
+        self, user_id: str, level: int, lesson_ids: list[str], progress: dict[str, str]
+    ) -> None:
         if self.is_orm:
             self.ensure_user(user_id, level=level)
             stmt = select(Plan).where(Plan.user_id == user_id)
@@ -640,7 +704,12 @@ class EducationRepository:
                 plan.lesson_ids = lesson_ids
                 plan.progress = progress
             else:
-                plan = Plan(user_id=user_id, level=int(level), lesson_ids=lesson_ids, progress=progress)
+                plan = Plan(
+                    user_id=user_id,
+                    level=int(level),
+                    lesson_ids=lesson_ids,
+                    progress=progress,
+                )
                 self.conn.add(plan)
             self.conn.commit()
             return
@@ -661,7 +730,7 @@ class EducationRepository:
         )
         self.conn.commit()
 
-    def get_plan(self, user_id: str) -> Optional[Dict[str, Any]]:
+    def get_plan(self, user_id: str) -> dict[str, Any] | None:
         if self.is_orm:
             stmt = select(Plan).where(Plan.user_id == user_id)
             p = self.conn.scalars(stmt).first()
@@ -673,23 +742,41 @@ class EducationRepository:
                 "level": p.level,
                 "lesson_ids": p.lesson_ids,
                 "progress": p.progress,
-                "updated_at": p.updated_at.isoformat() if hasattr(p.updated_at, "isoformat") else str(p.updated_at),
+                "updated_at": (
+                    p.updated_at.isoformat()
+                    if hasattr(p.updated_at, "isoformat")
+                    else str(p.updated_at)
+                ),
             }
 
-        row = self.conn.execute("SELECT * FROM plans WHERE user_id = ?", (user_id,)).fetchone()
+        row = self.conn.execute(
+            "SELECT * FROM plans WHERE user_id = ?", (user_id,)
+        ).fetchone()
         if not row:
             return None
         d = dict(row)
-        d["lesson_ids"] = json.loads(d["lesson_ids"]) if isinstance(d["lesson_ids"], str) else d["lesson_ids"]
-        d["progress"] = json.loads(d["progress"]) if isinstance(d["progress"], str) else d["progress"]
+        d["lesson_ids"] = (
+            json.loads(d["lesson_ids"])
+            if isinstance(d["lesson_ids"], str)
+            else d["lesson_ids"]
+        )
+        d["progress"] = (
+            json.loads(d["progress"])
+            if isinstance(d["progress"], str)
+            else d["progress"]
+        )
         return d
 
     # ---- Scenarios ----
 
-    def upsert_scenario(self, sc: Dict[str, Any]) -> None:
+    def upsert_scenario(self, sc: dict[str, Any]) -> None:
         if self.is_orm:
             existing = self.conn.get(Scenario, sc["id"])
-            as_of = date.fromisoformat(str(sc["as_of_date"])) if isinstance(sc["as_of_date"], str) else sc["as_of_date"]
+            as_of = (
+                date.fromisoformat(str(sc["as_of_date"]))
+                if isinstance(sc["as_of_date"], str)
+                else sc["as_of_date"]
+            )
             if existing:
                 existing.symbol = sc["symbol"]
                 existing.as_of_date = as_of
@@ -721,7 +808,10 @@ class EducationRepository:
 
         self.conn.execute(
             """
-            INSERT INTO scenarios (id, symbol, as_of_date, window_days, context, outcome, explanation, key_clues, tags, difficulty, data_origin)
+            INSERT INTO scenarios (
+                id, symbol, as_of_date, window_days, context, outcome, explanation,
+                key_clues, tags, difficulty, data_origin
+            )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET
                 symbol=excluded.symbol,
@@ -751,15 +841,23 @@ class EducationRepository:
         )
         self.conn.commit()
 
-    def _hydrate_scenario(self, row: sqlite3.Row) -> Dict[str, Any]:
+    def _hydrate_scenario(self, row: sqlite3.Row) -> dict[str, Any]:
         d = dict(row)
-        d["context"] = json.loads(d["context"]) if isinstance(d["context"], str) else d["context"]
-        d["outcome"] = json.loads(d["outcome"]) if isinstance(d["outcome"], str) else d["outcome"]
-        d["key_clues"] = json.loads(d["key_clues"]) if isinstance(d["key_clues"], str) else d["key_clues"]
+        d["context"] = (
+            json.loads(d["context"]) if isinstance(d["context"], str) else d["context"]
+        )
+        d["outcome"] = (
+            json.loads(d["outcome"]) if isinstance(d["outcome"], str) else d["outcome"]
+        )
+        d["key_clues"] = (
+            json.loads(d["key_clues"])
+            if isinstance(d["key_clues"], str)
+            else d["key_clues"]
+        )
         d["tags"] = json.loads(d["tags"]) if isinstance(d["tags"], str) else d["tags"]
         return d
 
-    def get_scenario(self, scenario_id: str) -> Optional[Dict[str, Any]]:
+    def get_scenario(self, scenario_id: str) -> dict[str, Any] | None:
         if self.is_orm:
             s = self.conn.get(Scenario, scenario_id)
             if not s:
@@ -767,7 +865,11 @@ class EducationRepository:
             return {
                 "id": s.id,
                 "symbol": s.symbol,
-                "as_of_date": s.as_of_date.isoformat() if hasattr(s.as_of_date, "isoformat") else str(s.as_of_date),
+                "as_of_date": (
+                    s.as_of_date.isoformat()
+                    if hasattr(s.as_of_date, "isoformat")
+                    else str(s.as_of_date)
+                ),
                 "window_days": s.window_days,
                 "context": s.context,
                 "outcome": s.outcome,
@@ -778,14 +880,16 @@ class EducationRepository:
                 "data_origin": s.data_origin,
             }
 
-        row = self.conn.execute("SELECT * FROM scenarios WHERE id = ?", (scenario_id,)).fetchone()
+        row = self.conn.execute(
+            "SELECT * FROM scenarios WHERE id = ?", (scenario_id,)
+        ).fetchone()
         return self._hydrate_scenario(row) if row else None
 
     def list_scenarios(
         self,
-        difficulty: Optional[int] = None,
-        exclude_ids: Optional[Set[str]] = None,
-    ) -> List[Dict[str, Any]]:
+        difficulty: int | None = None,
+        exclude_ids: set[str] | None = None,
+    ) -> list[dict[str, Any]]:
         if self.is_orm:
             stmt = select(Scenario)
             if difficulty is not None:
@@ -796,7 +900,11 @@ class EducationRepository:
                 {
                     "id": s.id,
                     "symbol": s.symbol,
-                    "as_of_date": s.as_of_date.isoformat() if hasattr(s.as_of_date, "isoformat") else str(s.as_of_date),
+                    "as_of_date": (
+                        s.as_of_date.isoformat()
+                        if hasattr(s.as_of_date, "isoformat")
+                        else str(s.as_of_date)
+                    ),
                     "window_days": s.window_days,
                     "context": s.context,
                     "outcome": s.outcome,
@@ -818,7 +926,9 @@ class EducationRepository:
                 (int(difficulty),),
             ).fetchall()
         else:
-            rows = self.conn.execute("SELECT * FROM scenarios ORDER BY id ASC").fetchall()
+            rows = self.conn.execute(
+                "SELECT * FROM scenarios ORDER BY id ASC"
+            ).fetchall()
         out = [self._hydrate_scenario(r) for r in rows]
         if exclude_ids:
             out = [s for s in out if s["id"] not in exclude_ids]
@@ -831,8 +941,8 @@ class EducationRepository:
         session_id: str,
         user_id: str,
         session_type: str,
-        state: Dict[str, Any],
-        target_level: Optional[int] = None,
+        state: dict[str, Any],
+        target_level: int | None = None,
     ) -> None:
         self.ensure_user(user_id)
         if self.is_orm:
@@ -850,14 +960,23 @@ class EducationRepository:
 
         self.conn.execute(
             """
-            INSERT INTO edu_sessions (id, user_id, session_type, target_level, state, completed, created_at)
+            INSERT INTO edu_sessions (
+                id, user_id, session_type, target_level, state, completed, created_at
+            )
             VALUES (?, ?, ?, ?, ?, 0, ?)
             """,
-            (session_id, user_id, session_type, target_level, json.dumps(state), utc_now_iso()),
+            (
+                session_id,
+                user_id,
+                session_type,
+                target_level,
+                json.dumps(state),
+                utc_now_iso(),
+            ),
         )
         self.conn.commit()
 
-    def get_session(self, session_id: str) -> Optional[Dict[str, Any]]:
+    def get_session(self, session_id: str) -> dict[str, Any] | None:
         if self.is_orm:
             sess = self.conn.get(EduSession, session_id)
             if not sess:
@@ -869,18 +988,28 @@ class EducationRepository:
                 "target_level": sess.target_level,
                 "state": sess.state,
                 "completed": bool(sess.completed),
-                "created_at": sess.created_at.isoformat() if hasattr(sess.created_at, "isoformat") else str(sess.created_at),
+                "created_at": (
+                    sess.created_at.isoformat()
+                    if hasattr(sess.created_at, "isoformat")
+                    else str(sess.created_at)
+                ),
             }
 
-        row = self.conn.execute("SELECT * FROM edu_sessions WHERE id = ?", (session_id,)).fetchone()
+        row = self.conn.execute(
+            "SELECT * FROM edu_sessions WHERE id = ?", (session_id,)
+        ).fetchone()
         if not row:
             return None
         d = dict(row)
-        d["state"] = json.loads(d["state"]) if isinstance(d["state"], str) else d["state"]
+        d["state"] = (
+            json.loads(d["state"]) if isinstance(d["state"], str) else d["state"]
+        )
         d["completed"] = bool(d["completed"])
         return d
 
-    def update_session(self, session_id: str, state: Dict[str, Any], completed: bool = False) -> None:
+    def update_session(
+        self, session_id: str, state: dict[str, Any], completed: bool = False
+    ) -> None:
         if self.is_orm:
             sess = self.conn.get(EduSession, session_id)
             if sess:
@@ -897,7 +1026,7 @@ class EducationRepository:
 
     # ---- Explain a Stock Cache ----
 
-    def upsert_explain(self, rec: Dict[str, Any]) -> None:
+    def upsert_explain(self, rec: dict[str, Any]) -> None:
         if self.is_orm:
             stmt = select(ExplainCache).where(
                 ExplainCache.symbol == rec["symbol"].upper(),
@@ -943,7 +1072,7 @@ class EducationRepository:
         )
         self.conn.commit()
 
-    def get_explain(self, symbol: str, year: int) -> Optional[Dict[str, Any]]:
+    def get_explain(self, symbol: str, year: int) -> dict[str, Any] | None:
         if self.is_orm:
             stmt = select(ExplainCache).where(
                 ExplainCache.symbol == symbol.upper(),
@@ -968,11 +1097,15 @@ class EducationRepository:
         if not row:
             return None
         d = dict(row)
-        d["chart"] = json.loads(d["chart"]) if isinstance(d["chart"], str) else d["chart"]
-        d["moves"] = json.loads(d["moves"]) if isinstance(d["moves"], str) else d["moves"]
+        d["chart"] = (
+            json.loads(d["chart"]) if isinstance(d["chart"], str) else d["chart"]
+        )
+        d["moves"] = (
+            json.loads(d["moves"]) if isinstance(d["moves"], str) else d["moves"]
+        )
         return d
 
-    def list_explain_records(self) -> List[Dict[str, Any]]:
+    def list_explain_records(self) -> list[dict[str, Any]]:
         if self.is_orm:
             stmt = select(
                 ExplainCache.symbol,

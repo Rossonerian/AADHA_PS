@@ -1,23 +1,27 @@
-"""Phase 4 tests: unseen items, pass/fail/calibration thresholds, level-up unlocks, fail->plan update."""
+"""Phase 4 tests: unseen items, pass/fail/calibration thresholds, level-up unlocks.
+
+Also covers the fail -> plan update path.
+"""
+
 from __future__ import annotations
 
 import sqlite3
 import unittest
 
-from services.api.app.core import market
-from services.api.app.education.assessments import start_assessment, submit_assessment
-from services.api.app.education.config import EducationConfig
-from services.api.app.education.enums import AttemptContext, AttemptItemType
-from services.api.app.education.exceptions import ValidationDomainError
-from services.api.app.education.learning import get_plan, get_user_unlocks
-from services.api.app.education.loader import load_seed_directory
-from services.api.app.education.repository import EducationRepository, apply_migrations
-from services.api.app.education.scenarios import recompute_scenario_outcome
+from app.education.assessments import start_assessment, submit_assessment
+from app.education.config import EducationConfig
+from app.education.enums import AttemptContext, AttemptItemType
+from app.education.exceptions import ValidationDomainError
+from app.education.learning import get_plan, get_user_unlocks
+from app.education.loader import load_seed_directory
+from app.education.repository import EducationRepository, apply_migrations
+from app.education.scenarios import recompute_scenario_outcome
+from tests.education._market_seed import use_education_price_seed
 
 
 class TestPhase4Assessments(unittest.TestCase):
     def setUp(self) -> None:
-        market.load_price_store()
+        self.addCleanup(use_education_price_seed())
         self.conn = sqlite3.connect(":memory:")
         self.conn.row_factory = sqlite3.Row
         apply_migrations(self.conn)
@@ -34,14 +38,24 @@ class TestPhase4Assessments(unittest.TestCase):
             if item["item_type"] == AttemptItemType.QUESTION.value:
                 q = self.repo.get_question(item["item_id"])
                 assert q is not None
-                ans = q["answer"] if should_be_right else next(o for o in q["options"] if o != q["answer"])
+                ans = (
+                    q["answer"]
+                    if should_be_right
+                    else next(o for o in q["options"] if o != q["answer"])
+                )
             else:
                 sc = self.repo.get_scenario(item["item_id"])
                 assert sc is not None
-                out = recompute_scenario_outcome(sc["symbol"], sc["as_of_date"], sc["window_days"])
+                out = recompute_scenario_outcome(
+                    sc["symbol"], sc["as_of_date"], sc["window_days"]
+                )
                 actual = out["actual_direction"]
-                ans = actual if should_be_right else ("down" if actual == "up" else "up")
-            answers.append({"item_id": item["item_id"], "answer": ans, "confidence": confidence})
+                ans = (
+                    actual if should_be_right else ("down" if actual == "up" else "up")
+                )
+            answers.append(
+                {"item_id": item["item_id"], "answer": ans, "confidence": confidence}
+            )
         return answers
 
     def test_assessment_uses_unseen_items_and_passes_to_unlock_level_2(self) -> None:
@@ -49,8 +63,18 @@ class TestPhase4Assessments(unittest.TestCase):
         # Mark one L1 question and one scenario as already seen
         first_q = self.repo.list_questions(level=1)[0]["id"]
         first_s = self.repo.list_scenarios()[0]["id"]
-        self.repo.record_attempt("u_pass", "question", first_q, "A", 70, True, AttemptContext.ONBOARDING.value)
-        self.repo.record_attempt("u_pass", "scenario", first_s, "up", 70, True, AttemptContext.PRACTICE.value)
+        self.repo.record_attempt(
+            "u_pass",
+            "question",
+            first_q,
+            "A",
+            70,
+            True,
+            AttemptContext.ONBOARDING.value,
+        )
+        self.repo.record_attempt(
+            "u_pass", "scenario", first_s, "up", 70, True, AttemptContext.PRACTICE.value
+        )
 
         asmt = start_assessment(self.repo, "u_pass", target_level=1)
         items = asmt["items"]
@@ -93,11 +117,15 @@ class TestPhase4Assessments(unittest.TestCase):
 
     def test_assessment_fails_when_brier_exceeds_configurable_threshold(self) -> None:
         self.repo.ensure_user("u_brier", level=1)
-        strict_cfg = EducationConfig(assessment_pass_accuracy=0.70, assessment_max_brier=0.20)
+        strict_cfg = EducationConfig(
+            assessment_pass_accuracy=0.70, assessment_max_brier=0.20
+        )
         asmt = start_assessment(self.repo, "u_brier", target_level=1, cfg=strict_cfg)
         # 9/12 correct (75% >= 70%), but 100% confidence -> Brier = 3/12 = 0.25 > 0.20 -> FAIL!
         answers = self._build_answers(asmt["items"], correct_count=9, confidence=100)
-        res = submit_assessment(self.repo, "u_brier", asmt["assessment_id"], answers, cfg=strict_cfg)
+        res = submit_assessment(
+            self.repo, "u_brier", asmt["assessment_id"], answers, cfg=strict_cfg
+        )
         self.assertEqual(res["score"], 75.0)
         self.assertAlmostEqual(res["brier"], 0.25, places=4)
         self.assertFalse(res["passed"])
