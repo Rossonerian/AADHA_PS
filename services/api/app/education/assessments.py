@@ -10,7 +10,11 @@ from .enums import AttemptContext, AttemptItemType, SkillArea
 from .exceptions import NotFoundError, ValidationDomainError
 from .learning import build_or_update_plan, ensure_level_unlocks
 from .repository import EducationRepository
-from .scenarios import build_public_scenario, recompute_scenario_outcome
+from .scenarios import (
+    build_public_scenario,
+    recompute_scenario_outcome,
+    scenario_outcome,
+)
 from .scoring import compute_brier_score, compute_skill_scores
 
 
@@ -111,7 +115,8 @@ def start_assessment(
         )
 
     for sc in selected_scenarios:
-        pub = build_public_scenario(sc)
+        _, series_origin = scenario_outcome(sc, cfg=cfg)
+        pub = build_public_scenario(sc, series_data_origin=series_origin)
         items_public.append(
             {
                 "item_id": sc["id"],
@@ -174,6 +179,16 @@ def submit_assessment(
         raise ValidationDomainError(
             "INCOMPLETE_SUBMISSION",
             f"Expected {len(spec_map)} answers, received {len(answers)}.",
+        )
+    submitted_ids = [str(answer.get("item_id", "")) for answer in answers]
+    if len(set(submitted_ids)) != len(submitted_ids):
+        raise ValidationDomainError(
+            "DUPLICATE_ITEM", "Each assessment item must be answered exactly once."
+        )
+    if set(submitted_ids) != set(spec_map):
+        raise ValidationDomainError(
+            "INVALID_SUBMISSION_ITEMS",
+            "Answers must match the items issued for this assessment.",
         )
 
     graded_records: list[dict[str, Any]] = []

@@ -473,7 +473,7 @@ questions:
   level: 1
   skill_area: judging_info
   difficulty: 4
-  text: A tiny illiquid stock suddenly sees a 10x volume spike right after bulk SMS
+  text: A tiny illiquid stock suddenly sees a tenfold volume jump right after bulk SMS
     messages promote it. What pattern does this resemble?
   options:
   - Pump-and-dump manipulation
@@ -945,7 +945,7 @@ questions:
   level: 2
   skill_area: reading_stock
   difficulty: 3
-  text: What does an Interest Coverage Ratio (EBIT / Interest Expense) below 1.5x
+  text: What does an Interest Coverage Ratio (EBIT / Interest Expense) below one and a half times
     warn about?
   options:
   - Operating profits barely cover annual interest payments, raising refinancing or
@@ -1170,7 +1170,7 @@ questions:
   level: 2
   skill_area: judging_info
   difficulty: 4
-  text: A WhatsApp group claims an 'inside tip from an operator' about an upcoming
+  text: A WhatsApp group claims private advance knowledge from an operator about an upcoming
     merger. What are the risks?
   options:
   - High likelihood of a pump-and-dump trap AND trading on unpublished price-sensitive
@@ -1535,13 +1535,13 @@ questions:
   text: How does index inclusion (e.g., entering NIFTY 50 or MSCI India) affect short-term
     trading?
   options:
-  - Passive index funds must buy shares around the rebalance date, creating temporary
-    non-fundamental demand
+  - Index funds purchase shares near rebalance dates, which can create temporary
+    demand unrelated to company fundamentals
   - It permanently doubles company profits
   - It eliminates downside risk
   - It bans short selling
-  answer: Passive index funds must buy shares around the rebalance date, creating
-    temporary non-fundamental demand
+  answer: Index funds purchase shares near rebalance dates, which can create temporary
+    demand unrelated to company fundamentals
   explanation: Mechanical passive flows can move prices temporarily independent of
     underlying earnings.
   tags:
@@ -1780,12 +1780,12 @@ questions:
   options:
   - A source rating evaluates a publisher's historical accuracy and red flags; it
     never tells you whether to buy or sell a stock
-  - A reliable source rating means you must buy every stock they mention
+  - A reliable source rating certifies every mentioned company as financially sound
   - They are identical
   - Stock recommendations are safer than source ratings
   answer: A source rating evaluates a publisher's historical accuracy and red flags;
     it never tells you whether to buy or sell a stock
-  explanation: Aacharya evaluates information sources, never stocks; even credible
+  explanation: PaisaProof evaluates information sources, never stocks; even credible
     analysts can be wrong on any single thesis.
   tags:
   - judging_info
@@ -2079,7 +2079,7 @@ questions:
   options:
   - Modest upside in normal times paired with sudden 70-95% permanent loss if a credit
     or governance shock hits
-  - Unlimited guaranteed upside
+  - Upside with no possibility of loss
   - Zero volatility
   - Equal probability of +5% and -5%
   answer: Modest upside in normal times paired with sudden 70-95% permanent loss if
@@ -2098,7 +2098,7 @@ questions:
   options:
   - Records your exact thesis and confidence before the outcome, preventing hindsight
     bias and exposing calibration errors
-  - Guarantees 100% winning picks
+  - Every selection has a certain positive outcome
   - Replaces financial statements
   - Eliminates taxes
   answer: Records your exact thesis and confidence before the outcome, preventing

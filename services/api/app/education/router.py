@@ -60,7 +60,7 @@ def _effective_level(repo: EducationRepository, user: User) -> int:
 def api_onboarding_start(
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
-):
+) -> dict[str, Any]:
     return start_onboarding(repo, user_id=user.id, user_name=user.name)
 
 
@@ -69,7 +69,7 @@ def api_onboarding_answer(
     body: OnboardingAnswerRequest,
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
-):
+) -> dict[str, Any]:
     return answer_onboarding(
         repo,
         user_id=user.id,
@@ -87,7 +87,7 @@ def api_onboarding_answer(
 def api_get_plan(
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
-):
+) -> dict[str, Any]:
     lvl = _effective_level(repo, user)
     return get_plan(repo, user_id=user.id, user_level=lvl)
 
@@ -97,7 +97,7 @@ def api_get_lesson(
     lesson_id: str,
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
-):
+) -> dict[str, Any]:
     _ = user  # Auth enforced
     return get_lesson_detail(repo, lesson_id=lesson_id)
 
@@ -108,7 +108,7 @@ def api_submit_lesson_check(
     body: LessonCheckRequest,
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
-):
+) -> dict[str, Any]:
     return submit_lesson_check(
         repo,
         user_id=user.id,
@@ -128,7 +128,7 @@ def api_scenarios_next(
     difficulty: int | None = Query(default=None, ge=1, le=5),
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
-):
+) -> dict[str, Any]:
     lvl = _effective_level(repo, user)
     return get_next_scenario(
         repo, user_id=user.id, user_level=lvl, difficulty=difficulty
@@ -141,7 +141,7 @@ def api_scenarios_answer(
     body: ScenarioAnswerRequest,
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
-):
+) -> dict[str, Any]:
     lvl = _effective_level(repo, user)
     return answer_scenario(
         repo,
@@ -162,7 +162,7 @@ def api_assessments_start(
     level: int,
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
-):
+) -> dict[str, Any]:
     _effective_level(repo, user)
     return start_assessment(repo, user_id=user.id, target_level=level)
 
@@ -175,7 +175,7 @@ def api_assessments_submit(
     body: AssessmentSubmitRequest,
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
-):
+) -> dict[str, Any]:
     return submit_assessment(
         repo,
         user_id=user.id,
@@ -198,7 +198,7 @@ def api_explain_stock(
     year: int = Query(..., ge=2005, le=2030),
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
-):
+) -> dict[str, Any]:
     lvl = _effective_level(repo, user)
     return explain_stock(
         repo, user_id=user.id, user_level=lvl, symbol=symbol, year=year
@@ -209,7 +209,7 @@ def api_explain_stock(
 def api_me_dashboard(
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
-):
+) -> dict[str, Any]:
     lvl = _effective_level(repo, user)
     return get_dashboard(repo, user_id=user.id, user_level=lvl)
 
@@ -219,7 +219,7 @@ def api_study_start(
     body: StudyStartRequest,
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
-):
+) -> dict[str, Any]:
     _effective_level(repo, user)
     return start_study_session(repo, user_id=user.id, context=body.context)
 
@@ -230,7 +230,7 @@ def api_study_submit(
     body: StudySubmitRequest,
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
-):
+) -> dict[str, Any]:
     return submit_study_session(
         repo,
         user_id=user.id,

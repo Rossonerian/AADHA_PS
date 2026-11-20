@@ -14,13 +14,13 @@ import {
   Alert,
   Badge,
   Button,
+  ConfidenceControl,
   DataBadge,
   Input,
   Panel,
   ProgressBar,
+  ChoiceOption,
   RadioGroup,
-  RadioGroupItem,
-  Slider,
 } from "@/components/ui";
 import {
   ApiClientError,
@@ -59,11 +59,11 @@ function Check({
 }) {
   return (
     <li>
-      <div className="flex justify-between text-sm text-gray-800">
+      <div className="flex justify-between text-sm text-[var(--ink)]">
         <span>
           <span aria-hidden="true">{ok ? "✓" : "○"}</span> {label}
         </span>
-        <span className="text-gray-600">{value}</span>
+        <span className="text-[var(--ink-soft)]">{value}</span>
       </div>
       <ProgressBar value={pct} ariaLabel={`${label} progress`} />
     </li>
@@ -76,14 +76,14 @@ function LockedCard({ missing, progress }: { missing: string[]; progress: Progre
   return (
     <Panel className="p-5" aria-labelledby="cap-title">
       <div className="flex items-center justify-between gap-3">
-        <h2 id="cap-title" className="text-base font-semibold text-gray-900">
+        <h2 id="cap-title" className="text-base font-semibold text-[var(--ink)]">
           Final capstone: Nasdaq literacy check
         </h2>
         <Badge variant="outline" className="text-xs">
           Locked
         </Badge>
       </div>
-      <p className="mt-2 text-sm text-gray-600">
+      <p className="mt-2 text-sm text-[var(--ink-soft)]">
         Finish every requirement to read real Nasdaq data. The server checks these, not this page.
       </p>
       <ul className="mt-4 space-y-3">
@@ -144,17 +144,16 @@ function Verifier({ data }: { data: NasdaqChallengeResponse }) {
 
   return (
     <div className="space-y-4">
-      <Alert
-        className="rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-900"
-        variant="warning"
-        role="note"
-      >
-        {data.disclaimer}
-      </Alert>
+      <Panel role="note" className="p-4 text-sm text-[var(--ink)]">
+        <span>
+          <strong>Educational literacy check, not investment advice.</strong>{" "}
+          {data.disclaimer.replace(/^Educational literacy check( only)?\s*[—:-]\s*/i, "")}
+        </span>
+      </Panel>
       <div className="grid gap-4 md:grid-cols-[1.25fr_1fr]">
-        <Panel className="p-4" aria-label="Market snapshot">
+        <Panel className="p-5" aria-label="Market snapshot">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="text-base font-semibold text-gray-900">
+            <h2 className="text-base font-semibold text-[var(--ink)]">
               {snap.name} · {snap.symbol}
             </h2>
             <DataBadge origin={data.data_origin} />
@@ -171,9 +170,9 @@ function Verifier({ data }: { data: NasdaqChallengeResponse }) {
               ["P/E (TTM)", num(snap.pe_ttm, 1)],
               ["Sector", snap.sector ?? "—"],
             ].map(([k, v]) => (
-              <div key={k} className="rounded bg-gray-50 px-2 py-1.5">
-                <dt className="text-xs text-gray-500">{k}</dt>
-                <dd className="font-medium text-gray-900">{v}</dd>
+              <div key={k} className="rounded bg-[var(--paper)] px-2 py-1.5">
+                <dt className="text-xs text-[var(--ink-soft)]">{k}</dt>
+                <dd className="font-medium text-[var(--ink)]">{v}</dd>
               </div>
             ))}
           </dl>
@@ -185,21 +184,44 @@ function Verifier({ data }: { data: NasdaqChallengeResponse }) {
             {snap.chart.length > 1 ? (
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={snap.chart}>
-                  <CartesianGrid stroke="#e5e7eb" vertical={false} />
-                  <XAxis dataKey="date" tick={{ fontSize: 11 }} minTickGap={40} />
-                  <YAxis domain={["auto", "auto"]} tick={{ fontSize: 11 }} width={44} />
-                  <Tooltip />
+                  <CartesianGrid stroke="var(--line)" strokeDasharray="3 5" vertical={false} />
+                  <XAxis
+                    dataKey="date"
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 11, fill: "var(--ink-soft)" }}
+                    minTickGap={40}
+                  />
+                  <YAxis
+                    domain={["auto", "auto"]}
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 11, fill: "var(--ink-soft)" }}
+                    width={44}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      borderRadius: 12,
+                      border: "1px solid var(--line)",
+                      background: "var(--paper)",
+                      color: "var(--ink)",
+                      fontSize: 12,
+                    }}
+                    labelStyle={{ color: "var(--ink)", fontWeight: 600 }}
+                    itemStyle={{ color: "var(--ink)" }}
+                  />
                   <Line
+                    isAnimationActive={false}
                     type="monotone"
                     dataKey="close"
-                    stroke="#2a78d6"
-                    strokeWidth={2}
+                    stroke="var(--green)"
+                    strokeWidth={2.5}
                     dot={false}
                   />
                 </LineChart>
               </ResponsiveContainer>
             ) : (
-              <p className="pt-16 text-center text-sm text-gray-500">
+              <p className="pt-16 text-center text-sm text-[var(--ink-soft)]">
                 Price history isn&apos;t available.
               </p>
             )}
@@ -208,29 +230,29 @@ function Verifier({ data }: { data: NasdaqChallengeResponse }) {
             href={data.nasdaq_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 inline-block text-sm text-blue-700 underline"
+            className="mt-2 inline-block text-sm text-[var(--green)] underline"
           >
             ↗ Open full page on Nasdaq.com
           </a>
         </Panel>
 
-        <Panel className="p-4" aria-label="Comprehension check">
+        <Panel className="p-5" aria-label="Quick check">
           {result ? (
             <div aria-live="polite">
-              <h2 className="text-base font-semibold text-gray-900">
+              <h2 className="text-base font-semibold text-[var(--ink)]">
                 {result.passed ? "Passed" : "Not passed yet"}
               </h2>
-              <p className="mt-1 text-sm text-gray-700">
+              <p className="mt-1 text-sm text-[var(--ink-soft)]">
                 {Math.round(result.score * 100)}% correct · Brier {result.brier.toFixed(2)}
               </p>
-              <p className="mt-2 text-sm text-gray-600">{result.feedback}</p>
+              <p className="mt-2 text-sm text-[var(--ink-soft)]">{result.feedback}</p>
               <ul className="mt-3 space-y-1 text-sm">
                 {result.results.map((r) => (
-                  <li
-                    key={r.question_id}
-                    className={r.correct ? "text-emerald-700" : "text-amber-800"}
-                  >
-                    {r.correct ? "✓" : "✗"} {r.explanation}
+                  <li key={r.question_id} className="text-[var(--ink)]">
+                    <strong className={r.correct ? "text-[var(--green)]" : ""}>
+                      {r.correct ? "✓ Correct." : "✗ Not quite."}
+                    </strong>{" "}
+                    {r.explanation}
                   </li>
                 ))}
               </ul>
@@ -238,12 +260,12 @@ function Verifier({ data }: { data: NasdaqChallengeResponse }) {
           ) : (
             <fieldset className="min-w-0">
               <legend className="flex w-full justify-between text-sm">
-                <span className="font-semibold text-gray-900">Comprehension check</span>
-                <span className="text-gray-500">
+                <span className="font-semibold text-[var(--ink)]">Quick check</span>
+                <span className="text-[var(--ink-soft)]">
                   Q {i + 1} of {data.questions.length}
                 </span>
               </legend>
-              <p id={`nasdaq-question-${q.id}`} className="mt-2 text-sm text-gray-800">
+              <p id={`nasdaq-question-${q.id}`} className="mt-2 text-sm text-[var(--ink)]">
                 {q.text}
               </p>
               <RadioGroup
@@ -256,33 +278,24 @@ function Verifier({ data }: { data: NasdaqChallengeResponse }) {
                 className="mt-2 grid gap-1.5"
               >
                 {q.options.map((o) => (
-                  <RadioGroupItem
-                    key={o}
-                    value={o}
-                    className="min-h-10 w-full justify-start rounded border border-gray-200 px-2.5 py-1.5 text-left text-sm text-gray-900 data-[state=checked]:border-blue-500 data-[state=checked]:bg-blue-50"
-                  >
+                  <ChoiceOption key={o} value={o} selected={answers[q.id] === o}>
                     {o}
-                  </RadioGroupItem>
+                  </ChoiceOption>
                 ))}
               </RadioGroup>
-              <label className="mt-3 block text-sm text-gray-700">
-                Confidence: <span className="font-medium">{conf}%</span>
-                <Slider
-                  min={50}
-                  max={100}
-                  step={5}
-                  value={[conf]}
-                  onValueChange={(value) => setConf(value[0] ?? conf)}
-                  aria-label={`Confidence ${conf} percent`}
-                  className="mt-1 w-full"
-                />
-              </label>
+              <ConfidenceControl label="How sure are you?" value={conf} onChange={setConf} />
               {err && (
-                <p className="mt-2 text-sm text-red-700" role="alert">
+                <Alert variant="destructive" role="alert" className="mt-3 text-sm">
                   {err}
-                </p>
+                </Alert>
               )}
-              <Button variant="primary" type="button" onClick={next} className="mt-3 w-full">
+              <Button
+                variant="primary"
+                type="button"
+                onClick={next}
+                disabled={!answers[q.id]}
+                className="mt-3 w-full"
+              >
                 {i + 1 < data.questions.length ? "Next question" : "Submit answers"}
               </Button>
             </fieldset>
@@ -339,13 +352,19 @@ export function NasdaqVerifier() {
 
   return (
     <div className="space-y-4">
-      <header className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold tracking-tight text-gray-900">
-          Nasdaq literacy check
-        </h1>
+      <header className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <span className="eyebrow">NASDAQ CAPSTONE</span>
+          <h1 className="text-2xl font-semibold tracking-tight text-[var(--ink)]">
+            Nasdaq literacy check
+          </h1>
+          <p className="mt-1 text-sm text-[var(--ink-soft)]">
+            Read real market data, then answer a few questions about it.
+          </p>
+        </div>
         {view.s === "ready" && (
           <form
-            className="flex items-center gap-2"
+            className="nasdaq-load-form flex items-center gap-2"
             onSubmit={(e) => {
               e.preventDefault();
               reload(symbol);
@@ -359,7 +378,7 @@ export function NasdaqVerifier() {
               value={symbol}
               onChange={(e) => setSymbol(e.target.value)}
               frameClassName="w-24"
-              className="w-24 rounded-md border border-gray-300 px-2 py-1.5 text-sm"
+              className="w-24 rounded-md border border-[var(--line)] px-2 py-1.5 text-sm"
             />
             <Button
               variant="secondary"
@@ -382,13 +401,27 @@ export function NasdaqVerifier() {
           </form>
         )}
       </header>
-      {view.s === "loading" && <p className="text-sm text-gray-600">Loading…</p>}
-      {view.s === "error" && (
-        <p className="text-sm text-amber-800" role="alert">
-          {view.message}
-        </p>
+      {view.s === "loading" && (
+        <Panel className="p-5" role="status" aria-live="polite">
+          <p className="text-sm text-[var(--ink-soft)]">Loading Nasdaq data…</p>
+        </Panel>
       )}
-      {view.s === "locked" && <LockedCard missing={view.missing} progress={view.progress} />}
+      {view.s === "error" && (
+        <Alert variant="warning" role="alert" className="text-sm">
+          {view.message}
+        </Alert>
+      )}
+      {view.s === "locked" && (
+        <>
+          <Panel role="note" className="p-4 text-sm text-[var(--ink)]">
+            <span>
+              <strong>Educational literacy check, not investment advice.</strong> Nothing here
+              recommends buying or selling anything.
+            </span>
+          </Panel>
+          <LockedCard missing={view.missing} progress={view.progress} />
+        </>
+      )}
       {view.s === "ready" && <Verifier key={view.data.challenge_id} data={view.data} />}
     </div>
   );

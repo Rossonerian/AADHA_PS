@@ -6,6 +6,16 @@
 - **Architecture & Contracts:** [`docs/SOURCE_OF_TRUTH.md`](docs/SOURCE_OF_TRUTH.md)
 - **Team Progress:** [`STATUS.md`](STATUS.md)
 
+## How it works (and what the AI does not do)
+
+- **Educational half:** onboarding quiz with confidence ratings, a level (L1–L4) from accuracy and Brier calibration, a learning plan, lessons, historical scenarios and level-up assessments. Tools unlock by level; the server enforces the gates.
+- **Verifier half:** a pasted tip is turned into a structured claim (symbol, direction, entry/target/stop, deadline). **The language model is used only for this extraction step** (`app/verifier/extraction.py`), and a claim is accepted only if it is grounded in a verbatim excerpt of the source text; otherwise it goes to review.
+- **Everything after extraction is deterministic:** red flags (`app/verifier/red_flags.py`) and claim outcomes and source ratings (`app/verifier/scoring.py`) come from price data, surveillance and SEBI lists, and fixed rules. The model never produces a verdict, a number or a rating.
+- **Scoring over time:** logged claims are scored against adjusted market prices by the daily job (`make cron`), so a source's label reflects its track record, not an opinion.
+- **No advice, ever:** every generated text passes `core.guardrails.check_output()` (English and Hinglish); the product never says buy, sell or hold.
+- **Nasdaq literacy capstone** (`app/nasdaq_verifier`): an optional Level-4 extension that reuses the same calibration idea on US data. The core product is India and NSE.
+- **Data labels:** every record carries `data_origin: real | synthetic`, and the UI shows it.
+
 ## Stack & Hosting
 
 | Layer | Technology | Hosting |

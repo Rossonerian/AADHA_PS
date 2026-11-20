@@ -277,6 +277,22 @@ Blockers: Live FINNHUB_API_KEY not tested; gate inputs depend on education table
 ## Divyansh
 
 ```text
+[Divyansh] 100% | Phase 6/6: Education real-data hardening and acceptance
+Done: Closed the provenance and Nasdaq gate gaps; added full-suite coverage, submission replay/shape checks, answer-key exposure checks, mixed-origin evidence exports, and market-data refresh support. Changes are on `feat/education-real-data-next` and ready for PR review.
+Next: Review PR into `main`; no merge performed.
+Minor: Five scenarios and six Explain examples remain synthetic because Yahoo Finance lacks their historical delisted-symbol data.
+Blockers: none for local acceptance.
+```
+
+```text
+[Divyansh] RESOLVED | Education historical provenance and Nasdaq gate
+Impact: Education records are labeled real only when complete real market history is available; missing historical/delisted symbols remain synthetic. The Nasdaq gate now reads the education JSON lesson map and skill Brier values through typed SQLAlchemy queries, and derives completed lesson percentage from the plan.
+Done: Refreshed 19/24 scenario records and 24/30 Explain records from `core.market`; added fail-closed provenance checks, answer-submission validation, separate-origin evidence cohorts, and a fresh-account end-to-end test. Unavailable historical records: five scenarios and six Explain examples.
+Evidence: Full suite `PYTHONPATH=services/api pytest services/api/tests -q`: 314 passed, 1 warning. Ruff: all checks passed. Black: 82 files unchanged. Mypy: no issues in 58 source files. `git diff --check` clean.
+Remaining data limitation: Yahoo Finance does not provide the requested historical series for the delisted/unavailable symbols; those examples are explicitly retained as synthetic.
+```
+
+```text
 [Divyansh] MAJOR | Contract gaps identified in SoT Section 7 before Phase 1 start
 Impact: Blocks frontend-backend integration for lesson completion (C2) and study mode (C3); minor ambiguity on 403 TOOL_LOCKED JSON nesting and scenario direction enum.
 Options: A) Add non-breaking extension endpoints (`POST /api/v1/lessons/{id}/check`, `POST /api/v1/study/start`, `POST /api/v1/study/{id}/submit`), standardize `direction` as `up|down|flat`, and include both `error: {code, message, required_level}` and top-level `code`/`required_level` on 403 TOOL_LOCKED; B) Freeze without lesson-completion/study endpoints and rely on client-side state. Recommend A.
@@ -349,4 +365,24 @@ Blockers: none
 
 ## Ananya
 
-_Append updates here._
+_Web UI (`apps/web`) status as of 2026-11-21._
+
+```text
+[Ananya] Web UI | current state
+Auth: sign-in and sign-up tabs; sign-out via Neon Auth. The demo workspace has been removed.
+Lessons: Looseleaf ChoiceOption radios; lesson checks POST /lessons/{id}/check.
+Gating: LockNotice is actionable and gates by level (L1-L4).
+Capstone: Nasdaq view (Level 4) on /nasdaq-verifier.
+Charts: theme-aware. Dark-theme contrast polished.
+Dev fixtures: NEXT_PUBLIC_USE_MOCKS=true (with NEXT_PUBLIC_MOCK_LEVEL) enables fixture mode. It is dev-only and absent from the production bundle.
+In progress: mobile navigation.
+```
+
+Open items:
+- Server-side answer shuffle (Divyansh).
+- Top-level `data_origin` missing on some endpoints.
+- `/verify` returns 500 without an OpenRouter key.
+- Nasdaq challenge store is process-local.
+- Live F1 run (Arnav, needs OpenRouter key).
+- Real-source seed (Arnav, Option A/B decision from Hardhik).
+- CI database name `aacharya_test` (Hardhik).

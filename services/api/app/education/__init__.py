@@ -1,4 +1,4 @@
-"""Public package surface for Aacharya Education module.
+"""Public package surface for PaisaProof Education module.
 
 Hardhik's app/main.py and GET /me can import directly:
     from app.education import (

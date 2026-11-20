@@ -3,6 +3,7 @@ import type {
   AssessmentSubmitResponse,
   DashboardResponse,
   ExplainResponse,
+  LessonCheckResponse,
   LessonDetailResponse,
   MeResponse,
   OnboardingResult,
@@ -15,10 +16,25 @@ import type {
   VerifyResponse,
 } from "@/lib/contracts";
 
+/** Single source of truth for the mock learner's level. Every level field below derives from it. */
+export const MOCK_LEVEL = Math.min(
+  4,
+  Math.max(1, Math.trunc(Number(process.env.NEXT_PUBLIC_MOCK_LEVEL ?? 2)) || 2),
+) as 1 | 2 | 3 | 4;
+
+const PROGRESS_BY_LEVEL = { 1: 12, 2: 38, 3: 61, 4: 84 } as const;
+
+const LESSON_STATUS_BY_LEVEL = {
+  1: ["in_progress", "not_started", "locked", "locked"],
+  2: ["completed", "in_progress", "not_started", "locked"],
+  3: ["completed", "completed", "in_progress", "not_started"],
+  4: ["completed", "completed", "completed", "in_progress"],
+} as const;
+
 export const me = {
   id: "demo-user",
-  name: "Ananya",
-  level: 2,
+  name: "Test learner",
+  level: MOCK_LEVEL,
   unlocks: ["scenarios", "red_flag_check", "explain_stock"],
 } satisfies MeResponse;
 
@@ -62,19 +78,39 @@ export const onboardingQuestions = [
 ] satisfies QuestionItem[];
 
 export const onboardingResult = {
-  level: 2,
+  level: MOCK_LEVEL,
   skills: { basics: 72, reading_stock: 58, judging_info: 44, risk: 64 },
   brier: 0.22,
 } satisfies OnboardingResult;
 
 export const plan = {
-  level: 2,
-  progress_pct: 38,
+  level: MOCK_LEVEL,
+  progress_pct: PROGRESS_BY_LEVEL[MOCK_LEVEL],
   lessons: [
-    { id: "lesson-1", title: "How markets and shares work", status: "completed", minutes: 6 },
-    { id: "lesson-2", title: "Read a price chart with context", status: "in_progress", minutes: 8 },
-    { id: "lesson-3", title: "Check the source behind a claim", status: "not_started", minutes: 7 },
-    { id: "lesson-4", title: "Think in risks and time windows", status: "locked", minutes: 9 },
+    {
+      id: "lesson-1",
+      title: "How markets and shares work",
+      status: LESSON_STATUS_BY_LEVEL[MOCK_LEVEL][0],
+      minutes: 6,
+    },
+    {
+      id: "lesson-2",
+      title: "Read a price chart with context",
+      status: LESSON_STATUS_BY_LEVEL[MOCK_LEVEL][1],
+      minutes: 8,
+    },
+    {
+      id: "lesson-3",
+      title: "Check the source behind a claim",
+      status: LESSON_STATUS_BY_LEVEL[MOCK_LEVEL][2],
+      minutes: 7,
+    },
+    {
+      id: "lesson-4",
+      title: "Think in risks and time windows",
+      status: LESSON_STATUS_BY_LEVEL[MOCK_LEVEL][3],
+      minutes: 9,
+    },
   ],
 } satisfies PlanResponse;
 
@@ -108,8 +144,42 @@ export const lesson = {
         "Whether the chart has green candles",
       ],
     },
+    {
+      id: "lesson-check-2",
+      skill_area: "reading_stock",
+      difficulty: 2,
+      text: "A post claims a stock doubled in one week. Which detail should you verify first?",
+      options: [
+        "The start and end dates and the price source behind the claim",
+        "How many followers the post has",
+        "Whether the post uses an emoji",
+      ],
+    },
   ],
 } satisfies LessonDetailResponse;
+
+/** Mock POST /lessons/{id}/check result. Feedback covers each check question in `lesson` above. */
+export const lessonCheck = {
+  lesson_id: "lesson-2",
+  passed: false,
+  score_pct: 50,
+  plan_progress_pct: 40,
+  correct_count: 1,
+  total_count: 2,
+  feedback: [
+    {
+      question_id: "lesson-check-1",
+      correct: true,
+      explanation: "Checking the dates and the index move is the right next step.",
+    },
+    {
+      question_id: "lesson-check-2",
+      correct: false,
+      explanation:
+        "The claim is only as good as its dates and price source, so verify those first.",
+    },
+  ],
+} satisfies LessonCheckResponse;
 
 export const scenario = {
   id: "scenario-54",
@@ -191,7 +261,7 @@ export const assessmentResult = {
   passed: true,
   score: 82,
   brier: 0.16,
-  new_level: 3,
+  new_level: MOCK_LEVEL,
   unlocked: ["verifier"],
 } satisfies AssessmentSubmitResponse;
 
@@ -227,7 +297,7 @@ export const explain = {
 } satisfies ExplainResponse;
 
 export const dashboard = {
-  level: 2,
+  level: MOCK_LEVEL,
   skills_over_time: [
     { date: "W1", skills: { basics: 42, reading_stock: 35, judging_info: 28, risk: 31 } },
     { date: "W2", skills: { basics: 51, reading_stock: 40, judging_info: 36, risk: 38 } },
@@ -325,7 +395,7 @@ export const sourceDetail = {
     verification.claim!,
     {
       id: "claim-demo-02",
-      symbol: "DEMO INFRA",
+      symbol: "SAMPLE INFRA",
       direction: "up",
       entry: null,
       target: null,
