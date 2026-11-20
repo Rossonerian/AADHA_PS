@@ -56,7 +56,9 @@ class Settings(BaseSettings):
     def cors_origins_list(self) -> list[str]:
         """Return parsed list of allowed CORS origins."""
         return [
-            origin.strip() for origin in self.cors_origins.split(",") if origin.strip()
+            origin.strip().rstrip("/")
+            for origin in self.cors_origins.split(",")
+            if origin.strip().rstrip("/")
         ]
 
 
