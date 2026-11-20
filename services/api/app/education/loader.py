@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import yaml
 
@@ -32,14 +32,14 @@ def _assert_origin(record: dict[str, Any], kind: str) -> str:
             f"{kind} '{record.get('id') or record.get('symbol')}' missing valid data_origin "
             f"(expected 'real' or 'synthetic', got {origin!r})"
         )
-    return origin
+    return cast(str, origin)
 
 
 def _assert_guardrails(text: str, field_name: str, rec_id: str) -> str:
     res = guardrails.check_output(text)
     if not res.ok:
         raise ValueError(f"Guardrail violation in {rec_id}.{field_name}: {res.reasons}")
-    return res.text
+    return cast(str, res.text)
 
 
 def load_yaml_file(repo: EducationRepository, file_path: str | Path) -> LoadSummary:
@@ -64,6 +64,11 @@ def load_yaml_file(repo: EducationRepository, file_path: str | Path) -> LoadSumm
             )
         if q["answer"] not in q["options"]:
             raise ValueError(f"Question {q.get('id')} answer must be one of options")
+        q["text"] = _assert_guardrails(q["text"], "text", q["id"])
+        q["options"] = [
+            _assert_guardrails(option, f"option[{idx}]", q["id"])
+            for idx, option in enumerate(q["options"])
+        ]
         q["explanation"] = _assert_guardrails(q["explanation"], "explanation", q["id"])
         repo.upsert_question(q)
         summary.questions += 1
@@ -76,13 +81,30 @@ def load_yaml_file(repo: EducationRepository, file_path: str | Path) -> LoadSumm
             raise ValueError(
                 f"Lesson {lesson.get('id')} must have >= 3 check_questions"
             )
+        lesson["title"] = _assert_guardrails(lesson["title"], "title", lesson["id"])
         for sec in lesson.get("sections", []):
+            sec["heading"] = _assert_guardrails(
+                sec.get("heading", ""), "section.heading", lesson["id"]
+            )
             _assert_guardrails(sec.get("body", ""), "section.body", lesson["id"])
+            if sec.get("takeaway"):
+                sec["takeaway"] = _assert_guardrails(
+                    sec["takeaway"], "section.takeaway", lesson["id"]
+                )
         for cq in lesson.get("check_questions", []):
             if cq["answer"] not in cq["options"]:
                 raise ValueError(
                     f"Lesson {lesson['id']} check question {cq['id']} answer not in options"
                 )
+            cq["text"] = _assert_guardrails(
+                cq["text"], "check_question.text", lesson["id"]
+            )
+            cq["options"] = [
+                _assert_guardrails(
+                    option, f"check_question.option[{idx}]", lesson["id"]
+                )
+                for idx, option in enumerate(cq["options"])
+            ]
             _assert_guardrails(
                 cq.get("explanation", ""), "check_question.explanation", lesson["id"]
             )
@@ -114,6 +136,9 @@ def load_yaml_file(repo: EducationRepository, file_path: str | Path) -> LoadSumm
                     raise ValueError(
                         f"Explain {exp['symbol']} {exp['year']} event missing source"
                     )
+                ev["text"] = _assert_guardrails(
+                    ev["text"], "event.text", f"{exp['symbol']}_{exp['year']}"
+                )
         exp["summary"] = _assert_guardrails(
             exp["summary"], "summary", f"{exp['symbol']}_{exp['year']}"
         )

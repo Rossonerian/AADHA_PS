@@ -17,6 +17,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 from ..enums import AttemptContext, AttemptItemType
 from ..loader import load_seed_directory
 from ..repository import EducationRepository, apply_migrations
@@ -30,10 +32,51 @@ RED_FLAG_TAGS = {
     "hype_no_fundamentals",
     "auditor_resignation",
 }
+REPO_ROOT = Path(__file__).resolve().parents[5]
+
+
+def _synthetic_study_user_ids() -> set[str]:
+    """Read the explicitly seeded study cohort so it cannot be reported as real."""
+    seed_path = REPO_ROOT / "data" / "seed" / "education" / "study_seed.yaml"
+    if not seed_path.exists():
+        return set()
+    payload = yaml.safe_load(seed_path.read_text(encoding="utf-8")) or {}
+    return {
+        str(attempt["user_id"])
+        for attempt in payload.get("study_attempts", [])
+        if attempt.get("user_id")
+    }
+
+
+def _cohort_metrics(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Calculate paired metrics and CIs for a single provenance cohort."""
+    n = len(rows)
+    if not n:
+        return {"cohort_n": 0, "metrics": {}}
+    return {
+        "cohort_n": n,
+        "metrics": {
+            "score_pct": {
+                "pre_mean": round(sum(x["pre_score_pct"] for x in rows) / n, 2),
+                "post_mean": round(sum(x["post_score_pct"] for x in rows) / n, 2),
+                "delta": paired_ci_95([x["score_delta_pct"] for x in rows]),
+            },
+            "brier_score": {
+                "pre_mean": round(sum(x["pre_brier"] for x in rows) / n, 4),
+                "post_mean": round(sum(x["post_brier"] for x in rows) / n, 4),
+                "delta": paired_ci_95([x["brier_delta"] for x in rows]),
+            },
+            "red_flag_detection_pct": {
+                "pre_mean": round(sum(x["pre_red_flag_pct"] for x in rows) / n, 2),
+                "post_mean": round(sum(x["post_red_flag_pct"] for x in rows) / n, 2),
+                "delta": paired_ci_95([x["red_flag_delta_pct"] for x in rows]),
+            },
+        },
+    }
 
 
 def compute_evidence_report(repo: EducationRepository) -> dict[str, Any]:
-    """Computes paired study_pre vs study_post metrics with 95% Student's t CIs."""
+    """Compute separate 95% CIs for seeded synthetic and real paired participants."""
     pre_attempts = repo.list_attempts(context=AttemptContext.STUDY_PRE.value)
     post_attempts = repo.list_attempts(context=AttemptContext.STUDY_POST.value)
 
@@ -57,14 +100,7 @@ def compute_evidence_report(repo: EducationRepository) -> dict[str, Any]:
 
     paired_users = sorted(set(pre_by_user.keys()) & set(post_by_user.keys()))
     participant_rows: list[dict[str, Any]] = []
-
-    score_deltas: list[float] = []
-    brier_deltas: list[float] = []
-    rf_deltas: list[float] = []
-
-    pre_scores, post_scores = [], []
-    pre_briers, post_briers = [], []
-    pre_rfs, post_rfs = [], []
+    synthetic_users = _synthetic_study_user_ids()
 
     for uid in paired_users:
         pre_list = pre_by_user[uid]
@@ -97,20 +133,10 @@ def compute_evidence_report(repo: EducationRepository) -> dict[str, Any]:
         d_brier = round(post_brier - pre_brier, 4)  # Negative means better calibration
         d_rf = round(post_rf - pre_rf, 4)
 
-        pre_scores.append(pre_acc)
-        post_scores.append(post_acc)
-        pre_briers.append(pre_brier)
-        post_briers.append(post_brier)
-        pre_rfs.append(pre_rf)
-        post_rfs.append(post_rf)
-
-        score_deltas.append(d_score)
-        brier_deltas.append(d_brier)
-        rf_deltas.append(d_rf)
-
         participant_rows.append(
             {
                 "user_id": uid,
+                "data_origin": "synthetic" if uid in synthetic_users else "real",
                 "pre_score_pct": round(pre_acc, 2),
                 "post_score_pct": round(post_acc, 2),
                 "score_delta_pct": round(d_score, 2),
@@ -123,29 +149,25 @@ def compute_evidence_report(repo: EducationRepository) -> dict[str, Any]:
             }
         )
 
-    n = len(paired_users)
-    return {
-        "cohort_n": n,
-        "data_origin": "synthetic",
-        "metrics": {
-            "score_pct": {
-                "pre_mean": round(sum(pre_scores) / n, 2) if n else 0.0,
-                "post_mean": round(sum(post_scores) / n, 2) if n else 0.0,
-                "delta": paired_ci_95(score_deltas),
-            },
-            "brier_score": {
-                "pre_mean": round(sum(pre_briers) / n, 4) if n else 0.0,
-                "post_mean": round(sum(post_briers) / n, 4) if n else 0.0,
-                "delta": paired_ci_95(brier_deltas),
-            },
-            "red_flag_detection_pct": {
-                "pre_mean": round(sum(pre_rfs) / n, 2) if n else 0.0,
-                "post_mean": round(sum(post_rfs) / n, 2) if n else 0.0,
-                "delta": paired_ci_95(rf_deltas),
-            },
-        },
+    grouped = {
+        origin: [row for row in participant_rows if row["data_origin"] == origin]
+        for origin in ("synthetic", "real")
+    }
+    cohorts = {
+        origin: {"data_origin": origin, **_cohort_metrics(rows)}
+        for origin, rows in grouped.items()
+        if rows
+    }
+    report: dict[str, Any] = {
+        "cohort_n": len(paired_users),
+        "cohorts": cohorts,
         "participants": participant_rows,
     }
+    if len(cohorts) == 1:
+        only_cohort = next(iter(cohorts.values()))
+        report["data_origin"] = only_cohort["data_origin"]
+        report["metrics"] = only_cohort["metrics"]
+    return report
 
 
 def export_evidence_files(repo: EducationRepository, out_dir: Path) -> dict[str, Any]:
@@ -159,6 +181,7 @@ def export_evidence_files(repo: EducationRepository, out_dir: Path) -> dict[str,
     csv_path = out_dir / "evidence_summary.csv"
     fieldnames = [
         "user_id",
+        "data_origin",
         "pre_score_pct",
         "post_score_pct",
         "score_delta_pct",
@@ -204,18 +227,31 @@ def main() -> None:
 
     res = export_evidence_files(repo, Path(args.out_dir))
     r = res["report"]
-    sd = r["metrics"]["score_pct"]["delta"]
-    bd = r["metrics"]["brier_score"]["delta"]
-    rd = r["metrics"]["red_flag_detection_pct"]["delta"]
-    print(
-        f"Exported N={r['cohort_n']} paired participants -> {res['csv']} and {res['json']}\n"
-        f"  Score delta:    {sd['mean']:+.2f}% "
-        f"(95% CI [{sd['ci_low']:+.2f}, {sd['ci_high']:+.2f}])\n"
-        f"  Brier delta:    {bd['mean']:+.4f} "
-        f"(95% CI [{bd['ci_low']:+.4f}, {bd['ci_high']:+.4f}])\n"
-        f"  Red-flag delta: {rd['mean']:+.2f}% "
-        f"(95% CI [{rd['ci_low']:+.2f}, {rd['ci_high']:+.2f}])"
-    )
+    cohorts = r.get("cohorts", {})
+    if r.get("metrics") and r.get("data_origin"):
+        cohorts = {
+            r["data_origin"]: {
+                "data_origin": r["data_origin"],
+                "cohort_n": r["cohort_n"],
+                "metrics": r["metrics"],
+            }
+        }
+    if not cohorts:
+        print(f"No paired participants found -> {res['csv']} and {res['json']}")
+        conn.close()
+        return
+    print(f"Exported paired participant cohorts -> {res['csv']} and {res['json']}")
+    for origin, cohort in cohorts.items():
+        sd = cohort["metrics"]["score_pct"]["delta"]
+        bd = cohort["metrics"]["brier_score"]["delta"]
+        rd = cohort["metrics"]["red_flag_detection_pct"]["delta"]
+        print(
+            f"  {origin}: N={cohort['cohort_n']} | "
+            f"Score {sd['mean']:+.2f}% (95% CI [{sd['ci_low']:+.2f}, {sd['ci_high']:+.2f}]) | "
+            f"Brier {bd['mean']:+.4f} (95% CI [{bd['ci_low']:+.4f}, {bd['ci_high']:+.4f}]) | "
+            f"Red-flag {rd['mean']:+.2f}% "
+            f"(95% CI [{rd['ci_low']:+.2f}, {rd['ci_high']:+.2f}])"
+        )
     conn.close()
 
 

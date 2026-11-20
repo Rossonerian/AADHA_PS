@@ -10,10 +10,11 @@ import json
 import sqlite3
 import tempfile
 import unittest
+import uuid
 from pathlib import Path
 
 from app.core import guardrails
-from app.education.exceptions import ToolLockedError
+from app.education.exceptions import ToolLockedError, ValidationDomainError
 from app.education.explain import (
     explain_stock,
     get_dashboard,
@@ -96,6 +97,19 @@ class TestPhase6ExplainDashboardStudy(unittest.TestCase):
         pre = start_study_session(self.repo, "u_study_live", "study_pre")
         pre_ids = {i["item_id"] for i in pre["items"]}
 
+        def assert_keyless(payload) -> None:
+            if isinstance(payload, dict):
+                self.assertFalse(
+                    {"answer", "answer_key", "correct_answer", "_answer"} & set(payload)
+                )
+                for value in payload.values():
+                    assert_keyless(value)
+            elif isinstance(payload, list):
+                for value in payload:
+                    assert_keyless(value)
+
+        assert_keyless(pre)
+
         def answer_all(items, conf):
             out = []
             for item in items:
@@ -114,8 +128,23 @@ class TestPhase6ExplainDashboardStudy(unittest.TestCase):
                 )
             return out
 
+        pre_answers = answer_all(pre["items"], 70)
+        duplicate_answers = [dict(answer) for answer in pre_answers]
+        duplicate_answers[-1] = dict(duplicate_answers[0])
+        with self.assertRaises(ValidationDomainError) as duplicate:
+            submit_study_session(
+                self.repo,
+                "u_study_live",
+                pre["session_id"],
+                duplicate_answers,
+            )
+        self.assertEqual(duplicate.exception.code, "DUPLICATE_ITEM")
+        self.assertEqual(
+            self.repo.list_attempts(user_id="u_study_live", context="study_pre"),
+            [],
+        )
         res_pre = submit_study_session(
-            self.repo, "u_study_live", pre["session_id"], answer_all(pre["items"], 70)
+            self.repo, "u_study_live", pre["session_id"], pre_answers
         )
         self.assertEqual(res_pre["context"], "study_pre")
 
@@ -154,6 +183,47 @@ class TestPhase6ExplainDashboardStudy(unittest.TestCase):
             with out["csv"].open("r", encoding="utf-8") as fh:
                 rows = list(csv.DictReader(fh))
             self.assertEqual(len(rows), 40)
+            self.assertTrue(all(row["data_origin"] == "synthetic" for row in rows))
+
+            real_user_id = str(uuid.uuid4())
+            self.repo.ensure_user(real_user_id)
+            red_flag_question = next(
+                q for q in self.repo.list_questions() if "red_flag" in q["tags"]
+            )
+            self.repo.record_attempt(
+                real_user_id,
+                "question",
+                red_flag_question["id"],
+                "incorrect response",
+                50,
+                False,
+                "study_pre",
+            )
+            self.repo.record_attempt(
+                real_user_id,
+                "question",
+                red_flag_question["id"],
+                red_flag_question["answer"],
+                90,
+                True,
+                "study_post",
+            )
+            mixed = export_evidence_files(self.repo, Path(td) / "mixed")
+            mixed_report = json.loads(mixed["json"].read_text(encoding="utf-8"))
+            self.assertNotIn("metrics", mixed_report)
+            self.assertEqual(mixed_report["cohorts"]["synthetic"]["cohort_n"], 40)
+            real_cohort = mixed_report["cohorts"]["real"]
+            self.assertEqual(real_cohort["data_origin"], "real")
+            self.assertEqual(real_cohort["cohort_n"], 1)
+            score_delta = real_cohort["metrics"]["score_pct"]["delta"]
+            self.assertEqual(score_delta["n"], 1)
+            self.assertLessEqual(score_delta["ci_low"], score_delta["mean"])
+            self.assertGreaterEqual(score_delta["ci_high"], score_delta["mean"])
+            with mixed["csv"].open("r", encoding="utf-8") as fh:
+                mixed_rows = list(csv.DictReader(fh))
+            real_rows = [row for row in mixed_rows if row["user_id"] == real_user_id]
+            self.assertEqual(len(real_rows), 1)
+            self.assertEqual(real_rows[0]["data_origin"], "real")
 
 
 if __name__ == "__main__":
