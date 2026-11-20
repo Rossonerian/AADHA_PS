@@ -258,6 +258,12 @@ class VerifierService:
                 )
             )
         for flag in flags:
+            if (
+                flag.code == RedFlagCode.DELETED_POST
+                and submission.post_url
+                and self.core.deletion_provenance
+            ):
+                flag.evidence.update(self.core.deletion_provenance(submission.post_url))
             flag.text = self.safe_text(flag.text)
             flag.evidence = {
                 key: self.safe_text(value) if isinstance(value, str) else value

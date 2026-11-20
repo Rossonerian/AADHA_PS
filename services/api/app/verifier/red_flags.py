@@ -106,6 +106,11 @@ def collect_flags(
                             "The security was small-cap and had low observed trading volume.",
                             market_cap_bucket=bucket,
                             median_daily_volume=typical,
+                            **(
+                                core.market_cap_provenance(symbol, applicable_date)
+                                if core.market_cap_provenance
+                                else {}
+                            ),
                         )
     if registered is False:
         add(

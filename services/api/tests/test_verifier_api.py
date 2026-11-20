@@ -1,7 +1,7 @@
 from datetime import UTC, date, datetime
 from time import perf_counter
 from types import SimpleNamespace
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 import pandas as pd
 import pytest
@@ -10,6 +10,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, func, select
 from sqlalchemy.orm import sessionmaker
 
+from app.core.guardrails import check_output
 from app.verifier import service as service_module
 from app.verifier.ingestion import CapturedTip
 from app.verifier.jobs import score_open_claims
@@ -66,7 +67,7 @@ def api(tmp_path):
 
     def guard(text):
         observations.checked.append(text)
-        return SimpleNamespace(ok=True, text=text)
+        return check_output(text)
 
     core = VerifierCore(
         complete, guard, TestMarket(), post_deleted=lambda _: observations.deleted
@@ -95,7 +96,10 @@ def test_basic_mode_deduplication_guard_and_owner_privacy(api):
     assert basic["source"]["label"] is None and basic["source"]["score"] is None
     assert basic["source"]["facts"] is None
     assert [flag["code"] for flag in basic["red_flags"]] == ["guaranteed_returns"]
-    assert basic["red_flags"][0]["text"] in observations.checked
+    assert any(
+        check_output(text).text == basic["red_flags"][0]["text"]
+        for text in observations.checked
+    )
     assert basic["claim"]["symbol"] == "TCS"
     source_url = f"/api/v1/sources/{basic['source']['id']}"
     locked = client.get(source_url, headers={"x-level": "2"})
@@ -261,6 +265,41 @@ def test_adversarial_advice_queries_never_reach_llm_or_echo(api):
             }
     assert observations.llm_calls == 0
     assert len(observations.checked) == 100
+
+
+def test_verify_en_hinglish_guardrail_corpus_and_phone_storage(api):
+    import json
+    from hashlib import sha256
+    from pathlib import Path
+
+    client, sessions, _, _, _ = api
+    corpus = json.loads(
+        (Path(__file__).parent / "data/adversarial_prompts_300.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    for item in corpus:
+        response = client.post("/api/v1/verify", json={"text": item["text"]})
+        assert response.status_code in (200, 422), response.text
+        payload = response.json()
+        prose = (
+            [payload["error"]["message"]]
+            if response.status_code == 422
+            else [flag["text"] for flag in payload["red_flags"]]
+            + [payload["source"]["handle"]]
+        )
+        # Check rendered language, not JSON field names such as the quoted
+        # source claim's `target` or random numeric UUID substrings.
+        assert all(check_output(text).ok for text in prose), item["id"]
+        assert item["text"] not in response.text
+    text = "TCS will rise. WhatsApp: +91 98765 432 10."
+    response = client.post("/api/v1/verify", json={"text": text})
+    assert response.status_code == 200
+    with sessions() as db:
+        row = db.get_one(Submission, UUID(response.json()["submission_id"]))
+        assert "98765" not in row.raw_content
+        assert "[REDACTED PHONE]" in row.raw_content
+        assert row.content_hash == sha256(row.raw_content.encode()).hexdigest()
 
 
 def test_synthetic_demo_seed_and_local_latency(api):
