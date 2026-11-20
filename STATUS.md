@@ -8,7 +8,7 @@
 | Person | % | Phase | Blockers | Last Update |
 |---|---|---|---|---|
 | Hardhik | 80% | Phase 6/6 (Integration & Demo — Phases 1–5 complete; C1 live green) | docs/PRD.md export; Divyansh education routes for C2/C3 | 2026-11-21 |
-| Arnav | 76.25% | Phase 3/6 & Phase 6/6 open (Phases 1,2,4,5 done; grounding 59/59) | OpenRouter key for live F1; real-source dataset or Option B sign-off | 2026-11-20 |
+| Arnav | 76.25% | Backend hardening verified; Phase 3/6 & 6/6 acceptance open | OpenRouter quota / held-out integrity; 30-source real seed; vetted deletion evidence | 2026-11-21 |
 | Divyansh | 100% | Phase 6/6 (Education complete; 20/20 tests pass) | none | 2026-11-20 |
 | Ananya | 0% | Phase 1/6 (unblocked: Next.js scaffold & contracts.ts ready) | none | 2026-11-20 |
 
@@ -79,6 +79,37 @@ Blockers: docs/PRD.md export; Divyansh education endpoints for full C2/C3 smoke 
 ## Arnav
 
 _Append updates here._
+
+```text
+[Arnav] 76.25% | Nasdaq / Platform / Privacy hardening (2026-11-21)
+Done: Durable owner-scoped 30-minute challenge keys; fresh-process restart, one-winner concurrent submit, TTL and JSON-plan gate tests. Owner-FK revision up/down/re-up passed on isolated Postgres with existing submission preserved. Live Finnhub quote/profile/metrics 200, candles 403 -> empty chart; 4 real-data questions. Bound 2,245 official AMFI categories and reviewed-deletion provider; 100 + 300 EN/Hinglish adversarial cases exercised on each endpoint, phones redacted before hashing. 333 tests passed.
+Next: Review PR #9 and apply its migrations after approval; finish live F1 and real-source quota.
+Minor: SOURCE_OF_TRUTH.md proposes persistence, exact-answer and origin details for review; no apps/web edits. Production DB was read only; migrations tested in disposable schemas. See docs/evidence/verifier_hardening.md.
+Blockers: Real-data acceptance remains open (MAJOR below). No synthetic-only approval assumed.
+
+$ PYTHONPATH=services/api python -m pytest services/api/tests -q
+333 passed, 1 warning in 285.01s (0:04:45)
+$ python -m ruff check services/api infra db/migrations
+All checks passed!
+$ python -m black --check services/api infra db/migrations
+All done! ✨ 🍰 ✨
+98 files would be left unchanged.
+$ python -m mypy services/api/app
+Success: no issues found in 59 source files
+```
+
+Python 3.11.16 (`.venv/Scripts/python.exe`); the full pytest run used
+`VERIFIER_POSTGRES_TEST_URL` loaded privately from local settings, with the
+application `DATABASE_URL=sqlite://`, `DATABASE_URL_UNPOOLED=""`, `APP_ENV=test`.
+All 6 Postgres persistence cases ran (no skipped tests). Warning: Starlette's
+`httpx` TestClient deprecation. No API key or database URL was printed.
+
+```text
+[Arnav] MAJOR | Real-data acceptance gates remain open (2026-11-21)
+Impact: Read-only Postgres count is 0 qualifying public real sources (need >=30 with >=5 scored claims each). F1 remains unmeasured after OpenRouter daily quota; eval.jsonl also has prior development feedback. No vetted real deletion notice/capture pair is available, so no deletion finding is asserted.
+Options: A) Source and independently vet the required public dated claims, complete live F1 with enough quota and resolve held-out integrity (recommended); B) synthetic-only remains NOT approved — user explicitly chose to keep the real-data gate open.
+Need from: Hardhik/Arnav — verified public-source corpus and deletion provenance; OpenRouter quota and evaluation-integrity decision. Finnhub key now works. PR #9 is reviewable but not merged or deployed.
+```
 
 ```text
 [Arnav] MAJOR | Live F1 retry blocked by OpenRouter daily quota (2026-11-21)

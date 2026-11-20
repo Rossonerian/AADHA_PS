@@ -56,6 +56,8 @@ class VerifierCore:
     post_deleted: Callable[[str], bool | None] | None = None
     # True only if historical nominal levels and the returned OHLC bars share a price basis.
     nominal_price_basis: Callable[[str, date, date], bool] | None = None
+    market_cap_provenance: Callable[[str, date], dict[str, str]] | None = None
+    deletion_provenance: Callable[[str], dict[str, str]] | None = None
 
 
 SessionFactory = Callable[[], Session]
@@ -100,6 +102,9 @@ class _PlatformMarket:
 def platform_core() -> VerifierCore:
     """Bind Verifier dependencies to Hardhik's shared `app.core` modules."""
     from app.core import guardrails, llm
+    from app.verifier.evidence import EvidenceProviders
+
+    evidence = EvidenceProviders()
 
     def _complete(prompt: str, schema: dict[str, Any] | None = None) -> object:
         if schema is None:
@@ -110,4 +115,8 @@ def platform_core() -> VerifierCore:
         complete=_complete,
         check_output=guardrails.check_output,
         market=_PlatformMarket(),
+        market_cap_bucket=evidence.market_cap_bucket,
+        market_cap_provenance=evidence.market_cap_provenance,
+        post_deleted=evidence.post_deleted,
+        deletion_provenance=evidence.deletion_provenance,
     )

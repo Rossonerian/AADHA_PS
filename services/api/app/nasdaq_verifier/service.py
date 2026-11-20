@@ -1,11 +1,16 @@
 """Deterministic question generation and Brier scoring. All numbers come from the snapshot."""
 
 import secrets
-import time
 from dataclasses import dataclass
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
+from sqlalchemy import delete
+from sqlalchemy.orm import Session
+
+from app.core.errors import AppError, NotFoundError
 from app.core.guardrails import check_output
+from app.nasdaq_verifier.models import NasdaqChallenge
 
 DISCLAIMER = (
     "Educational literacy check only — Aacharya never recommends buying, selling, "
@@ -20,12 +25,6 @@ class Challenge:
 
     user_id: str
     answers: dict[str, str]
-    expires: float
-
-
-_store: dict[str, Challenge] = (
-    {}
-)  # ponytail: per-process; move to DB for multi-instance
 
 
 def _f(v: float) -> str:
@@ -94,18 +93,50 @@ def build_questions(snap: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def issue(
-    user_id: str, questions: list[dict[str, Any]]
+    db: Session, user_id: str, questions: list[dict[str, Any]]
 ) -> tuple[str, list[dict[str, Any]]]:
     """Store the answer key; return challenge id and public questions."""
-    now = time.time()
-    for k in [k for k, v in _store.items() if v.expires < now]:
-        del _store[k]
-    cid = "c_" + secrets.token_hex(8)
-    _store[cid] = Challenge(
-        user_id, {q["id"]: q["_answer"] for q in questions}, now + CHALLENGE_TTL
+    now = datetime.now(UTC)
+    db.execute(delete(NasdaqChallenge).where(NasdaqChallenge.expires_at <= now))
+    cid = "c_" + secrets.token_hex(32)
+    db.add(
+        NasdaqChallenge(
+            id=cid,
+            user_id=user_id,
+            answers={q["id"]: q["_answer"] for q in questions},
+            expires_at=now + timedelta(seconds=CHALLENGE_TTL),
+            data_origin="real",
+        )
     )
+    db.commit()
     public = [{k: v for k, v in q.items() if k != "_answer"} for q in questions]
     return cid, public
+
+
+def submit(
+    db: Session, challenge_id: str, user_id: str, answers: list[dict[str, Any]]
+) -> dict[str, Any]:
+    """Atomically consume an unexpired owned key; a stranger cannot burn it."""
+    key = db.execute(
+        delete(NasdaqChallenge)
+        .where(
+            NasdaqChallenge.id == challenge_id,
+            NasdaqChallenge.user_id == user_id,
+            NasdaqChallenge.expires_at > datetime.now(UTC),
+        )
+        .returning(NasdaqChallenge.answers)
+    ).scalar_one_or_none()
+    if key is None:
+        raise NotFoundError("Challenge not found or expired.")
+    ids = [a["question_id"] for a in answers]
+    if len(ids) != len(key) or set(ids) != set(key):
+        db.rollback()
+        raise AppError(
+            "INVALID_ANSWERS", "Answer each challenge question exactly once.", 422
+        )
+    result = score(Challenge(user_id, key), answers)
+    db.commit()
+    return result
 
 
 def score(challenge: Challenge, answers: list[dict[str, Any]]) -> dict[str, Any]:
@@ -134,6 +165,7 @@ def score(challenge: Challenge, answers: list[dict[str, Any]]) -> dict[str, Any]
         "Lower Brier means your confidence matched your accuracy."
     )
     return {
+        "data_origin": "real",
         "passed": brier <= 0.25,
         "score": round(right / n, 4),
         "brier": brier,

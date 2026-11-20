@@ -1,9 +1,12 @@
 """Server-side unlock gate for `nasdaq_verifier`. Fails closed when data is missing."""
 
+import json
+from contextlib import suppress
 from dataclasses import dataclass
+from math import isfinite
 
 from fastapi import Depends
-from sqlalchemy import inspect, text
+from sqlalchemy import Uuid, bindparam, inspect, text
 from sqlalchemy.orm import Session
 
 from app.core.auth import User, current_user
@@ -27,22 +30,44 @@ def read_gate_inputs(db: Session, user: User) -> GateInputs:
     inspector = inspect(db.get_bind())
     progress: float | None = None
     brier: float | None = None
+    owner = bindparam("u", type_=Uuid(as_uuid=False))
     if inspector.has_table("plans"):
         row = db.execute(
-            text("SELECT progress FROM plans WHERE user_id = :u"), {"u": user.id}
+            text(
+                "SELECT lesson_ids, progress FROM plans WHERE user_id = :u"
+            ).bindparams(owner),
+            {"u": user.id},
         ).fetchone()
-        if row and row[0] is not None:
-            progress = float(row[0])
+        if row:
+            try:
+                ids = json.loads(row[0]) if isinstance(row[0], str) else row[0]
+                statuses = json.loads(row[1]) if isinstance(row[1], str) else row[1]
+                if (
+                    isinstance(ids, list)
+                    and ids
+                    and all(isinstance(x, str) for x in ids)
+                    and len(set(ids)) == len(ids)
+                    and isinstance(statuses, dict)
+                ):
+                    progress = (
+                        100.0
+                        * sum(statuses.get(x) == "completed" for x in ids)
+                        / len(ids)
+                    )
+            except (ValueError, TypeError):
+                pass  # Malformed progress is not evidence of completion.
     if inspector.has_table("skill_scores"):
         row = db.execute(
             text(
-                "SELECT AVG(brier) FROM skill_scores WHERE user_id = :u "
-                "AND brier IS NOT NULL"
-            ),
+                "SELECT AVG(brier) FROM (SELECT brier, ROW_NUMBER() OVER "
+                "(PARTITION BY skill_area ORDER BY measured_at DESC, id DESC) AS rn "
+                "FROM skill_scores WHERE user_id = :u) latest WHERE rn = 1"
+            ).bindparams(owner),
             {"u": user.id},
         ).fetchone()
         if row and row[0] is not None:
-            brier = float(row[0])
+            with suppress(TypeError, ValueError):
+                brier = float(row[0])
     return GateInputs(progress, brier)
 
 
@@ -58,9 +83,17 @@ def missing_requirements(user: User, inputs: GateInputs) -> list[str]:
     missing: list[str] = []
     if user.level != REQUIRED_LEVEL:
         missing.append("level_4")
-    if inputs.progress_pct is None or inputs.progress_pct < 100:
+    if (
+        inputs.progress_pct is None
+        or not isfinite(inputs.progress_pct)
+        or inputs.progress_pct != 100
+    ):
         missing.append("plan_progress_100")
-    if inputs.brier is None or inputs.brier > MAX_BRIER:
+    if (
+        inputs.brier is None
+        or not isfinite(inputs.brier)
+        or not 0 <= inputs.brier <= MAX_BRIER
+    ):
         missing.append("brier_lte_0.25")
     return missing
 
