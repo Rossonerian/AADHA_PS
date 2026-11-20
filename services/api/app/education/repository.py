@@ -13,25 +13,20 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Set, Union
 
-try:
-    from sqlalchemy import func, select, text
-    from sqlalchemy.orm import Session
-    from .models import (
-        Attempt,
-        EduSession,
-        ExplainCache,
-        Lesson,
-        Plan,
-        Question,
-        Scenario,
-        SkillScore,
-        Unlock,
-        User,
-    )
-    SQLALCHEMY_AVAILABLE = True
-except ImportError:  # pragma: no cover
-    SQLALCHEMY_AVAILABLE = False
-    Session = None
+from sqlalchemy import func, select, text
+from sqlalchemy.orm import Session
+from .models import (
+    Attempt,
+    EduSession,
+    ExplainCache,
+    Lesson,
+    Plan,
+    Question,
+    Scenario,
+    SkillScore,
+    Unlock,
+    User,
+)
 
 
 def utc_now_iso() -> str:
@@ -51,7 +46,7 @@ def apply_migrations(conn: Any) -> None:
             conn.executescript(ddl)
             conn.execute("PRAGMA foreign_keys = ON;")
             conn.commit()
-    elif SQLALCHEMY_AVAILABLE and hasattr(conn, "get_bind"):
+    elif hasattr(conn, "get_bind"):
         from .models import Base
         Base.metadata.create_all(bind=conn.get_bind())
 
@@ -64,7 +59,7 @@ def revert_migrations(conn: Any) -> None:
             ddl = sql_file.read_text(encoding="utf-8")
             conn.executescript(ddl)
             conn.commit()
-    elif SQLALCHEMY_AVAILABLE and hasattr(conn, "get_bind"):
+    elif hasattr(conn, "get_bind"):
         from .models import Base
         Base.metadata.drop_all(bind=conn.get_bind())
 
@@ -74,12 +69,8 @@ class EducationRepository:
 
     def __init__(self, conn: Any):
         self.conn = conn
-        self.is_orm: bool = (
-            SQLALCHEMY_AVAILABLE
-            and (
-                (Session is not None and isinstance(conn, Session))
-                or (hasattr(conn, "scalars") and hasattr(conn, "commit") and not isinstance(conn, sqlite3.Connection))
-            )
+        self.is_orm: bool = isinstance(conn, Session) or (
+            hasattr(conn, "scalars") and hasattr(conn, "commit") and not isinstance(conn, sqlite3.Connection)
         )
 
     # ---- Users (read/upsert helper for Hardhik's users table) ----

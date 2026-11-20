@@ -239,9 +239,13 @@ def submit_study_session(
         user_ans = str(ans["answer"]).strip()
         if spec["item_type"] == AttemptItemType.QUESTION.value:
             q = repo.get_question(item_id)
+            if not q:
+                raise NotFoundError("QUESTION_NOT_FOUND", f"Question '{item_id}' not found.")
             is_correct = user_ans == str(q["answer"]).strip()
         else:
             sc = repo.get_scenario(item_id)
+            if not sc:
+                raise NotFoundError("SCENARIO_NOT_FOUND", f"Scenario '{item_id}' not found.")
             out = recompute_scenario_outcome(sc["symbol"], sc["as_of_date"], sc["window_days"], cfg=cfg)
             is_correct = user_ans.lower() == out["actual_direction"]
 

@@ -61,6 +61,7 @@ class TestPhase2Onboarding(unittest.TestCase):
             asked.append(q["id"])
             difficulties.append(q["difficulty"])
             full_q = self.repo.get_question(q["id"])
+            assert full_q is not None
             correct_ans = full_q["answer"]
             wrong_ans = next(opt for opt in full_q["options"] if opt != correct_ans)
 
@@ -92,6 +93,7 @@ class TestPhase2Onboarding(unittest.TestCase):
         self.assertGreaterEqual(len(asked), 12)
         self.assertLessEqual(len(asked), 15)
         self.assertEqual(len(asked), len(set(asked)), "Duplicate questions asked in onboarding")
+        assert result is not None
         return result, difficulties
 
     def test_simulated_users_land_at_sensible_levels_and_brier(self) -> None:

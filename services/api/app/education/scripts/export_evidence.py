@@ -132,7 +132,7 @@ def compute_evidence_report(repo: EducationRepository) -> Dict[str, Any]:
     }
 
 
-def export_evidence_files(repo: EducationRepository, out_dir: Path) -> Dict[str, Path]:
+def export_evidence_files(repo: EducationRepository, out_dir: Path) -> Dict[str, Any]:
     """Writes evidence_summary.json and evidence_summary.csv to out_dir."""
     out_dir.mkdir(parents=True, exist_ok=True)
     report = compute_evidence_report(repo)

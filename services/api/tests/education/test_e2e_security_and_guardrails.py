@@ -36,6 +36,7 @@ class TestE2ESecurityAndGuardrails(unittest.TestCase):
         result = None
         while q is not None:
             full_q = self.repo.get_question(q["id"])
+            assert full_q is not None
             wrong = next(o for o in full_q["options"] if o != full_q["answer"])
             r = self.client.post(
                 "/api/v1/onboarding/answer",
@@ -46,6 +47,7 @@ class TestE2ESecurityAndGuardrails(unittest.TestCase):
             payload = r.json()
             q = payload["next_question"]
             result = payload["result"]
+        assert result is not None
         self.assertEqual(result["level"], 1)
 
         # 3. Plan & Lesson check
@@ -55,6 +57,7 @@ class TestE2ESecurityAndGuardrails(unittest.TestCase):
         lesson = self.client.get(f"/api/v1/lessons/{first_lid}", headers=headers)
         self.assertEqual(lesson.status_code, 200)
         full_lesson = self.repo.get_lesson(first_lid)
+        assert full_lesson is not None
         chk = self.client.post(
             f"/api/v1/lessons/{first_lid}/check",
             headers=headers,
@@ -93,9 +96,12 @@ class TestE2ESecurityAndGuardrails(unittest.TestCase):
         answers = []
         for item in asmt.json()["items"]:
             if item["item_type"] == "question":
-                ans = self.repo.get_question(item["item_id"])["answer"]
+                q_rec = self.repo.get_question(item["item_id"])
+                assert q_rec is not None
+                ans = q_rec["answer"]
             else:
                 sc = self.repo.get_scenario(item["item_id"])
+                assert sc is not None
                 ans = recompute_scenario_outcome(sc["symbol"], sc["as_of_date"], sc["window_days"])["actual_direction"]
             answers.append({"item_id": item["item_id"], "answer": ans, "confidence": 90})
 

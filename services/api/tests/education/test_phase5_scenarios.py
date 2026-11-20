@@ -56,6 +56,7 @@ class TestPhase5Scenarios(unittest.TestCase):
         nxt = get_next_scenario(self.repo, "u_scen", user_level=1, difficulty=2)
         self.assertIn("id", nxt)
         sc_full = self.repo.get_scenario(nxt["id"])
+        assert sc_full is not None
         expected_dir = sc_full["outcome"]["actual_direction"]
 
         res = answer_scenario(

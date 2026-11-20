@@ -70,6 +70,7 @@ class TestPhase3UnlocksPlanLessons(unittest.TestCase):
         # Complete first lesson's 3 check questions
         first_id = plan["lessons"][0]["id"]
         full_lesson = self.repo.get_lesson(first_id)
+        assert full_lesson is not None
         detail = get_lesson_detail(self.repo, first_id)
         self.assertEqual(len(detail["check_questions"]), 3)
         answers = [

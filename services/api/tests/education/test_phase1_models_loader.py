@@ -101,6 +101,7 @@ questions:
             self.assertEqual(summary.questions, 1)
             q = self.repo.get_question("q_sample_1")
             self.assertIsNotNone(q)
+            assert q is not None
             self.assertEqual(q["data_origin"], "synthetic")
 
             # Idempotent reload should not duplicate or fail

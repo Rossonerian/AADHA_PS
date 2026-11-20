@@ -7,12 +7,8 @@ Owner: Divyansh (coordinated with Hardhik's db/migrations/)
 """
 from __future__ import annotations
 
-try:
-    from alembic import op
-    import sqlalchemy as sa
-except ImportError:  # pragma: no cover
-    op = None
-    sa = None
+from alembic import op
+import sqlalchemy as sa
 
 revision = "20261120_01_edu"
 # Chained to Alembic head in monorepo (0001_initial_platform -> 20261120_verifier -> 20261120_01_edu)

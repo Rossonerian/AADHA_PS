@@ -4,10 +4,7 @@ from __future__ import annotations
 import math
 from typing import Dict, Sequence, Tuple
 
-try:
-    from scipy import stats
-except ImportError:
-    stats = None
+from scipy import stats
 
 from .enums import SkillArea
 
@@ -48,7 +45,7 @@ def compute_skill_scores(
     weighted_total: Dict[str, float] = {s.value: 0.0 for s in SkillArea}
     for rec in records:
         area = str(rec["skill_area"])
-        diff = float(rec.get("difficulty", 3))
+        diff = float(str(rec.get("difficulty", 3)))
         weight = 0.6 + 0.2 * diff  # diff 1 -> 0.8, diff 3 -> 1.2, diff 5 -> 1.6
         weighted_total[area] = weighted_total.get(area, 0.0) + weight
         if rec.get("correct"):
@@ -116,18 +113,7 @@ def paired_ci_95(deltas: Sequence[float]) -> Dict[str, float]:
     variance = sum((x - mean_val) ** 2 for x in deltas) / (n - 1)
     std_val = math.sqrt(variance)
     se = std_val / math.sqrt(n)
-    if stats is not None:
-        t_crit = float(stats.t.ppf(0.975, df=n - 1))
-    else:
-        # Fallback Student's t critical values for 95% two-sided CI when scipy is unavailable
-        _t_table = {
-            1: 12.706, 2: 4.303, 3: 3.182, 4: 2.776, 5: 2.571, 6: 2.447, 7: 2.365, 8: 2.306,
-            9: 2.262, 10: 2.228, 11: 2.201, 12: 2.179, 13: 2.160, 14: 2.145, 15: 2.131,
-            16: 2.120, 17: 2.110, 18: 2.101, 19: 2.093, 20: 2.086, 25: 2.060, 30: 2.042,
-            39: 2.02269, 40: 2.02107, 60: 2.0003, 120: 1.9799
-        }
-        df = n - 1
-        t_crit = _t_table.get(df, 2.02269 if 35 <= df <= 45 else (1.96 if df > 120 else 2.0))
+    t_crit = float(stats.t.ppf(0.975, df=n - 1))
     margin = t_crit * se
     return {
         "n": n,

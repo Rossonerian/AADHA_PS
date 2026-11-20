@@ -89,9 +89,11 @@ class TestPhase6ExplainDashboardStudy(unittest.TestCase):
             for item in items:
                 if item["item_type"] == "question":
                     q = self.repo.get_question(item["item_id"])
+                    assert q is not None
                     ans = q["answer"]
                 else:
                     sc = self.repo.get_scenario(item["item_id"])
+                    assert sc is not None
                     ans = recompute_scenario_outcome(sc["symbol"], sc["as_of_date"], sc["window_days"])["actual_direction"]
                 out.append({"item_id": item["item_id"], "answer": ans, "confidence": conf})
             return out

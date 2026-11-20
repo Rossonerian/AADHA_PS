@@ -33,9 +33,11 @@ class TestPhase4Assessments(unittest.TestCase):
             should_be_right = idx < correct_count
             if item["item_type"] == AttemptItemType.QUESTION.value:
                 q = self.repo.get_question(item["item_id"])
+                assert q is not None
                 ans = q["answer"] if should_be_right else next(o for o in q["options"] if o != q["answer"])
             else:
                 sc = self.repo.get_scenario(item["item_id"])
+                assert sc is not None
                 out = recompute_scenario_outcome(sc["symbol"], sc["as_of_date"], sc["window_days"])
                 actual = out["actual_direction"]
                 ans = actual if should_be_right else ("down" if actual == "up" else "up")

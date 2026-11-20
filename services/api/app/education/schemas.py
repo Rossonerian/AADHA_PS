@@ -89,7 +89,7 @@ class LessonCheckAnswerItem(BaseModel):
 
 
 class LessonCheckRequest(BaseModel):
-    answers: List[LessonCheckAnswerItem] = Field(..., min_items=1)
+    answers: List[LessonCheckAnswerItem] = Field(min_length=1)
 
 
 class LessonCheckResponse(BaseModel):
@@ -173,7 +173,7 @@ class AssessmentAnswerInput(BaseModel):
 
 
 class AssessmentSubmitRequest(BaseModel):
-    answers: List[AssessmentAnswerInput] = Field(..., min_items=1)
+    answers: List[AssessmentAnswerInput] = Field(min_length=1)
 
 
 class AssessmentSubmitResponse(BaseModel):
@@ -225,7 +225,7 @@ class StudyStartResponse(BaseModel):
 
 
 class StudySubmitRequest(BaseModel):
-    answers: List[AssessmentAnswerInput] = Field(..., min_items=1)
+    answers: List[AssessmentAnswerInput] = Field(min_length=1)
 
 
 class StudySubmitResponse(BaseModel):
