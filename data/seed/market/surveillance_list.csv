@@ -1,0 +1,5 @@
+symbol,list_type,stage,effective_from,effective_to,source,as_of_date,data_origin
+SUZLON,ASM-LT,ASM-LT-Stage-IV,2023-10-03,2024-01-15,NSE Surveillance Framework (ASM/GSM),2026-11-20,real
+COCHINSHIP,ASM-LT,ASM-LT-Stage-I,2024-07-12,2025-02-28,NSE Surveillance Framework (ASM/GSM),2026-11-20,real
+RVNL,ASM-ST,ASM-ST-Stage-I,2024-08-01,2025-01-31,NSE Surveillance Framework (ASM/GSM),2026-11-20,real
+IRFC,ASM-LT,ASM-LT-Stage-I,2024-08-01,2025-01-31,NSE Surveillance Framework (ASM/GSM),2026-11-20,real
