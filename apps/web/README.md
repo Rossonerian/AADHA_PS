@@ -21,4 +21,4 @@ The shared API contracts live in `src/lib/contracts.ts`. Several endpoints do no
 
 ## UI design system
 
-PaisaProof uses the actual [Looseleaf](https://github.com/kevintngo/looseleaf) registry Button and its Ink rendering runtime. The registry-generated source is vendored in `src/components/ui/button.tsx` and `src/lib/ink/` under the upstream MIT license; the source font assets and styles are in `src/app/fonts/` and `src/app/looseleaf.css`. Our project Button wrapper delegates its primary, secondary, and quiet variants to the Looseleaf component. Lucide React provides the sidebar icons.
+PaisaProof uses vendored components from the [Looseleaf](https://github.com/kevintngo/looseleaf) registry for its buttons, cards, badges, alerts, avatars, fields, progress indicators, tabs, sliders, checkboxes, and radio groups. App-specific dashboard and learning flows compose these primitives with Looseleaf's Ink rendering runtime. Registry source and the runtime are in `src/components/ui/` and `src/lib/ink/` under the upstream MIT license; the font assets and styles are in `src/app/fonts/` and `src/app/looseleaf.css`. Lucide React provides the interface icons.

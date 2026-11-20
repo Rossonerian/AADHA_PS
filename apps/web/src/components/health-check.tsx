@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Alert, Button, Panel } from "@/components/ui";
 import { ApiClientError, apiFetch } from "@/lib/api-client";
 import type { HealthResponse } from "@/lib/contracts";
 
@@ -30,29 +31,30 @@ export function HealthCheck() {
   }
 
   return (
-    <div className="mt-6 rounded-lg border border-gray-200 bg-white p-4">
+    <Panel className="mt-6 health-check-panel">
       <div className="flex items-center justify-between gap-4">
-        <span className="text-sm font-medium text-gray-700">API Health Check</span>
-        <button
+        <h2 className="text-sm font-medium text-gray-700">API Health Check</h2>
+        <Button
+          variant="secondary"
           type="button"
           onClick={runCheck}
           disabled={state.status === "loading"}
-          className="rounded-md bg-gray-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-gray-800 disabled:opacity-50"
+          className="h-auto min-h-8 px-3 py-1.5 text-xs"
         >
           {state.status === "loading" ? "Checking..." : "Ping /api/v1/health"}
-        </button>
+        </Button>
       </div>
       {state.status === "ok" && (
-        <p className="mt-2 text-xs text-emerald-700">
+        <Alert className="mt-2 text-xs" variant="success" role="status">
           Status: {state.data.status} (v{state.data.version}, db: {state.data.db}, market as of:{" "}
           {state.data.market_data_as_of ?? "n/a"})
-        </p>
+        </Alert>
       )}
       {state.status === "error" && (
-        <p className="mt-2 text-xs text-amber-700">
+        <Alert className="mt-2 text-xs" variant="warning" role="alert">
           Backend unreachable or returned error: {state.message}
-        </p>
+        </Alert>
       )}
-    </div>
+    </Panel>
   );
 }
