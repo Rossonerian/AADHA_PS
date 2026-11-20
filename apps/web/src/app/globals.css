@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "./fonts.css";
+@import "./looseleaf.css";
 
 :root {
   --ink: #202a24;
@@ -3524,4 +3527,20 @@ button {
     min-height: 56px;
     padding: 0.85rem 1rem;
   }
+}
+.app-shell,
+.welcome-screen {
+  --ll-marker: var(--primary-700);
+  --ll-hi: var(--secondary-300);
+  --ll-hi-deep: var(--secondary-700);
+  --ll-focus: var(--accent-700);
+  --ll-ink: var(--ink);
+  --ll-paper: var(--surface);
+  --ll-paper-shade: var(--canvas);
+  --ll-card: var(--surface);
+  --ll-slip: var(--paper);
+  --ll-pencil-text: var(--ink-soft);
+}
+.looseleaf-button {
+  min-height: 44px;
 }
