@@ -1,6 +1,38 @@
 # Live extraction exact-match F1
 
-## Latest attempt: key loaded, provider quota exhausted
+## Re-check attempt: daily quota still exhausted (2026-11-21)
+
+Re-ran `PYTHONPATH=services/api .venv/Scripts/python.exe infra/scripts/evaluate_extraction.py`
+on 2026-11-21 (Asia/Calcutta). OpenRouter immediately failed with `ExternalServiceError`
+(`total_calls: 0`; daily free-tier quota has not reset). F1 remains **unmeasured (`null`)**.
+
+```json
+{
+  "corpus": "data/seed/verifier/eval.jsonl",
+  "corpus_sha256": "b323a6979c9de91524151c5262b1dc18c0f220edfe4b6b1ffd3e42d1f914c01d",
+  "labelled_rows": 150,
+  "model": "nvidia/nemotron-3.5-lightning:free",
+  "target_f1": 0.8,
+  "status": "blocked",
+  "reason": "ExternalServiceError",
+  "f1": null,
+  "usage": {
+    "total_calls": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "by_model": {}
+  }
+}
+```
+
+When quota resets (or a paid OpenRouter model is approved), any score on
+`data/seed/verifier/eval.jsonl` must be labelled **diagnostic only**, because
+earlier grounding work used `eval.jsonl` for recall diagnostics. Proposal: build
+an independent held-out acceptance set instead of tuning further on `eval.jsonl`.
+
+## Prior attempt: key loaded, provider quota exhausted
 
 Retried on 2026-11-21 (Asia/Calcutta) after finding the supplied key in
 `.env.txt` and copying that file to the ignored `.env` path. The application's

@@ -8,7 +8,7 @@
 | Person | % | Phase | Blockers | Last Update |
 |---|---|---|---|---|
 | Hardhik | 80% | Phase 6/6 (Integration & Demo — Phases 1–5 complete; C1 live green) | docs/PRD.md export; Divyansh education routes for C2/C3 | 2026-11-21 |
-| Arnav | 76.25% | Backend hardening verified; Phase 3/6 & 6/6 acceptance open | OpenRouter quota / held-out integrity; 30-source real seed; vetted deletion evidence | 2026-11-21 |
+| Arnav | 76.25% | Real seed verified (30×5); Phase 3/6 & 6/6 acceptance open | Hardhik decisions: SoT seed policy, 61 default-horizon quota, OpenRouter quota + held-out set; vetted deletion evidence | 2026-11-21 |
 | Divyansh | 100% | Phase 6/6 (Education complete; 20/20 tests pass) | none | 2026-11-20 |
 | Ananya | 0% | Phase 1/6 (unblocked: Next.js scaffold & contracts.ts ready) | none | 2026-11-20 |
 
@@ -79,6 +79,62 @@ Blockers: docs/PRD.md export; Divyansh education endpoints for full C2/C3 smoke 
 ## Arnav
 
 _Append updates here._
+
+```text
+[Arnav] 76.25% | Phase 6/6: Real-source seed verification & PR #9 update (2026-11-21)
+Done: Validated 30-publisher × 5-claim real seed (150 claims, 2023-01-12 to 2025-11-17, core.market prices cut off 2026-11-20); 150/150 public PDF HTTP 200 + SHA256 verified; idempotent --load passed on disposable Postgres schema at Alembic head 20261121_submission_owner_fk (30 sources, 150 submissions, 150 claims, data_origin=real; production DB untouched). Spot-checked 10 random claims across 10 publishers against fetched PDFs (10/10 matched publisher, date, security, direction, price levels). Confirmed 0 analyst emails/phones, max excerpt 42 chars, no report bodies, data/market_cache/ gitignored. Re-ran evaluate_extraction.py: OpenRouter daily quota still exhausted (0 calls, ExternalServiceError). Deletion evidence remains empty (missing evidence = no finding). All 342 pytest (zero skips, including 6 isolated Postgres + 9 real_seed tests), ruff, black, and mypy passed on Python 3.11.16.
+Next: Await Hardhik review/decisions on the 3 MAJORs below (SoT seed policy, 61 default-horizon claims, OpenRouter quota + independent held-out set); leave PR #9 unmerged and production migrations unapplied.
+Minor: Kept SOURCE_OF_TRUTH.md diff strictly to the 13-line proposed public-research seed policy; updated DATA_MANIFEST.md, docs/evidence/real_source_seed.md, and docs/evidence/extraction_f1.md; no apps/web/ edits.
+Blockers: 3 MAJORs below (SoT contract change, default-horizon quota decision, OpenRouter quota + held-out acceptance set); vetted deletion evidence still absent.
+
+$ PYTHONPATH=services/api .venv/Scripts/python.exe infra/scripts/load_real_verifier_seed.py
+{"status": "validated", "claims": 150}
+$ PYTHONPATH=services/api .venv/Scripts/python.exe infra/scripts/load_real_verifier_seed.py --check-publications
+{"public_pdfs_verified": 150, "digest_matches": 150}
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m pytest services/api/tests -q
+342 passed, 1 warning in 145.88s (0:02:25)
+$ .venv/Scripts/python.exe -m ruff check services/api infra db/migrations
+All checks passed!
+$ .venv/Scripts/python.exe -m black --check services/api infra db/migrations
+All done! ✨ 🍰 ✨
+104 files would be left unchanged.
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m mypy services/api/app
+Success: no issues found in 60 source files
+```
+
+```text
+[Arnav] MAJOR | Contract change proposed in docs/SOURCE_OF_TRUTH.md for public-research seed policy (2026-11-21)
+Impact: Adds 13 lines under Section 8 defining `broker_research` corporate-publisher identity (alias brands collapsed), Level-1 import owner, provenance/excerpt retention, end-of-day Asia/Kolkata storage for date-only reports, strict post-date scoring sessions, 20/252 session horizon mapping, explicit 20-session default for unstated horizons, benchmark-relative scoring for target-only reports, and sample-limitation disclosure. Blocks merging PR #9 until Hardhik approves.
+Options: A) Approve the 13-line public-research seed policy in docs/SOURCE_OF_TRUTH.md as part of PR #9 (recommended); B) request revisions to the contract before merge.
+Need from: Hardhik — contract review and approval on PR #9.
+```
+
+```text
+[Arnav] MAJOR | Decision needed: do the 61 default-horizon claims count toward the ">=5 scored claims" quota? (2026-11-21)
+Impact: 61 of 150 real-seed claims use `horizon_basis="verifier_default_20_sessions"` (20 trading sessions) because the source PDF states no horizon (89 have explicit stated horizons). If default-horizon claims are excluded from the ">=5 scored claims per publisher" quota, 13 of 30 publishers fall short by a total of 61 claims:
+  - asit_c_mehta: stated=1, default_20=4, shortfall=4
+  - axis_securities: stated=0, default_20=5, shortfall=5
+  - bp_wealth: stated=2, default_20=3, shortfall=3
+  - elara_securities: stated=0, default_20=5, shortfall=5
+  - hdfc_securities: stated=0, default_20=5, shortfall=5
+  - hem_securities: stated=0, default_20=5, shortfall=5
+  - idbi_capital: stated=0, default_20=5, shortfall=5
+  - lkp_securities: stated=1, default_20=4, shortfall=4
+  - nirmal_bang_institutional_equities: stated=0, default_20=5, shortfall=5
+  - nuvama: stated=0, default_20=5, shortfall=5
+  - prabhudas_lilladher: stated=0, default_20=5, shortfall=5
+  - religare: stated=0, default_20=5, shortfall=5
+  - sharekhan: stated=0, default_20=5, shortfall=5
+Options: A) Count the 61 explicitly labelled 20-session-default claims toward the 30×5 quota, retaining their `verifier_default_20_sessions` disclosure (recommended, matches existing Verifier extraction default); B) require stated horizons on all 150 claims and collect 61 replacement stated-horizon reports across the 13 publishers above.
+Need from: Hardhik — quota policy decision.
+```
+
+```text
+[Arnav] MAJOR | Live extraction F1 still blocked by OpenRouter quota; independent held-out set needed (2026-11-21)
+Impact: Re-running `infra/scripts/evaluate_extraction.py` hit `ExternalServiceError` immediately (0 calls; OpenRouter free-tier daily quota has not reset), so live F1 remains unmeasured (`null`). In addition, `data/seed/verifier/eval.jsonl` was used during earlier grounding recall work and is no longer a held-out acceptance set.
+Options: A) Once quota resets or a paid OpenRouter model is configured, run `evaluate_extraction.py` on `eval.jsonl` strictly as a diagnostic (no further tuning on `eval.jsonl`) and build a fresh independent held-out acceptance set for formal F1>=0.80 sign-off (recommended); B) explicitly accept a diagnostic-only `eval.jsonl` run once quota is available.
+Need from: Hardhik — OpenRouter quota/paid-model approval and sign-off on building an independent held-out acceptance set.
+```
 
 ```text
 [Arnav] 76.25% | Nasdaq / Platform / Privacy hardening (2026-11-21)

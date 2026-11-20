@@ -138,6 +138,19 @@ capture digest, a later timestamp and explicit publisher/platform confirmation
 with evidence URL and digest. These files are not populated from user assertions.
 Missing evidence remains unknown and produces no finding.
 
+Proposed public-research seed policy (review in this PR): `broker_research`
+identifies a corporate publisher, with aliases/renamed brands collapsed. A
+dedicated Level-1 import owner owns the public submissions; no demo workspace or
+learner history is created. Each claim retains its dated report URL, PDF digest,
+page, short field excerpts and adjusted-price/benchmark digests. Date-only
+reports use end-of-day Asia/Kolkata for storage, not a claimed publication time.
+Scoring uses benchmark sessions strictly after that report date. Source-stated
+months map to 20 sessions each and years to 252 (existing extraction convention);
+unrepresentable or ranged horizons are excluded. An unstated horizon explicitly
+uses the existing 20-session default. Target-only reports use the existing
+benchmark-relative policy; their outcomes are not target-hit statistics. Imported
+source ratings are limited to this availability-selected historical sample.
+
 - Source labels: `reliable`, `semi_reliable`, `not_reliable`, `not_enough_history`.
 - Red-flag codes: `guaranteed_returns`, `urgency`, `illiquid_small_cap`, `surveillance_list`, `pre_post_volume_spike`, `not_sebi_registered`, `vague_claim`, `deleted_post`.
 - Levels: 1 Foundations, 2 Reading a stock, 3 Judging information, 4 Risk & discipline.
