@@ -124,3 +124,25 @@ def test_smoke_test_platform_only_against_asgi_app(
         "me_unauthenticated_401",
         "me_authenticated",
     ]
+
+
+def test_smoke_test_health_only_against_asgi_app(migrated_db: str) -> None:
+    """`smoke_test.py --health-only` verifies `/health` and `/me` 401 without a JWT."""
+    from infra.scripts.smoke_test import run_smoke_test
+
+    del migrated_db
+    app = create_app()
+    with TestClient(app, base_url="http://testserver/api/v1") as client:
+        result = run_smoke_test(
+            base_url="http://testserver",
+            health_only=True,
+            http_client=client,
+        )
+
+    assert result["status"] == "ok"
+    assert result["mode"] == "health-only"
+    assert result["base_url"] == "http://testserver/api/v1"
+    assert [c["step"] for c in result["checks"]] == [
+        "health",
+        "me_unauthenticated_401",
+    ]

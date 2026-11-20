@@ -1,7 +1,8 @@
-.PHONY: setup dev lint typecheck test migrate seed cron
+.PHONY: setup dev lint typecheck test build check check-api migrate seed cron
 
 PYTHON_BIN := $(shell if [ -x /opt/homebrew/bin/python3.11 ]; then echo /opt/homebrew/bin/python3.11; elif command -v python3.11 >/dev/null 2>&1; then command -v python3.11; else command -v python3; fi)
 VENV_DIR := services/api/.venv
+API_URL ?= http://localhost:8000/api/v1
 
 setup:
 	"$(PYTHON_BIN)" -m venv $(VENV_DIR)
@@ -30,6 +31,14 @@ typecheck:
 
 test:
 	PYTHONPATH=services/api $(VENV_DIR)/bin/pytest services/api/tests
+
+build:
+	cd apps/web && npm run build
+
+check: lint typecheck test build
+
+check-api:
+	PYTHONPATH=services/api $(VENV_DIR)/bin/python infra/scripts/smoke_test.py --base-url "$(API_URL)" --health-only
 
 migrate:
 	PYTHONPATH=services/api $(VENV_DIR)/bin/alembic -c db/alembic.ini upgrade head

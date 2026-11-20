@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -16,18 +17,53 @@ API_DIR = REPO_ROOT / "services" / "api"
 if str(API_DIR) not in sys.path:
     sys.path.insert(0, str(API_DIR))
 
+_BARE_ORIGIN_RE = re.compile(r"^https?://[^/]+$", re.IGNORECASE)
+
+
+def _normalize_api_base(base_url: str) -> str:
+    trimmed = base_url.strip().rstrip("/")
+    if _BARE_ORIGIN_RE.match(trimmed):
+        return f"{trimmed}/api/v1"
+    return trimmed
+
 
 def _acquire_jwt(
     *,
     jwt_token: str | None,
-    supabase_url: str | None,
-    supabase_anon_key: str | None,
-    email: str | None,
-    password: str | None,
-    timeout: float,
+    neon_auth_base_url: str | None = None,
+    origin: str | None = None,
+    supabase_url: str | None = None,
+    supabase_anon_key: str | None = None,
+    email: str | None = None,
+    password: str | None = None,
+    timeout: float = 15.0,
 ) -> str:
     if jwt_token and jwt_token.strip():
         return jwt_token.strip()
+
+    if neon_auth_base_url and email and password:
+        auth_base = neon_auth_base_url.strip().rstrip("/")
+        request_origin = (origin or "http://localhost:3000").strip().rstrip("/")
+        with httpx.Client(timeout=timeout, follow_redirects=True) as auth_client:
+            signin_resp = auth_client.post(
+                f"{auth_base}/sign-in/email",
+                headers={
+                    "Origin": request_origin,
+                    "Content-Type": "application/json",
+                },
+                json={"email": email, "password": password},
+            )
+            signin_resp.raise_for_status()
+            token_resp = auth_client.get(
+                f"{auth_base}/token",
+                headers={"Origin": request_origin},
+            )
+            token_resp.raise_for_status()
+            token_data = token_resp.json()
+            token = token_data.get("token")
+            if isinstance(token, str) and token.strip():
+                return token.strip()
+        raise RuntimeError("Neon Auth /token response missing token")
 
     if supabase_url and supabase_anon_key and email and password:
         auth_url = f"{supabase_url.rstrip('/')}/auth/v1/token?grant_type=password"
@@ -49,7 +85,7 @@ def _acquire_jwt(
 
     raise RuntimeError(
         "No JWT provided. Supply --jwt / SMOKE_TEST_JWT or "
-        "SUPABASE_URL + SUPABASE_ANON_KEY + SMOKE_TEST_EMAIL + SMOKE_TEST_PASSWORD."
+        "NEON_AUTH_BASE_URL + SMOKE_TEST_EMAIL + SMOKE_TEST_PASSWORD."
     )
 
 
@@ -66,16 +102,19 @@ def run_smoke_test(
     *,
     base_url: str,
     jwt_token: str | None = None,
+    neon_auth_base_url: str | None = None,
+    origin: str | None = None,
     supabase_url: str | None = None,
     supabase_anon_key: str | None = None,
     email: str | None = None,
     password: str | None = None,
+    health_only: bool = False,
     platform_only: bool = False,
     timeout: float = 15.0,
     http_client: httpx.Client | None = None,
 ) -> dict[str, Any]:
-    """Execute platform-only or full C2-C4 smoke checks and return structured summary."""
-    normalized_base = base_url.rstrip("/")
+    """Execute health-only, platform-only, or full C2-C4 API smoke checks."""
+    normalized_base = _normalize_api_base(base_url)
     owns_client = http_client is None
     client = http_client or httpx.Client(base_url=normalized_base, timeout=timeout)
     checks: list[dict[str, Any]] = []
@@ -83,8 +122,8 @@ def run_smoke_test(
     try:
         # 1. /health
         health_data = _assert_ok(client.get("/health"), "GET /health")
-        if health_data.get("db") != "ok":
-            raise RuntimeError(f"/health db check failed: {health_data!r}")
+        if health_data.get("status") != "ok" or health_data.get("db") != "ok":
+            raise RuntimeError(f"/health check failed: {health_data!r}")
         if not health_data.get("market_data_as_of"):
             raise RuntimeError(
                 f"/health market_data_as_of is missing/null: {health_data!r}"
@@ -99,9 +138,19 @@ def run_smoke_test(
             )
         checks.append({"step": "me_unauthenticated_401", "status": "ok"})
 
+        if health_only:
+            return {
+                "status": "ok",
+                "mode": "health-only",
+                "base_url": normalized_base,
+                "checks": checks,
+            }
+
         # 3. Acquire JWT and verify authenticated /me
         token = _acquire_jwt(
             jwt_token=jwt_token,
+            neon_auth_base_url=neon_auth_base_url,
+            origin=origin,
             supabase_url=supabase_url,
             supabase_anon_key=supabase_anon_key,
             email=email,
@@ -245,22 +294,32 @@ def main() -> int:
     parser.add_argument(
         "--base-url",
         default=os.getenv("STAGING_API_URL", "http://localhost:8000/api/v1"),
-        help="API base URL including /api/v1.",
+        help="API base URL (origin or /api/v1 base).",
     )
     parser.add_argument(
         "--jwt",
         default=os.getenv("SMOKE_TEST_JWT"),
-        help="Optional pre-minted Supabase Bearer JWT.",
+        help="Optional pre-minted Neon Auth Bearer JWT.",
     )
     parser.add_argument(
         "--email",
         default=os.getenv("SMOKE_TEST_EMAIL"),
-        help="Supabase smoke test user email.",
+        help="Neon Auth smoke test user email.",
     )
     parser.add_argument(
         "--password",
         default=os.getenv("SMOKE_TEST_PASSWORD"),
-        help="Supabase smoke test user password.",
+        help="Neon Auth smoke test user password.",
+    )
+    parser.add_argument(
+        "--origin",
+        default=os.getenv("SMOKE_TEST_ORIGIN", "http://localhost:3000"),
+        help="Origin header sent to Neon Auth.",
+    )
+    parser.add_argument(
+        "--health-only",
+        action="store_true",
+        help="Verify public /health and unauthenticated /me 401 guard without a JWT.",
     )
     parser.add_argument(
         "--platform-only",
@@ -274,10 +333,13 @@ def main() -> int:
         result = run_smoke_test(
             base_url=args.base_url,
             jwt_token=args.jwt,
+            neon_auth_base_url=os.getenv("NEON_AUTH_BASE_URL"),
+            origin=args.origin,
             supabase_url=os.getenv("SUPABASE_URL"),
             supabase_anon_key=os.getenv("SUPABASE_ANON_KEY"),
             email=args.email,
             password=args.password,
+            health_only=args.health_only,
             platform_only=args.platform_only,
             timeout=args.timeout,
         )

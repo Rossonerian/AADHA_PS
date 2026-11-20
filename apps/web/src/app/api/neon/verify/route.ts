@@ -224,6 +224,13 @@ async function runRealtimeVerification() {
 }
 
 export async function POST(request: Request): Promise<Response> {
+  if (process.env.NODE_ENV === "production" && process.env.ENABLE_NEON_VERIFY !== "true") {
+    return NextResponse.json(
+      { ok: false, error: "Verification endpoint is disabled in production" },
+      { status: 403, headers: { "Cache-Control": "no-store" } },
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();

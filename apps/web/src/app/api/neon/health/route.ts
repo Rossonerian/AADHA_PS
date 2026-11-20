@@ -29,13 +29,16 @@ async function checkPostgres() {
 }
 
 async function checkAuth() {
-  const baseUrl = process.env.NEON_AUTH_BASE_URL?.trim();
-  const jwksUrl = process.env.NEON_AUTH_JWKS_URL?.trim();
-  const baseUrlConfigured = Boolean(baseUrl);
+  const baseUrl = process.env.NEON_AUTH_BASE_URL?.trim() || "";
+  const trimmedBase = baseUrl.replace(/\/+$/, "");
+  const jwksUrl =
+    process.env.NEON_AUTH_JWKS_URL?.trim() ||
+    (trimmedBase ? `${trimmedBase}/.well-known/jwks.json` : "");
+  const baseUrlConfigured = Boolean(trimmedBase);
   const jwksUrlConfigured = Boolean(jwksUrl);
   const cookieSecretConfigured = isNeonAuthConfigured();
 
-  if (!baseUrl || !jwksUrl) {
+  if (!baseUrlConfigured || !jwksUrl) {
     return {
       ok: false,
       baseUrlConfigured,
@@ -53,17 +56,24 @@ async function checkAuth() {
     });
     const payload = (await response.json().catch(() => null)) as { keys?: unknown[] } | null;
     const keyCount = Array.isArray(payload?.keys) ? payload.keys.length : 0;
+    const jwksOk = response.status === 200 && keyCount > 0;
+    const ok = jwksOk && cookieSecretConfigured;
+
+    let error: string | undefined;
+    if (!jwksOk) {
+      error = "JWKS endpoint did not return valid JWK keys";
+    } else if (!cookieSecretConfigured) {
+      error = "NEON_AUTH_COOKIE_SECRET is missing or shorter than 32 characters";
+    }
 
     return {
-      ok: response.status === 200 && keyCount > 0,
+      ok,
       baseUrlConfigured,
       jwksUrlConfigured,
       cookieSecretConfigured,
       jwksStatus: response.status,
       keyCount,
-      ...(response.status !== 200 || keyCount === 0
-        ? { error: "JWKS endpoint did not return valid JWK keys" }
-        : {}),
+      ...(error ? { error } : {}),
     };
   } catch (error) {
     return {
