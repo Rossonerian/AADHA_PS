@@ -42,7 +42,9 @@ import type {
 const useMocks = process.env.NEXT_PUBLIC_USE_MOCKS !== "false";
 
 async function request<T>(path: string, options: ApiFetchOptions = {}): Promise<T> {
-  const token = await authClient.getJWTToken?.();
+  const token = await (
+    authClient as typeof authClient & { getJWTToken?: () => Promise<string | null> }
+  ).getJWTToken?.();
   return apiFetch<T>(path, { ...options, token: token ?? null });
 }
 

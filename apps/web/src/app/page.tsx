@@ -921,7 +921,7 @@ function HomeView({
                 <li key={item.submission_id}>
                   <span className="recent-status">{item.status === "scored" ? "✓" : "…"}</span>
                   <span>
-                    <strong>{item.claim.symbol ?? "Submitted tip"}</strong>
+                    <strong>{item.claim?.symbol ?? "Submitted tip"}</strong>
                     <small>
                       {item.status === "scored" ? "Outcome checked" : "Still being reviewed"}
                     </small>
