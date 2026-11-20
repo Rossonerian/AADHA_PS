@@ -1,0 +1,360 @@
+/**
+ * Aacharya API v1 TypeScript contracts.
+ * Strictly aligned with docs/SOURCE_OF_TRUTH.md Sections 7 & 8.
+ */
+
+export type DataOrigin = "real" | "synthetic";
+
+export type SourceLabel = "reliable" | "semi_reliable" | "not_reliable" | "not_enough_history";
+
+export type RedFlagCode =
+  | "guaranteed_returns"
+  | "urgency"
+  | "illiquid_small_cap"
+  | "surveillance_list"
+  | "pre_post_volume_spike"
+  | "not_sebi_registered"
+  | "vague_claim"
+  | "deleted_post";
+
+export type UserLevel = 1 | 2 | 3 | 4;
+
+export type ToolName = "scenarios" | "red_flag_check" | "explain_stock" | "verifier" | "dashboard";
+
+export type SkillArea = "basics" | "reading_stock" | "judging_info" | "risk";
+
+export type ClaimStatus = "open" | "scored" | "needs_review" | "unscorable";
+
+export type ClaimDirection = "up" | "down";
+
+export type LessonStatus = "locked" | "not_started" | "in_progress" | "completed";
+
+export interface ApiErrorDetail {
+  code: string;
+  message: string;
+  required_level?: UserLevel;
+}
+
+export interface ApiErrorEnvelope {
+  error: ApiErrorDetail;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Shared domain primitives                                                   */
+/* -------------------------------------------------------------------------- */
+
+export interface QuestionItem {
+  id: string;
+  text: string;
+  skill_area?: SkillArea;
+  difficulty?: number;
+  options: string[];
+}
+
+export interface ChartPoint {
+  date: string;
+  open?: number;
+  high?: number;
+  low?: number;
+  close: number;
+  volume?: number;
+}
+
+export interface RedFlagItem {
+  code: RedFlagCode;
+  text: string;
+  evidence: string;
+}
+
+export interface VerifySourceSummary {
+  id: string;
+  platform: string;
+  handle: string | null;
+  label: SourceLabel;
+  score: number | null;
+  facts: Record<string, unknown>;
+  sebi_reg_no?: string | null;
+  scored_claims?: number;
+  data_origin?: DataOrigin;
+}
+
+export interface ClaimRecord {
+  id: string;
+  submission_id?: string;
+  symbol: string | null;
+  direction: ClaimDirection | null;
+  entry: number | null;
+  target: number | null;
+  stop: number | null;
+  window_end: string | null;
+  scorable: boolean;
+  status: ClaimStatus;
+  outcome: Record<string, unknown> | null;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1. GET /api/v1/health                                                      */
+/* -------------------------------------------------------------------------- */
+
+export interface HealthResponse {
+  status: "ok" | "degraded";
+  version: string;
+  db: "ok" | "error";
+  market_data_as_of: string | null;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 2. GET /api/v1/me                                                          */
+/* -------------------------------------------------------------------------- */
+
+export interface MeResponse {
+  id: string;
+  name: string;
+  level: UserLevel;
+  unlocks: ToolName[];
+}
+
+/* -------------------------------------------------------------------------- */
+/* 3. POST /api/v1/onboarding/start                                           */
+/* -------------------------------------------------------------------------- */
+
+export interface OnboardingStartResponse {
+  session_id: string;
+  question: QuestionItem;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 4. POST /api/v1/onboarding/answer                                          */
+/* -------------------------------------------------------------------------- */
+
+export interface OnboardingAnswerRequest {
+  session_id: string;
+  question_id: string;
+  answer: string;
+  confidence: number;
+}
+
+export interface OnboardingResult {
+  level: UserLevel;
+  skills: Record<SkillArea, number>;
+  brier: number;
+}
+
+export interface OnboardingAnswerResponse {
+  next_question: QuestionItem | null;
+  result?: OnboardingResult;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 5. GET /api/v1/plan                                                        */
+/* -------------------------------------------------------------------------- */
+
+export interface PlanLessonItem {
+  id: string;
+  title: string;
+  status: LessonStatus;
+  minutes: number;
+}
+
+export interface PlanResponse {
+  level: UserLevel;
+  progress_pct: number;
+  lessons: PlanLessonItem[];
+}
+
+/* -------------------------------------------------------------------------- */
+/* 6. GET /api/v1/lessons/{id}                                                */
+/* -------------------------------------------------------------------------- */
+
+export interface LessonSection {
+  heading: string;
+  body: string;
+  example?: string;
+}
+
+export interface LessonDetailResponse {
+  id: string;
+  title: string;
+  sections: LessonSection[];
+  check_questions: QuestionItem[];
+}
+
+/* -------------------------------------------------------------------------- */
+/* 7. GET /api/v1/scenarios/next?difficulty=                                  */
+/* -------------------------------------------------------------------------- */
+
+export interface ScenarioHeadline {
+  date?: string;
+  text: string;
+  source?: string;
+}
+
+export interface ScenarioContext {
+  company: string;
+  chart: ChartPoint[];
+  headlines: ScenarioHeadline[];
+  numbers: Record<string, string | number | null>;
+}
+
+export interface ScenarioNextResponse {
+  id: string;
+  as_of_date: string;
+  window_days: number;
+  context: ScenarioContext;
+  data_origin: DataOrigin;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 8. POST /api/v1/scenarios/{id}/answer                                      */
+/* -------------------------------------------------------------------------- */
+
+export interface ScenarioAnswerRequest {
+  direction: ClaimDirection;
+  confidence: number;
+  clues: string[];
+}
+
+export interface ScenarioOutcome {
+  stock_pct: number;
+  index_pct: number;
+}
+
+export interface ScenarioAnswerResponse {
+  correct: boolean;
+  outcome: ScenarioOutcome;
+  key_clues: string[];
+  explanation: string;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 9. POST /api/v1/assessments/{level}/start                                  */
+/* -------------------------------------------------------------------------- */
+
+export interface AssessmentStartResponse {
+  assessment_id: string;
+  items: QuestionItem[];
+}
+
+/* -------------------------------------------------------------------------- */
+/* 10. POST /api/v1/assessments/{id}/submit                                   */
+/* -------------------------------------------------------------------------- */
+
+export interface AssessmentAnswerInput {
+  item_id: string;
+  answer: string;
+  confidence: number;
+}
+
+export interface AssessmentSubmitRequest {
+  answers: AssessmentAnswerInput[];
+}
+
+export interface AssessmentSubmitResponse {
+  passed: boolean;
+  score: number;
+  brier: number;
+  new_level?: UserLevel;
+  unlocked: ToolName[];
+}
+
+/* -------------------------------------------------------------------------- */
+/* 11. GET /api/v1/explain?symbol=&year=                                      */
+/* -------------------------------------------------------------------------- */
+
+export interface ExplainMoveEvent {
+  text: string;
+  source: string;
+}
+
+export interface ExplainMove {
+  date: string;
+  pct: number;
+  events: ExplainMoveEvent[];
+}
+
+export interface ExplainResponse {
+  chart: ChartPoint[];
+  moves: ExplainMove[];
+  summary: string;
+  data_origin?: DataOrigin;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 12. GET /api/v1/me/dashboard                                               */
+/* -------------------------------------------------------------------------- */
+
+export interface DashboardSkillPoint {
+  date: string;
+  skills: Record<SkillArea, number>;
+}
+
+export interface DashboardBrierPoint {
+  date: string;
+  brier: number;
+}
+
+export interface DashboardScenarioAccuracyPoint {
+  date: string;
+  accuracy: number;
+  attempts?: number;
+}
+
+export interface DashboardResponse {
+  level: UserLevel;
+  skills_over_time: DashboardSkillPoint[];
+  brier_over_time: DashboardBrierPoint[];
+  scenario_accuracy: DashboardScenarioAccuracyPoint[];
+}
+
+/* -------------------------------------------------------------------------- */
+/* 13. POST /api/v1/verify                                                    */
+/* -------------------------------------------------------------------------- */
+
+export interface VerifyRequest {
+  url?: string;
+  text?: string;
+  image_base64?: string;
+  user_guess?: string;
+  user_confidence?: number;
+}
+
+export interface VerifyResponse {
+  submission_id: string;
+  source: VerifySourceSummary | null;
+  claim: ClaimRecord | null;
+  red_flags: RedFlagItem[];
+  mode: "basic" | "full";
+  data_origin?: DataOrigin;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 14. GET /api/v1/sources/{id}                                               */
+/* -------------------------------------------------------------------------- */
+
+export interface SourceRatingHistoryItem {
+  score: number | null;
+  label: SourceLabel;
+  reason: string;
+  changed_at: string;
+}
+
+export interface SourceDetailResponse {
+  source: VerifySourceSummary;
+  history: SourceRatingHistoryItem[];
+  recent_claims: ClaimRecord[];
+}
+
+/* -------------------------------------------------------------------------- */
+/* 15. GET /api/v1/submissions/mine                                           */
+/* -------------------------------------------------------------------------- */
+
+export interface SubmissionMineItem {
+  submission_id: string;
+  claim: ClaimRecord | null;
+  status: ClaimStatus;
+  outcome: Record<string, unknown> | null;
+}
+
+export interface SubmissionsMineResponse {
+  items: SubmissionMineItem[];
+}

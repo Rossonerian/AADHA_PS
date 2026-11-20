@@ -1,0 +1,52 @@
+services:
+  - type: web
+    name: aacharya-api
+    runtime: docker
+    dockerfilePath: ./infra/Dockerfile.api
+    dockerContext: .
+    plan: starter
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_VERSION
+        value: 0.1.0
+      - key: CORS_ORIGINS
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_JWT_SECRET
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_DEFAULT_MODEL
+        value: openai/gpt-4o-mini
+      - key: OPENROUTER_BASE_URL
+        value: https://openrouter.ai/api/v1
+      - key: MARKET_DATA_DIR
+        value: data/seed/market
+
+  - type: cron
+    name: aacharya-daily-cron
+    runtime: docker
+    dockerfilePath: ./infra/Dockerfile.api
+    dockerContext: .
+    schedule: "0 13 * * 1-5"
+    dockerCommand: "python /app/infra/scripts/daily_job.py"
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_DEFAULT_MODEL
+        value: openai/gpt-4o-mini
+      - key: OPENROUTER_BASE_URL
+        value: https://openrouter.ai/api/v1
+      - key: MARKET_DATA_DIR
+        value: data/seed/market
