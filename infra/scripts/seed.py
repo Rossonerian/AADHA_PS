@@ -256,7 +256,9 @@ def seed(
 
 def main() -> int:
     """CLI entrypoint for `infra/scripts/seed.py`."""
-    parser = argparse.ArgumentParser(description="Validate and seed PaisaProof datasets.")
+    parser = argparse.ArgumentParser(
+        description="Validate and seed PaisaProof datasets."
+    )
     parser.add_argument(
         "--seed-dir",
         type=Path,
