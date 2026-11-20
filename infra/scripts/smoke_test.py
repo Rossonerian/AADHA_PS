@@ -325,7 +325,7 @@ def run_smoke_test(
                 "checks": checks,
             }
 
-        # 4. Onboarding flow (onboarding -> placement level + Brier)
+        # 4. Onboarding flow (onboarding -> placement level + Brier; conf=55 targets L3 for assessment)
         current_step = "onboarding"
         answer_key = _load_question_answers()
         onb_start = _assert_ok(
@@ -340,7 +340,7 @@ def run_smoke_test(
             options = question.get("options") or ["A"]
             qid = str(question["id"])
             chosen_answer = answer_key.get(qid, options[0])
-            confidence = 90 if qid in answer_key else 70
+            confidence = 55 if qid in answer_key else 70
             ans_resp = _assert_ok(
                 client.post(
                     "/onboarding/answer",
@@ -361,6 +361,7 @@ def run_smoke_test(
         if not onb_result or "level" not in onb_result:
             raise RuntimeError("Onboarding completed without placement result")
         placed_level = int(onb_result["level"])
+        current_level = placed_level
         checks.append(
             {
                 "step": "onboarding",
@@ -391,7 +392,61 @@ def run_smoke_test(
             }
         )
 
-        # 6. Scenario practice
+        # 6. Level-up assessment (L3 -> L4 unlock so dashboard & explain unlock cleanly)
+        current_step = "assessment"
+        target_level = current_level if 1 <= current_level <= 3 else 3
+        asmt_start = _assert_ok(
+            client.post(f"/assessments/{target_level}/start", headers=auth_headers),
+            f"POST /assessments/{target_level}/start",
+        )
+        assessment_id = str(asmt_start.get("assessment_id") or "")
+        asmt_items = asmt_start.get("items") or []
+        if not assessment_id or not asmt_items:
+            raise RuntimeError(
+                f"POST /assessments/{target_level}/start returned invalid payload: {asmt_start!r}"
+            )
+        asmt_answers: list[dict[str, Any]] = []
+        for item in asmt_items:
+            item_id = str(item["item_id"])
+            item_type = str(item.get("item_type", "question"))
+            if item_type == "scenario":
+                asmt_answers.append(
+                    {"item_id": item_id, "answer": "down", "confidence": 50}
+                )
+            else:
+                prompt_obj = item.get("prompt") or {}
+                options = prompt_obj.get("options") or ["A"]
+                chosen = answer_key.get(item_id, options[0])
+                conf = 90 if item_id in answer_key else 70
+                asmt_answers.append(
+                    {"item_id": item_id, "answer": chosen, "confidence": conf}
+                )
+        asmt_submit = _assert_ok(
+            client.post(
+                f"/assessments/{assessment_id}/submit",
+                headers=auth_headers,
+                json={"answers": asmt_answers},
+            ),
+            f"POST /assessments/{assessment_id}/submit",
+        )
+        if answer_key and not asmt_submit.get("passed"):
+            raise RuntimeError(f"Assessment did not pass: {asmt_submit!r}")
+        if isinstance(asmt_submit.get("new_level"), int):
+            current_level = int(asmt_submit["new_level"])
+        checks.append(
+            {
+                "step": "assessment",
+                "status": "ok",
+                "assessment_id": assessment_id,
+                "target_level": target_level,
+                "passed": asmt_submit.get("passed"),
+                "score": asmt_submit.get("score"),
+                "brier": asmt_submit.get("brier"),
+                "new_level": current_level,
+            }
+        )
+
+        # 7. Scenario practice
         current_step = "scenarios"
         scenario = _assert_ok(
             client.get("/scenarios/next", headers=auth_headers),
@@ -418,14 +473,14 @@ def run_smoke_test(
             }
         )
 
-        # 7. Explain a stock (Level >= 2 unlocked, else expect 403 TOOL_LOCKED)
+        # 8. Explain a stock (Level >= 2 unlocked, else expect 403 TOOL_LOCKED)
         current_step = "explain"
         explain_resp = client.get(
             "/explain",
             params={"symbol": "TCS", "year": 2020},
             headers=auth_headers,
         )
-        if placed_level >= 2:
+        if current_level >= 2:
             explain_data = _assert_ok(explain_resp, "GET /explain?symbol=TCS&year=2020")
             for req_key in ("chart", "moves", "summary", "data_origin"):
                 if req_key not in explain_data:
@@ -443,12 +498,12 @@ def run_smoke_test(
         else:
             if explain_resp.status_code != 403:
                 raise RuntimeError(
-                    f"Expected 403 TOOL_LOCKED on GET /explain at level {placed_level}, "
+                    f"Expected 403 TOOL_LOCKED on GET /explain at level {current_level}, "
                     f"got {explain_resp.status_code}"
                 )
             checks.append({"step": "explain", "status": "ok_locked_403"})
 
-        # 8. Verifier (POST /verify + GET /submissions/mine)
+        # 9. Verifier (POST /verify + GET /submissions/mine)
         current_step = "verify"
         verify_data = _assert_ok(
             client.post(
@@ -478,10 +533,10 @@ def run_smoke_test(
             }
         )
 
-        # 9. Dashboard (Level >= 4 unlocked, else expect 403 TOOL_LOCKED)
+        # 10. Dashboard (Level >= 4 unlocked, else expect 403 TOOL_LOCKED)
         current_step = "dashboard"
         dashboard_resp = client.get("/me/dashboard", headers=auth_headers)
-        if placed_level >= 4:
+        if current_level >= 4:
             dash_data = _assert_ok(dashboard_resp, "GET /me/dashboard")
             for req_key in (
                 "level",
@@ -503,7 +558,7 @@ def run_smoke_test(
         else:
             if dashboard_resp.status_code != 403:
                 raise RuntimeError(
-                    f"Expected 403 TOOL_LOCKED on GET /me/dashboard at level {placed_level}, "
+                    f"Expected 403 TOOL_LOCKED on GET /me/dashboard at level {current_level}, "
                     f"got {dashboard_resp.status_code}"
                 )
             checks.append({"step": "dashboard", "status": "ok_locked_403"})

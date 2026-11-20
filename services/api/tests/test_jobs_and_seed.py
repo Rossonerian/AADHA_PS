@@ -235,11 +235,14 @@ def test_smoke_test_full_walkthrough_against_asgi_app(
         "me_authenticated",
         "onboarding",
         "plan_and_lesson",
+        "assessment",
         "scenarios",
         "explain",
         "verify",
         "dashboard",
     ]
     steps = {c["step"]: c for c in result["checks"]}
-    assert steps["onboarding"]["level"] == 4
+    assert steps["onboarding"]["level"] == 3
+    assert steps["assessment"]["passed"] is True
+    assert steps["assessment"]["new_level"] == 4
     assert steps["dashboard"]["level"] == 4

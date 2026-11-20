@@ -64,16 +64,16 @@ Fresh accounts are created exclusively via **Neon Auth sign-up** (`POST /api/aut
 # Public health + unauthenticated 401 guard + market freshness check
 make check-api API_URL=https://<your-api-host>/api/v1
 
-# Full fresh-user staging walkthrough (onboarding -> plan -> lesson -> scenario -> explain -> verify -> dashboard)
+# Full fresh-user staging walkthrough (onboarding -> plan -> lesson -> assessment -> scenario -> explain -> verify -> dashboard)
 PYTHONPATH=services/api services/api/.venv/bin/python infra/scripts/smoke_test.py \
   --base-url https://<your-api-host>/api/v1 \
   --auth-base-url https://aadha-ps.vercel.app/api/auth \
   --origin https://aadha-ps.vercel.app \
   --fresh-user --cleanup-db --timeout 75
 
-# Minimal curl checks
+# Minimal curl checks (/api/neon/health and /api/neon/verify are dev-only diagnostics intended to return 403 in production)
 curl -sf https://<your-api-host>/api/v1/health
-curl -sf https://aadha-ps.vercel.app/api/neon/health
+curl -sfI https://aadha-ps.vercel.app
 ```
 
 ## Cron, Stale-Refresh Alerting & Rate Limits
