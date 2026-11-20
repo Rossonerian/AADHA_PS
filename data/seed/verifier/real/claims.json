@@ -34,8 +34,8 @@
       "index_pct": 20.616375486075956,
       "data_origin": "real"
     },
-    "price_sha256": "c85cd5dd70f272f70cffdc167d6d5fc9e1c57de48a977919740d58b1e74c5b0a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "8188f392c70b9f13bb0530bdbc4aa92e381ec7b56a86b25ed88334d44fa2250b",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -74,8 +74,8 @@
       "index_pct": 20.616375486075956,
       "data_origin": "real"
     },
-    "price_sha256": "ea684f800fedc97d6ffdc8a657fb5eecd88e73ff78943656f2cdca78fca8778b",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "bfd4da12ae31a62ee69fc570a2b11ec42ec1545475a4e97b7fe54acb4777d56f",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -114,8 +114,8 @@
       "index_pct": 20.84051890015175,
       "data_origin": "real"
     },
-    "price_sha256": "9d0f0655b17f67ef8f87d631b1c044ef1b40d38d62fd355c33d81dc68195d0ff",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "c4ebf687453d2d42812bc6a25fab73a6a7438eac6e69809cf2e13266d7a43fd6",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -154,8 +154,8 @@
       "index_pct": 21.962039848780314,
       "data_origin": "real"
     },
-    "price_sha256": "72aa3dd7a6f886f4e6d05308d1de81bab796d4f5e502061d02e221c315f7b2ed",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "1ced621eeb7998a67728d610cefdfd30d89feec14c5b173692b03fa5670638e0",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -194,8 +194,8 @@
       "index_pct": 22.537609723804273,
       "data_origin": "real"
     },
-    "price_sha256": "3cbce5d9383a5b5a4a5290a6d3b069b5cdd013cc46cee10813417eb4627ef93d",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "ef6bb39ca132af244eac8c3074f091cff8514e8e133b26bb32eb13418e0e6b35",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -234,8 +234,8 @@
       "index_pct": -0.6926530340051751,
       "data_origin": "real"
     },
-    "price_sha256": "ea684f800fedc97d6ffdc8a657fb5eecd88e73ff78943656f2cdca78fca8778b",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "bfd4da12ae31a62ee69fc570a2b11ec42ec1545475a4e97b7fe54acb4777d56f",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -274,8 +274,8 @@
       "index_pct": -0.6926530340051751,
       "data_origin": "real"
     },
-    "price_sha256": "c85cd5dd70f272f70cffdc167d6d5fc9e1c57de48a977919740d58b1e74c5b0a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "8188f392c70b9f13bb0530bdbc4aa92e381ec7b56a86b25ed88334d44fa2250b",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -314,8 +314,8 @@
       "index_pct": -0.3976176164105283,
       "data_origin": "real"
     },
-    "price_sha256": "892ad3028e99214ef204b0f02273f0c619d103c6e813c80282b392470fa0b6e7",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "80b022637aaa8e92b2d7262bb98002ba0ab8c960aacd0bb36d341ebaf179bb48",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -354,8 +354,8 @@
       "index_pct": -0.4629065356093087,
       "data_origin": "real"
     },
-    "price_sha256": "34d20e58d895b56df28c5d584016dfe6c146eb4fe5fb949c6a7d3531536b4b81",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "23ccca28201ea00c9662e2144551c8d237df754556d526d5f8390d70a89af56e",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -394,8 +394,8 @@
       "index_pct": -1.5119927370708885,
       "data_origin": "real"
     },
-    "price_sha256": "3f3ca701a249b19076f7a445877914d25eadecc27429826726c23ead928f4dfd",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "fc10284cc7c5dc1f9af55cb8f55a8c9778b771261638c0bf9cc8fa03e914f853",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -434,8 +434,8 @@
       "index_pct": 19.163804229879176,
       "data_origin": "real"
     },
-    "price_sha256": "ea684f800fedc97d6ffdc8a657fb5eecd88e73ff78943656f2cdca78fca8778b",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "bfd4da12ae31a62ee69fc570a2b11ec42ec1545475a4e97b7fe54acb4777d56f",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -474,8 +474,8 @@
       "index_pct": 18.604101064236424,
       "data_origin": "real"
     },
-    "price_sha256": "0d33c1eaef0a530a0d7fe23d45db4646dead641ad9487ff8320f19696157a5d3",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "d6ef77b3fddc3f0bbabf546210cb67b8729dcb0e47b521981794c78faea3f102",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -514,8 +514,8 @@
       "index_pct": 20.84051890015175,
       "data_origin": "real"
     },
-    "price_sha256": "708967892c35bf07b92c696a8c59ba4b3cefbbf79cc4c76d898c344f6d6b4624",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "25e915c43374b9bdfb43c99c5c1c8fdcd719d72abe9875948ede1a1e7c1a2793",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -554,8 +554,8 @@
       "index_pct": 21.962039848780314,
       "data_origin": "real"
     },
-    "price_sha256": "bf6d49a3f6ad0ee2a139c2d978fcfa4b8ff47933281c4c01c2602bd2fb6b7166",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "bb6b1949238ae3adf2b30e1549c4cdb29a735e50d9c3119b27c31b254a9844d3",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -594,8 +594,8 @@
       "index_pct": 22.537609723804273,
       "data_origin": "real"
     },
-    "price_sha256": "b830ae1c431d3566691c3fd8ce040f24f474515a1e422c143bb35d7169e88a68",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "ae988c17e9d82bf1a2657ae215ccb6e754fd0c5b69e46952048d80924a65e4ba",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -634,8 +634,8 @@
       "index_pct": 4.054304900408567,
       "data_origin": "real"
     },
-    "price_sha256": "9953f942e3488054557c03cee7f7e9d34ccbd2c972f68d22de5e807837e02a7b",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "4e170ffaa1703db0d3328f23aa1f05d622e9b5d2ddb8a12954e6264108a9e2df",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -674,8 +674,8 @@
       "index_pct": 4.205703477152611,
       "data_origin": "real"
     },
-    "price_sha256": "8d47277fbe658d860baa3788f7213684979eacc73ef734ffbe5a1ebae77b4dda",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "d5cec0f28558463d06e02d05a95dab33b120bc2b4e31100770a88d4ebe0f566f",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -714,8 +714,8 @@
       "index_pct": 1.5500892524749288,
       "data_origin": "real"
     },
-    "price_sha256": "ff607b9de1d46511ba2f1b298a51176dde543f7faa46ec61357c780c7435cc37",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "0544a9d6426ee91f0297b722434fd5ac0e500ca3346c0fa60ad63cf0ad0d88c6",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -754,8 +754,8 @@
       "index_pct": 2.6198407560411585,
       "data_origin": "real"
     },
-    "price_sha256": "6cf2a90252e6f110f6e58b01309c779e414f7523a748199490809b390605f758",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "82c1b5bccbd11c543d0a9d97b6a8148e9ae117c2ed6b5f561fca278c7a042cc4",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -794,8 +794,8 @@
       "index_pct": 4.1393299420135365,
       "data_origin": "real"
     },
-    "price_sha256": "bf6d49a3f6ad0ee2a139c2d978fcfa4b8ff47933281c4c01c2602bd2fb6b7166",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "bb6b1949238ae3adf2b30e1549c4cdb29a735e50d9c3119b27c31b254a9844d3",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -834,8 +834,8 @@
       "index_pct": 28.477208618443093,
       "data_origin": "real"
     },
-    "price_sha256": "96b67e20dc4444bb7f27d841d504729c5f14c6f89b0e431b608d80e2af75719d",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "83b75d0855262adf5e6be0c12fa7a3872049538b3b1215e7bf245ddca3ae61c2",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -874,8 +874,8 @@
       "index_pct": 8.89584649305979,
       "data_origin": "real"
     },
-    "price_sha256": "66d77b4f96cdbaa2eb512901e846b0ecb3fc71b1fd341c5319fc1178de88656f",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "f528887acf3a78482e35754a73b2cffb9144e26b33769adb6cd6777c2d1a3693",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -914,8 +914,8 @@
       "index_pct": 7.0473464617588855,
       "data_origin": "real"
     },
-    "price_sha256": "96b67e20dc4444bb7f27d841d504729c5f14c6f89b0e431b608d80e2af75719d",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "83b75d0855262adf5e6be0c12fa7a3872049538b3b1215e7bf245ddca3ae61c2",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -954,8 +954,8 @@
       "index_pct": 9.060298874425188,
       "data_origin": "real"
     },
-    "price_sha256": "f3c4f55a6bcdfb5eb7b8358321a88d13993f42a8e461a4600be51fbc64d698e8",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "b953a9e8dd04aba7a08b05e53bc5cb9e8cce078c30fe2460ed6c61dbbbb929de",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -994,8 +994,8 @@
       "index_pct": 8.369325213470491,
       "data_origin": "real"
     },
-    "price_sha256": "d924c73286c77156cb78813136d08564d5c79a61fe2bfa6585d7effcc06d692a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "89b9360ff72ef03df4ca2569ada837b632d38a88fdc7c06937e975c2dc1e74bd",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1034,8 +1034,8 @@
       "index_pct": 0.8943536402740815,
       "data_origin": "real"
     },
-    "price_sha256": "708967892c35bf07b92c696a8c59ba4b3cefbbf79cc4c76d898c344f6d6b4624",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "25e915c43374b9bdfb43c99c5c1c8fdcd719d72abe9875948ede1a1e7c1a2793",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1074,8 +1074,8 @@
       "index_pct": 2.9392131704868873,
       "data_origin": "real"
     },
-    "price_sha256": "ef3a19f72c1029bea408acec680870d38182fdaade2dbc7e8a3199195a5c3b40",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "c5ea59c1e990b04c5d2dc299f060f40f939a1dac1440d7b3511f6a7edec78c3e",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1114,8 +1114,8 @@
       "index_pct": 2.9392131704868873,
       "data_origin": "real"
     },
-    "price_sha256": "7dd5b832205c8832ab78311e742b76fedf254666086b9f40172dc27835f4fd11",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "7d4c08b80e3f43521a55fc6ff2633b63cd38cab6fb1908e317d04387f1dc0126",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1154,8 +1154,8 @@
       "index_pct": 1.1270402742901364,
       "data_origin": "real"
     },
-    "price_sha256": "39823898d8e4fae66493a8fafd48276001bb29c3ea6655d20690242a9ea79854",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "ba4b4ef1a146e0842f3c7e952c4bac48b5e255913e184294884e10407f7f5b7b",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1194,8 +1194,8 @@
       "index_pct": -0.10938378504433688,
       "data_origin": "real"
     },
-    "price_sha256": "02fcaa637a857b8913a063cceca4508effbb0817731f7cb0bf9a2b98b3815b7a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "037196e24de6a96cac56194cb0609a977d84ec5a29ece41c0daf1537b2af74fc",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1234,8 +1234,8 @@
       "index_pct": 29.38136778317906,
       "data_origin": "real"
     },
-    "price_sha256": "d6dfebca9137e922dd93db5dca5893c124347ce27ba1b32e7130ea5d5d388f7a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "ac0a325fdfa57c61822803109b62b637ad1bd4c67f58402771fe1d7a52473273",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1274,8 +1274,8 @@
       "index_pct": 21.307442164066725,
       "data_origin": "real"
     },
-    "price_sha256": "d6dfebca9137e922dd93db5dca5893c124347ce27ba1b32e7130ea5d5d388f7a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "ac0a325fdfa57c61822803109b62b637ad1bd4c67f58402771fe1d7a52473273",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1314,8 +1314,8 @@
       "index_pct": 27.247343114054278,
       "data_origin": "real"
     },
-    "price_sha256": "5c0a0c6d91763b1ef6be4bc83e666159d0870e97cf0bebd93187e654d68ededc",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "fa8ce674e5ec990e9b68aba007b880bf005f334d812c6cb069d2c520f3a93dda",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1354,8 +1354,8 @@
       "index_pct": 27.914833062095745,
       "data_origin": "real"
     },
-    "price_sha256": "d6dfebca9137e922dd93db5dca5893c124347ce27ba1b32e7130ea5d5d388f7a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "ac0a325fdfa57c61822803109b62b637ad1bd4c67f58402771fe1d7a52473273",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1395,8 +1395,8 @@
       "index_pct": 0.07630494390449272,
       "data_origin": "real"
     },
-    "price_sha256": "d6dfebca9137e922dd93db5dca5893c124347ce27ba1b32e7130ea5d5d388f7a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "ac0a325fdfa57c61822803109b62b637ad1bd4c67f58402771fe1d7a52473273",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1435,8 +1435,8 @@
       "index_pct": 22.66291791970396,
       "data_origin": "real"
     },
-    "price_sha256": "e9d342b4ade8c82e9f2a1cc9819832eb7fd52458573a168af9583733a6d3aaf8",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "e62e0d503d4a3801e72fe5bf12749e906ff8b21066f7d945c3740f6e63b6d333",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1475,8 +1475,8 @@
       "index_pct": 24.600363980594864,
       "data_origin": "real"
     },
-    "price_sha256": "5c495ceae7e54cb87da7469b44e1fb5818d6334552b5bccd8276fb0c75e77edf",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "f4785722aaa35ad9adb91cfd49ce9ccb680be570bc7b795d46efef71fef24ccf",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1515,8 +1515,8 @@
       "index_pct": 13.132247556783906,
       "data_origin": "real"
     },
-    "price_sha256": "58a1fa801169768ab366e7595b37cbd6f807c40053c3d77c58d0b4532f7ff477",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "19fcb4a99d9f973cfe589ec7b68ce0bfabfd98c06f395f67b16fd615f68dc82e",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1556,8 +1556,8 @@
       "index_pct": -3.3952120715703193,
       "data_origin": "real"
     },
-    "price_sha256": "87eda6e603337f910f4d0b7c8b8be8e47c3460afaeb8e9f9deabed7e3599ab7f",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "92403e3d0f792a8972a7cd6ba0accdd57a6cf734cbc265fdd69b631059990025",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1597,8 +1597,8 @@
       "index_pct": -3.3952120715703193,
       "data_origin": "real"
     },
-    "price_sha256": "7e21e034fc38fd6c5bf0522243274013fe40858fe151d6e9bec2808e217a3ac4",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "96066a09a245f98abc195856e2a3c8f893de94b8725f9dcc7be0d3929e30e646",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1635,8 +1635,8 @@
       "index_pct": 9.635685560751073,
       "data_origin": "real"
     },
-    "price_sha256": "acdfdf29ef566a01fd9f6fda68c59f83ff3940f82699354a536319ed2e43d581",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "d3dc59e5a758d455ae74848da8f8abc610e504734f735cfaa3bb337df06072ff",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1673,8 +1673,8 @@
       "index_pct": 7.518753622975849,
       "data_origin": "real"
     },
-    "price_sha256": "3113064ff5a4bc0f420e5ec6d4cb2802fe25302d5fcb96cd621cf72087faa18e",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "8bf4312a66b15067dd2832b7a34ea510c4bc39efe3a845958f1b2e431d4a0a18",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1711,8 +1711,8 @@
       "index_pct": 1.2364543070203071,
       "data_origin": "real"
     },
-    "price_sha256": "32f38032298281f4165a254a66ce323dc154fc445035c3ac018f5ee8a4eba7d4",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "367783ae51c97315eca000f4a90dccc874a557aa1f878d0a14b62a4680119a5b",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1749,8 +1749,8 @@
       "index_pct": 8.404737690482932,
       "data_origin": "real"
     },
-    "price_sha256": "4abe9db8a1b1bdb95051d722ff2384cd550ebfc518bc91e5d09592816f0ce511",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "98d7d4ba8feb7b37b82b1046a7502b53cf32326a5f6ffbb890d468cc20599870",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1790,8 +1790,8 @@
       "index_pct": -0.08115197833745702,
       "data_origin": "real"
     },
-    "price_sha256": "1a5cc55002ab66f82fa2e827049c619abcf7f0a8ce452f06fbee34d924713da8",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "2946b96f448bb5013507206cb3733e804fb26f79607d4da2ec4f50c8b5452f6c",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1830,8 +1830,8 @@
       "index_pct": 0.2764653755694013,
       "data_origin": "real"
     },
-    "price_sha256": "158de785379e8c6dc655311a4897b7f8ef973b5702f2821257ac1789d799414d",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "7fc428507d2195799abf8e194c5d57607af48631c5b5376ba66812381257832d",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1870,8 +1870,8 @@
       "index_pct": 0.8369971796923004,
       "data_origin": "real"
     },
-    "price_sha256": "66c09ba6c0d904291a4048d7854c3faaddc343f767da7e53fcf4b903187d6be5",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "d6e2bd77294d19cf9a296762aec229f322ace360ff02ac1a52bd7157696f2f28",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1910,8 +1910,8 @@
       "index_pct": 0.8369971796923004,
       "data_origin": "real"
     },
-    "price_sha256": "0314a2037eec0accc56a62bdcd1bc1e8e4db51a408c3f6f33771fb9a572688cb",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "64fdde46c017e4ff30a9455474538a07a756e294ca3b194ea64062ed1b889e5f",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1950,8 +1950,8 @@
       "index_pct": 0.9012640493640589,
       "data_origin": "real"
     },
-    "price_sha256": "70a3e8f516ebe832a45a867fc5bd3cde0722b423da9c82797e644cf57c732dcd",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "56f4e45ef074aa6e72ba82bdff8fafb090e29a43708f5cd1d59f91b94793c7ca",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -1990,8 +1990,8 @@
       "index_pct": 0.28049834786652017,
       "data_origin": "real"
     },
-    "price_sha256": "d3f4f397e0765683c16b679072cb6c653e2d439239806055edb69c63a2e3b723",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "254a51058d36b9590c9a65c0e5d25a39048420b995f7afb418c260b5c0aa76bf",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2030,8 +2030,8 @@
       "index_pct": 10.272179526641057,
       "data_origin": "real"
     },
-    "price_sha256": "5d05abccaaec69b5965be2b68e1ceb07c16930d1dedb5b8415aae86822d7ec5d",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "32ca67ef374673a75e13dbe783341d14138ba9511e02ff088b77950edce46215",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2070,8 +2070,8 @@
       "index_pct": 9.657132257385847,
       "data_origin": "real"
     },
-    "price_sha256": "5d5fc850c3c6fd3562a51dcf1c660fde43c5f3ea5bf2e41b2826a8c7fd3b2282",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "3d92953badc39693b78aa599d0cbee7d1861caca29a038a58f0ddf97f4dbf597",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2110,8 +2110,8 @@
       "index_pct": 9.684578798175236,
       "data_origin": "real"
     },
-    "price_sha256": "5fdf8065a04513c659bb3dee496594902fcc534fcb388951e4c192b6e11f0d21",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "523c730f8693f01dc54d9483ddcbbb8957b8586f54f0c0bbb61e26ad17949656",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2150,8 +2150,8 @@
       "index_pct": 9.825758480568858,
       "data_origin": "real"
     },
-    "price_sha256": "cf22b4faaea81e5cd9de24fdf799c29163e4333e90c84a44fd984ce7eca55165",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "c58a0be8ecb0f0fde8bbd217ef78e24f23f691ced984d0a717c058bc2cf4cc36",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2190,8 +2190,8 @@
       "index_pct": 9.825758480568858,
       "data_origin": "real"
     },
-    "price_sha256": "6f557c247a19dcddb408146f668f5ec2aa3a9964056f8a7148e53e060089dcfb",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "e318c231bab8fb8a1f5573669fe29dcdb05c614bf6676a8f40f140d1e9f17442",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2230,8 +2230,8 @@
       "index_pct": 10.272179526641057,
       "data_origin": "real"
     },
-    "price_sha256": "292beea3324dabd224496b84faf9dfc652ba11ce53d8cb1ca4641704a1527f3e",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "c0f1d09efcc3d54ee8dbd95af690439ebea8026eaabb35ae5c9d71fa7fc151fd",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2270,8 +2270,8 @@
       "index_pct": 9.684578798175236,
       "data_origin": "real"
     },
-    "price_sha256": "7e57d8dbe008b763813e0943e0585465057bf5e9876eacab3a0080a94a666a74",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "f53a51630d5e823fbb78dbd337131e5cac1e98656a7aabde35472ccf247c3c80",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2310,8 +2310,8 @@
       "index_pct": 9.684578798175236,
       "data_origin": "real"
     },
-    "price_sha256": "fd856bf8cbb4502b17b7c38e322c86169d51f66999a0da6457aaaad47e7bca63",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "dd6f805cdf29de9bf2191a6ea379e8e6db3fcc1309067b1ec336a9f1516290f0",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2350,8 +2350,8 @@
       "index_pct": 6.872293482685987,
       "data_origin": "real"
     },
-    "price_sha256": "c85cd5dd70f272f70cffdc167d6d5fc9e1c57de48a977919740d58b1e74c5b0a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "8188f392c70b9f13bb0530bdbc4aa92e381ec7b56a86b25ed88334d44fa2250b",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2390,8 +2390,8 @@
       "index_pct": 9.618050297615577,
       "data_origin": "real"
     },
-    "price_sha256": "0d33c1eaef0a530a0d7fe23d45db4646dead641ad9487ff8320f19696157a5d3",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "d6ef77b3fddc3f0bbabf546210cb67b8729dcb0e47b521981794c78faea3f102",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2430,8 +2430,8 @@
       "index_pct": 10.272179526641057,
       "data_origin": "real"
     },
-    "price_sha256": "521bbcd96851f61fe0e8c49931cabe092ed9299fefa15afb70a51333f8c6faec",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "238c571066819b4e325f57e898525b887a2e9e92d3cfd361904b491867b2dd7c",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2470,8 +2470,8 @@
       "index_pct": 8.713691276064072,
       "data_origin": "real"
     },
-    "price_sha256": "708967892c35bf07b92c696a8c59ba4b3cefbbf79cc4c76d898c344f6d6b4624",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "25e915c43374b9bdfb43c99c5c1c8fdcd719d72abe9875948ede1a1e7c1a2793",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2510,8 +2510,8 @@
       "index_pct": 8.713691276064072,
       "data_origin": "real"
     },
-    "price_sha256": "449037fb3557dc1c06f77d5dd502bff4e83e3299751d35e17cd0a9ad5db925c6",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "a2d613725ddd5d5b4ca85c471b6caf06de1955ef1581df371638016f1e4a8ad3",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2550,8 +2550,8 @@
       "index_pct": 7.811039070940429,
       "data_origin": "real"
     },
-    "price_sha256": "11e0b83161b663c28c424705403862c81e65c9f35d9b8b6c12f232d7c38a8076",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "7b4988e10d797bce9fa338a7b488f78c66eb182d236142f1ee6d2795a0484c54",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2590,8 +2590,8 @@
       "index_pct": 7.452237854111066,
       "data_origin": "real"
     },
-    "price_sha256": "1b6150946d497c94cef5bfe53cd7fcb239ef08395131910271989338381b44d0",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "d39a6de05748d78ddd4bbd208deb37a79be719605466061141970746f3a2fd60",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2630,8 +2630,8 @@
       "index_pct": 0.9012640493640589,
       "data_origin": "real"
     },
-    "price_sha256": "598a0e2b62d15892a642097821ca5cdbb56b37fe73be35829701865b6dd26952",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "238e8489bfe281fe68ced39e9d6b862bc84dbf79d015b0a3e4d02a30689a3fac",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2670,8 +2670,8 @@
       "index_pct": 0.28049834786652017,
       "data_origin": "real"
     },
-    "price_sha256": "ea87af83689aa6f4c4cac90b7b2983a205c04891aa74f841e8001f58a35f390e",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "4c92b205ed5fe73951b38c85e2b23dd45a9290439ef8826188427317dc47afb7",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2710,8 +2710,8 @@
       "index_pct": 0.28049834786652017,
       "data_origin": "real"
     },
-    "price_sha256": "7d875b828e2b56718f4864dac3f11210a7e8f63fd385eb5ec2f67b002cf82e50",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "a4ec6d72699afdd25cb5faa3dbbe821c89b2f8cc13c51c77cca02aeb8f8528bc",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2750,8 +2750,8 @@
       "index_pct": 0.28049834786652017,
       "data_origin": "real"
     },
-    "price_sha256": "2204d13e2f97b03b368ddb5a54b483a329f961d8f74ff0bfa76d169607933caa",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "4ae371dbd4a15771ca0cbfd8720f5ac8e708e2805a2289070b57d7a3564d2dbc",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2790,8 +2790,8 @@
       "index_pct": -1.6028964033072968,
       "data_origin": "real"
     },
-    "price_sha256": "7efe72baa1234efabb70d01f928b945ea6cace9ea7f7b3437037b46d4d767617",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "bff014e596209f3d661ce847b3ba7f3f089b7852db0fa3bfba0f06d856f8afa3",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2830,8 +2830,8 @@
       "index_pct": 1.9355756548366188,
       "data_origin": "real"
     },
-    "price_sha256": "db04e594f4e021c2c8719d0b6d57463b91b5b20a3392ee004cd5bf47e0f4ec73",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "ae92c3a461c40d17325d545111db7ee034b47620d733bfb3b4cb0c03cd7d4e5a",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2870,8 +2870,8 @@
       "index_pct": 2.604531578139979,
       "data_origin": "real"
     },
-    "price_sha256": "1a5cc55002ab66f82fa2e827049c619abcf7f0a8ce452f06fbee34d924713da8",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "2946b96f448bb5013507206cb3733e804fb26f79607d4da2ec4f50c8b5452f6c",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2910,8 +2910,8 @@
       "index_pct": 7.11523819344777,
       "data_origin": "real"
     },
-    "price_sha256": "0abdc7e7f410cd4b709a55049736cd78960fc779d03b568c1794c98b9d798480",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "1ef5101174e05e8e63d9447a1c00aefbc1673cabc09b085c358da553fc998605",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2950,8 +2950,8 @@
       "index_pct": -1.7096944100743028,
       "data_origin": "real"
     },
-    "price_sha256": "566321b572af6299ecc047e6d457aad49603952a9389056eed1e78b60c243e41",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "865d2f8b36d8df1489935aa1377f98e6463c8d35b0e08e6d404271b53c680a07",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -2990,8 +2990,8 @@
       "index_pct": 2.353433027649765,
       "data_origin": "real"
     },
-    "price_sha256": "cba0002ebec012f7a7cca5c29a4df434acedfdb346ce7336313bc78a50bf9d0d",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "15db9583789a34e3083fe431ed06f094c181e1ca281fcfac2bc08b3dc6ba92b1",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3030,8 +3030,8 @@
       "index_pct": 1.9355756548366188,
       "data_origin": "real"
     },
-    "price_sha256": "9a01bbff01984b1be14523ef61ab82332a5985c88133cf7f1cadca75acb117d7",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "aab564809c21ea47b9317188fd73535a680beff963b09914ad8d53aa36eaabf1",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3070,8 +3070,8 @@
       "index_pct": -1.6028964033072968,
       "data_origin": "real"
     },
-    "price_sha256": "5b6ad451a67cac0af83bb615fe5788a3f77563d97198bb4a4df150299540f74e",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "a3db32f1066f66d20082c29e978a96cdc630165972fd1b7c959a552a29f05d63",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3110,8 +3110,8 @@
       "index_pct": 4.5113113841430685,
       "data_origin": "real"
     },
-    "price_sha256": "4dd8190a71662b138c913d7b93414b299f9d82a74be8da958b82e8af1937ad87",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "76de36a54c92e854a9707c88eda710aacfead109798d32a9608ad5d93ab47ac9",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3150,8 +3150,8 @@
       "index_pct": 2.1856121094902203,
       "data_origin": "real"
     },
-    "price_sha256": "ad0dbef7c44f9b809c03d595b3a4c82419a1bcecb852c10ce69762625046d79d",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "71416892ed2ea92a9f1c2aff3e9fc918a21d211442d27d4b76eb46e7eee3c877",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3190,8 +3190,8 @@
       "index_pct": 3.3151273404510517,
       "data_origin": "real"
     },
-    "price_sha256": "1a3829f5d93dafd367be979c1b7c70e6924fc87232c8e81e0376bf2dece53510",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "9e1ffa7cae4d7519d993e7add9f0d76710af80761e092c4c4507024b2cf4a6cc",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3231,8 +3231,8 @@
       "index_pct": 9.746882479798003,
       "data_origin": "real"
     },
-    "price_sha256": "aff2e2fa4d67fbb3c554ab8236bde5c7d652ad67232614ea602358971ae0e94b",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "920b704b8c9c5412980e5000138c1028c992ccc188891fce499a2faa76257c45",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3272,8 +3272,8 @@
       "index_pct": 6.240426811444766,
       "data_origin": "real"
     },
-    "price_sha256": "a146aafcbecaa0b472fabeea4f382211e273739057441baea7a8a21b29fcb5bc",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "69cf020e3ca64b5c134950d296fecf5c8c9724825d506438d15cf113df88b3b7",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3313,8 +3313,8 @@
       "index_pct": 6.660743908400857,
       "data_origin": "real"
     },
-    "price_sha256": "bd9808700b91c3a0704386ab8eb2b1bc20144e962fde0449a4dbbcc43c2e184e",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "70404408615c4ca8ab1ee04e7bfdec259a883f5f9464f9bb175b3b2309ce71e7",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3354,8 +3354,8 @@
       "index_pct": 0.9913036899806382,
       "data_origin": "real"
     },
-    "price_sha256": "d924c73286c77156cb78813136d08564d5c79a61fe2bfa6585d7effcc06d692a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "89b9360ff72ef03df4ca2569ada837b632d38a88fdc7c06937e975c2dc1e74bd",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3395,8 +3395,8 @@
       "index_pct": 2.946107300025891,
       "data_origin": "real"
     },
-    "price_sha256": "a146aafcbecaa0b472fabeea4f382211e273739057441baea7a8a21b29fcb5bc",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "69cf020e3ca64b5c134950d296fecf5c8c9724825d506438d15cf113df88b3b7",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3435,8 +3435,8 @@
       "index_pct": 0.45909330157070105,
       "data_origin": "real"
     },
-    "price_sha256": "17677b3e929dc275385fc3b9741a3c893c8242a117c5e6b26726d183689be4b5",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "ab2e2939867b560f9d9b23649268a3c576863dd7d94eb20c294028df269995f2",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3475,8 +3475,8 @@
       "index_pct": 1.5705617411500228,
       "data_origin": "real"
     },
-    "price_sha256": "ececeae156825ebf49000ff4fabd6b1d0d0eade2b596e9515e4e029865738359",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "af6edc94559f89c39776bdeb0e84d665fde6bf0843e3be33acc6884f90e2dabd",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3515,8 +3515,8 @@
       "index_pct": 4.5113113841430685,
       "data_origin": "real"
     },
-    "price_sha256": "34d20e58d895b56df28c5d584016dfe6c146eb4fe5fb949c6a7d3531536b4b81",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "23ccca28201ea00c9662e2144551c8d237df754556d526d5f8390d70a89af56e",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3555,8 +3555,8 @@
       "index_pct": 4.5113113841430685,
       "data_origin": "real"
     },
-    "price_sha256": "7efe72baa1234efabb70d01f928b945ea6cace9ea7f7b3437037b46d4d767617",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "bff014e596209f3d661ce847b3ba7f3f089b7852db0fa3bfba0f06d856f8afa3",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3595,8 +3595,8 @@
       "index_pct": 4.5113113841430685,
       "data_origin": "real"
     },
-    "price_sha256": "c5e2c9981b6f8e3b6961e7d7013a04bb117e98cf6c2c0c84c1a2f4d044286e82",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "b51d6100c6f018308081ff063cd6ecd572b3d355e5186a45ed35e6dcb768413e",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3635,8 +3635,8 @@
       "index_pct": -1.6028964033072968,
       "data_origin": "real"
     },
-    "price_sha256": "3cbce5d9383a5b5a4a5290a6d3b069b5cdd013cc46cee10813417eb4627ef93d",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "ef6bb39ca132af244eac8c3074f091cff8514e8e133b26bb32eb13418e0e6b35",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3675,8 +3675,8 @@
       "index_pct": 2.1856121094902203,
       "data_origin": "real"
     },
-    "price_sha256": "5240b14d6773a61777a7a6bd3ae5e0c5867f2959d4cf6d6351a8d289fce9a177",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "d75868c0a91f077dffbed989d0ac934d92c8470f18225bac12ae2a9dcb3ec180",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3715,8 +3715,8 @@
       "index_pct": 2.17151043926207,
       "data_origin": "real"
     },
-    "price_sha256": "f8d52a8c72934ba352996d84ff5ef374e6356aabffb1d1dd2c32cc2c4b30c964",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "fc9222b497ade922732c411ef55baa27cdd8ba54a8ceb2f002b889d274cb2430",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3755,8 +3755,8 @@
       "index_pct": 3.481459298409373,
       "data_origin": "real"
     },
-    "price_sha256": "7e57d8dbe008b763813e0943e0585465057bf5e9876eacab3a0080a94a666a74",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "f53a51630d5e823fbb78dbd337131e5cac1e98656a7aabde35472ccf247c3c80",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3795,8 +3795,8 @@
       "index_pct": 3.3151273404510517,
       "data_origin": "real"
     },
-    "price_sha256": "bb3e8864ed9a14f5180a74fa01f50caef08568d4592cc575f572631608d9f4ff",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "e65430ef9c1a8e81c8bd40bf769469326af45251c446f026f63467f31f3ad4a9",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3835,8 +3835,8 @@
       "index_pct": -1.6028964033072968,
       "data_origin": "real"
     },
-    "price_sha256": "c85cd5dd70f272f70cffdc167d6d5fc9e1c57de48a977919740d58b1e74c5b0a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "8188f392c70b9f13bb0530bdbc4aa92e381ec7b56a86b25ed88334d44fa2250b",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3875,8 +3875,8 @@
       "index_pct": -1.6028964033072968,
       "data_origin": "real"
     },
-    "price_sha256": "02fcaa637a857b8913a063cceca4508effbb0817731f7cb0bf9a2b98b3815b7a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "037196e24de6a96cac56194cb0609a977d84ec5a29ece41c0daf1537b2af74fc",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3915,8 +3915,8 @@
       "index_pct": 2.6951937413365323,
       "data_origin": "real"
     },
-    "price_sha256": "ececeae156825ebf49000ff4fabd6b1d0d0eade2b596e9515e4e029865738359",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "af6edc94559f89c39776bdeb0e84d665fde6bf0843e3be33acc6884f90e2dabd",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3955,8 +3955,8 @@
       "index_pct": 4.5113113841430685,
       "data_origin": "real"
     },
-    "price_sha256": "34d20e58d895b56df28c5d584016dfe6c146eb4fe5fb949c6a7d3531536b4b81",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "23ccca28201ea00c9662e2144551c8d237df754556d526d5f8390d70a89af56e",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -3995,8 +3995,8 @@
       "index_pct": 4.5113113841430685,
       "data_origin": "real"
     },
-    "price_sha256": "11e0b83161b663c28c424705403862c81e65c9f35d9b8b6c12f232d7c38a8076",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "7b4988e10d797bce9fa338a7b488f78c66eb182d236142f1ee6d2795a0484c54",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4035,8 +4035,8 @@
       "index_pct": 6.872293482685987,
       "data_origin": "real"
     },
-    "price_sha256": "02fcaa637a857b8913a063cceca4508effbb0817731f7cb0bf9a2b98b3815b7a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "037196e24de6a96cac56194cb0609a977d84ec5a29ece41c0daf1537b2af74fc",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4075,8 +4075,8 @@
       "index_pct": 6.872293482685987,
       "data_origin": "real"
     },
-    "price_sha256": "c85cd5dd70f272f70cffdc167d6d5fc9e1c57de48a977919740d58b1e74c5b0a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "8188f392c70b9f13bb0530bdbc4aa92e381ec7b56a86b25ed88334d44fa2250b",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4115,8 +4115,8 @@
       "index_pct": 6.872293482685987,
       "data_origin": "real"
     },
-    "price_sha256": "ea684f800fedc97d6ffdc8a657fb5eecd88e73ff78943656f2cdca78fca8778b",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "bfd4da12ae31a62ee69fc570a2b11ec42ec1545475a4e97b7fe54acb4777d56f",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4155,8 +4155,8 @@
       "index_pct": 6.872293482685987,
       "data_origin": "real"
     },
-    "price_sha256": "b5722c883686cc481b9f5d75530dbf983f1119a5fc29ce3aa8b4ddc5d33ffb2f",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "ae953fecf557a885daa8d4ee82aac56446b70839eff0fdf37f832089baca8918",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4195,8 +4195,8 @@
       "index_pct": 9.618050297615577,
       "data_origin": "real"
     },
-    "price_sha256": "d973f5f07e8e463219aa98ff102d28cbc065ca630083b03cf50bb3a40d1f56bc",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "193ed756b43c3cb33fe9ec46a92299c899cb149ebf2b4f81f32c17bfc9bceb23",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4235,8 +4235,8 @@
       "index_pct": 5.324223011349272,
       "data_origin": "real"
     },
-    "price_sha256": "4b8c324d286210d0b27feed96d93190282fbb00fa93c8acf8aa22a1e5bb3a903",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "ff8be2317caad134a31485c200cfaeaff74fb6a9b0430384b6b496a2227cfea0",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4275,8 +4275,8 @@
       "index_pct": 2.311721179632409,
       "data_origin": "real"
     },
-    "price_sha256": "449037fb3557dc1c06f77d5dd502bff4e83e3299751d35e17cd0a9ad5db925c6",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "a2d613725ddd5d5b4ca85c471b6caf06de1955ef1581df371638016f1e4a8ad3",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4315,8 +4315,8 @@
       "index_pct": 2.311721179632409,
       "data_origin": "real"
     },
-    "price_sha256": "0d33c1eaef0a530a0d7fe23d45db4646dead641ad9487ff8320f19696157a5d3",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "d6ef77b3fddc3f0bbabf546210cb67b8729dcb0e47b521981794c78faea3f102",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4355,8 +4355,8 @@
       "index_pct": 4.050324668642613,
       "data_origin": "real"
     },
-    "price_sha256": "8d34b21d33c30cae1460ed410633c9566740027ae0a9913b8802ee7ac3b99292",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "f2c933096a7f5270b744656a0343ecd09d79d0a07f5d6caf2d15b1d80296e0ac",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4395,8 +4395,8 @@
       "index_pct": 0.5902863364192434,
       "data_origin": "real"
     },
-    "price_sha256": "85568f65762c2e3d0f9560b1674c519d3e092fb6a94c3f3fb2477a5f4097daf7",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "6d48c6707f392c7b52369cbff1876360bed7ff85efd56a9bf11179ad162a00af",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4435,8 +4435,8 @@
       "index_pct": 9.618050297615577,
       "data_origin": "real"
     },
-    "price_sha256": "ad0dbef7c44f9b809c03d595b3a4c82419a1bcecb852c10ce69762625046d79d",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "71416892ed2ea92a9f1c2aff3e9fc918a21d211442d27d4b76eb46e7eee3c877",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4475,8 +4475,8 @@
       "index_pct": 7.452237854111066,
       "data_origin": "real"
     },
-    "price_sha256": "8506894e2cbae38ff540f595dc9a8eab32609fd76fe83cfc730b4f7ab806eda1",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "256505481031f99d2c140d188ac92da53185a4581c3cbe0c82dae668d5defdf7",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4515,8 +4515,8 @@
       "index_pct": 6.584926496643528,
       "data_origin": "real"
     },
-    "price_sha256": "808bd8aaf7e4958b0bf6b93eb349d4a3a6ce0e436a05e65b9385c3470c9d5625",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "750591de2beb048bd3e3082ca65d0864feb97371b115c496dc624aac797a7e87",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4555,8 +4555,8 @@
       "index_pct": 4.097719571487191,
       "data_origin": "real"
     },
-    "price_sha256": "2146b5812a49f72659270b06ee48180e9f699e43391f38278cbffb4364f01d28",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "b9d9d5e34b084104c7b5f32366d8fb2e73099002faa3339fa492808d43c953b4",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4595,8 +4595,8 @@
       "index_pct": 5.706343489283339,
       "data_origin": "real"
     },
-    "price_sha256": "e3502064064870e146b2b5b718aa2139a987ec2b1faa0eb3b78d0d074b739a20",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "05813ba75371ed84fedd06da15e20374be70b5e0bc23a85f41e3a78b40985079",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4636,8 +4636,8 @@
       "index_pct": 4.050324668642613,
       "data_origin": "real"
     },
-    "price_sha256": "5e79b133f99e298e1ada186378366c0b89223dba316b633b91f31598830701aa",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "9f2d625f7b9872961c0b8b65d16e312abde944f5d20bb79a4d1b714cd75ee552",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4677,8 +4677,8 @@
       "index_pct": 2.1856121094902203,
       "data_origin": "real"
     },
-    "price_sha256": "1a3829f5d93dafd367be979c1b7c70e6924fc87232c8e81e0376bf2dece53510",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "9e1ffa7cae4d7519d993e7add9f0d76710af80761e092c4c4507024b2cf4a6cc",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4718,8 +4718,8 @@
       "index_pct": -4.069062734422591,
       "data_origin": "real"
     },
-    "price_sha256": "d6dfebca9137e922dd93db5dca5893c124347ce27ba1b32e7130ea5d5d388f7a",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "ac0a325fdfa57c61822803109b62b637ad1bd4c67f58402771fe1d7a52473273",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4759,8 +4759,8 @@
       "index_pct": -5.780778801318586,
       "data_origin": "real"
     },
-    "price_sha256": "4791d90cfc35b927c70ecde0cc5f58573b05e29d96f30c6d47e9832dac0f9952",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "f2372992d72e7dcf8dd8e568760ed61d2d1194a7f85afeacf602a405350a1b7d",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4800,8 +4800,8 @@
       "index_pct": -0.545304639691635,
       "data_origin": "real"
     },
-    "price_sha256": "79ba61e84059bb4bcec62b039d8f05f6a8e965e549b58d50fee80192489dfa2f",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "8291c1f21eeb46859557195222c7b81b80ceec15f4f7195e5bf4aa7475447efd",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4840,8 +4840,8 @@
       "index_pct": 5.955709220346228,
       "data_origin": "real"
     },
-    "price_sha256": "07ac74be1c917ff371e92476ab606ddd5da36a04aeffa81af742fc4901069aaa",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "4d6a2f387eb2d7820998c87214d3b6f03ae1c8927d170c861aa074635e09a291",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4880,8 +4880,8 @@
       "index_pct": 6.619128880800518,
       "data_origin": "real"
     },
-    "price_sha256": "7177fb53b8c27fbdede137cae77b1a5913555bf19b16825c712ff3d42fe72930",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "b6e508c701f85cdac8d7b50f6549ba4754b4532c3eb83813bf8eb38048f7dfe8",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4921,8 +4921,8 @@
       "index_pct": 1.1439839273369223,
       "data_origin": "real"
     },
-    "price_sha256": "cfffac06f70be9a39dd2e71aa930e5d24067e4a8b1d4c307c492a68f75236ad4",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "e9685db538974743b2f468dc38f19f183572fb3c2fb956bac990431881286ef6",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -4962,8 +4962,8 @@
       "index_pct": 6.240426811444766,
       "data_origin": "real"
     },
-    "price_sha256": "56e9c417203489c0c921a75fb6fd0a2bd109589134475eadd14a73072b53b99d",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "2d8d54a56e17fcfd457a64b1f54d4dd1488d107601346cdb7429418c4d1828e4",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5003,8 +5003,8 @@
       "index_pct": 6.523654532588519,
       "data_origin": "real"
     },
-    "price_sha256": "0a1bfd4c4fe1eeb38e570abf3f97fb210d6515cb4d29e952756d6a351d98841b",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "608051469242e91b4f8e0bb286bc242bfc0f538e42c6b3cf29538774154c6ae4",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5043,8 +5043,8 @@
       "index_pct": 0.12965857534044112,
       "data_origin": "real"
     },
-    "price_sha256": "3133036449a81a7da5b09159d4df6fc9d44fea3cdb8028e933fe2ac5dcb28489",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "c0c01c31ba953ad4fc13b22baccf0bd9ecad428ac43cf3b3b7c9fd0afc32ebae",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5086,8 +5086,8 @@
       "index_pct": 0.17641874126705925,
       "data_origin": "real"
     },
-    "price_sha256": "02207ac41a8b044bebac2261ccfa764f2f1054ad61e849eb6f37246c5c0caf20",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "d8548412273d90fab7f8e03d3837e937183ab2fb4dc1b3b85eb8f84ec5b29554",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5129,8 +5129,8 @@
       "index_pct": 1.3832368589272281,
       "data_origin": "real"
     },
-    "price_sha256": "d996976dd3b6abe4def501a6f953587a32f3410fb82ff246fe879524de3f448e",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "04c146f45f484c5535b5f6393189529dc093953fb7c48b78509af84881dfde87",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5169,8 +5169,8 @@
       "index_pct": 2.023305315111479,
       "data_origin": "real"
     },
-    "price_sha256": "ef27b37e86af50d8c2ca2c2c2209177d6ddc73091a8ca7a11f45ca166ac12550",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "bc79a298da82d95d95e49e461f24f479220262d101ad76a5d889569764077451",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5212,8 +5212,8 @@
       "index_pct": -3.0263550142981765,
       "data_origin": "real"
     },
-    "price_sha256": "ebe47929b30b06eea0a8ce61dcb4d55f8e8f5b1926bac8bdb1170255c9e14d06",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "799ada6cc20aa21aa4b177d66501ecb9c4cdfefb40be6c772dde80dd5a3d7fe8",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5252,8 +5252,8 @@
       "index_pct": 2.0368553372733134,
       "data_origin": "real"
     },
-    "price_sha256": "0ebada36a0ea28695244ec24a60ba313d294c10bec96fa4410846e278aa1c986",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "8fb5a112b6ff70818ca898e36b3bdc3158fa63f56e2f1887fb439ac2bbdf8496",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5292,8 +5292,8 @@
       "index_pct": 4.010323128297233,
       "data_origin": "real"
     },
-    "price_sha256": "eca5c29f67c45a330c956c6d10fa7e191ff1b6c863bc728ac2e599c97c105937",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "e467eaa4d6603c433e400162e6c76646e9a4e7b6503c6183744c66952c88da2d",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5332,8 +5332,8 @@
       "index_pct": 3.420098517857939,
       "data_origin": "real"
     },
-    "price_sha256": "366cff2d2f4ef2545c9466e1b3f14c1852c5d6e818794e0688ae6703c10e4a2e",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "deb58038b6c262ccc87cf4ae5d7b9727d9d0879879398ab0074dff451a49fe2e",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5372,8 +5372,8 @@
       "index_pct": 0.7504006141586084,
       "data_origin": "real"
     },
-    "price_sha256": "ad0dbef7c44f9b809c03d595b3a4c82419a1bcecb852c10ce69762625046d79d",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "71416892ed2ea92a9f1c2aff3e9fc918a21d211442d27d4b76eb46e7eee3c877",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5412,8 +5412,8 @@
       "index_pct": 0.7504006141586084,
       "data_origin": "real"
     },
-    "price_sha256": "67709cffc319133c1b7e8bce3a8b6fac0879a5a21e42cc7a41a587f872eecaf9",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "285ce0805959e0b9f91b97e6a5e486a4d747cd57affb3be7a3cb1e51ccce45cd",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5451,8 +5451,8 @@
       "index_pct": 1.6574694205769847,
       "data_origin": "real"
     },
-    "price_sha256": "77146321627d0fd80db823f5ac9c48b87bb456881c9c4a22499a58d96c1f2538",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "7af2adc57818c6fa2425774ea3cdacd237bc641480cfad5278037038a3ec37e2",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5490,8 +5490,8 @@
       "index_pct": 6.523042067189744,
       "data_origin": "real"
     },
-    "price_sha256": "1a3829f5d93dafd367be979c1b7c70e6924fc87232c8e81e0376bf2dece53510",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "9e1ffa7cae4d7519d993e7add9f0d76710af80761e092c4c4507024b2cf4a6cc",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5529,8 +5529,8 @@
       "index_pct": 2.946949997403059,
       "data_origin": "real"
     },
-    "price_sha256": "7435bcfe00a210dd3bab165855b0c3ecaad268aac66907a016b645a5eedecade",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "6794eaef3726b4234c5c5c5ba4f89c8493b312fd506acb4f70bb1a86647bb219",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5568,8 +5568,8 @@
       "index_pct": 0.4020200254873263,
       "data_origin": "real"
     },
-    "price_sha256": "0d33c1eaef0a530a0d7fe23d45db4646dead641ad9487ff8320f19696157a5d3",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "d6ef77b3fddc3f0bbabf546210cb67b8729dcb0e47b521981794c78faea3f102",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5607,8 +5607,8 @@
       "index_pct": -1.8089397701228749,
       "data_origin": "real"
     },
-    "price_sha256": "1d2e68a26f2b223a64992271b7c47adefd7e2f4a0850b414da0d0abb70a5ffea",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "fc2be47db198ff3bfdd4aed8530be3fd78820e48880fc892931433677774a63d",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5646,8 +5646,8 @@
       "index_pct": 5.515634046655671,
       "data_origin": "real"
     },
-    "price_sha256": "c749aa29601262ac7b9c0cbe1a4ff56610d8ee9433b4e1ffec2591d15a743345",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "0b2c9487e187374dd55213070d198872cd41fa7c5597d1eeed53932606eec61e",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5684,8 +5684,8 @@
       "index_pct": 8.717404859320709,
       "data_origin": "real"
     },
-    "price_sha256": "243b2e2052adc04d133caccd5680783d5a66be04a2537fead1ad9d2e94d1a21b",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "183d80d030d63e3656a496c7d9941b36ed3202b91e7ede045292a797e63b3b61",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5723,8 +5723,8 @@
       "index_pct": 7.787690211299192,
       "data_origin": "real"
     },
-    "price_sha256": "fd856bf8cbb4502b17b7c38e322c86169d51f66999a0da6457aaaad47e7bca63",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "dd6f805cdf29de9bf2191a6ea379e8e6db3fcc1309067b1ec336a9f1516290f0",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5762,8 +5762,8 @@
       "index_pct": 8.520892624366283,
       "data_origin": "real"
     },
-    "price_sha256": "96104d1fcab9ca2aada52228014070588e80af5f44ccd2c484034d5c2eb20866",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "e08e74f193cd9606469c26e780456b11287af234837b9a137abd85ecf6b1bc79",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5801,8 +5801,8 @@
       "index_pct": 3.888988432467144,
       "data_origin": "real"
     },
-    "price_sha256": "43a75507a7a606b805928813efce09817e2326a1fe342857280510f36addc5cf",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "e57318641479ec475e77aca5a2c1582eb6f2a4ed8ca73a30c70bf5becc3c7065",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5842,8 +5842,8 @@
       "index_pct": 3.884454976182461,
       "data_origin": "real"
     },
-    "price_sha256": "4b9e170658134863e73e6e0a550949d8455f0a80614e5de1a3c0e954f0c2ace8",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "613649f101fac7b951c018665ef522c1a9a9c753a1f529f2dd5a7edacdee70c1",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5883,8 +5883,8 @@
       "index_pct": 3.888988432467144,
       "data_origin": "real"
     },
-    "price_sha256": "d3f4f397e0765683c16b679072cb6c653e2d439239806055edb69c63a2e3b723",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "254a51058d36b9590c9a65c0e5d25a39048420b995f7afb418c260b5c0aa76bf",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5924,8 +5924,8 @@
       "index_pct": 0.9913036899806382,
       "data_origin": "real"
     },
-    "price_sha256": "a40a4e68d8641acf8c75f4af4c9343b33517086904ba9e429e997a1127c45466",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "afc293935bd93d669c6b253c69de541ade7d666fe01b34b52588ca66b9a0680e",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -5965,8 +5965,8 @@
       "index_pct": 0.4020200254873263,
       "data_origin": "real"
     },
-    "price_sha256": "f3c4f55a6bcdfb5eb7b8358321a88d13993f42a8e461a4600be51fbc64d698e8",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "b953a9e8dd04aba7a08b05e53bc5cb9e8cce078c30fe2460ed6c61dbbbb929de",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   },
@@ -6006,8 +6006,8 @@
       "index_pct": 1.0142577173397616,
       "data_origin": "real"
     },
-    "price_sha256": "d35bb145c601fe1893d9ca4619fa4375b31ec58482961006ba4b9633be6fbc04",
-    "benchmark_sha256": "2d4cdd1cfab7ae742db9ad8aeb6e4e4342fe891e7ec47b2d06d35a650891beab",
+    "price_sha256": "191e8645c056449c5a4e831b6e5c70143b4a174ef93451fd6d4330314ea32e5d",
+    "benchmark_sha256": "3a415d953792bcffa1736795863dc6dcc7377f986f6159264205fb85f8f1a987",
     "retrieved_on": "2026-11-21",
     "scoring_cutoff": "2026-11-20"
   }
