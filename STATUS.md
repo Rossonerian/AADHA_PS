@@ -7,7 +7,7 @@
 
 | Person | % | Phase | Blockers | Last Update |
 |---|---|---|---|---|
-| Hardhik | 80% | Phase 4/6 (CI & Deploy — Neon postgres/auth/storage/realtime live; Phases 1,2,3,5 done) | Render/Vercel deploy URLs, OPENROUTER_API_KEY in cloud, docs/PRD.md export | 2026-11-20 |
+| Hardhik | 80% | Phase 6/6 (Integration & Demo — Phases 1–5 complete; C1 live green) | docs/PRD.md export; Divyansh education routes for C2/C3 | 2026-11-21 |
 | Arnav | 76.25% | Phase 3/6 & Phase 6/6 open (Phases 1,2,4,5 done; grounding 59/59) | OpenRouter key for live F1; real-source dataset or Option B sign-off | 2026-11-20 |
 | Divyansh | 0% | Phase 1/6 (unblocked: core stubs & auth/db ready) | none | 2026-11-20 |
 | Ananya | 0% | Phase 1/6 (unblocked: Next.js scaffold & contracts.ts ready) | none | 2026-11-20 |
@@ -31,6 +31,13 @@ _Hardhik appends checkpoint rollups and any scope-cut flags here._
 Arnav 0% (Phase 1/6) | Divyansh 0% (Phase 1/6) | Hardhik 71% (Phase 4/6) | Ananya 0% (Phase 1/6)
 Behind target: none (C0 contract freeze reached; next target C1 25% by Hour 8)
 Blockers: docs/PRD.md export pending; live cloud secrets (Supabase, OpenRouter, Vercel/Render, GitHub remote) needed for C1 staging deploy
+```
+
+```text
+[TEAM] C1 | Overall 39%
+Arnav 76.25% (Phase 3/6 & 6/6) | Divyansh 0% (Phase 1/6) | Hardhik 80% (Phase 6/6) | Ananya 0% (Phase 1/6; UI PRs #2/#3 merged, % self-update pending)
+Behind target: Divyansh (target C1 25%; next target C2 50%) — prioritize P0 onboarding, plan, and lessons before P1/P2 polish
+Blockers: docs/PRD.md export pending; Arnav live F1 & real-source Option A/B sign-off; Divyansh education backend routes for C2
 ```
 
 ## Hardhik
@@ -59,6 +66,14 @@ Done: Provisioned Neon (`dawn-silence-66045214`), live Alembic (`0001_initial_pl
 Next: Deploy API (Render) + Web (Vercel) with Neon/OpenRouter cloud secrets for C1 staging URLs.
 Minor: Updated `core.llm` default model to `nvidia/nemotron-3.5-lightning:free` ($0 fallback pricing); enabled `http://127.0.0.1:3000` in Neon Auth dev trusted origins.
 Blockers: Render/Vercel deploy URLs, OPENROUTER_API_KEY in cloud, docs/PRD.md export.
+```
+
+```text
+[Hardhik] 80% | Phase 4/6: CI & deployment (complete -> entering Phase 6/6)
+Done: Live C1 verified end-to-end across Vercel (https://aadha-ps.vercel.app), Render API, and Neon (Postgres, Auth, Object Storage, Realtime); CORS preflight 200, /api/neon/health 200 (all 4 services ok), Vercel Auth -> EdDSA JWT -> Render /api/v1/me (401->200), POST /api/v1/verify 200 & GET /api/v1/submissions/mine 200, live daily_job cron logged in job_runs, CI & 286/286 pytest green.
+Next: Checkpoint C2/C3 integration with Divyansh education routes & Ananya live UI wiring, update data/DATA_MANIFEST.md, and run full staging smoke test twice before C4.
+Minor: Disabled reasoning token overhead for Nemotron models in core.llm so structured outputs do not truncate; guarded /api/neon/verify with 403 in production, hardened CORS/base-URL normalization, and cleaned up README.md and Makefile check commands.
+Blockers: docs/PRD.md export; Divyansh education endpoints for full C2/C3 smoke path.
 ```
 
 ## Arnav
