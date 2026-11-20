@@ -21,4 +21,4 @@ The shared API contracts live in `src/lib/contracts.ts`. Several endpoints do no
 
 ## UI design system
 
-The refreshed surfaces follow the [Looseleaf](https://github.com/kevintngo/looseleaf) paper-and-ink visual language: rounded paper cards, restrained drawn-like button depth, accessible focus targets, and semantic DOM controls. The app keeps its existing project components and uses Lucide React icons for consistent navigation. Palette scales are available through light/dark theme tokens; the workspace toggle switches between them.
+PaisaProof uses the actual [Looseleaf](https://github.com/kevintngo/looseleaf) registry Button and its Ink rendering runtime. The registry-generated source is vendored in `src/components/ui/button.tsx` and `src/lib/ink/` under the upstream MIT license; the source font assets and styles are in `src/app/fonts/` and `src/app/looseleaf.css`. Our project Button wrapper delegates its primary, secondary, and quiet variants to the Looseleaf component. Lucide React provides the sidebar icons.

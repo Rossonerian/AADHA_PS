@@ -36,7 +36,7 @@ export function mockNasdaqChallenge(symbol: string): NasdaqChallengeResponse {
     },
     nasdaq_url: `https://www.nasdaq.com/market-activity/stocks/${sym.toLowerCase()}`,
     disclaimer:
-      "Educational literacy check only — Aacharya never recommends buying, selling, or holding any security.",
+      "Educational literacy check only — PaisaProof never recommends buying, selling, or holding any security.",
     questions: [
       {
         id: "q1",
