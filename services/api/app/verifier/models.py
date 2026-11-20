@@ -18,11 +18,10 @@ from sqlalchemy import (
     UniqueConstraint,
     Uuid,
 )
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column
 
-
-class Base(DeclarativeBase):
-    pass
+from app.core.db import Base
+from app.core.models import UserRecord
 
 
 class Source(Base):
@@ -68,7 +67,9 @@ class Submission(Base):
     )
 
     id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
-    user_id: Mapped[UUID] = mapped_column(Uuid)
+    user_id: Mapped[UUID] = mapped_column(
+        Uuid, ForeignKey(UserRecord.id, name="fk_submissions_user_id_users")
+    )
     source_id: Mapped[UUID] = mapped_column(ForeignKey("sources.id"))
     raw_content: Mapped[str] = mapped_column(Text)
     content_hash: Mapped[str] = mapped_column(String(64))

@@ -1,0 +1,1206 @@
+{
+  "checked_at": "2026-11-20T23:26:11.139393+00:00",
+  "data_origin": "real",
+  "publications": [
+    {
+      "publisher": "bob_capital_markets",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230112_INE_IN_BOB_Capital_Markets.pdf",
+      "sha256": "3524c17af5a32eec33e8b026314551eed97eb776788d7d69f000c7547674c6de",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "bob_capital_markets",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230112_HTE_IN_BOB_Capital_Markets.pdf",
+      "sha256": "abe629ea993ff5a32d8113a9268ea3b0c112b6ef8b8e963e72c67f461a290184",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "bob_capital_markets",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230120_POI_IN_BOB_Capital_Markets.pdf",
+      "sha256": "59f63c0d9241aca197eaec92a0afa975893f11d19c43b40b12986a617d5c2afd",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "bob_capital_markets",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230123_SBIL_IN_BOB_Capital_Markets.pdf",
+      "sha256": "26d62302cf4c99b80b09f07ee6f4ab76e0f1e06a308bb16a420159c51aa2e8a3",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "bob_capital_markets",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230125_HDT_IN_BOB_Capital_Markets.pdf",
+      "sha256": "e4ababcfc7512682390f7eafa0a6d046a7c8c0a2a73806788ab0f5210b047fbc",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "nirmal_bang_institutional_equities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230113_HTE_IN_Nirmal_Bang_Institutional_Equities.pdf",
+      "sha256": "50a2f948d6f47c6de83917ad82698692e0c5572111ca88f4590f151f55fc34e8",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "nirmal_bang_institutional_equities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230113_INE_IN_Nirmal_Bang_Institutional_Equities.pdf",
+      "sha256": "a2e8c7aaddad748704812462f71ada1f58fd721df3e6a7930b9605a8d22edb98",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "nirmal_bang_institutional_equities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230118_ERI_IN_Nirmal_Bang_Institutional_Equities.pdf",
+      "sha256": "75fd9bd8ac4219fa54171a89d7a1a30c32ba14adb5013f9f1ce38d26a5a4d1c4",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "nirmal_bang_institutional_equities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230119_IBK_IN_Nirmal_Bang_Institutional_Equities.pdf",
+      "sha256": "5f2bcd42f6ab3f2eb4e3d97b29679ad6f8580322874374ffee57514f7ea5dd6a",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "nirmal_bang_institutional_equities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230120_ASF_IN_Nirmal_Bang_Institutional_Equities.pdf",
+      "sha256": "29962fba0a290d354cc732cde62b7296161678c85498194388a606d1455423ba",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "deven_choksey",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230116_HTE_IN_Kisan_Ratilal_Choksey_Shares_and_Securitiesies.pdf",
+      "sha256": "cb0a0f40ffa988b58b6cea9ed1c98f678f6e7142b16fd42de7e2cf7c8f315c0f",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "deven_choksey",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230117_HFC_IN_Kisan_Ratilal_Choksey_Shares_and_Securitiesies.pdf",
+      "sha256": "6db1e721fdb91c65a4e6bdb3c7c8154033984213cc9c475d4a2adce3cdf04b79",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "deven_choksey",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230120_API_IN_Kisan_Ratilal_Choksey_Shares_and_Securitiesies.pdf",
+      "sha256": "ab522df275ef9b9273ad3daf27e9d227e298bc7d93ea466596eb767421ce6652",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "deven_choksey",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230123_HMT_IN_Kisan_Ratilal_Choksey_Shares_and_Securitiesies.pdf",
+      "sha256": "73c28962bf6706583aefe24a3e40d69455270fbadd5f62d4bdfd5b2526f8108f",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "deven_choksey",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230125_KOK_IN_Kisan_Ratilal_Choksey_Shares_and_Securitiesies.pdf",
+      "sha256": "055d1e00e7a75eac43994e1c867cc8d8821b1045f226b59864f5e60cda2973c5",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "hem_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230322_JYL_IN_Hem_Securities.pdf",
+      "sha256": "e9c8a89611fb5468631fa1e6cc20257cae0bba4a5d771e77e96b979ff7d906c1",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "hem_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230329_GLE_IN_Hem_Securities.pdf",
+      "sha256": "6d634cda4298c5bb4cdc902f4bf9d6b26855651567d6caea7c2c68002b99bd81",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "hem_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230509_URC_IN_Hem_Securities.pdf",
+      "sha256": "1466661f96e776f528a872cd3855e1c72cc3c34fd3edb7f5a5d8fc70f85cf759",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "hem_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230531_DHA_IN_Hem_Securities.pdf",
+      "sha256": "d15a6ea7b54e79f0a142eef1e92c3f01e3476fb7449382e635c80ca7c526c566",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "hem_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230608_HMT_IN_Hem_Securities.pdf",
+      "sha256": "8b8dc8ec685bd0854e3a71b88dfac23c139e3b3588a9f094b09eaf54bcb6221b",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "keynote_capitals",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230419_AGK_IN_Keynote_Capitals_Ltd.pdf",
+      "sha256": "b142f9c981460b2e07b4532958673ae89aa78629915dcd323db7d359e4bb913f",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "keynote_capitals",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240102_IGE_IN_Keynote_Capital_Ltd.pdf",
+      "sha256": "b0b486e6a4ce634ee7bf421788cb9308bb144d2cd2f3dc8a1239b084e921ac1e",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "keynote_capitals",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240116_AGK_IN_Keynote_Capital_Ltd.pdf",
+      "sha256": "ddd8c29a74e91dcffa24282a896980751d849091dbf63a9ffc3b6d697f18e471",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "keynote_capitals",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240119_MAR_IN_Keynote_Capital_Ltd.pdf",
+      "sha256": "061426cc63d4ba331b0b4bdf5b4d967b8bb0af0ccbf34eb246545b7045c731e2",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "keynote_capitals",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240123_ZIB_IN_Keynote_Capital_Ltd.pdf",
+      "sha256": "385e41f0e52907850dddf6c0cbfd3d2e2a7fdd7dd6937eb7c1dedd5787a500d0",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "religare",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230512_API_IN_Religare.pdf",
+      "sha256": "099f42697c4a6f3a8b1c39f1b0c704de146e46aa63630a9477df45e11eab085e",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "religare",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230516_BPI_IN_Religare.pdf",
+      "sha256": "98fe8d76bee97f336e1f14b9462960d42e512496e2c20ab6f71925fb0360f7d3",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "religare",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230516_RNF_IN_Religare.pdf",
+      "sha256": "ac5f3e11bece6b211e54b4284d7159e24f63265f3dbd183bd2a9f8bbeb78e09b",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "religare",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230712_COP_IN_Religare.pdf",
+      "sha256": "e586f024619faf7d0223f8408aed3ca4a18cbbc3286a0a4c585c267b4739fa79",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "religare",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230713_TSE_IN_Religare.pdf",
+      "sha256": "42112dbbc06e9766cbb523980423ab38d4874e8ef53daf394044f2f8139004a2",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "iifl",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230621_CI9_IN_IIFL.pdf",
+      "sha256": "8e687c55e8e73076546beeb0502ef0d1144e0ce61131aae3406048dda764552c",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "iifl",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230725_CI9_IN_IIFL.pdf",
+      "sha256": "4433a369ada878b0e33e439d1094abc7230e373567802c63b726333f044e4bf4",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "iifl",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20231025_KFT_IN_IIFL.pdf",
+      "sha256": "4f8a175b0ecffb6fac0ad312a07f9dd2295fe1ff7c930d53100240b77ba22a86",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "iifl",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20231027_CI9_IN_IIFL.pdf",
+      "sha256": "5be951421f40a451ae30fd349a3549a145c3bc4396d9131fcf74e7f9fbd7134e",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "iifl",
+      "url": "https://www.valoremadvisors.com/assets/admin/research_file/1748866962_IIFL_-_CMS_Info_Systems_-_1QFY25_update_-_20240726.pdf",
+      "sha256": "abd448bd943eacee00e96bc232a4df4c5827b04f1bb086f7057b9b5048c36de2",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "systematix_shares_&_stocks",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230628_PTJ_IN_Systematix_Shares_%26_Stocks.pdf",
+      "sha256": "889bcd2f40e0626b7ab7240c2210de2cbc2e44913098f7b1771f5e561c59ef2a",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "systematix_shares_&_stocks",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20230727_IDV_IN_Systematix_Shares_%26_Stocks.pdf",
+      "sha256": "69ff1571c5d7b78b649b4be91a915b3a6d2b94ad79801faa86472c7565f40368",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "systematix_shares_&_stocks",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20250116_MAS_IN_Systematix_Shares_%26_Stocks.pdf",
+      "sha256": "5d3e5e1b95ef114b392729bd5f5ca3ef8a5b74fe3e0718a103fe51d113ceef0a",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "systematix_shares_&_stocks",
+      "url": "https://investmentguruindia.com/editorial/uploads/news-pdf/66d5e0ab_Shilpa%20Medicare%20-%202QFY26%20-%2017-11-2025%20-%20Systematix.pdf",
+      "sha256": "2a7a03f5e67ffeb1745de92a84cbcb041486f697eb8634b5daa7122e6811a104",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "systematix_shares_&_stocks",
+      "url": "https://investmentguruindia.com/editorial/uploads/news-pdf/113e102c_Petronet%20LNG%20-%20Plant%20Visit%20Update%20-%2017-11-2025%20-%20Systematix.pdf",
+      "sha256": "fb8fadeaeda109692f5286acc4067d892086f0ca3e947a48d23cde3d0a8133a8",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "sbi_securities",
+      "url": "https://www.sbisecurities.in/fileserver/research/reports/Pick%20of%20the%20Week_VIP%20Industries%20Ltd.pdf",
+      "sha256": "2b7ce76acad8e284e6e8cbc16a92a62bdfe9cff92eb162bb9b1e6e8449b05270",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "sbi_securities",
+      "url": "https://www.sbisecurities.in/fileserver/research/reports/Pick%20of%20the%20Week_Lupin%20Ltd.pdf",
+      "sha256": "440a9649d5a12dc194403b0dd1411d087e84041ad65943bdc3eea6b9cb828445",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "sbi_securities",
+      "url": "https://www.sbisecurities.in/fileserver/research/reports/Pick%20of%20the%20Week_Titagarh%20Rail%20Systems%20Ltd.pdf",
+      "sha256": "bec04050e317af08c6ae99595581e115f65ca811b4ae0d6cc9934ecce837797b",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "sbi_securities",
+      "url": "https://www.sbisecurities.in/fileserver/research/reports/Pick%20of%20the%20week_Amber%20Enterprises%20Ltd..pdf",
+      "sha256": "1180e138888c8bae906d1136bdc58d2c21432191f2c027d61406ed34dad899ff",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "sbi_securities",
+      "url": "https://www.sbisecurities.in/fileserver/research/reports/Pick%20of%20the%20Week_National%20Aluminium%20Ltd%20-%2021.03.2025.pdf",
+      "sha256": "3807fed38c2325c2667a594f0863e74cb7f4e65e078431de91761fc0607267d6",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "sharekhan",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240101_GAI_IN_Sharekhan.pdf",
+      "sha256": "561727002c6d5ad2d961073bf1455fce4285718d16fc15d60f6c4d1b8e4abe64",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "sharekhan",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240102_AFL_IN_Sharekhan.pdf",
+      "sha256": "2efcbe8d37f97cb58caf453611ac415d0aa22216cf77f401d83f40ec46e47065",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "sharekhan",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240102_BHG_IN_Sharekhan.pdf",
+      "sha256": "6d2d50a1941ba1183cb4902316f635a0885f0be1999bd49cf1f4730e0fccec1b",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "sharekhan",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240103_NMR_IN_Sharekhan.pdf",
+      "sha256": "f4aa2857454c7cc33fb0a42396ffafe3ae7bac1e79c6dc53fd6d3c5d45e96550",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "sharekhan",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240104_UTI_IN_Sharekhan.pdf",
+      "sha256": "89c9813caa9d0fb52684cf026e0d199f2e3299ba6600f601a5fe5e78f4b3f96c",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "motilal_oswal",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240102_MAM_IN_Motilal_Oswal_Securities.pdf",
+      "sha256": "2bba5bc377d217b5eacd5d1eee25a495153a9c37ba77d2e795eccdb3f85fe816",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "motilal_oswal",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240103_SBH_IN_Motilal_Oswal_Securities.pdf",
+      "sha256": "fbb43277439e7c95e717217b949b7864927d23d3b5836154d962e72e12c3866d",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "motilal_oswal",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240104_GL0_IN_Motilal_Oswal_Securities.pdf",
+      "sha256": "01c67b8a1cb3c96b120f483638a2b4f1a5e69b6d5c642cd8c8f42080cefde64c",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "motilal_oswal",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240109_CLH_IN_Motilal_Oswal_Securities.pdf",
+      "sha256": "6869fd7e86d16b73a70986095d30fe148287bf1d4c3ade179613020dc0ef2e47",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "motilal_oswal",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240109_LOS_IN_Motilal_Oswal_Securities.pdf",
+      "sha256": "7287fc010a1e1d7b8ea02e90e48088eb10dc1fac75df31253780dc714bc917ad",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "emkay",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240102_LFH_IN_Emkay_Global_Financial_Services.pdf",
+      "sha256": "84a944a7833197fe02e618b40fdb2b3acfbc68075a86fd3d66342fe96d0b16dc",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "emkay",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240104_GJ_IN_Emkay_Global_Financial_Services.pdf",
+      "sha256": "ad72cedc360320df1bfea10eba7b795df93acd3dc0c71dbf8b69acad22e1162e",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "emkay",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240104_DAB_IN_Emkay_Global_Financial_Services.pdf",
+      "sha256": "f6124c2ca17fef7779fa88bac2c0c8b3ae27081fae58fea9005dbaaf68a4682e",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "emkay",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240112_INE_IN_Emkay_Global_Financial_Services.pdf",
+      "sha256": "8781b26630b6b0b5f3a33ea984bde9be0316c3c588f633653a555341ef03fb8d",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "emkay",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240117_HFC_IN_Emkay_Global_Financial_Services.pdf",
+      "sha256": "fe2fde272ecd12f21da7169c29f5e4ea7e35929e7f96777ed8f4a6a703b43513",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "geojit",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240102_YHN_IN_Geojit.pdf",
+      "sha256": "dbe13c803873c2b4fe3d42cea0b47f27996d1a1bc7ee6a0065ef278f9ba40ac6",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "geojit",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240124_API_IN_Geojit.pdf",
+      "sha256": "18a78e0f79b2f0c9ba2db058ad3b08a2c846604ee426cb0243209de3a1da4b2a",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "geojit",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240124_FED_IN_Geojit.pdf",
+      "sha256": "34f57db4ef13226ef4ec864a49e0220a0562ec2a007b02ea21e9c349c40ec885",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "geojit",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240129_SUI_IN_Geojit.pdf",
+      "sha256": "97dd60df0335a6411d6fe6df61708a4d4eff11c7a21c2e61ac8eb3d5747d33d3",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "geojit",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240130_TAL_IN_Geojit.pdf",
+      "sha256": "922249222befd38632942808c372dc4d4935f06921d6f0293ff4aa985071c954",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "hdfc_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240103_SGM_IN_HDFC_Securities.pdf",
+      "sha256": "5766d658093cfc512590cb1f4bed4185d1366445fbe876c1b15e71eb219a942a",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "hdfc_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240104_BJF_IN_HDFC_Securities.pdf",
+      "sha256": "19349aa5d503a2c81a560d741dca8f1914866b742633b99501f7da63a6bbff1e",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "hdfc_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240104_BHP_IN_HDFC_Securities.pdf",
+      "sha256": "32636054fcf39d22f508f7d3dc152d7a79b3c54a5c4e95736f3b68eb1bbf35bc",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "hdfc_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240104_CDI_IN_HDFC_Securities.pdf",
+      "sha256": "70e7c55037a4c9db0e8757531321c9ef7e223c25e981447f45573810fc0dabb5",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "hdfc_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240112_CRG_IN_HDFC_Securities.pdf",
+      "sha256": "46cf61456ce6985671f204c24400c17687ae21874d056d865dda4b04386d1a43",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "bp_wealth",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240106_BUT_IN_BP_Wealth.pdf",
+      "sha256": "a8a259679832ecd103c893f445807e58492b59ea0e52152120a8515094f282b0",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "bp_wealth",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240204_NTA_IN_BP_Wealth.pdf",
+      "sha256": "c1b6362897d45d4ca8e7d6026ba259df8937d435b8bbb226984a1a4cf3e44b81",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "bp_wealth",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240217_TMK_IN_BP_Wealth.pdf",
+      "sha256": "3950713def69a356f77d47385de82099a2d97ca2f41abcc4717bbfd3117931a2",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "bp_wealth",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240219_AC6_IN_BP_Wealth.pdf",
+      "sha256": "d9f69dc38191d2fdfe5bea5b05e0da6e71402f02dc0480471f599b9c6a6d578f",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "bp_wealth",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240303_CP1_IN_BP_Wealth.pdf",
+      "sha256": "762cdd9aed5217ad3324aa580eea394ee9c7382f6745ee390dfb3f9928c70bc5",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "axis_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240106_ASC_IN_Axis_Direct.pdf",
+      "sha256": "bae90a0621504e43d088fff28bc3ac979fc24b901ea4e69dde41d8bae963d097",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "axis_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240113_WSR_IN_Axis_Direct.pdf",
+      "sha256": "41200fb55a1580836abf16545a0ca04e1a4e11e357f4821255dc5516adc7c410",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "axis_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240122_ES1_IN_Axis_Direct.pdf",
+      "sha256": "491b102a57887f624c81fb62583de3a86ad536bdabace111461e12823aafd5f4",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "axis_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240127_AOC_IN_Axis_Direct.pdf",
+      "sha256": "b6ac59e3c198a0828e1db156aa48ff33259efc42f6d91914aa9aa9d18c322d10",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "axis_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240210_CYE_IN_Axis_Direct.pdf",
+      "sha256": "9e381cc98bb7976c741379fb4e345b464f238f0a5db0204cff08d937641123a4",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "centrum_broking",
+      "url": "https://centrumbroking.com/documents/Divgi_Torqtransfer_Systems_Initiating_Coverage_Centrum_08012024.pdf",
+      "sha256": "15c5b2a83a884d9fe742ecbcf6e58bf891759ea10eb66f744a549f878f491008",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "centrum_broking",
+      "url": "https://centrumbroking.com/documents/Balrampur_Chini_Mills_Q4FY24_Result_Update_Centrum_21052024.pdf",
+      "sha256": "6339752e88cb1199d47c43b7720d2687357588da70894eaedd2becf3f77c53f2",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "centrum_broking",
+      "url": "https://www.valoremadvisors.com/assets/admin/research_file/1717564860_Centrum_Q4-FY24_Result_Update.pdf",
+      "sha256": "2dbf746dbb195608cdc2f5ba4463c7cb5e9b0d858a41ce91d58b5002a90362fb",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "centrum_broking",
+      "url": "https://investmentguruindia.com/editorial/uploads/news-pdf/2d26ad88_IDFCFB_Q1FY25_Result_Update_Centrum_28072024.pdf",
+      "sha256": "388d9876cb7615c740e5906de63d73c250e0fc86dade1fc2d950b61538e726c0",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "centrum_broking",
+      "url": "https://bsmedia.business-standard.com/_media/bs/data/market-reports/equity-brokertips/2024-08/17236265200.37507600.pdf",
+      "sha256": "ad80c77dea05ae3ba97cf1b2b7435207117daa1570c9eb5c5441a87d11493ecb",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "nuvama",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240109_AR6_IN_Edelweiss_Capital.pdf",
+      "sha256": "964a73d150b3106160d0b3266a9cb07a3852697fba3482f5df8d5915121380ff",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "nuvama",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240116_NWG_IN_Edelweiss_Capital.pdf",
+      "sha256": "efbab681c8310b28cfd5ce5088fcd1a45b17e39f56c18a926d56b0f39dea6cc9",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "nuvama",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240119_IBK_IN_Edelweiss_Capital.pdf",
+      "sha256": "9848685f7d563ebdd0851eabcf98ab028f2be99ca6a248bbe74498497a5d38d2",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "nuvama",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240120_CRG_IN_Edelweiss_Capital.pdf",
+      "sha256": "1d3fde16e460d19a22283944f032e5e57ffc1a5b96c79f005ddd1e5ec5f69397",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "nuvama",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240120_MEB_IN_Edelweiss_Capital.pdf",
+      "sha256": "30d5b1c3ee6f545116b9dd4abfcbc4d428ea888cc76459981474ce0e5813f6e3",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "prabhudas_lilladher",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240112_HDT_IN_Prabhudas_Lilladher.pdf",
+      "sha256": "3578a6b6dc239185f0d57a5aab8196b9c60f6d4b069ebcc36ae74175686b1a96",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "prabhudas_lilladher",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240125_HPT_IN_Prabhudas_Lilladher.pdf",
+      "sha256": "a1d9f5fd14471add4036711b61f8b59aecbcc5ac82097524db727cf281c413e1",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "prabhudas_lilladher",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240205_KNH_IN_Prabhudas_Lilladher%20-%20Copy.pdf",
+      "sha256": "35f79c7148497bd1ae9bcab1db9659a4e09dbb4df079040f6749af31e03ff31d",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "prabhudas_lilladher",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240207_GJ_IN_Prabhudas_Lilladher%20-%20Copy.pdf",
+      "sha256": "5c8f30da9d8f2c6b5362e6e88c8829ae102add743b1238d419b7897f51ea3956",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "prabhudas_lilladher",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240209_HE5_IN_Prabhudas_Lilladher.pdf",
+      "sha256": "a3191fc092dea9d29caec1701970ce061651b29355f99a3c972e873b6f4926da",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "idbi_capital",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240112_INE_IN_IDBI_Capital_Market.pdf",
+      "sha256": "70f6590b9689b03bc9f55815f4793704c1d618779e89fd22ae16ec3337807b52",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "idbi_capital",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240112_TSE_IN_IDBI_Capital_Market.pdf",
+      "sha256": "85993b5ada0b302ac200d26dc448c1d43b12c1814ab507d2a50332e49a66e422",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "idbi_capital",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240117_NWG_IN_IDBI_Capital_Market.pdf",
+      "sha256": "ec14f72efbe99536ba13872620648e63545a1222fcc260d2708dbd3bc64ee1e7",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "idbi_capital",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240119_IBK_IN_IDBI_Capital_Market.pdf",
+      "sha256": "56f4a70da969d6e63bcfdbc69d3f21db2e8f53094f460c4e9f12ebe7a28fe0a2",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "idbi_capital",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240120_SUI_IN_IDBI_Capital_Market.pdf",
+      "sha256": "a6aa1c6f085ee965f7c2de27fe4539089c7f6729d91d5f2aceeba08f104ac2d4",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "choice_broking",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240112_TSE_IN_Choice_Broking.pdf",
+      "sha256": "96ef46d3b783575930dc8bd46d1ed7c73e3d70240ecf18ae21649021bcce5a72",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "choice_broking",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240112_INE_IN_Choice_Broking.pdf",
+      "sha256": "f1a84ddfe8d9377501ef348cf58bcc89a46e2e42e58aec2bcdcafe603b362e5b",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "choice_broking",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240114_HTE_IN_Choice_Broking.pdf",
+      "sha256": "07df83c47d192b166e5fe8efa46ac4b34905a84233db74a2d4c0e007751272d3",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "choice_broking",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240114_WIP_IN_Choice_Broking.pdf",
+      "sha256": "8bd96167cd9b0e9d8f02ac60eb92559a4e9219e88d490500cf48652a3286e62f",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "choice_broking",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240117_T1E_IN_Choice_Broking.pdf",
+      "sha256": "0f5c0e9b87db56f9b578b6391fce42feb0da97b940a6e714e393ddc4df9add3c",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "lkp_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240115_KSC_IN_LKP_Securities.pdf",
+      "sha256": "4062c5f901e97a8fc950264a4f27071a8489680e17f54e4993f14f287d494973",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "lkp_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240118_FED_IN_LKP_Securities.pdf",
+      "sha256": "3cd70ee13047f68f20c52196409ff782af2ab7e88fe537ad28eedf53b413fac4",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "lkp_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240118_HFC_IN_LKP_Securities.pdf",
+      "sha256": "f6be49f7e953ba0bf132e222455adf5540c628dd93ec455a1ce7354e150c9ab4",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "lkp_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240124_SW3_IN_LKP_Securities.pdf",
+      "sha256": "d67523666ac6643a0aead48d40d963ef3aaeec31a37498360007f123fd4c650b",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "lkp_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240201_LST_IN_LKP_Securities.pdf",
+      "sha256": "49c19b309b827f117bdedc8c4bd099c21f82e167d667707755b2dc3f6b33d3ae",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "icici_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240117_AOC_IN_ICICI_Securities.pdf",
+      "sha256": "c4b6fb2deafb9150967f72ab24e870e39fefb56f01a362556936d5ef3063f277",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "icici_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240130_EXI_IN_ICICI_Securities.pdf",
+      "sha256": "d28ef8140c87d1ef3e7175254cb0c1f055d5c6a725996dec10daaeb059418662",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "icici_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240202_KAJ_IN_ICICI_Securities.pdf",
+      "sha256": "f14edc63c7959d17996cb7cec47ba9f49a9d0314a3b6a3672b438cd3c4db3646",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "icici_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240206_ASH_IN_ICICI_Securities.pdf",
+      "sha256": "c7abade0a1a8d4e6ecda781d6ef2b1f48ce658bbd79e670d23d4230b69086247",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "icici_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240207_SBK_IN_ICICI_Securities.pdf",
+      "sha256": "1f462c8a5a45fe203f86419f74dc0ec6a78eafd2640713884deead5b73e4adfe",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "elara_securities",
+      "url": "https://investmentguruindia.com/editorial/uploads/news-pdf/efb02a97_REC%20-%20Elara%20Securities%20-%2024%20January%202024.pdf",
+      "sha256": "bffe51903e430b4d0beda5737a1c71d2b2da15a39f9f10312e8670584e6af58f",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "elara_securities",
+      "url": "https://investmentguruindia.com/editorial/uploads/news-pdf/7d275a82_Cyient%20-%20Elara%20Securities%20-%2026%20January%202024.pdf",
+      "sha256": "8bb72fa75ce39f01d8e9bc604931b6f523b9c966007789fd3c3c8234cb38b220",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "elara_securities",
+      "url": "https://valoremadvisors.com/assets/admin/research_file/1744091795_CMS_Info_Systems_-_Elara_Securities_-_7_October_2024.pdf",
+      "sha256": "34251d2b0b9d0e7d59c31fc826039989a8e8de38006a7e7788b441d0593225a1",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "elara_securities",
+      "url": "https://investmentguruindia.com/editorial/uploads/news-pdf/954db1ab_SRF%20-%20Elara%20Securities%20-%2031%20January%202025.pdf",
+      "sha256": "866c44a86d2cc09d41a964405c038ab61626cf5397b0b000c131e825fe99322d",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "elara_securities",
+      "url": "https://investmentguruindia.com/editorial/uploads/news-pdf/f74e96f3_NCC%20-%20Elara%20Securities%20-%2016%20February%202025.pdf",
+      "sha256": "2dfe589e37748349aea8b674d34fca586e97ca187a5ae668735a2986546bb557",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "jm_financial",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240201_AYF_IN_JM_Financial.pdf",
+      "sha256": "6ed2cfd35b48e07352da3f3918f6da340b90c26fffa885c308e885f5b496933e",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "jm_financial",
+      "url": "https://www.valoremadvisors.com/assets/admin/research_file/1713164017_JM_Financial_-_Report_-_Feb_2024.pdf",
+      "sha256": "d960519fa12770e1d9215ef167781552cd7f35878925a02f6c17ed999a9494e4",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "jm_financial",
+      "url": "https://jmflresearch.com/JMnew/JMCRM/analystreports/pdf/%5BJMFL%5DCarTrade_CompanyUpdate_24042024.pdf",
+      "sha256": "7e1b51d0daca5089ba4ccdcf051a254c47f48c6a86be7ae97f81633571c3ecc5",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "jm_financial",
+      "url": "https://krsnaadiagnostics.com/investor-docs/2025/Research%20Report/Research-Report-of-JM-Financials-dated-May-21-2024.pdf",
+      "sha256": "d8e5f83eb15dabdd4a93f1cc2ef7e48ecbaaf94a6963c58c9a61c9dfa34144cc",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "jm_financial",
+      "url": "https://jmflresearch.com/JMnew/JMCRM/analystreports/pdf/RIL_Nov24_Note_edited.pdf",
+      "sha256": "03220f5313e1bc464c32b0f9a6ab2e95c2b533f57471d9d7661498edf198f559",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "asit_c_mehta",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240304_ADW_IN_Asit_C__Mehta.pdf",
+      "sha256": "c280f0827bc2f3e5697c85b315626ea7c64954cd2d04f3e5cea60b5896cbae8b",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "asit_c_mehta",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240307_SWY_IN_Asit_C__Mehta.pdf",
+      "sha256": "ea3f8c9950a792a8aa438ddba31a8a0da0b416076d931a415defa96bc021258f",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "asit_c_mehta",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240328_FAG_IN_Asit_C__Mehta.pdf",
+      "sha256": "2b8186b89f2d9b60e4ebca33ff1b9dd76fb7d0a4d0c65be72aaf4e2ea6618831",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "asit_c_mehta",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240402_AE1_IN_Asit_C._Mehta.pdf",
+      "sha256": "f5311c8e1c9b0710306b6ca75e26645af9f1ab5acb06428b9a8679bb451d106f",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "asit_c_mehta",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240408_MD1_IN_Asit_C._Mehta.pdf",
+      "sha256": "3a28df7c88740db0c6ce98f41ccf3bce9b0a5c223782738bc2a6f21fd63bf807",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "anand_rathi_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240320_GCD_IN_Anand_Rathi_Securities.pdf",
+      "sha256": "6fcadd9fa04d950ca990a45ec631ee014e338a18f1c3736df8f54d0d74d50cb0",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "anand_rathi_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240412_KT1_IN_Anand_Rathi_Securities..pdf",
+      "sha256": "22840173aceccbd87f1b87606a02979901b4e3269ea4a76c08b03a723e6f1075",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "anand_rathi_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240418_PMR_IN_Anand_Rathi_Securities.pdf",
+      "sha256": "dcbd031494f77876a8f1fd99bd0fb6f9f4d6951baf93beb6546a0e1bab5d50db",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "anand_rathi_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240422_AOC_IN_Anand_Rathi_Securities.pdf",
+      "sha256": "c9890be9a93ef5b7fd116e367da0cda495516ad128eac28c598d889a0a65a776",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "anand_rathi_securities",
+      "url": "https://storage.googleapis.com/msi-broker-report-archive/20240422_JDI_IN_Anand_Rathi_Securities.pdf",
+      "sha256": "cd3e7a32507740641045c604f13986b8410c4f6fc666f032494166cef12a1b43",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "kotak_securities",
+      "url": "https://www.kotaksecurities.com/pdf/monthlyreport/april2024.pdf",
+      "sha256": "0e4a5f1f579d4d5ac9aa5f0d1d60469a0d801492cf8ead82a07b9fb72a40194e",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "kotak_securities",
+      "url": "https://www.kotaksecurities.com/pdf/monthlyreport/may2024.pdf",
+      "sha256": "f1ee218dda2ab6f8bbd41ecd5a9ea43454e83bf63be91d78a9dab6f21f7e8c73",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "kotak_securities",
+      "url": "https://www.kotaksecurities.com/pdf/monthlyreport/july2024.pdf",
+      "sha256": "6a152704154d698debdfe7a18d7f3676898f993d2d11b0a809d9489273cc56af",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "kotak_securities",
+      "url": "https://www.kotaksecurities.com/pdf/monthlyreport/august2024.pdf",
+      "sha256": "711dbab0cd7fad7bb286ac8fd365295fca5c24eceec11feec53f7b2dda63ac00",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "kotak_securities",
+      "url": "https://www.kotaksecurities.com/pdf/monthlyreport/october2024.pdf",
+      "sha256": "6d9ece35ad24569a2188e79fcbe7fbcad12fe3a64be3cf94fced9ee8b82712c0",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "east_india_securities",
+      "url": "https://images.moneycontrol.com/static-mcnews/2024/04/Rajratan-Global-Wire-29042024-kr.pdf",
+      "sha256": "08b91aa492d397e8f5f34d0d7cb4047f662c833be27f5fc7a25a5f5c9c593d34",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "east_india_securities",
+      "url": "https://images.moneycontrol.com/static-mcnews/2024/05/20240506060005_Shoppers-Stop-06052024-east.pdf",
+      "sha256": "376ae651267d4c31f590cfb4c0b20a00bd319d9d59e6f7a88250818f69879323",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "east_india_securities",
+      "url": "https://images.moneycontrol.com/static-mcnews/2024/05/20240508051313_Dabur-India-07052024-east.pdf",
+      "sha256": "fd668dc8d0613f4fdcd3f257560fcfdabfa7e1f2999d0ab07211700ad95aea10",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "east_india_securities",
+      "url": "https://tcil.com/wp-content/uploads/2024/05/TCI-Q4-FY24-Result-Updates-East-India-Securities.pdf",
+      "sha256": "b4cb0eb880ff24d023bbd620fd6bb769f822a27501358b0a89d81706966b8d6b",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "east_india_securities",
+      "url": "https://images.moneycontrol.com/static-mcnews/2024/07/20240724090724_Nitin-Spinners-240724-east.pdf",
+      "sha256": "50c47ff542bf1e4dd54940718f2dc2fffaad8d74af02a8a4e1f97a1de62eaa64",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "dolat_capital_market",
+      "url": "https://www.dolatresearch.com/Attachment/__Page/One%2097%20Communications_%28Q1FY25%20Result%20Update%29_19-July-2024.pdf",
+      "sha256": "d6c29f2307e914317b7b07b504d7e00d70eda9d31bea9b4fd6f8db88da8269e5",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "dolat_capital_market",
+      "url": "https://www.dolatresearch.com/Attachment/__Page/Axis%20Bank%20%28Q1FY25%20Result%20Update%29_24-July-2024.pdf",
+      "sha256": "5773585720102512b889ed572ddfa6c4f4b6464eef355fd1ef98887f6363f0eb",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "dolat_capital_market",
+      "url": "https://www.dolatresearch.com/Attachment/__Page/Cipla%20%28Q1FY25%20Result%20Update%29_26-July-2024.pdf",
+      "sha256": "8b28e7519ad75d3c2072f8341222d7bda0b9820a87055ea8b0b80f8bb49a2ed7",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "dolat_capital_market",
+      "url": "https://www.dolatresearch.com/Attachment/__Page/IndiaMART%20InterMESH%20%28Q1FY25%20Result%20Update%29_30-July-2024.pdf",
+      "sha256": "31f698f02f4a4e475dd95f9f55d7a4e823af35dc5b65b93e3021c5b6b9c6ba88",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    },
+    {
+      "publisher": "dolat_capital_market",
+      "url": "https://www.dolatresearch.com/Attachment/__Page/CG%20Consumer%20Electricals%20%28Q1FY25%20Result%20Update%29_31-Jul-2024.pdf",
+      "sha256": "db004792d01b1a1b659850a17fec8d53e8f6b4ee163c56dc1a7d04373d9b07d1",
+      "http_status": 200,
+      "digest_match": true,
+      "data_origin": "real"
+    }
+  ]
+}

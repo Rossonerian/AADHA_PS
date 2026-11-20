@@ -26,6 +26,7 @@ jobs:
           --health-retries 10
     env:
       DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/aacharya_test
+      VERIFIER_POSTGRES_TEST_URL: postgresql+psycopg://postgres:postgres@localhost:5432/aacharya_test
       APP_ENV: test
       PYTHONPATH: services/api
     steps:
