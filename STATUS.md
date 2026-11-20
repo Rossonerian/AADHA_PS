@@ -1,4 +1,4 @@
-# Aacharya — Team Status
+# PaisaProof — Team Status
 
 > Updated by everyone in their own section; summarised by **Hardhik** after each checkpoint.
 > Progress update format and checkpoint rules: [`docs/SOURCE_OF_TRUTH.md` Section 12](docs/SOURCE_OF_TRUTH.md#12-progress-updates-all-agents).
@@ -195,6 +195,14 @@ Done: Merged origin/main (711fa6c) into feat/verifier-backend without losing Ver
 Next: Run live extraction F1 (`>= 0.80`) with `OPENROUTER_API_KEY` and finalize Phase 6 real-source dataset or Hardhik Option B approval.
 Minor: Added Verifier runtime deps + `types-requests` to `services/api/pyproject.toml` and updated `test_jobs_and_seed.py` from `stub` to `ok`. `submissions.user_id -> users.id` FK remains deferred to a platform reconciliation revision so standalone owner tests stay intact.
 Blockers: `OPENROUTER_API_KEY` (for live F1 evaluation) and Phase 6 real-source dataset / Option B approval from Hardhik.
+```
+
+```text
+[Arnav] 76.25% | Capstone: Nasdaq literacy verifier (contract proposal, Hardhik approval needed)
+Done: Added core/finnhub.py (endpoint allowlist, cache), nasdaq_verifier gate/router/service (`403 TOOL_LOCKED` unless level 4 + plan 100% + Brier <= 0.25, fails closed), `/me` unlock, tests, typed web client + `/nasdaq-verifier` UI; docs and PROMPT_* notes updated.
+Next: Divyansh to populate `plans.progress` / `skill_scores.brier`; Hardhik to review the SOURCE_OF_TRUTH change and set FINNHUB_API_KEY.
+Minor: NDX benchmark is served via the QQQ ETF (index quotes need a paid Finnhub plan); `/stock/candle` may be plan-restricted, so the chart degrades gracefully. Challenge answer keys are process-local.
+Blockers: Live FINNHUB_API_KEY not tested; gate inputs depend on education tables that do not exist yet.
 ```
 
 ## Divyansh

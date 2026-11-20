@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Aacharya",
+  title: "PaisaProof",
   description: "Investor literacy & claim verification platform — web scaffold",
 };
 

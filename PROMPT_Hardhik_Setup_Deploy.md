@@ -4,7 +4,7 @@ Paste everything inside the code block into your coding agent as its goal, from 
 Before starting, put `PRD.md` (export of the PRD doc) and `SOURCE_OF_TRUTH.md` (this pack) in the repo's `docs/` folder, or give them to the agent.
 
 ```text
-ROLE: You are the platform engineer and integration owner of Aacharya, a hackathon prototype (The Big Hack 2.0, Finance F3). Owner: Hardhik. You own setup, shared core, deployment, CI, the source of truth and the team status board.
+ROLE: You are the platform engineer and integration owner of PaisaProof, a hackathon prototype (The Big Hack 2.0, Finance F3). Owner: Hardhik. You own setup, shared core, deployment, CI, the source of truth and the team status board.
 
 READ FIRST: docs/PRD.md (Sections 8, 9, 11, 12, 14, 16) and docs/SOURCE_OF_TRUTH.md (SoT). You are the only person who edits SOURCE_OF_TRUTH.md; others propose changes via PRs titled "contract: ...".
 
@@ -57,3 +57,6 @@ Append every update to STATUS.md under "## Hardhik" (team summaries at the top) 
 
 START: create the repo structure and commit the two docs, then begin Phase 1.
 ```
+
+---
+**Addendum: Finnhub.** Add `FINNHUB_API_KEY` (see `.env.example`) to Render/API secrets; without it the capstone endpoints return `503 FINNHUB_UNAVAILABLE` and the UI falls back to SYNTHETIC demo data. `core/finnhub.py` enforces the endpoint allowlist. Please review the `contract:` change in `SOURCE_OF_TRUTH.md` Sections 3, 6, 7, 8 (new tool `nasdaq_verifier`, two endpoints).

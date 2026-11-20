@@ -19,7 +19,7 @@ from app.core.market.symbols import (
     is_test_env,
 )
 
-_logger = get_logger("aacharya.market.prices")
+_logger = get_logger("paisaproof.market.prices")
 
 PRICE_COLUMNS: list[str] = [
     "date",

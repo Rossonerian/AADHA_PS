@@ -1,4 +1,4 @@
-"""Shared pytest fixtures for the Aacharya API test suite."""
+"""Shared pytest fixtures for the PaisaProof API test suite."""
 
 import os
 from collections.abc import Callable, Generator
@@ -33,7 +33,7 @@ def migrated_db(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, jwt_secret: str
 ) -> Generator[str, None, None]:
     """Provision an isolated SQLite DB, run Alembic migrations, and configure the engine."""
-    db_file = tmp_path / "test_aacharya.db"
+    db_file = tmp_path / "test_paisaproof.db"
     db_url = f"sqlite:///{db_file}"
 
     monkeypatch.setenv("DATABASE_URL", db_url)

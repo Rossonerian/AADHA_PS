@@ -14,15 +14,17 @@ from app.core.logging import RequestLoggingMiddleware
 from app.core.market import get_market_data_as_of
 from app.education.router import router as education_router
 from app.education.unlocks import get_user_unlocks
+from app.nasdaq_verifier.gate import missing_requirements, read_gate_inputs
+from app.nasdaq_verifier.router import router as nasdaq_router
 from app.verifier.router import router as verifier_router
 
 
 def create_app() -> FastAPI:
-    """Construct and configure the Aacharya FastAPI application."""
+    """Construct and configure the PaisaProof FastAPI application."""
     current_settings = get_settings()
 
     application = FastAPI(
-        title="Aacharya API",
+        title="PaisaProof API",
         version=current_settings.app_version,
     )
 
@@ -51,15 +53,19 @@ def create_app() -> FastAPI:
         user: User = Depends(current_user),
         db: Session = Depends(get_db),
     ) -> dict[str, Any]:
+        unlocks = get_user_unlocks(db, user.id, user.level)
+        if not missing_requirements(user, read_gate_inputs(db, user)):
+            unlocks = [*unlocks, "nasdaq_verifier"]
         return {
             "id": user.id,
             "name": user.name,
             "level": user.level,
-            "unlocks": get_user_unlocks(db, user.id, user.level),
+            "unlocks": unlocks,
         }
 
     application.include_router(education_router, prefix="/api/v1")
     application.include_router(verifier_router, prefix="/api/v1")
+    application.include_router(nasdaq_router, prefix="/api/v1")
 
     return application
 

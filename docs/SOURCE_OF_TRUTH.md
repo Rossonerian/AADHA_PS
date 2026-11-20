@@ -1,7 +1,7 @@
-# Aacharya — Source of Truth
+# PaisaProof — Source of Truth
 
 > Repo path: `docs/SOURCE_OF_TRUTH.md`. Owner: **Hardhik**. Others propose changes via a PR titled `contract: ...`; Hardhik approves and updates this file.
-> Product spec: `docs/PRD.md` (Aacharya — Product Requirements Document). If this file and the PRD disagree on a contract, **this file wins**.
+> Product spec: `docs/PRD.md` (PaisaProof — Product Requirements Document). If this file and the PRD disagree on a contract, **this file wins**.
 > Assumption: "Advisor work" = the **Verifier** (PRD Section 7).
 
 ## 1. Work split
@@ -17,7 +17,7 @@ Integration owner: **Hardhik**. Contract owner: **Hardhik**.
 
 ## 2. Rules that override everything
 
-1. Aacharya never tells a user to buy, sell or hold anything, never gives price targets of its own, and never ranks or recommends stocks. Ratings describe **sources**, never stocks.
+1. PaisaProof never tells a user to buy, sell or hold anything, never gives price targets of its own, and never ranks or recommends stocks. Ratings describe **sources**, never stocks.
 2. Every LLM output shown to users goes through `core.guardrails.check_output()` before it is returned.
 3. Every data record shown in the demo carries `data_origin: "real" | "synthetic"`; the UI shows it as a badge.
 4. Numbers in the UI come from our data via templates, never written freely by an LLM.
@@ -31,14 +31,14 @@ Integration owner: **Hardhik**. Contract owner: **Hardhik**.
 | Backend | Python 3.11+, FastAPI, Pydantic v2, SQLAlchemy 2 + Alembic |
 | Database & auth | Neon Lakebase Postgres + Neon Auth (Managed Better Auth); Neon Object Storage + Neon Realtime |
 | LLM | OpenRouter, called only through `core.llm.complete()` |
-| Market data | NSE/BSE bhavcopy or yfinance (`.NS`), loaded by `core.market` |
+| Market data | NSE/BSE bhavcopy or yfinance (`.NS`), loaded by `core.market`; Nasdaq capstone uses Finnhub via `core.finnhub` (env `FINNHUB_API_KEY`, factual endpoints only) |
 | Hosting | Web on Vercel; API + cron on Render (or Railway); DB/Auth/Storage/Realtime on Neon |
 | CI | GitHub Actions: lint, typecheck, tests on every PR |
 
 ## 4. Repo layout
 
 ```text
-aacharya/
+paisaproof/
   apps/web/                     # Ananya
   services/api/app/
     main.py                     # Hardhik
@@ -72,7 +72,7 @@ aacharya/
 | Table | Owner | Key columns |
 |---|---|---|
 | users | Hardhik | id, name, current_level (1–4), created_at |
-| unlocks | Divyansh | user_id, tool (`scenarios`, `red_flag_check`, `explain_stock`, `verifier`, `dashboard`), unlocked_at |
+| unlocks | Divyansh | user_id, tool (`scenarios`, `red_flag_check`, `explain_stock`, `verifier`, `dashboard`, `nasdaq_verifier`), unlocked_at |
 | skill_scores | Divyansh | user_id, skill_area (`basics`, `reading_stock`, `judging_info`, `risk`), score 0–100, brier, measured_at |
 | questions | Divyansh | id, level, skill_area, difficulty 1–5, text, options[], answer, explanation |
 | attempts | Divyansh | id, user_id, item_type (`question`, `scenario`, `verifier_guess`), item_id, answer, confidence 50–100, correct, context (`onboarding`, `lesson`, `assessment`, `practice`, `study_pre`, `study_post`), created_at |
@@ -106,8 +106,12 @@ All endpoints under `/api/v1`, JSON, auth required except `/health`.
 | `POST /verify` | Arnav | one of `{url}`, `{text}`, `{image_base64}`; optional `{user_guess, user_confidence}` | `{submission_id, source{id, platform, handle, label, score, facts{}}, claim{...}, red_flags[{code, text, evidence}], mode: "basic" or "full"}` |
 | `GET /sources/{id}` | Arnav | – | `{source, history[], recent_claims[]}` |
 | `GET /submissions/mine` | Arnav | – | `{items[{submission_id, claim, status, outcome}]}` |
+| `GET /nasdaq-verifier/challenge?symbol=` | Arnav (gate: shared core) | – | `{challenge_id, data_origin: "real", as_of, snapshot{symbol, name, sector, price, day_low, day_high, week52_low, week52_high, market_cap_musd, pe_ttm, chart[], data_origin}, nasdaq_url, disclaimer, questions[{id, text, options[]}]}` |
+| `POST /nasdaq-verifier/submit` | Arnav (gate: shared core) | `{challenge_id, answers[{question_id, answer, confidence 50–100}]}` | `{passed, score, brier, results[{question_id, correct, correct_answer, explanation}], feedback}` |
 
 Errors: `{error: {code, message}}` with HTTP 4xx/5xx. Locked tool → `403 {code: "TOOL_LOCKED", required_level}`.
+
+**Nasdaq literacy verifier (final capstone, `nasdaq_verifier`).** Not level-granted: unlocked only when `user.level == 4` **and** `plan.progress_pct == 100` **and** calibration `brier <= 0.25`, checked server-side on both endpoints (missing data fails closed). Locked → `403 {error: {code: "TOOL_LOCKED", message, required_level: 4, missing_requirements["level_4"|"plan_progress_100"|"brier_lte_0.25"]}}`. `GET /me` adds `nasdaq_verifier` to `unlocks` only when the gate passes. Data comes from Finnhub (`FINNHUB_API_KEY`), allowlist `/quote`, `/stock/profile2`, `/stock/metric`, `/stock/candle` only; never `/stock/recommendation`, `/stock/price-target` or `/stock/upgrade-downgrade`. Every record is `data_origin: "real"` (REAL badge); questions are template-generated from the numbers; feedback passes `core.guardrails.check_output()`. `nasdaq.com` cannot be iframed, so the UI shows its own snapshot + Recharts chart with an external "Open on Nasdaq.com" link. Extra errors: `FINNHUB_UNAVAILABLE` 503, `NOT_NASDAQ` 422, `INVALID_SYMBOL` 422.
 
 ## 8. Shared enums
 
@@ -115,6 +119,7 @@ Errors: `{error: {code, message}}` with HTTP 4xx/5xx. Locked tool → `403 {code
 - Red-flag codes: `guaranteed_returns`, `urgency`, `illiquid_small_cap`, `surveillance_list`, `pre_post_volume_spike`, `not_sebi_registered`, `vague_claim`, `deleted_post`.
 - Levels: 1 Foundations, 2 Reading a stock, 3 Judging information, 4 Risk & discipline.
 - Level → unlocks: L1 `scenarios` + `red_flag_check`, L2 `explain_stock`, L3 `verifier`, L4 `dashboard`.
+- Capstone unlock (outside the level map): `nasdaq_verifier` — see Section 7 gate rule.
 
 ## 9. Integration checkpoints (assumes ~36 h; adjust to the event length)
 

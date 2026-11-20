@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: aacharya-api
+    name: paisaproof-api
     runtime: docker
     dockerfilePath: ./infra/Dockerfile.api
     dockerContext: .
@@ -43,7 +43,7 @@ services:
         value: data/seed/market
 
   - type: cron
-    name: aacharya-daily-cron
+    name: paisaproof-daily-cron
     runtime: docker
     dockerfilePath: ./infra/Dockerfile.api
     dockerContext: .

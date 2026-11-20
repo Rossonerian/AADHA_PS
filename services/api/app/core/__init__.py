@@ -1,1 +1,1 @@
-"""Shared core infrastructure for the Aacharya backend."""
+"""Shared core infrastructure for the PaisaProof backend."""

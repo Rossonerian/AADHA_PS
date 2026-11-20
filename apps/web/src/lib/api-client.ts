@@ -1,4 +1,11 @@
-import type { ApiErrorEnvelope, UserLevel } from "./contracts";
+import type {
+  ApiErrorEnvelope,
+  NasdaqChallengeResponse,
+  NasdaqSubmitRequest,
+  NasdaqSubmitResponse,
+  UserLevel,
+} from "./contracts";
+import { mockNasdaqChallenge, mockNasdaqSubmit } from "./mock-nasdaq";
 
 export class ApiClientError extends Error {
   readonly status: number;
@@ -150,4 +157,42 @@ export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): 
   }
 
   return parsedBody as T;
+}
+
+/**
+ * Nasdaq verifier helpers. The server enforces the unlock gate (403 TOOL_LOCKED).
+ * Mock (SYNTHETIC) data is used only when the backend or Finnhub key is absent, never on 403.
+ */
+function isBackendAbsent(err: unknown): boolean {
+  if (err instanceof ApiClientError) {
+    return err.code === "FINNHUB_UNAVAILABLE" || err.status === 404 || err.status === 502;
+  }
+  return err instanceof TypeError; // network failure
+}
+
+export async function getNasdaqChallenge(
+  symbol: string,
+  token?: string | null,
+): Promise<NasdaqChallengeResponse> {
+  try {
+    return await apiFetch<NasdaqChallengeResponse>("/nasdaq-verifier/challenge", {
+      token,
+      query: { symbol },
+    });
+  } catch (err) {
+    if (isBackendAbsent(err)) return mockNasdaqChallenge(symbol);
+    throw err;
+  }
+}
+
+export async function submitNasdaqVerifier(
+  req: NasdaqSubmitRequest,
+  token?: string | null,
+): Promise<NasdaqSubmitResponse> {
+  if (req.challenge_id.startsWith("mock_")) return mockNasdaqSubmit(req);
+  return apiFetch<NasdaqSubmitResponse>("/nasdaq-verifier/submit", {
+    method: "POST",
+    token,
+    body: req,
+  });
 }

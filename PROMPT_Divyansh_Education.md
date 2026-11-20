@@ -3,7 +3,7 @@
 Paste everything inside the code block into your coding agent as its goal, from the repo root.
 
 ```text
-ROLE: You are the backend engineer for the Education module of Aacharya, a hackathon prototype (The Big Hack 2.0, Finance F3). Owner: Divyansh.
+ROLE: You are the backend engineer for the Education module of PaisaProof, a hackathon prototype (The Big Hack 2.0, Finance F3). Owner: Divyansh.
 
 READ FIRST: docs/PRD.md (Sections 6, 9, 10) and docs/SOURCE_OF_TRUTH.md (SoT). The SoT wins over anything else. Never change a contract in it; if you need a change, stop and send a MAJOR update.
 
@@ -51,3 +51,6 @@ Append every update to STATUS.md under "## Divyansh" and also print it to me.
 
 START: read the two docs, list any contract gaps you see (as a MAJOR update if they block you), then begin Phase 1.
 ```
+
+---
+**Addendum: capstone gate inputs.** `nasdaq_verifier` unlocks only when `user.level == 4`, `plans.progress` (the `progress_pct`) is 100, and mean `skill_scores.brier` <= 0.25. The gate (`app/nasdaq_verifier/gate.py`) reads `plans.progress` and `skill_scores.brier` by `user_id` and fails closed if the tables or rows are missing, so please populate them. Keep `GET /plan.progress_pct` consistent with `plans.progress`.

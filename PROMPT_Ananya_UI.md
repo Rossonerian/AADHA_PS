@@ -3,7 +3,7 @@
 Paste everything inside the code block into your coding agent as its goal, from the repo root.
 
 ```text
-ROLE: You are the frontend engineer for Aacharya, a hackathon prototype (The Big Hack 2.0, Finance F3). Owner: Ananya. You own the complete UI.
+ROLE: You are the frontend engineer for PaisaProof, a hackathon prototype (The Big Hack 2.0, Finance F3). Owner: Ananya. You own the complete UI.
 
 READ FIRST: docs/PRD.md (Sections 5, 6, 7, 8, 18) and docs/SOURCE_OF_TRUTH.md (SoT; API contract Section 7, enums Section 8). Build against the contract with mocks until the real endpoints are live; never invent fields. If a screen needs data the contract lacks, send a MAJOR update.
 
@@ -52,3 +52,6 @@ Append every update to STATUS.md under "## Ananya" and also print it to me.
 
 START: read the two docs, list any contract gaps you see, set up mocks, then begin Phase 1.
 ```
+
+---
+**Addendum: Nasdaq literacy verifier screen.** Route `/nasdaq-verifier` (built; see `apps/web/src/components/nasdaq-verifier.tsx`). Unlock key `nasdaq_verifier` appears in `/me` `unlocks` only after Level 4 + plan 100% + Brier <= 0.25; the server returns `403 TOOL_LOCKED` with `missing_requirements` otherwise, so show the locked checklist card. Unlocked: neutral disclaimer, REAL DATA badge, snapshot + Recharts chart, external "Open full page on Nasdaq.com" link (never an iframe), comprehension questions with a 50-100% confidence slider. No buy/sell/hold copy. Typed calls: `getNasdaqChallenge`, `submitNasdaqVerifier` in `api-client.ts` (SYNTHETIC mock only when API/key is absent).
