@@ -11,7 +11,7 @@ from sqlalchemy.pool import StaticPool
 from app.core.config import get_settings, normalize_database_url
 from app.core.logging import get_logger
 
-_logger = get_logger("aacharya.db")
+_logger = get_logger("paisaproof.db")
 
 
 class Base(DeclarativeBase):

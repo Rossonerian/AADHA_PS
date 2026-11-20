@@ -45,9 +45,9 @@ _TROJAN_DISCLAIMER_RE = re.compile(
     re.IGNORECASE,
 )
 
-# Platform/policy statements describing what Aacharya does NOT do.
+# Platform/policy statements describing what PaisaProof does NOT do.
 _POLICY_NEGATION_RE = re.compile(
-    r"\b(?:aacharya|this\s+platform|the\s+platform|our\s+platform|the\s+app|we)\s+"
+    r"\b(?:paisaproof|this\s+platform|the\s+platform|our\s+platform|the\s+app|we)\s+"
     r"(?:is\s+an\s+educational\b[^.;\n]{0,80}\band\s+)?"
     r"(?:does\s+not|do\s+not|never|will\s+not|cannot)\s+"
     r"(?:provide|give|offer|issue|make|publish|recommend)\b"

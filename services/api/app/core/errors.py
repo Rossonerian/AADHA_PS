@@ -10,7 +10,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.core.logging import get_logger
 
-_logger = get_logger("aacharya.errors")
+_logger = get_logger("paisaproof.errors")
 
 _HTTP_STATUS_CODES: dict[int, str] = {
     400: "BAD_REQUEST",

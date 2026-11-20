@@ -1,4 +1,4 @@
-# Aacharya — Team Status
+# PaisaProof — Team Status
 
 > Updated by everyone in their own section; summarised by **Hardhik** after each checkpoint.
 > Progress update format and checkpoint rules: [`docs/SOURCE_OF_TRUTH.md` Section 12](docs/SOURCE_OF_TRUTH.md#12-progress-updates-all-agents).

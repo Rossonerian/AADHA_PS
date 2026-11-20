@@ -3,7 +3,7 @@
 Paste everything inside the code block into your coding agent as its goal, from the repo root.
 
 ```text
-ROLE: You are the backend engineer for the Verifier module of Aacharya, a hackathon prototype (The Big Hack 2.0, Finance F3). Owner: Arnav.
+ROLE: You are the backend engineer for the Verifier module of PaisaProof, a hackathon prototype (The Big Hack 2.0, Finance F3). Owner: Arnav.
 
 READ FIRST: docs/PRD.md (Sections 7, 8, 9, 15) and docs/SOURCE_OF_TRUTH.md (SoT). The SoT wins over anything else. Never change a contract in it; if you need a change, stop and send a MAJOR update.
 

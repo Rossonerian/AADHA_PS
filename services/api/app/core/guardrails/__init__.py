@@ -1,4 +1,4 @@
-"""Multi-layer financial-advice output guardrails for Aacharya."""
+"""Multi-layer financial-advice output guardrails for PaisaProof."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from app.core.guardrails.normalizer import normalize_text
 from app.core.guardrails.rules import evaluate_rules
 
 NEUTRAL_FALLBACK: str = (
-    "Aacharya is an educational platform and does not provide buy, sell, or hold "
+    "PaisaProof is an educational platform and does not provide buy, sell, or hold "
     "recommendations, price targets, or stock picks. We focus on teaching financial "
     "reasoning and evaluating the historical accuracy of public sources."
 )

@@ -25,7 +25,7 @@ from app.core.market import get_market_data_as_of, refresh_all
 from app.core.models import JobRunRecord
 from app.verifier.jobs import score_open_claims
 
-_logger = get_logger("aacharya.daily_job")
+_logger = get_logger("paisaproof.daily_job")
 
 
 def run_daily_job(
@@ -126,7 +126,7 @@ def run_daily_job(
 def main() -> int:
     """CLI entrypoint for `infra/scripts/daily_job.py`."""
     parser = argparse.ArgumentParser(
-        description="Run Aacharya daily market & claim job."
+        description="Run PaisaProof daily market & claim job."
     )
     parser.add_argument(
         "--symbols",

@@ -32,7 +32,7 @@ Run the full walkthrough twice end-to-end before demo:
 
 Record a crisp 1080p MP4 backup video at C4 freeze in case live staging/network fails during pitch:
 
-- **0:00–0:30 — Problem & Promise**: Introduce Aacharya (investor literacy + source claim verification without ever giving buy/sell advice).
+- **0:00–0:30 — Problem & Promise**: Introduce PaisaProof (investor literacy + source claim verification without ever giving buy/sell advice).
 - **0:30–1:15 — Onboarding & Calibration**: Complete onboarding quiz with confidence slider; show level placement, Brier calibration score, and personalized learning plan.
 - **1:15–2:00 — Practice & Stock Explainer**: Walk through one historical scenario (clues + market outcome vs NIFTY50) and one `/explain` stock move timeline.
 - **2:00–2:45 — Verifier**: Paste a finfluencer claim into `/verify`; highlight source reliability score, SEBI check, red flags (`guaranteed_returns`, `urgency`, etc.), and `data_origin` badge.

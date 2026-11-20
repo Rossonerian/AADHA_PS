@@ -112,8 +112,8 @@ def _build_headers(api_key: str) -> dict[str, str]:
     """Build standard OpenRouter request headers."""
     return {
         "Authorization": f"Bearer {api_key}",
-        "HTTP-Referer": "https://aacharya.app",
-        "X-Title": "Aacharya",
+        "HTTP-Referer": "https://paisaproof.app",
+        "X-Title": "PaisaProof",
         "Content-Type": "application/json",
     }
 

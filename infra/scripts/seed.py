@@ -23,7 +23,7 @@ from app.core.logging import get_logger
 from app.core.market import get_market_data_as_of
 from app.core.models import JobRunRecord
 
-_logger = get_logger("aacharya.seed")
+_logger = get_logger("paisaproof.seed")
 
 VALID_DATA_ORIGINS = frozenset({"real", "synthetic"})
 
@@ -256,7 +256,9 @@ def seed(
 
 def main() -> int:
     """CLI entrypoint for `infra/scripts/seed.py`."""
-    parser = argparse.ArgumentParser(description="Validate and seed Aacharya datasets.")
+    parser = argparse.ArgumentParser(
+        description="Validate and seed PaisaProof datasets."
+    )
     parser.add_argument(
         "--seed-dir",
         type=Path,

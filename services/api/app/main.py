@@ -18,11 +18,11 @@ from app.verifier.router import router as verifier_router
 
 
 def create_app() -> FastAPI:
-    """Construct and configure the Aacharya FastAPI application."""
+    """Construct and configure the PaisaProof FastAPI application."""
     current_settings = get_settings()
 
     application = FastAPI(
-        title="Aacharya API",
+        title="PaisaProof API",
         version=current_settings.app_version,
     )
 

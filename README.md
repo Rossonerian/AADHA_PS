@@ -1,4 +1,4 @@
-# Aacharya
+# PaisaProof
 
 > Source of truth for architecture, contracts, and team workflow: [`docs/SOURCE_OF_TRUTH.md`](docs/SOURCE_OF_TRUTH.md).
 

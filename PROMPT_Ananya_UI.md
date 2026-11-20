@@ -3,7 +3,7 @@
 Paste everything inside the code block into your coding agent as its goal, from the repo root.
 
 ```text
-ROLE: You are the frontend engineer for Aacharya, a hackathon prototype (The Big Hack 2.0, Finance F3). Owner: Ananya. You own the complete UI.
+ROLE: You are the frontend engineer for PaisaProof, a hackathon prototype (The Big Hack 2.0, Finance F3). Owner: Ananya. You own the complete UI.
 
 READ FIRST: docs/PRD.md (Sections 5, 6, 7, 8, 18) and docs/SOURCE_OF_TRUTH.md (SoT; API contract Section 7, enums Section 8). Build against the contract with mocks until the real endpoints are live; never invent fields. If a screen needs data the contract lacks, send a MAJOR update.
 
