@@ -1,8 +1,4 @@
-import {
-  apiFetch,
-  ApiClientError,
-  type ApiFetchOptions,
-} from "@/lib/api-client";
+import { apiFetch, ApiClientError, type ApiFetchOptions } from "@/lib/api-client";
 import { authClient } from "@/lib/neon-auth-client";
 import * as demo from "@/lib/mock-data";
 import type {
@@ -91,7 +87,10 @@ export const api = {
   },
 
   async onboardingStart(): Promise<OnboardingStart> {
-    const fixture: OnboardingStartResponse = { session_id: "demo-session", question: demo.onboardingQuestions[0] };
+    const fixture: OnboardingStartResponse = {
+      session_id: "demo-session",
+      question: demo.onboardingQuestions[0],
+    };
     return getOriginated("/onboarding/start", fixture, post({}));
   },
 
@@ -123,16 +122,9 @@ export const api = {
     return request<ScenarioNextResponse>("/scenarios/next", { query: { difficulty: 2 } });
   },
 
-  async scenarioAnswer(
-    id: string,
-    payload: ScenarioAnswerRequest,
-  ): Promise<ScenarioResult> {
+  async scenarioAnswer(id: string, payload: ScenarioAnswerRequest): Promise<ScenarioResult> {
     const fixture: ScenarioAnswerResponse = demo.scenarioResult;
-    return getOriginated(
-      `/scenarios/${encodeURIComponent(id)}/answer`,
-      fixture,
-      post(payload),
-    );
+    return getOriginated(`/scenarios/${encodeURIComponent(id)}/answer`, fixture, post(payload));
   },
 
   async assessmentStart(level: number): Promise<Assessment> {

@@ -167,14 +167,22 @@ export const assessment = {
       skill_area: "judging_info",
       difficulty: 2,
       text: "Which detail makes a market claim easier to check?",
-      options: ["A clear source and a dated filing", "A large number of forwards", "A promise with no end date"],
+      options: [
+        "A clear source and a dated filing",
+        "A large number of forwards",
+        "A promise with no end date",
+      ],
     },
     {
       id: "q-2",
       skill_area: "reading_stock",
       difficulty: 2,
       text: "Why compare a share with an index over the same dates?",
-      options: ["To see how much of the move was market-wide", "To predict tomorrow", "To remove all risk"],
+      options: [
+        "To see how much of the move was market-wide",
+        "To predict tomorrow",
+        "To remove all risk",
+      ],
     },
   ],
 } satisfies AssessmentStartResponse;
@@ -209,7 +217,9 @@ export const explain = {
     {
       date: "02 Aug",
       pct: -14,
-      events: [{ text: "Trading moved to additional surveillance", source: "Exchange notice · 02 Aug" }],
+      events: [
+        { text: "Trading moved to additional surveillance", source: "Exchange notice · 02 Aug" },
+      ],
     },
   ],
   summary:
@@ -296,8 +306,18 @@ export const sourceDetail = {
   source: verification.source!,
   history: [
     { score: 34, label: "not_reliable", reason: "Initial sample score", changed_at: "2026-06-01" },
-    { score: 29, label: "not_reliable", reason: "One more claim was scored", changed_at: "2026-07-01" },
-    { score: 25, label: "not_reliable", reason: "More scored claims added", changed_at: "2026-08-01" },
+    {
+      score: 29,
+      label: "not_reliable",
+      reason: "One more claim was scored",
+      changed_at: "2026-07-01",
+    },
+    {
+      score: 25,
+      label: "not_reliable",
+      reason: "More scored claims added",
+      changed_at: "2026-08-01",
+    },
     { score: 21, label: "not_reliable", reason: "Latest scored claim", changed_at: "2026-09-01" },
     { score: 18, label: "not_reliable", reason: "Current sample rating", changed_at: "2026-10-01" },
   ],
