@@ -1,0 +1,2922 @@
+explain_stocks:
+- symbol: SATYAMCOMP
+  year: 2009
+  chart:
+  - date: '2009-01-01'
+    close: 178.09
+    volume: 4024999
+  - date: '2009-01-15'
+    close: 86.54
+    volume: 4024999
+  - date: '2009-01-29'
+    close: 24.51
+    volume: 4024999
+  - date: '2009-02-12'
+    close: 24.52
+    volume: 4024999
+  - date: '2009-02-26'
+    close: 24.51
+    volume: 4024999
+  - date: '2009-03-12'
+    close: 24.47
+    volume: 4024999
+  - date: '2009-03-26'
+    close: 24.42
+    volume: 4024999
+  - date: '2009-04-09'
+    close: 24.38
+    volume: 4024999
+  - date: '2009-04-23'
+    close: 24.35
+    volume: 4024999
+  - date: '2009-05-07'
+    close: 24.36
+    volume: 4024999
+  - date: '2009-05-21'
+    close: 24.4
+    volume: 4024999
+  - date: '2009-06-04'
+    close: 24.46
+    volume: 4024999
+  - date: '2009-06-18'
+    close: 24.54
+    volume: 4024999
+  - date: '2009-07-02'
+    close: 24.62
+    volume: 4024999
+  - date: '2009-07-16'
+    close: 24.67
+    volume: 4024999
+  - date: '2009-07-30'
+    close: 24.69
+    volume: 4024999
+  - date: '2009-08-13'
+    close: 24.67
+    volume: 4024999
+  - date: '2009-08-27'
+    close: 24.62
+    volume: 4024999
+  - date: '2009-09-10'
+    close: 24.55
+    volume: 4024999
+  - date: '2009-09-24'
+    close: 24.48
+    volume: 4024999
+  - date: '2009-10-08'
+    close: 24.43
+    volume: 4024999
+  - date: '2009-10-22'
+    close: 24.4
+    volume: 4024999
+  - date: '2009-11-05'
+    close: 24.41
+    volume: 4024999
+  - date: '2009-11-19'
+    close: 24.43
+    volume: 4024999
+  - date: '2009-12-03'
+    close: 24.46
+    volume: 4024999
+  - date: '2009-12-17'
+    close: 24.49
+    volume: 4024999
+  - date: '2009-12-31'
+    close: 24.5
+    volume: 4024999
+  moves:
+  - date: '2009-01-07'
+    pct: -77.7
+    events:
+    - text: Chairman B. Ramalinga Raju confesses to falsifying cash balances and revenues
+        in letter to board.
+      source: BSE Corporate Filing (Jan 7, 2009)
+  - date: '2009-01-09'
+    pct: -18.4
+    events:
+    - text: Government of India supersedes Satyam board and appoints independent directors.
+      source: Ministry of Corporate Affairs Press Release (Jan 9, 2009)
+  summary: Jan 2009 accounting confession triggered an extreme single-week repricing
+    after board resignations and halted Maytas buyout.
+  data_origin: synthetic
+- symbol: YESBANK
+  year: 2018
+  chart:
+  - date: '2018-01-01'
+    close: 324.74
+    volume: 2975000
+  - date: '2018-01-15'
+    close: 324.81
+    volume: 2975000
+  - date: '2018-01-29'
+    close: 325.2
+    volume: 2975000
+  - date: '2018-02-12'
+    close: 325.72
+    volume: 2975000
+  - date: '2018-02-26'
+    close: 326.16
+    volume: 2975000
+  - date: '2018-03-12'
+    close: 326.35
+    volume: 2975000
+  - date: '2018-03-26'
+    close: 326.16
+    volume: 2975000
+  - date: '2018-04-09'
+    close: 325.59
+    volume: 2975000
+  - date: '2018-04-23'
+    close: 324.68
+    volume: 2975000
+  - date: '2018-05-07'
+    close: 323.56
+    volume: 2975000
+  - date: '2018-05-21'
+    close: 322.4
+    volume: 2975000
+  - date: '2018-06-04'
+    close: 321.33
+    volume: 2975000
+  - date: '2018-06-18'
+    close: 320.46
+    volume: 2975000
+  - date: '2018-07-02'
+    close: 319.85
+    volume: 2975000
+  - date: '2018-07-16'
+    close: 319.47
+    volume: 2975000
+  - date: '2018-07-30'
+    close: 319.22
+    volume: 2975000
+  - date: '2018-08-13'
+    close: 319.02
+    volume: 2975000
+  - date: '2018-08-27'
+    close: 318.75
+    volume: 2975000
+  - date: '2018-09-10'
+    close: 318.34
+    volume: 2975000
+  - date: '2018-09-24'
+    close: 300.74
+    volume: 2975000
+  - date: '2018-10-08'
+    close: 251.22
+    volume: 2975000
+  - date: '2018-10-22'
+    close: 210.22
+    volume: 2975000
+  - date: '2018-11-05'
+    close: 211.04
+    volume: 2975000
+  - date: '2018-11-19'
+    close: 211.11
+    volume: 2975000
+  - date: '2018-12-03'
+    close: 210.48
+    volume: 2975000
+  - date: '2018-12-17'
+    close: 209.88
+    volume: 2975000
+  - date: '2018-12-31'
+    close: 210.0
+    volume: 2975000
+  moves:
+  - date: '2018-09-21'
+    pct: -28.7
+    events:
+    - text: RBI directs MD & CEO Rana Kapoor to step down by Jan 31, 2019.
+      source: NSE Corporate Announcement (Sep 19, 2018)
+  - date: '2018-10-25'
+    pct: -11.2
+    events:
+    - text: Q2 FY19 results highlight elevated corporate stress provisioning.
+      source: Yes Bank Q2 FY19 Exchange Filing
+  summary: RBI refusal to extend founder CEO term and NPA divergence disclosures drove
+    steep 2018 re-rating.
+  data_origin: synthetic
+- symbol: DHFL
+  year: 2018
+  chart:
+  - date: '2018-01-01'
+    close: 596.0
+    volume: 2975000
+  - date: '2018-01-15'
+    close: 596.47
+    volume: 2975000
+  - date: '2018-01-29'
+    close: 597.53
+    volume: 2975000
+  - date: '2018-02-12'
+    close: 598.84
+    volume: 2975000
+  - date: '2018-02-26'
+    close: 600.0
+    volume: 2975000
+  - date: '2018-03-12'
+    close: 600.7
+    volume: 2975000
+  - date: '2018-03-26'
+    close: 600.73
+    volume: 2975000
+  - date: '2018-04-09'
+    close: 600.02
+    volume: 2975000
+  - date: '2018-04-23'
+    close: 598.7
+    volume: 2975000
+  - date: '2018-05-07'
+    close: 596.98
+    volume: 2975000
+  - date: '2018-05-21'
+    close: 595.16
+    volume: 2975000
+  - date: '2018-06-04'
+    close: 593.53
+    volume: 2975000
+  - date: '2018-06-18'
+    close: 592.27
+    volume: 2975000
+  - date: '2018-07-02'
+    close: 591.48
+    volume: 2975000
+  - date: '2018-07-16'
+    close: 591.11
+    volume: 2975000
+  - date: '2018-07-30'
+    close: 591.02
+    volume: 2975000
+  - date: '2018-08-13'
+    close: 591.01
+    volume: 2975000
+  - date: '2018-08-27'
+    close: 590.88
+    volume: 2975000
+  - date: '2018-09-10'
+    close: 590.5
+    volume: 2975000
+  - date: '2018-09-24'
+    close: 555.34
+    volume: 2975000
+  - date: '2018-10-08'
+    close: 391.54
+    volume: 2975000
+  - date: '2018-10-22'
+    close: 235.08
+    volume: 2975000
+  - date: '2018-11-05'
+    close: 236.07
+    volume: 2975000
+  - date: '2018-11-19'
+    close: 236.22
+    volume: 2975000
+  - date: '2018-12-03'
+    close: 235.54
+    volume: 2975000
+  - date: '2018-12-17'
+    close: 234.87
+    volume: 2975000
+  - date: '2018-12-31'
+    close: 235.0
+    volume: 2975000
+  moves:
+  - date: '2018-09-21'
+    pct: -42.4
+    events:
+    - text: Secondary-market sale of DHFL commercial paper at elevated yield triggers
+        liquidity panic.
+      source: BSE Exchange Clarification Filing (Sep 21, 2018)
+  - date: '2018-10-15'
+    pct: -14.8
+    events:
+    - text: Credit agencies review short-term funding rollover risk across HFCs.
+      source: CARE Ratings Press Release (Oct 2018)
+  summary: IL&FS commercial paper defaults sparked a sector-wide NBFC/HFC wholesale
+    funding squeeze.
+  data_origin: synthetic
+- symbol: VAKRANGEE
+  year: 2018
+  chart:
+  - date: '2018-01-01'
+    close: 492.85
+    volume: 2975000
+  - date: '2018-01-15'
+    close: 500.0
+    volume: 2975000
+  - date: '2018-01-29'
+    close: 478.17
+    volume: 2975000
+  - date: '2018-02-12'
+    close: 386.23
+    volume: 2975000
+  - date: '2018-02-26'
+    close: 294.59
+    volume: 2975000
+  - date: '2018-03-12'
+    close: 208.01
+    volume: 2975000
+  - date: '2018-03-26'
+    close: 208.26
+    volume: 2975000
+  - date: '2018-04-09'
+    close: 208.5
+    volume: 2975000
+  - date: '2018-04-23'
+    close: 208.6
+    volume: 2975000
+  - date: '2018-05-07'
+    close: 208.48
+    volume: 2975000
+  - date: '2018-05-21'
+    close: 208.11
+    volume: 2975000
+  - date: '2018-06-04'
+    close: 207.57
+    volume: 2975000
+  - date: '2018-06-18'
+    close: 206.99
+    volume: 2975000
+  - date: '2018-07-02'
+    close: 206.55
+    volume: 2975000
+  - date: '2018-07-16'
+    close: 206.38
+    volume: 2975000
+  - date: '2018-07-30'
+    close: 206.54
+    volume: 2975000
+  - date: '2018-08-13'
+    close: 207.01
+    volume: 2975000
+  - date: '2018-08-27'
+    close: 207.67
+    volume: 2975000
+  - date: '2018-09-10'
+    close: 208.35
+    volume: 2975000
+  - date: '2018-09-24'
+    close: 208.89
+    volume: 2975000
+  - date: '2018-10-08'
+    close: 209.16
+    volume: 2975000
+  - date: '2018-10-22'
+    close: 209.13
+    volume: 2975000
+  - date: '2018-11-05'
+    close: 208.86
+    volume: 2975000
+  - date: '2018-11-19'
+    close: 208.49
+    volume: 2975000
+  - date: '2018-12-03'
+    close: 208.15
+    volume: 2975000
+  - date: '2018-12-17'
+    close: 207.97
+    volume: 2975000
+  - date: '2018-12-31'
+    close: 208.0
+    volume: 2975000
+  moves:
+  - date: '2018-02-02'
+    pct: -20.0
+    events:
+    - text: Media reports cite regulatory examination of unusual trading volumes.
+      source: BSE Surveillance Notice (Feb 2018)
+  - date: '2018-04-28'
+    pct: -19.5
+    events:
+    - text: Statutory auditor PwC resigns citing insufficient store-level audit information.
+      source: NSE Corporate Filing (Apr 28, 2018)
+  summary: Sharp multi-week lower-circuit decline followed regulatory scrutiny and
+    auditor resignation.
+  data_origin: synthetic
+- symbol: PCJEWELLER
+  year: 2018
+  chart:
+  - date: '2018-01-01'
+    close: 272.1
+    volume: 2975000
+  - date: '2018-01-15'
+    close: 268.46
+    volume: 2975000
+  - date: '2018-01-29'
+    close: 264.9
+    volume: 2975000
+  - date: '2018-02-12'
+    close: 261.3
+    volume: 2975000
+  - date: '2018-02-26'
+    close: 257.54
+    volume: 2975000
+  - date: '2018-03-12'
+    close: 253.58
+    volume: 2975000
+  - date: '2018-03-26'
+    close: 249.43
+    volume: 2975000
+  - date: '2018-04-09'
+    close: 245.17
+    volume: 2975000
+  - date: '2018-04-23'
+    close: 240.91
+    volume: 2975000
+  - date: '2018-05-07'
+    close: 194.89
+    volume: 2975000
+  - date: '2018-05-21'
+    close: 135.89
+    volume: 2975000
+  - date: '2018-06-04'
+    close: 114.96
+    volume: 2975000
+  - date: '2018-06-18'
+    close: 114.79
+    volume: 2975000
+  - date: '2018-07-02'
+    close: 114.57
+    volume: 2975000
+  - date: '2018-07-16'
+    close: 114.39
+    volume: 2975000
+  - date: '2018-07-30'
+    close: 114.35
+    volume: 2975000
+  - date: '2018-08-13'
+    close: 114.5
+    volume: 2975000
+  - date: '2018-08-27'
+    close: 114.82
+    volume: 2975000
+  - date: '2018-09-10'
+    close: 115.21
+    volume: 2975000
+  - date: '2018-09-24'
+    close: 115.56
+    volume: 2975000
+  - date: '2018-10-08'
+    close: 115.76
+    volume: 2975000
+  - date: '2018-10-22'
+    close: 115.78
+    volume: 2975000
+  - date: '2018-11-05'
+    close: 115.61
+    volume: 2975000
+  - date: '2018-11-19'
+    close: 115.35
+    volume: 2975000
+  - date: '2018-12-03'
+    close: 115.11
+    volume: 2975000
+  - date: '2018-12-17'
+    close: 114.98
+    volume: 2975000
+  - date: '2018-12-31'
+    close: 115.0
+    volume: 2975000
+  moves:
+  - date: '2018-04-27'
+    pct: -25.1
+    events:
+    - text: Promoter share gift disclosure and Fidelity stake trim rattle investor
+        confidence.
+      source: BSE Shareholding & SAST Filing (Apr 2018)
+  - date: '2018-05-03'
+    pct: 14.2
+    events:
+    - text: Board announces proposed share buyback to calm volatility (later withdrawn).
+      source: NSE Board Outcome Filing (May 2018)
+  summary: Institutional stake reduction and disclosure questions sparked steep 2018
+    volatility.
+  data_origin: synthetic
+- symbol: MANPASAND
+  year: 2018
+  chart:
+  - date: '2018-01-01'
+    close: 431.67
+    volume: 2975000
+  - date: '2018-01-15'
+    close: 431.97
+    volume: 2975000
+  - date: '2018-01-29'
+    close: 432.52
+    volume: 2975000
+  - date: '2018-02-12'
+    close: 433.07
+    volume: 2975000
+  - date: '2018-02-26'
+    close: 433.42
+    volume: 2975000
+  - date: '2018-03-12'
+    close: 433.43
+    volume: 2975000
+  - date: '2018-03-26'
+    close: 433.06
+    volume: 2975000
+  - date: '2018-04-09'
+    close: 432.4
+    volume: 2975000
+  - date: '2018-04-23'
+    close: 431.59
+    volume: 2975000
+  - date: '2018-05-07'
+    close: 430.8
+    volume: 2975000
+  - date: '2018-05-21'
+    close: 430.19
+    volume: 2975000
+  - date: '2018-06-04'
+    close: 354.1
+    volume: 2975000
+  - date: '2018-06-18'
+    close: 222.28
+    volume: 2975000
+  - date: '2018-07-02'
+    close: 147.89
+    volume: 2975000
+  - date: '2018-07-16'
+    close: 147.61
+    volume: 2975000
+  - date: '2018-07-30'
+    close: 147.44
+    volume: 2975000
+  - date: '2018-08-13'
+    close: 147.49
+    volume: 2975000
+  - date: '2018-08-27'
+    close: 147.79
+    volume: 2975000
+  - date: '2018-09-10'
+    close: 148.26
+    volume: 2975000
+  - date: '2018-09-24'
+    close: 148.73
+    volume: 2975000
+  - date: '2018-10-08'
+    close: 149.04
+    volume: 2975000
+  - date: '2018-10-22'
+    close: 149.09
+    volume: 2975000
+  - date: '2018-11-05'
+    close: 148.88
+    volume: 2975000
+  - date: '2018-11-19'
+    close: 148.52
+    volume: 2975000
+  - date: '2018-12-03'
+    close: 148.16
+    volume: 2975000
+  - date: '2018-12-17'
+    close: 147.97
+    volume: 2975000
+  - date: '2018-12-31'
+    close: 148.0
+    volume: 2975000
+  moves:
+  - date: '2018-05-28'
+    pct: -20.0
+    events:
+    - text: Deloitte Haskins & Sells resigns as statutory auditor days before FY18
+        results.
+      source: BSE Corporate Disclosure (May 27, 2018)
+  - date: '2018-06-04'
+    pct: -19.8
+    events:
+    - text: Credit rating agencies downgrade company citing governance uncertainty.
+      source: ICRA Rating Rationale (Jun 2018)
+  summary: Abrupt pre-results auditor exit led to successive lower circuits.
+  data_origin: synthetic
+- symbol: PAYTM
+  year: 2021
+  chart:
+  - date: '2021-01-01'
+    close: 1851.93
+    volume: 4024999
+  - date: '2021-01-15'
+    close: 1840.06
+    volume: 4024999
+  - date: '2021-01-29'
+    close: 1825.55
+    volume: 4024999
+  - date: '2021-02-12'
+    close: 1808.99
+    volume: 4024999
+  - date: '2021-02-26'
+    close: 1791.37
+    volume: 4024999
+  - date: '2021-03-12'
+    close: 1773.84
+    volume: 4024999
+  - date: '2021-03-26'
+    close: 1757.48
+    volume: 4024999
+  - date: '2021-04-09'
+    close: 1743.06
+    volume: 4024999
+  - date: '2021-04-23'
+    close: 1730.91
+    volume: 4024999
+  - date: '2021-05-07'
+    close: 1720.87
+    volume: 4024999
+  - date: '2021-05-21'
+    close: 1712.35
+    volume: 4024999
+  - date: '2021-06-04'
+    close: 1704.52
+    volume: 4024999
+  - date: '2021-06-18'
+    close: 1696.48
+    volume: 4024999
+  - date: '2021-07-02'
+    close: 1687.48
+    volume: 4024999
+  - date: '2021-07-16'
+    close: 1677.05
+    volume: 4024999
+  - date: '2021-07-30'
+    close: 1665.13
+    volume: 4024999
+  - date: '2021-08-13'
+    close: 1651.96
+    volume: 4024999
+  - date: '2021-08-27'
+    close: 1638.08
+    volume: 4024999
+  - date: '2021-09-10'
+    close: 1624.09
+    volume: 4024999
+  - date: '2021-09-24'
+    close: 1610.52
+    volume: 4024999
+  - date: '2021-10-08'
+    close: 1597.71
+    volume: 4024999
+  - date: '2021-10-22'
+    close: 1585.72
+    volume: 4024999
+  - date: '2021-11-05'
+    close: 1574.35
+    volume: 4024999
+  - date: '2021-11-19'
+    close: 1554.31
+    volume: 4024999
+  - date: '2021-12-03'
+    close: 1421.92
+    volume: 4024999
+  - date: '2021-12-17'
+    close: 1296.85
+    volume: 4024999
+  - date: '2021-12-31'
+    close: 1174.25
+    volume: 4024999
+  moves:
+  - date: '2021-11-18'
+    pct: -27.2
+    events:
+    - text: Shares debut below Rs 2,150 IPO issue price amid valuation scrutiny.
+      source: NSE Listing Data (Nov 18, 2021)
+  - date: '2021-12-15'
+    pct: -12.6
+    events:
+    - text: Anchor investor 30-day lock-in expiry increases tradeable supply.
+      source: SEBI ICDR Lock-in Filing (Dec 2021)
+  summary: Post-IPO valuation reset reflected high listing multiples, large OFS, and
+    profitability timeline.
+  data_origin: synthetic
+- symbol: ZOMATO
+  year: 2023
+  chart:
+  - date: '2023-01-02'
+    close: 61.28
+    volume: 2975000
+  - date: '2023-01-16'
+    close: 61.67
+    volume: 2975000
+  - date: '2023-01-30'
+    close: 62.1
+    volume: 2975000
+  - date: '2023-02-13'
+    close: 62.52
+    volume: 2975000
+  - date: '2023-02-27'
+    close: 62.91
+    volume: 2975000
+  - date: '2023-03-13'
+    close: 63.26
+    volume: 2975000
+  - date: '2023-03-27'
+    close: 63.55
+    volume: 2975000
+  - date: '2023-04-10'
+    close: 63.81
+    volume: 2975000
+  - date: '2023-04-24'
+    close: 64.04
+    volume: 2975000
+  - date: '2023-05-08'
+    close: 64.29
+    volume: 2975000
+  - date: '2023-05-22'
+    close: 65.44
+    volume: 2975000
+  - date: '2023-06-05'
+    close: 69.67
+    volume: 2975000
+  - date: '2023-06-19'
+    close: 73.75
+    volume: 2975000
+  - date: '2023-07-03'
+    close: 77.86
+    volume: 2975000
+  - date: '2023-07-17'
+    close: 82.21
+    volume: 2975000
+  - date: '2023-07-31'
+    close: 86.79
+    volume: 2975000
+  - date: '2023-08-14'
+    close: 91.42
+    volume: 2975000
+  - date: '2023-08-28'
+    close: 92.36
+    volume: 2975000
+  - date: '2023-09-11'
+    close: 92.49
+    volume: 2975000
+  - date: '2023-09-25'
+    close: 92.76
+    volume: 2975000
+  - date: '2023-10-09'
+    close: 93.02
+    volume: 2975000
+  - date: '2023-10-23'
+    close: 93.14
+    volume: 2975000
+  - date: '2023-11-06'
+    close: 93.05
+    volume: 2975000
+  - date: '2023-11-20'
+    close: 92.81
+    volume: 2975000
+  - date: '2023-12-04'
+    close: 92.53
+    volume: 2975000
+  - date: '2023-12-18'
+    close: 92.37
+    volume: 2975000
+  moves:
+  - date: '2023-05-19'
+    pct: 9.8
+    events:
+    - text: Q4 FY23 filing shows food delivery segment turning adjusted-EBITDA positive.
+      source: NSE Q4 FY23 Results Filing (May 19, 2023)
+  - date: '2023-08-03'
+    pct: 12.4
+    events:
+    - text: Company reports first consolidated quarterly net profit (Q1 FY24).
+      source: BSE Q1 FY24 Results Filing (Aug 3, 2023)
+  summary: Operational inflection toward adjusted-EBITDA profitability drove a sustained
+    2023 recovery.
+  data_origin: synthetic
+- symbol: ADANIENT
+  year: 2023
+  chart:
+  - date: '2023-01-02'
+    close: 3460.41
+    volume: 2975000
+  - date: '2023-01-16'
+    close: 3449.06
+    volume: 2975000
+  - date: '2023-01-30'
+    close: 2917.0
+    volume: 2975000
+  - date: '2023-02-13'
+    close: 1718.0
+    volume: 2975000
+  - date: '2023-02-27'
+    close: 1718.8
+    volume: 2975000
+  - date: '2023-03-13'
+    close: 1720.86
+    volume: 2975000
+  - date: '2023-03-27'
+    close: 1723.31
+    volume: 2975000
+  - date: '2023-04-10'
+    close: 1725.05
+    volume: 2975000
+  - date: '2023-04-24'
+    close: 1725.15
+    volume: 2975000
+  - date: '2023-05-08'
+    close: 1723.1
+    volume: 2975000
+  - date: '2023-05-22'
+    close: 1719.09
+    volume: 2975000
+  - date: '2023-06-05'
+    close: 1713.97
+    volume: 2975000
+  - date: '2023-06-19'
+    close: 1708.97
+    volume: 2975000
+  - date: '2023-07-03'
+    close: 1705.43
+    volume: 2975000
+  - date: '2023-07-17'
+    close: 1704.31
+    volume: 2975000
+  - date: '2023-07-31'
+    close: 1705.97
+    volume: 2975000
+  - date: '2023-08-14'
+    close: 1710.0
+    volume: 2975000
+  - date: '2023-08-28'
+    close: 1715.39
+    volume: 2975000
+  - date: '2023-09-11'
+    close: 1720.77
+    volume: 2975000
+  - date: '2023-09-25'
+    close: 1724.88
+    volume: 2975000
+  - date: '2023-10-09'
+    close: 1726.88
+    volume: 2975000
+  - date: '2023-10-23'
+    close: 1726.58
+    volume: 2975000
+  - date: '2023-11-06'
+    close: 1724.51
+    volume: 2975000
+  - date: '2023-11-20'
+    close: 1721.63
+    volume: 2975000
+  - date: '2023-12-04'
+    close: 1719.09
+    volume: 2975000
+  - date: '2023-12-18'
+    close: 1717.78
+    volume: 2975000
+  moves:
+  - date: '2023-01-27'
+    pct: -18.5
+    events:
+    - text: Hindenburg Research publishes report questioning group leverage and related
+        parties.
+      source: NSE Clarification Filing (Jan 2023)
+  - date: '2023-02-01'
+    pct: -26.7
+    events:
+    - text: Board withdraws fully subscribed Rs 20,000 Cr FPO and returns investor
+        funds.
+      source: BSE Board Outcome Filing (Feb 1, 2023)
+  summary: Short-seller report released during the Rs 20,000 Cr FPO triggered severe
+    valuation compression.
+  data_origin: synthetic
+- symbol: TCS
+  year: 2020
+  chart:
+  - date: '2020-01-01'
+    close: 1833.8
+    volume: 3500000
+  - date: '2020-01-15'
+    close: 1823.35
+    volume: 3500000
+  - date: '2020-01-29'
+    close: 1811.35
+    volume: 3500000
+  - date: '2020-02-12'
+    close: 1797.83
+    volume: 3500000
+  - date: '2020-02-26'
+    close: 1783.26
+    volume: 3500000
+  - date: '2020-03-11'
+    close: 1768.39
+    volume: 3500000
+  - date: '2020-03-25'
+    close: 1758.5
+    volume: 3500000
+  - date: '2020-04-08'
+    close: 1804.54
+    volume: 3500000
+  - date: '2020-04-22'
+    close: 1845.28
+    volume: 3500000
+  - date: '2020-05-06'
+    close: 1884.47
+    volume: 3500000
+  - date: '2020-05-20'
+    close: 1927.33
+    volume: 3500000
+  - date: '2020-06-03'
+    close: 1976.38
+    volume: 3500000
+  - date: '2020-06-17'
+    close: 2029.24
+    volume: 3500000
+  - date: '2020-07-01'
+    close: 2046.57
+    volume: 3500000
+  - date: '2020-07-15'
+    close: 2046.78
+    volume: 3500000
+  - date: '2020-07-29'
+    close: 2050.12
+    volume: 3500000
+  - date: '2020-08-12'
+    close: 2055.47
+    volume: 3500000
+  - date: '2020-08-26'
+    close: 2060.74
+    volume: 3500000
+  - date: '2020-09-09'
+    close: 2063.74
+    volume: 3500000
+  - date: '2020-09-23'
+    close: 2063.12
+    volume: 3500000
+  - date: '2020-10-07'
+    close: 2058.92
+    volume: 3500000
+  - date: '2020-10-21'
+    close: 2052.59
+    volume: 3500000
+  - date: '2020-11-04'
+    close: 2046.38
+    volume: 3500000
+  - date: '2020-11-18'
+    close: 2042.4
+    volume: 3500000
+  - date: '2020-12-02'
+    close: 2041.74
+    volume: 3500000
+  - date: '2020-12-16'
+    close: 2044.06
+    volume: 3500000
+  - date: '2020-12-30'
+    close: 2047.74
+    volume: 3500000
+  moves:
+  - date: '2020-03-23'
+    pct: -11.4
+    events:
+    - text: Nationwide COVID-19 lockdown triggers broad NIFTY 50 sell-off.
+      source: NSE Market Summary (Mar 23, 2020)
+  - date: '2020-10-07'
+    pct: 7.6
+    events:
+    - text: Q2 FY21 results beat estimates alongside Rs 16,000 Cr share buyback.
+      source: NSE Q2 FY21 Filing (Oct 7, 2020)
+  summary: Pandemic crash gave way to strong recovery as global digital cloud transformation
+    accelerated.
+  data_origin: synthetic
+- symbol: HDFCBANK
+  year: 2020
+  chart:
+  - date: '2020-01-01'
+    close: 923.47
+    volume: 3500000
+  - date: '2020-01-15'
+    close: 913.51
+    volume: 3500000
+  - date: '2020-01-29'
+    close: 902.77
+    volume: 3500000
+  - date: '2020-02-12'
+    close: 891.26
+    volume: 3500000
+  - date: '2020-02-26'
+    close: 879.24
+    volume: 3500000
+  - date: '2020-03-11'
+    close: 867.08
+    volume: 3500000
+  - date: '2020-03-25'
+    close: 858.05
+    volume: 3500000
+  - date: '2020-04-08'
+    close: 885.35
+    volume: 3500000
+  - date: '2020-04-22'
+    close: 910.03
+    volume: 3500000
+  - date: '2020-05-06'
+    close: 933.92
+    volume: 3500000
+  - date: '2020-05-20'
+    close: 959.61
+    volume: 3500000
+  - date: '2020-06-03'
+    close: 988.39
+    volume: 3500000
+  - date: '2020-06-17'
+    close: 1019.09
+    volume: 3500000
+  - date: '2020-07-01'
+    close: 1029.28
+    volume: 3500000
+  - date: '2020-07-15'
+    close: 1029.39
+    volume: 3500000
+  - date: '2020-07-29'
+    close: 1031.07
+    volume: 3500000
+  - date: '2020-08-12'
+    close: 1033.76
+    volume: 3500000
+  - date: '2020-08-26'
+    close: 1036.41
+    volume: 3500000
+  - date: '2020-09-09'
+    close: 1037.92
+    volume: 3500000
+  - date: '2020-09-23'
+    close: 1037.6
+    volume: 3500000
+  - date: '2020-10-07'
+    close: 1035.49
+    volume: 3500000
+  - date: '2020-10-21'
+    close: 1032.31
+    volume: 3500000
+  - date: '2020-11-04'
+    close: 1029.19
+    volume: 3500000
+  - date: '2020-11-18'
+    close: 1027.18
+    volume: 3500000
+  - date: '2020-12-02'
+    close: 1026.85
+    volume: 3500000
+  - date: '2020-12-16'
+    close: 1028.02
+    volume: 3500000
+  - date: '2020-12-30'
+    close: 1029.87
+    volume: 3500000
+  moves:
+  - date: '2020-03-24'
+    pct: -12.6
+    events:
+    - text: COVID-19 moratorium concerns weigh heavily on private banking stocks.
+      source: RBI COVID-19 Regulatory Package (Mar 2020)
+  - date: '2020-07-18'
+    pct: 6.4
+    events:
+    - text: Q1 FY21 results show resilient 1.36% GNPA and strong deposit growth.
+      source: BSE Q1 FY21 Results Filing (Jul 18, 2020)
+  summary: Systemic lockdown panic compressed multiples before deposit strength drove
+    recovery.
+  data_origin: synthetic
+- symbol: ITC
+  year: 2022
+  chart:
+  - date: '2022-01-03'
+    close: 230.72
+    volume: 3500000
+  - date: '2022-01-17'
+    close: 231.41
+    volume: 3500000
+  - date: '2022-01-31'
+    close: 231.94
+    volume: 3500000
+  - date: '2022-02-14'
+    close: 236.76
+    volume: 3500000
+  - date: '2022-02-28'
+    close: 242.3
+    volume: 3500000
+  - date: '2022-03-14'
+    close: 247.4
+    volume: 3500000
+  - date: '2022-03-28'
+    close: 251.91
+    volume: 3500000
+  - date: '2022-04-11'
+    close: 256.0
+    volume: 3500000
+  - date: '2022-04-25'
+    close: 260.12
+    volume: 3500000
+  - date: '2022-05-09'
+    close: 264.73
+    volume: 3500000
+  - date: '2022-05-23'
+    close: 269.98
+    volume: 3500000
+  - date: '2022-06-06'
+    close: 273.87
+    volume: 3500000
+  - date: '2022-06-20'
+    close: 273.49
+    volume: 3500000
+  - date: '2022-07-04'
+    close: 273.4
+    volume: 3500000
+  - date: '2022-07-18'
+    close: 273.72
+    volume: 3500000
+  - date: '2022-08-01'
+    close: 274.39
+    volume: 3500000
+  - date: '2022-08-15'
+    close: 275.2
+    volume: 3500000
+  - date: '2022-08-29'
+    close: 275.88
+    volume: 3500000
+  - date: '2022-09-12'
+    close: 276.19
+    volume: 3500000
+  - date: '2022-09-26'
+    close: 276.0
+    volume: 3500000
+  - date: '2022-10-10'
+    close: 275.39
+    volume: 3500000
+  - date: '2022-10-24'
+    close: 274.57
+    volume: 3500000
+  - date: '2022-11-07'
+    close: 273.81
+    volume: 3500000
+  - date: '2022-11-21'
+    close: 273.35
+    volume: 3500000
+  - date: '2022-12-05'
+    close: 273.31
+    volume: 3500000
+  - date: '2022-12-19'
+    close: 273.62
+    volume: 3500000
+  moves:
+  - date: '2022-02-01'
+    pct: 4.8
+    events:
+    - text: Union Budget 2022 keeps tobacco excise duties unchanged.
+      source: Union Budget 2022 Finance Bill (Feb 1, 2022)
+  - date: '2022-05-18'
+    pct: 6.2
+    events:
+    - text: Q4 FY22 filing shows broad-based growth across FMCG, Agri, and Hotels.
+      source: NSE Q4 FY22 Filing (May 18, 2022)
+  summary: Stable cigarette taxation and post-pandemic hotel/FMCG margin recovery
+    drove 2022 re-rating.
+  data_origin: synthetic
+- symbol: IRCTC
+  year: 2021
+  chart:
+  - date: '2021-01-01'
+    close: 873.76
+    volume: 4024999
+  - date: '2021-01-15'
+    close: 888.72
+    volume: 4024999
+  - date: '2021-01-29'
+    close: 902.4
+    volume: 4024999
+  - date: '2021-02-12'
+    close: 915.04
+    volume: 4024999
+  - date: '2021-02-26'
+    close: 927.07
+    volume: 4024999
+  - date: '2021-03-12'
+    close: 939.06
+    volume: 4024999
+  - date: '2021-03-26'
+    close: 951.59
+    volume: 4024999
+  - date: '2021-04-09'
+    close: 965.06
+    volume: 4024999
+  - date: '2021-04-23'
+    close: 979.7
+    volume: 4024999
+  - date: '2021-05-07'
+    close: 995.47
+    volume: 4024999
+  - date: '2021-05-21'
+    close: 1012.07
+    volume: 4024999
+  - date: '2021-06-04'
+    close: 1029.05
+    volume: 4024999
+  - date: '2021-06-18'
+    close: 1045.94
+    volume: 4024999
+  - date: '2021-07-02'
+    close: 1062.29
+    volume: 4024999
+  - date: '2021-07-16'
+    close: 1077.86
+    volume: 4024999
+  - date: '2021-07-30'
+    close: 1092.6
+    volume: 4024999
+  - date: '2021-08-13'
+    close: 1106.7
+    volume: 4024999
+  - date: '2021-08-27'
+    close: 1120.46
+    volume: 4024999
+  - date: '2021-09-10'
+    close: 1134.26
+    volume: 4024999
+  - date: '2021-09-24'
+    close: 1148.42
+    volume: 4024999
+  - date: '2021-10-08'
+    close: 1163.11
+    volume: 4024999
+  - date: '2021-10-22'
+    close: 1144.63
+    volume: 4024999
+  - date: '2021-11-05'
+    close: 1008.47
+    volume: 4024999
+  - date: '2021-11-19'
+    close: 894.5
+    volume: 4024999
+  - date: '2021-12-03'
+    close: 890.21
+    volume: 4024999
+  - date: '2021-12-17'
+    close: 892.52
+    volume: 4024999
+  - date: '2021-12-31'
+    close: 895.0
+    volume: 4024999
+  moves:
+  - date: '2021-10-19'
+    pct: -15.3
+    events:
+    - text: Heavy profit-booking hits stock after parabolic 200%+ pre-split rally.
+      source: NSE Bulk & Delivery Data (Oct 19, 2021)
+  - date: '2021-10-29'
+    pct: -24.5
+    events:
+    - text: Railways Ministry issues convenience-fee sharing directive (later withdrawn).
+      source: BSE Corporate Filing (Oct 28-29, 2021)
+  summary: Pre-split retail enthusiasm reversed sharply following regulatory revenue-sharing
+    volatility.
+  data_origin: synthetic
+- symbol: BCG
+  year: 2022
+  chart:
+  - date: '2022-01-03'
+    close: 109.88
+    volume: 3500000
+  - date: '2022-01-17'
+    close: 109.54
+    volume: 3500000
+  - date: '2022-01-31'
+    close: 109.1
+    volume: 3500000
+  - date: '2022-02-14'
+    close: 108.59
+    volume: 3500000
+  - date: '2022-02-28'
+    close: 108.04
+    volume: 3500000
+  - date: '2022-03-14'
+    close: 99.96
+    volume: 3500000
+  - date: '2022-03-28'
+    close: 90.81
+    volume: 3500000
+  - date: '2022-04-11'
+    close: 81.4
+    volume: 3500000
+  - date: '2022-04-25'
+    close: 72.2
+    volume: 3500000
+  - date: '2022-05-09'
+    close: 68.96
+    volume: 3500000
+  - date: '2022-05-23'
+    close: 68.85
+    volume: 3500000
+  - date: '2022-06-06'
+    close: 68.75
+    volume: 3500000
+  - date: '2022-06-20'
+    close: 68.71
+    volume: 3500000
+  - date: '2022-07-04'
+    close: 68.76
+    volume: 3500000
+  - date: '2022-07-18'
+    close: 68.9
+    volume: 3500000
+  - date: '2022-08-01'
+    close: 69.12
+    volume: 3500000
+  - date: '2022-08-15'
+    close: 69.33
+    volume: 3500000
+  - date: '2022-08-29'
+    close: 69.49
+    volume: 3500000
+  - date: '2022-09-12'
+    close: 69.54
+    volume: 3500000
+  - date: '2022-09-26'
+    close: 69.48
+    volume: 3500000
+  - date: '2022-10-10'
+    close: 69.32
+    volume: 3500000
+  - date: '2022-10-24'
+    close: 69.13
+    volume: 3500000
+  - date: '2022-11-07'
+    close: 68.96
+    volume: 3500000
+  - date: '2022-11-21'
+    close: 68.86
+    volume: 3500000
+  - date: '2022-12-05'
+    close: 68.85
+    volume: 3500000
+  - date: '2022-12-19'
+    close: 68.92
+    volume: 3500000
+  moves:
+  - date: '2022-03-02'
+    pct: -10.0
+    events:
+    - text: Company discloses SEBI-ordered forensic audit into financial disclosures.
+      source: BSE Corporate Filing (Mar 2022)
+  - date: '2022-04-18'
+    pct: -14.5
+    events:
+    - text: Exchanges tighten ASM surveillance restrictions amid consecutive lower
+        circuits.
+      source: NSE Surveillance Circular (Apr 2022)
+  summary: SEBI forensic audit disclosure reversed a multi-thousand-percent social-media-driven
+    rally.
+  data_origin: synthetic
+- symbol: SUZLON
+  year: 2008
+  chart:
+  - date: '2008-01-01'
+    close: 412.3
+    volume: 3500000
+  - date: '2008-01-15'
+    close: 412.0
+    volume: 15750000
+  - date: '2008-01-29'
+    close: 388.7
+    volume: 3500000
+  - date: '2008-02-12'
+    close: 365.48
+    volume: 3500000
+  - date: '2008-02-26'
+    close: 341.39
+    volume: 3500000
+  - date: '2008-03-11'
+    close: 316.23
+    volume: 3500000
+  - date: '2008-03-25'
+    close: 290.64
+    volume: 3500000
+  - date: '2008-04-08'
+    close: 265.51
+    volume: 3500000
+  - date: '2008-04-22'
+    close: 254.94
+    volume: 3500000
+  - date: '2008-05-06'
+    close: 254.63
+    volume: 3500000
+  - date: '2008-05-20'
+    close: 254.2
+    volume: 3500000
+  - date: '2008-06-03'
+    close: 253.85
+    volume: 3500000
+  - date: '2008-06-17'
+    close: 253.75
+    volume: 3500000
+  - date: '2008-07-01'
+    close: 254.02
+    volume: 3500000
+  - date: '2008-07-15'
+    close: 254.63
+    volume: 3500000
+  - date: '2008-07-29'
+    close: 255.44
+    volume: 3500000
+  - date: '2008-08-12'
+    close: 256.25
+    volume: 3500000
+  - date: '2008-08-26'
+    close: 256.81
+    volume: 3500000
+  - date: '2008-09-09'
+    close: 256.99
+    volume: 3500000
+  - date: '2008-09-23'
+    close: 256.75
+    volume: 3500000
+  - date: '2008-10-07'
+    close: 256.18
+    volume: 3500000
+  - date: '2008-10-21'
+    close: 255.47
+    volume: 3500000
+  - date: '2008-11-04'
+    close: 254.84
+    volume: 3500000
+  - date: '2008-11-18'
+    close: 254.47
+    volume: 3500000
+  - date: '2008-12-02'
+    close: 254.42
+    volume: 3500000
+  - date: '2008-12-16'
+    close: 254.64
+    volume: 3500000
+  - date: '2008-12-30'
+    close: 254.98
+    volume: 3500000
+  moves:
+  - date: '2008-02-14'
+    pct: -16.2
+    events:
+    - text: Company discloses US rotor blade cracking retrofit costs.
+      source: BSE Corporate Filing (Feb 2008)
+  - date: '2008-10-24'
+    pct: -22.5
+    events:
+    - text: Global credit freeze weighs heavily on leveraged wind-energy balance sheets.
+      source: NSE Market Data (Oct 2008)
+  summary: High acquisition leverage and turbine blade retrofits collided with the
+    2008 global financial crisis.
+  data_origin: synthetic
+- symbol: JETAIRWAYS
+  year: 2018
+  chart:
+  - date: '2018-01-01'
+    close: 332.71
+    volume: 2975000
+  - date: '2018-01-15'
+    close: 331.19
+    volume: 2975000
+  - date: '2018-01-29'
+    close: 329.95
+    volume: 2975000
+  - date: '2018-02-12'
+    close: 328.8
+    volume: 2975000
+  - date: '2018-02-26'
+    close: 327.53
+    volume: 2975000
+  - date: '2018-03-12'
+    close: 326.0
+    volume: 2975000
+  - date: '2018-03-26'
+    close: 324.12
+    volume: 2975000
+  - date: '2018-04-09'
+    close: 321.89
+    volume: 2975000
+  - date: '2018-04-23'
+    close: 319.39
+    volume: 2975000
+  - date: '2018-05-07'
+    close: 316.76
+    volume: 2975000
+  - date: '2018-05-21'
+    close: 314.14
+    volume: 2975000
+  - date: '2018-06-04'
+    close: 311.64
+    volume: 2975000
+  - date: '2018-06-18'
+    close: 309.35
+    volume: 2975000
+  - date: '2018-07-02'
+    close: 307.25
+    volume: 2975000
+  - date: '2018-07-16'
+    close: 305.3
+    volume: 2975000
+  - date: '2018-07-30'
+    close: 303.39
+    volume: 2975000
+  - date: '2018-08-13'
+    close: 294.15
+    volume: 2975000
+  - date: '2018-08-27'
+    close: 267.99
+    volume: 2975000
+  - date: '2018-09-10'
+    close: 242.62
+    volume: 2975000
+  - date: '2018-09-24'
+    close: 218.03
+    volume: 2975000
+  - date: '2018-10-08'
+    close: 218.71
+    volume: 2975000
+  - date: '2018-10-22'
+    close: 219.39
+    volume: 2975000
+  - date: '2018-11-05'
+    close: 219.58
+    volume: 2975000
+  - date: '2018-11-19'
+    close: 219.15
+    volume: 2975000
+  - date: '2018-12-03'
+    close: 218.41
+    volume: 2975000
+  - date: '2018-12-17'
+    close: 217.91
+    volume: 2975000
+  - date: '2018-12-31'
+    close: 218.0
+    volume: 2975000
+  moves:
+  - date: '2018-08-10'
+    pct: -14.8
+    events:
+    - text: Board unexpectedly defers Q1 FY19 financial results.
+      source: NSE Corporate Filing (Aug 9, 2018)
+  - date: '2018-08-27'
+    pct: -12.1
+    events:
+    - text: Delayed Q1 FY19 filing reveals Rs 1,323 Cr quarterly net loss.
+      source: BSE Q1 FY19 Results Filing (Aug 27, 2018)
+  summary: Deferred results, surging Brent crude, and negative net worth triggered
+    sustained drawdown.
+  data_origin: synthetic
+- symbol: KFA
+  year: 2011
+  chart:
+  - date: '2011-01-03'
+    close: 29.02
+    volume: 3500000
+  - date: '2011-01-17'
+    close: 29.0
+    volume: 3500000
+  - date: '2011-01-31'
+    close: 28.96
+    volume: 3500000
+  - date: '2011-02-14'
+    close: 28.88
+    volume: 3500000
+  - date: '2011-02-28'
+    close: 28.77
+    volume: 3500000
+  - date: '2011-03-14'
+    close: 28.61
+    volume: 3500000
+  - date: '2011-03-28'
+    close: 28.43
+    volume: 3500000
+  - date: '2011-04-11'
+    close: 28.24
+    volume: 3500000
+  - date: '2011-04-25'
+    close: 28.04
+    volume: 3500000
+  - date: '2011-05-09'
+    close: 27.87
+    volume: 3500000
+  - date: '2011-05-23'
+    close: 27.73
+    volume: 3500000
+  - date: '2011-06-06'
+    close: 27.61
+    volume: 3500000
+  - date: '2011-06-20'
+    close: 27.53
+    volume: 3500000
+  - date: '2011-07-04'
+    close: 27.46
+    volume: 3500000
+  - date: '2011-07-18'
+    close: 27.4
+    volume: 3500000
+  - date: '2011-08-01'
+    close: 27.33
+    volume: 3500000
+  - date: '2011-08-15'
+    close: 27.24
+    volume: 3500000
+  - date: '2011-08-29'
+    close: 27.14
+    volume: 3500000
+  - date: '2011-09-12'
+    close: 27.02
+    volume: 3500000
+  - date: '2011-09-26'
+    close: 26.89
+    volume: 3500000
+  - date: '2011-10-10'
+    close: 26.76
+    volume: 3500000
+  - date: '2011-10-24'
+    close: 26.63
+    volume: 3500000
+  - date: '2011-11-07'
+    close: 26.51
+    volume: 3500000
+  - date: '2011-11-21'
+    close: 24.02
+    volume: 3500000
+  - date: '2011-12-05'
+    close: 21.38
+    volume: 3500000
+  - date: '2011-12-19'
+    close: 18.9
+    volume: 3500000
+  moves:
+  - date: '2011-11-09'
+    pct: -15.4
+    events:
+    - text: Airline cancels dozens of flights amid working-capital crunch.
+      source: DGCA Monthly Traffic Report (Nov 2011)
+  - date: '2011-11-15'
+    pct: -11.9
+    events:
+    - text: Q2 FY12 filing shows widening losses and negative net worth.
+      source: BSE Q2 FY12 Filing (Nov 2011)
+  summary: Flight cancellations and unpaid fuel/airport dues highlighted severe solvency
+    distress.
+  data_origin: synthetic
+- symbol: COFFEEDAY
+  year: 2019
+  chart:
+  - date: '2019-01-01'
+    close: 204.03
+    volume: 3500000
+  - date: '2019-01-15'
+    close: 203.82
+    volume: 3500000
+  - date: '2019-01-29'
+    close: 203.45
+    volume: 3500000
+  - date: '2019-02-12'
+    close: 202.83
+    volume: 3500000
+  - date: '2019-02-26'
+    close: 201.97
+    volume: 3500000
+  - date: '2019-03-12'
+    close: 200.9
+    volume: 3500000
+  - date: '2019-03-26'
+    close: 199.7
+    volume: 3500000
+  - date: '2019-04-09'
+    close: 198.47
+    volume: 3500000
+  - date: '2019-04-23'
+    close: 197.31
+    volume: 3500000
+  - date: '2019-05-07'
+    close: 196.29
+    volume: 3500000
+  - date: '2019-05-21'
+    close: 195.43
+    volume: 3500000
+  - date: '2019-06-04'
+    close: 194.7
+    volume: 3500000
+  - date: '2019-06-18'
+    close: 194.05
+    volume: 3500000
+  - date: '2019-07-02'
+    close: 193.42
+    volume: 3500000
+  - date: '2019-07-16'
+    close: 192.73
+    volume: 3500000
+  - date: '2019-07-30'
+    close: 187.77
+    volume: 3500000
+  - date: '2019-08-13'
+    close: 128.63
+    volume: 3500000
+  - date: '2019-08-27'
+    close: 68.32
+    volume: 3500000
+  - date: '2019-09-10'
+    close: 64.16
+    volume: 3500000
+  - date: '2019-09-24'
+    close: 64.3
+    volume: 3500000
+  - date: '2019-10-08'
+    close: 64.3
+    volume: 3500000
+  - date: '2019-10-22'
+    close: 64.15
+    volume: 3500000
+  - date: '2019-11-05'
+    close: 63.94
+    volume: 3500000
+  - date: '2019-11-19'
+    close: 63.76
+    volume: 3500000
+  - date: '2019-12-03'
+    close: 63.72
+    volume: 3500000
+  - date: '2019-12-17'
+    close: 63.83
+    volume: 3500000
+  - date: '2019-12-31'
+    close: 64.0
+    volume: 3500000
+  moves:
+  - date: '2019-07-30'
+    pct: -20.0
+    events:
+    - text: Company notifies exchanges regarding founder V.G. Siddhartha's disappearance.
+      source: NSE Corporate Disclosure (Jul 30, 2019)
+  - date: '2019-08-08'
+    pct: -18.5
+    events:
+    - text: Board appoints interim leadership and initiates group debt review.
+      source: BSE Board Outcome Filing (Aug 2019)
+  summary: Founder tragedy and promoter debt disclosures triggered consecutive lower
+    circuits.
+  data_origin: synthetic
+- symbol: RCOM
+  year: 2017
+  chart:
+  - date: '2017-01-02'
+    close: 28.11
+    volume: 3500000
+  - date: '2017-01-16'
+    close: 27.95
+    volume: 3500000
+  - date: '2017-01-30'
+    close: 27.77
+    volume: 3500000
+  - date: '2017-02-13'
+    close: 27.56
+    volume: 3500000
+  - date: '2017-02-27'
+    close: 27.32
+    volume: 3500000
+  - date: '2017-03-13'
+    close: 27.07
+    volume: 3500000
+  - date: '2017-03-27'
+    close: 26.8
+    volume: 3500000
+  - date: '2017-04-10'
+    close: 26.54
+    volume: 3500000
+  - date: '2017-04-24'
+    close: 26.3
+    volume: 3500000
+  - date: '2017-05-08'
+    close: 26.07
+    volume: 3500000
+  - date: '2017-05-22'
+    close: 25.86
+    volume: 3500000
+  - date: '2017-06-05'
+    close: 24.65
+    volume: 3500000
+  - date: '2017-06-19'
+    close: 23.18
+    volume: 3500000
+  - date: '2017-07-03'
+    close: 21.87
+    volume: 3500000
+  - date: '2017-07-17'
+    close: 21.2
+    volume: 3500000
+  - date: '2017-07-31'
+    close: 21.21
+    volume: 3500000
+  - date: '2017-08-14'
+    close: 21.26
+    volume: 3500000
+  - date: '2017-08-28'
+    close: 21.32
+    volume: 3500000
+  - date: '2017-09-11'
+    close: 21.35
+    volume: 3500000
+  - date: '2017-09-25'
+    close: 21.35
+    volume: 3500000
+  - date: '2017-10-09'
+    close: 21.31
+    volume: 3500000
+  - date: '2017-10-23'
+    close: 21.25
+    volume: 3500000
+  - date: '2017-11-06'
+    close: 21.18
+    volume: 3500000
+  - date: '2017-11-20'
+    close: 21.14
+    volume: 3500000
+  - date: '2017-12-04'
+    close: 21.13
+    volume: 3500000
+  - date: '2017-12-18'
+    close: 21.16
+    volume: 3500000
+  moves:
+  - date: '2017-05-29'
+    pct: -20.4
+    events:
+    - text: Rating agencies downgrade RCom debt following delayed debt servicing.
+      source: CARE / ICRA Rating Releases (May 2017)
+  - date: '2017-06-02'
+    pct: -11.2
+    events:
+    - text: Lenders invoke Strategic Debt Restructuring standstill window.
+      source: NSE Corporate Filing (Jun 2017)
+  summary: Debt downgrades and telecom tariff disruption eroded equity value sharply
+    in 2017.
+  data_origin: synthetic
+- symbol: INFIBEAM
+  year: 2018
+  chart:
+  - date: '2018-01-01'
+    close: 195.38
+    volume: 2975000
+  - date: '2018-01-15'
+    close: 195.67
+    volume: 2975000
+  - date: '2018-01-29'
+    close: 196.16
+    volume: 2975000
+  - date: '2018-02-12'
+    close: 196.73
+    volume: 2975000
+  - date: '2018-02-26'
+    close: 197.26
+    volume: 2975000
+  - date: '2018-03-12'
+    close: 197.64
+    volume: 2975000
+  - date: '2018-03-26'
+    close: 197.79
+    volume: 2975000
+  - date: '2018-04-09'
+    close: 197.7
+    volume: 2975000
+  - date: '2018-04-23'
+    close: 197.4
+    volume: 2975000
+  - date: '2018-05-07'
+    close: 196.97
+    volume: 2975000
+  - date: '2018-05-21'
+    close: 196.5
+    volume: 2975000
+  - date: '2018-06-04'
+    close: 196.08
+    volume: 2975000
+  - date: '2018-06-18'
+    close: 195.79
+    volume: 2975000
+  - date: '2018-07-02'
+    close: 195.66
+    volume: 2975000
+  - date: '2018-07-16'
+    close: 195.68
+    volume: 2975000
+  - date: '2018-07-30'
+    close: 195.79
+    volume: 2975000
+  - date: '2018-08-13'
+    close: 195.94
+    volume: 2975000
+  - date: '2018-08-27'
+    close: 196.05
+    volume: 2975000
+  - date: '2018-09-10'
+    close: 196.08
+    volume: 2975000
+  - date: '2018-09-24'
+    close: 196.02
+    volume: 2975000
+  - date: '2018-10-08'
+    close: 92.35
+    volume: 2975000
+  - date: '2018-10-22'
+    close: 54.17
+    volume: 2975000
+  - date: '2018-11-05'
+    close: 54.32
+    volume: 2975000
+  - date: '2018-11-19'
+    close: 54.29
+    volume: 2975000
+  - date: '2018-12-03'
+    close: 54.12
+    volume: 2975000
+  - date: '2018-12-17'
+    close: 53.97
+    volume: 2975000
+  - date: '2018-12-31'
+    close: 54.0
+    volume: 2975000
+  moves:
+  - date: '2018-09-28'
+    pct: -71.0
+    events:
+    - text: Intense F&O liquidation follows circulated message questioning related-party
+        loans.
+      source: NSE Price-Volume Clarification (Sep 28, 2018)
+  - date: '2018-10-01'
+    pct: 12.5
+    events:
+    - text: Management issues exchange clarification reiterating audited disclosures.
+      source: BSE Clarification Filing (Oct 1, 2018)
+  summary: Viral messaging regarding subsidiary loans triggered an abrupt single-day
+    crash.
+  data_origin: synthetic
+- symbol: INFY
+  year: 2017
+  chart:
+  - date: '2017-01-02'
+    close: 478.51
+    volume: 3500000
+  - date: '2017-01-16'
+    close: 478.94
+    volume: 3500000
+  - date: '2017-01-30'
+    close: 479.0
+    volume: 3500000
+  - date: '2017-02-13'
+    close: 478.5
+    volume: 3500000
+  - date: '2017-02-27'
+    close: 477.38
+    volume: 3500000
+  - date: '2017-03-13'
+    close: 475.73
+    volume: 3500000
+  - date: '2017-03-27'
+    close: 473.73
+    volume: 3500000
+  - date: '2017-04-10'
+    close: 471.63
+    volume: 3500000
+  - date: '2017-04-24'
+    close: 469.67
+    volume: 3500000
+  - date: '2017-05-08'
+    close: 468.03
+    volume: 3500000
+  - date: '2017-05-22'
+    close: 466.79
+    volume: 3500000
+  - date: '2017-06-05'
+    close: 465.93
+    volume: 3500000
+  - date: '2017-06-19'
+    close: 465.32
+    volume: 3500000
+  - date: '2017-07-03'
+    close: 464.79
+    volume: 3500000
+  - date: '2017-07-17'
+    close: 464.19
+    volume: 3500000
+  - date: '2017-07-31'
+    close: 463.38
+    volume: 3500000
+  - date: '2017-08-14'
+    close: 462.34
+    volume: 3500000
+  - date: '2017-08-28'
+    close: 454.71
+    volume: 3500000
+  - date: '2017-09-11'
+    close: 441.38
+    volume: 3500000
+  - date: '2017-09-25'
+    close: 442.54
+    volume: 3500000
+  - date: '2017-10-09'
+    close: 442.83
+    volume: 3500000
+  - date: '2017-10-23'
+    close: 442.03
+    volume: 3500000
+  - date: '2017-11-06'
+    close: 440.57
+    volume: 3500000
+  - date: '2017-11-20'
+    close: 439.32
+    volume: 3500000
+  - date: '2017-12-04'
+    close: 439.02
+    volume: 3500000
+  - date: '2017-12-18'
+    close: 439.79
+    volume: 3500000
+  moves:
+  - date: '2017-08-18'
+    pct: -9.6
+    events:
+    - text: MD & CEO Vishal Sikka resigns citing ongoing public distractions.
+      source: NSE Corporate Filing (Aug 18, 2017)
+  - date: '2017-08-24'
+    pct: 4.1
+    events:
+    - text: Co-founder Nandan Nilekani returns as Non-Executive Chairman.
+      source: BSE Board Filing (Aug 24, 2017)
+  summary: Sudden CEO resignation amid governance friction caused sharp August 2017
+    repricing.
+  data_origin: synthetic
+- symbol: BAJFINANCE
+  year: 2020
+  chart:
+  - date: '2020-01-01'
+    close: 2064.39
+    volume: 3500000
+  - date: '2020-01-15'
+    close: 2054.57
+    volume: 3500000
+  - date: '2020-01-29'
+    close: 2042.99
+    volume: 3500000
+  - date: '2020-02-12'
+    close: 2029.22
+    volume: 3500000
+  - date: '2020-02-26'
+    close: 2013.41
+    volume: 3500000
+  - date: '2020-03-11'
+    close: 1996.21
+    volume: 3500000
+  - date: '2020-03-25'
+    close: 1978.5
+    volume: 3500000
+  - date: '2020-04-08'
+    close: 1961.17
+    volume: 3500000
+  - date: '2020-04-22'
+    close: 1944.87
+    volume: 3500000
+  - date: '2020-05-06'
+    close: 1929.82
+    volume: 3500000
+  - date: '2020-05-20'
+    close: 1915.81
+    volume: 3500000
+  - date: '2020-06-03'
+    close: 2045.05
+    volume: 3500000
+  - date: '2020-06-17'
+    close: 2282.59
+    volume: 3500000
+  - date: '2020-07-01'
+    close: 2526.5
+    volume: 3500000
+  - date: '2020-07-15'
+    close: 2777.77
+    volume: 3500000
+  - date: '2020-07-29'
+    close: 3030.78
+    volume: 3500000
+  - date: '2020-08-12'
+    close: 3277.22
+    volume: 3500000
+  - date: '2020-08-26'
+    close: 3481.21
+    volume: 3500000
+  - date: '2020-09-09'
+    close: 3490.57
+    volume: 3500000
+  - date: '2020-09-23'
+    close: 3497.16
+    volume: 3500000
+  - date: '2020-10-07'
+    close: 3496.56
+    volume: 3500000
+  - date: '2020-10-21'
+    close: 3488.4
+    volume: 3500000
+  - date: '2020-11-04'
+    close: 3476.64
+    volume: 3500000
+  - date: '2020-11-18'
+    close: 3467.26
+    volume: 3500000
+  - date: '2020-12-02'
+    close: 3464.89
+    volume: 3500000
+  - date: '2020-12-16'
+    close: 3470.16
+    volume: 3500000
+  - date: '2020-12-30'
+    close: 3479.35
+    volume: 3500000
+  moves:
+  - date: '2020-03-24'
+    pct: -14.2
+    events:
+    - text: Lockdown moratorium fears trigger sharp NBFC sell-off.
+      source: RBI Moratorium Circular (Mar 2020)
+  - date: '2020-07-21'
+    pct: 8.5
+    events:
+    - text: Q1 FY21 update shows moratorium book shrinking faster than market fears.
+      source: NSE Q1 FY21 Update (Jul 2020)
+  summary: Pre-crisis equity cushion and declining moratorium book fueled a strong
+    H2 2020 rebound.
+  data_origin: synthetic
+- symbol: TATAMOTORS
+  year: 2020
+  chart:
+  - date: '2020-01-01'
+    close: 132.12
+    volume: 3500000
+  - date: '2020-01-15'
+    close: 132.72
+    volume: 3500000
+  - date: '2020-01-29'
+    close: 133.21
+    volume: 3500000
+  - date: '2020-02-12'
+    close: 133.55
+    volume: 3500000
+  - date: '2020-02-26'
+    close: 133.7
+    volume: 3500000
+  - date: '2020-03-11'
+    close: 133.68
+    volume: 3500000
+  - date: '2020-03-25'
+    close: 133.52
+    volume: 3500000
+  - date: '2020-04-08'
+    close: 133.31
+    volume: 3500000
+  - date: '2020-04-22'
+    close: 133.11
+    volume: 3500000
+  - date: '2020-05-06'
+    close: 132.99
+    volume: 3500000
+  - date: '2020-05-20'
+    close: 133.01
+    volume: 3500000
+  - date: '2020-06-03'
+    close: 133.17
+    volume: 3500000
+  - date: '2020-06-17'
+    close: 133.46
+    volume: 3500000
+  - date: '2020-07-01'
+    close: 133.83
+    volume: 3500000
+  - date: '2020-07-15'
+    close: 134.22
+    volume: 3500000
+  - date: '2020-07-29'
+    close: 134.59
+    volume: 3500000
+  - date: '2020-08-12'
+    close: 134.88
+    volume: 3500000
+  - date: '2020-08-26'
+    close: 135.08
+    volume: 3500000
+  - date: '2020-09-09'
+    close: 135.2
+    volume: 3500000
+  - date: '2020-09-23'
+    close: 135.28
+    volume: 3500000
+  - date: '2020-10-07'
+    close: 135.34
+    volume: 3500000
+  - date: '2020-10-21'
+    close: 135.44
+    volume: 3500000
+  - date: '2020-11-04'
+    close: 148.13
+    volume: 3500000
+  - date: '2020-11-18'
+    close: 169.83
+    volume: 3500000
+  - date: '2020-12-02'
+    close: 191.28
+    volume: 3500000
+  - date: '2020-12-16'
+    close: 212.99
+    volume: 3500000
+  - date: '2020-12-30'
+    close: 235.4
+    volume: 3500000
+  moves:
+  - date: '2020-10-27'
+    pct: 7.4
+    events:
+    - text: Q2 FY21 filing reports positive JLR free cash flow ahead of guidance.
+      source: BSE Q2 FY21 Results Filing (Oct 27, 2020)
+  - date: '2020-12-15'
+    pct: 8.9
+    events:
+    - text: Domestic passenger vehicle volumes post strong YoY recovery.
+      source: NSE Monthly Sales Filing (Dec 2020)
+  summary: JLR free cash flow inflection and net-debt-free roadmap drove late-2020
+    turnaround.
+  data_origin: synthetic
+- symbol: ASIANPAINT
+  year: 2024
+  chart:
+  - date: '2024-01-01'
+    close: 2889.56
+    volume: 2975000
+  - date: '2024-01-15'
+    close: 2888.06
+    volume: 2975000
+  - date: '2024-01-29'
+    close: 2889.63
+    volume: 2975000
+  - date: '2024-02-12'
+    close: 2892.63
+    volume: 2975000
+  - date: '2024-02-26'
+    close: 2895.15
+    volume: 2975000
+  - date: '2024-03-11'
+    close: 2895.48
+    volume: 2975000
+  - date: '2024-03-25'
+    close: 2892.43
+    volume: 2975000
+  - date: '2024-04-08'
+    close: 2885.55
+    volume: 2975000
+  - date: '2024-04-22'
+    close: 2875.22
+    volume: 2975000
+  - date: '2024-05-06'
+    close: 2862.5
+    volume: 2975000
+  - date: '2024-05-20'
+    close: 2848.85
+    volume: 2975000
+  - date: '2024-06-03'
+    close: 2835.8
+    volume: 2975000
+  - date: '2024-06-17'
+    close: 2824.58
+    volume: 2975000
+  - date: '2024-07-01'
+    close: 2815.93
+    volume: 2975000
+  - date: '2024-07-15'
+    close: 2809.91
+    volume: 2975000
+  - date: '2024-07-29'
+    close: 2806.0
+    volume: 2975000
+  - date: '2024-08-12'
+    close: 2803.25
+    volume: 2975000
+  - date: '2024-08-26'
+    close: 2800.58
+    volume: 2975000
+  - date: '2024-09-09'
+    close: 2797.05
+    volume: 2975000
+  - date: '2024-09-23'
+    close: 2792.11
+    volume: 2975000
+  - date: '2024-10-07'
+    close: 2785.68
+    volume: 2975000
+  - date: '2024-10-21'
+    close: 2778.15
+    volume: 2975000
+  - date: '2024-11-04'
+    close: 2770.22
+    volume: 2975000
+  - date: '2024-11-18'
+    close: 2662.76
+    volume: 2975000
+  - date: '2024-12-02'
+    close: 2489.16
+    volume: 2975000
+  - date: '2024-12-16'
+    close: 2413.22
+    volume: 2975000
+  - date: '2024-12-30'
+    close: 2407.4
+    volume: 2975000
+  moves:
+  - date: '2024-11-11'
+    pct: -8.2
+    events:
+    - text: Q2 FY25 consolidated net profit drops 43% YoY on weak demand and discounting.
+      source: NSE Q2 FY25 Results Filing (Nov 9, 2024)
+  - date: '2024-11-28'
+    pct: -4.5
+    events:
+    - text: Analyst notes highlight rising decorative paint competitive intensity.
+      source: BSE Investor Presentation (Nov 2024)
+  summary: Earnings contraction paired with new competitive entry compressed rich
+    valuation multiples.
+  data_origin: synthetic
+- symbol: RELIANCE
+  year: 2020
+  chart:
+  - date: '2020-01-01'
+    close: 1510.0
+    volume: 4250000
+  - date: '2020-01-15'
+    close: 1405.53
+    volume: 4250000
+  - date: '2020-01-29'
+    close: 1303.19
+    volume: 4250000
+  - date: '2020-02-12'
+    close: 1198.53
+    volume: 4250000
+  - date: '2020-02-26'
+    close: 1089.66
+    volume: 4250000
+  - date: '2020-03-11'
+    close: 978.47
+    volume: 4250000
+  - date: '2020-03-25'
+    close: 901.05
+    volume: 4250000
+  - date: '2020-04-08'
+    close: 1019.11
+    volume: 4250000
+  - date: '2020-04-22'
+    close: 1134.48
+    volume: 4250000
+  - date: '2020-05-06'
+    close: 1248.04
+    volume: 4250000
+  - date: '2020-05-20'
+    close: 1362.21
+    volume: 4250000
+  - date: '2020-06-03'
+    close: 1479.42
+    volume: 4250000
+  - date: '2020-06-17'
+    close: 1600.3
+    volume: 4250000
+  - date: '2020-07-01'
+    close: 1722.98
+    volume: 4250000
+  - date: '2020-07-15'
+    close: 1844.0
+    volume: 4250000
+  - date: '2020-07-29'
+    close: 1952.87
+    volume: 4250000
+  - date: '2020-08-12'
+    close: 2067.21
+    volume: 4250000
+  - date: '2020-08-26'
+    close: 2177.28
+    volume: 4250000
+  - date: '2020-09-09'
+    close: 2276.87
+    volume: 4250000
+  - date: '2020-09-23'
+    close: 2305.13
+    volume: 4250000
+  - date: '2020-10-07'
+    close: 2264.03
+    volume: 4250000
+  - date: '2020-10-21'
+    close: 2216.84
+    volume: 4250000
+  - date: '2020-11-04'
+    close: 2165.32
+    volume: 4250000
+  - date: '2020-11-18'
+    close: 2114.05
+    volume: 4250000
+  - date: '2020-12-02'
+    close: 2067.27
+    volume: 4250000
+  - date: '2020-12-16'
+    close: 2026.06
+    volume: 4250000
+  - date: '2020-12-30'
+    close: 1987.74
+    volume: 4250000
+  moves:
+  - date: '2020-04-22'
+    pct: 10.3
+    events:
+    - text: Facebook announces Rs 43,574 Cr investment for 9.99% stake in Jio Platforms.
+      source: NSE Corporate Filing (Apr 22, 2020)
+  - date: '2020-06-19'
+    pct: 6.2
+    events:
+    - text: Company announces net-debt-free milestone ahead of March 2021 target.
+      source: BSE Press Release Filing (Jun 19, 2020)
+  summary: Global tech/PE investments into Jio Platforms helped Reliance turn net-debt-free
+    in 2020.
+  data_origin: synthetic
+- symbol: SBIN
+  year: 2021
+  chart:
+  - date: '2021-01-01'
+    close: 279.0
+    volume: 4250000
+  - date: '2021-01-15'
+    close: 319.52
+    volume: 4250000
+  - date: '2021-01-29'
+    close: 360.44
+    volume: 4250000
+  - date: '2021-02-12'
+    close: 399.17
+    volume: 4250000
+  - date: '2021-02-26'
+    close: 405.1
+    volume: 4250000
+  - date: '2021-03-12'
+    close: 386.52
+    volume: 4250000
+  - date: '2021-03-26'
+    close: 366.03
+    volume: 4250000
+  - date: '2021-04-09'
+    close: 345.15
+    volume: 4250000
+  - date: '2021-04-23'
+    close: 334.91
+    volume: 4250000
+  - date: '2021-05-07'
+    close: 348.28
+    volume: 4250000
+  - date: '2021-05-21'
+    close: 361.37
+    volume: 4250000
+  - date: '2021-06-04'
+    close: 374.54
+    volume: 4250000
+  - date: '2021-06-18'
+    close: 388.16
+    volume: 4250000
+  - date: '2021-07-02'
+    close: 402.47
+    volume: 4250000
+  - date: '2021-07-16'
+    close: 417.42
+    volume: 4250000
+  - date: '2021-07-30'
+    close: 432.73
+    volume: 4250000
+  - date: '2021-08-13'
+    close: 447.93
+    volume: 4250000
+  - date: '2021-08-27'
+    close: 462.58
+    volume: 4250000
+  - date: '2021-09-10'
+    close: 476.44
+    volume: 4250000
+  - date: '2021-09-24'
+    close: 489.59
+    volume: 4250000
+  - date: '2021-10-08'
+    close: 502.4
+    volume: 4250000
+  - date: '2021-10-22'
+    close: 515.39
+    volume: 4250000
+  - date: '2021-11-05'
+    close: 526.78
+    volume: 4250000
+  - date: '2021-11-19'
+    close: 508.54
+    volume: 4250000
+  - date: '2021-12-03'
+    close: 490.12
+    volume: 4250000
+  - date: '2021-12-17'
+    close: 474.07
+    volume: 4250000
+  - date: '2021-12-31'
+    close: 460.0
+    volume: 4250000
+  moves:
+  - date: '2021-02-05'
+    pct: 10.7
+    events:
+    - text: Q3 FY21 results show multi-year low Net NPA and strong provisioning buffer.
+      source: NSE Q3 FY21 Results Filing (Feb 4, 2021)
+  - date: '2021-11-03'
+    pct: 5.1
+    events:
+    - text: Q2 FY22 net profit rises 67% YoY on lower credit costs.
+      source: BSE Q2 FY22 Results Filing (Nov 3, 2021)
+  summary: Improving corporate credit cycle and falling NPAs drove strong 2021 re-rating.
+  data_origin: synthetic
+- symbol: ICICIBANK
+  year: 2021
+  chart:
+  - date: '2021-01-01'
+    close: 527.0
+    volume: 4250000
+  - date: '2021-01-15'
+    close: 531.86
+    volume: 4250000
+  - date: '2021-01-29'
+    close: 537.67
+    volume: 4250000
+  - date: '2021-02-12'
+    close: 543.35
+    volume: 4250000
+  - date: '2021-02-26'
+    close: 547.88
+    volume: 4250000
+  - date: '2021-03-12'
+    close: 550.98
+    volume: 4250000
+  - date: '2021-03-26'
+    close: 553.35
+    volume: 4250000
+  - date: '2021-04-09'
+    close: 556.17
+    volume: 4250000
+  - date: '2021-04-23'
+    close: 565.0
+    volume: 4250000
+  - date: '2021-05-07'
+    close: 585.47
+    volume: 4250000
+  - date: '2021-05-21'
+    close: 605.47
+    volume: 4250000
+  - date: '2021-06-04'
+    close: 625.62
+    volume: 4250000
+  - date: '2021-06-18'
+    close: 646.57
+    volume: 4250000
+  - date: '2021-07-02'
+    close: 668.71
+    volume: 4250000
+  - date: '2021-07-16'
+    close: 691.93
+    volume: 4250000
+  - date: '2021-07-30'
+    close: 715.67
+    volume: 4250000
+  - date: '2021-08-13'
+    close: 739.12
+    volume: 4250000
+  - date: '2021-08-27'
+    close: 761.55
+    volume: 4250000
+  - date: '2021-09-10'
+    close: 782.66
+    volume: 4250000
+  - date: '2021-09-24'
+    close: 802.68
+    volume: 4250000
+  - date: '2021-10-08'
+    close: 822.35
+    volume: 4250000
+  - date: '2021-10-22'
+    close: 842.53
+    volume: 4250000
+  - date: '2021-11-05'
+    close: 829.06
+    volume: 4250000
+  - date: '2021-11-19'
+    close: 803.97
+    volume: 4250000
+  - date: '2021-12-03'
+    close: 779.67
+    volume: 4250000
+  - date: '2021-12-17'
+    close: 758.68
+    volume: 4250000
+  - date: '2021-12-31'
+    close: 740.0
+    volume: 4250000
+  moves:
+  - date: '2021-04-26'
+    pct: 5.4
+    events:
+    - text: Q4 FY21 filing shows Net NPA declining to 1.14% with strong CASA growth.
+      source: NSE Q4 FY21 Results Filing (Apr 24, 2021)
+  - date: '2021-10-25'
+    pct: 10.8
+    events:
+    - text: Q2 FY22 net profit rises 30% YoY beating consensus estimates.
+      source: BSE Q2 FY22 Results Filing (Oct 23, 2021)
+  summary: Consistent retail loan growth and clean asset quality drove sustained 2021
+    outperformance.
+  data_origin: synthetic
+- symbol: WIPRO
+  year: 2021
+  chart:
+  - date: '2021-01-01'
+    close: 396.0
+    volume: 4250000
+  - date: '2021-01-15'
+    close: 410.11
+    volume: 4250000
+  - date: '2021-01-29'
+    close: 424.8
+    volume: 4250000
+  - date: '2021-02-12'
+    close: 439.65
+    volume: 4250000
+  - date: '2021-02-26'
+    close: 454.1
+    volume: 4250000
+  - date: '2021-03-12'
+    close: 467.71
+    volume: 4250000
+  - date: '2021-03-26'
+    close: 480.44
+    volume: 4250000
+  - date: '2021-04-09'
+    close: 492.62
+    volume: 4250000
+  - date: '2021-04-23'
+    close: 504.86
+    volume: 4250000
+  - date: '2021-05-07'
+    close: 517.77
+    volume: 4250000
+  - date: '2021-05-21'
+    close: 531.64
+    volume: 4250000
+  - date: '2021-06-04'
+    close: 546.29
+    volume: 4250000
+  - date: '2021-06-18'
+    close: 561.41
+    volume: 4250000
+  - date: '2021-07-02'
+    close: 577.88
+    volume: 4250000
+  - date: '2021-07-16'
+    close: 595.7
+    volume: 4250000
+  - date: '2021-07-30'
+    close: 614.78
+    volume: 4250000
+  - date: '2021-08-13'
+    close: 634.21
+    volume: 4250000
+  - date: '2021-08-27'
+    close: 652.85
+    volume: 4250000
+  - date: '2021-09-10'
+    close: 669.96
+    volume: 4250000
+  - date: '2021-09-24'
+    close: 685.72
+    volume: 4250000
+  - date: '2021-10-08'
+    close: 701.16
+    volume: 4250000
+  - date: '2021-10-22'
+    close: 709.28
+    volume: 4250000
+  - date: '2021-11-05'
+    close: 709.47
+    volume: 4250000
+  - date: '2021-11-19'
+    close: 708.28
+    volume: 4250000
+  - date: '2021-12-03'
+    close: 708.2
+    volume: 4250000
+  - date: '2021-12-17'
+    close: 710.73
+    volume: 4250000
+  - date: '2021-12-31'
+    close: 715.0
+    volume: 4250000
+  moves:
+  - date: '2021-04-16'
+    pct: 9.0
+    events:
+    - text: Q4 FY21 filing delivers strongest quarterly IT services growth in a decade.
+      source: NSE Q4 FY21 Results Filing (Apr 15, 2021)
+  - date: '2021-10-14'
+    pct: 5.2
+    events:
+    - text: Q2 FY22 revenue guidance raised on broad-based digital deal wins.
+      source: BSE Q2 FY22 Results Filing (Oct 13, 2021)
+  summary: Cloud deal momentum and Capco acquisition propelled strong 2021 IT sector
+    expansion.
+  data_origin: synthetic
+- symbol: BHARTIARTL
+  year: 2021
+  chart:
+  - date: '2021-01-01'
+    close: 515.0
+    volume: 4250000
+  - date: '2021-01-15'
+    close: 517.59
+    volume: 4250000
+  - date: '2021-01-29'
+    close: 520.98
+    volume: 4250000
+  - date: '2021-02-12'
+    close: 524.43
+    volume: 4250000
+  - date: '2021-02-26'
+    close: 527.14
+    volume: 4250000
+  - date: '2021-03-12'
+    close: 528.69
+    volume: 4250000
+  - date: '2021-03-26'
+    close: 529.3
+    volume: 4250000
+  - date: '2021-04-09'
+    close: 529.66
+    volume: 4250000
+  - date: '2021-04-23'
+    close: 530.61
+    volume: 4250000
+  - date: '2021-05-07'
+    close: 532.66
+    volume: 4250000
+  - date: '2021-05-21'
+    close: 538.36
+    volume: 4250000
+  - date: '2021-06-04'
+    close: 553.92
+    volume: 4250000
+  - date: '2021-06-18'
+    close: 569.77
+    volume: 4250000
+  - date: '2021-07-02'
+    close: 586.44
+    volume: 4250000
+  - date: '2021-07-16'
+    close: 604.13
+    volume: 4250000
+  - date: '2021-07-30'
+    close: 622.62
+    volume: 4250000
+  - date: '2021-08-13'
+    close: 641.29
+    volume: 4250000
+  - date: '2021-08-27'
+    close: 659.41
+    volume: 4250000
+  - date: '2021-09-10'
+    close: 676.45
+    volume: 4250000
+  - date: '2021-09-24'
+    close: 692.27
+    volume: 4250000
+  - date: '2021-10-08'
+    close: 707.25
+    volume: 4250000
+  - date: '2021-10-22'
+    close: 722.12
+    volume: 4250000
+  - date: '2021-11-05'
+    close: 737.65
+    volume: 4250000
+  - date: '2021-11-19'
+    close: 754.28
+    volume: 4250000
+  - date: '2021-12-03'
+    close: 733.05
+    volume: 4250000
+  - date: '2021-12-17'
+    close: 704.85
+    volume: 4250000
+  - date: '2021-12-31'
+    close: 683.0
+    volume: 4250000
+  moves:
+  - date: '2021-09-15'
+    pct: 4.6
+    events:
+    - text: Union Cabinet approves four-year AGR moratorium and telecom sector reforms.
+      source: Department of Telecommunications Release (Sep 15, 2021)
+  - date: '2021-11-22'
+    pct: 5.8
+    events:
+    - text: Company announces 20-25% prepaid tariff hikes to improve ARPU.
+      source: NSE Corporate Filing (Nov 22, 2021)
+  summary: Telecom relief package and prepaid tariff hikes strengthened ARPU and balance
+    sheet.
+  data_origin: synthetic
+- symbol: SUNPHARMA
+  year: 2023
+  chart:
+  - date: '2023-01-02'
+    close: 1001.75
+    volume: 4250000
+  - date: '2023-01-16'
+    close: 999.3
+    volume: 4250000
+  - date: '2023-01-30'
+    close: 998.25
+    volume: 4250000
+  - date: '2023-02-13'
+    close: 997.3
+    volume: 4250000
+  - date: '2023-02-27'
+    close: 995.04
+    volume: 4250000
+  - date: '2023-03-13'
+    close: 990.75
+    volume: 4250000
+  - date: '2023-03-27'
+    close: 984.67
+    volume: 4250000
+  - date: '2023-04-10'
+    close: 977.96
+    volume: 4250000
+  - date: '2023-04-24'
+    close: 972.06
+    volume: 4250000
+  - date: '2023-05-08'
+    close: 967.94
+    volume: 4250000
+  - date: '2023-05-22'
+    close: 965.69
+    volume: 4250000
+  - date: '2023-06-05'
+    close: 973.82
+    volume: 4250000
+  - date: '2023-06-19'
+    close: 991.72
+    volume: 4250000
+  - date: '2023-07-03'
+    close: 1010.69
+    volume: 4250000
+  - date: '2023-07-17'
+    close: 1031.17
+    volume: 4250000
+  - date: '2023-07-31'
+    close: 1053.03
+    volume: 4250000
+  - date: '2023-08-14'
+    close: 1075.5
+    volume: 4250000
+  - date: '2023-08-28'
+    close: 1097.53
+    volume: 4250000
+  - date: '2023-09-11'
+    close: 1118.11
+    volume: 4250000
+  - date: '2023-09-25'
+    close: 1136.72
+    volume: 4250000
+  - date: '2023-10-09'
+    close: 1153.54
+    volume: 4250000
+  - date: '2023-10-23'
+    close: 1169.39
+    volume: 4250000
+  - date: '2023-11-06'
+    close: 1185.42
+    volume: 4250000
+  - date: '2023-11-20'
+    close: 1202.7
+    volume: 4250000
+  - date: '2023-12-04'
+    close: 1221.73
+    volume: 4250000
+  - date: '2023-12-18'
+    close: 1242.31
+    volume: 4250000
+  moves:
+  - date: '2023-05-26'
+    pct: 3.9
+    events:
+    - text: FY23 filing highlights specialty portfolio crossing $870M annual revenue.
+      source: NSE FY23 Annual Results Filing (May 26, 2023)
+  - date: '2023-11-01'
+    pct: 4.2
+    events:
+    - text: Q2 FY24 margins expand on higher specialty mix and India formulations.
+      source: BSE Q2 FY24 Results Filing (Nov 1, 2023)
+  summary: US specialty dermatology portfolio growth drove steady 2023 earnings expansion.
+  data_origin: synthetic

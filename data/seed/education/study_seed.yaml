@@ -1,0 +1,6570 @@
+study_attempts:
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: RBI
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_01
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The annual dividend yield
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: SEBI-registered Research Analyst (RA)
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Artificial urgency pressures people to skip basic verification
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: A guaranteed fixed interest loan
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: A company's annual dividend announcement
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_02
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: SEBI-registered Research Analyst (RA)
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: A guaranteed fixed interest loan
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: The stock won a corporate governance award
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A market order can only be placed after 3:30 PM
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: It doubles automatically
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_03
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: The stock won a corporate governance award
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: It doubles automatically
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_04
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Artificial urgency pressures people to skip basic verification
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_05
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Total revenue multiplied by profit margin
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: A company's annual dividend announcement
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_06
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The annual dividend yield
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: RBI
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_07
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: SEBI-registered Research Analyst (RA)
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: A guaranteed fixed interest loan
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: Customers are prepaying in cash
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_08
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: SEBI-registered Research Analyst (RA)
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Artificial urgency pressures people to skip basic verification
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: RBI
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: A guaranteed fixed interest loan
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: It doubles automatically
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_09
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: SEBI-registered Research Analyst (RA)
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Artificial urgency pressures people to skip basic verification
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: RBI
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Sponsorships guarantee factual accuracy
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: Customers are prepaying in cash
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: It doubles automatically
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_10
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: SEBI-registered Research Analyst (RA)
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Sponsorships guarantee factual accuracy
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_11
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: SEBI-registered Research Analyst (RA)
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Artificial urgency pressures people to skip basic verification
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: RBI
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_12
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: SEBI-registered Research Analyst (RA)
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Artificial urgency pressures people to skip basic verification
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: RBI
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Total revenue multiplied by profit margin
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_13
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: SEBI-registered Research Analyst (RA)
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: RBI
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: A routine annual formality with no significance
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A market order can only be placed after 3:30 PM
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_14
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The annual dividend yield
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Artificial urgency pressures people to skip basic verification
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: RBI
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Total revenue multiplied by profit margin
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_15
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Artificial urgency pressures people to skip basic verification
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: RBI
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: It doubles automatically
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_16
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: A guaranteed fixed interest loan
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Routine index rebalancing
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Total revenue multiplied by profit margin
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_17
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Artificial urgency pressures people to skip basic verification
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: RBI
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A market order can only be placed after 3:30 PM
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_18
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Sponsorships guarantee factual accuracy
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: Customers are prepaying in cash
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A market order can only be placed after 3:30 PM
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: It doubles automatically
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_19
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: Customers are prepaying in cash
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: It doubles automatically
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_20
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: A guaranteed fixed interest loan
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_21
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: SEBI-registered Research Analyst (RA)
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: A routine annual formality with no significance
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Total revenue multiplied by profit margin
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: A company's annual dividend announcement
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_22
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A market order can only be placed after 3:30 PM
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_23
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Artificial urgency pressures people to skip basic verification
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_24
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The annual dividend yield
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: A routine annual formality with no significance
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Total revenue multiplied by profit margin
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_25
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: The stock won a corporate governance award
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A market order can only be placed after 3:30 PM
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_26
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: Customers are prepaying in cash
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_27
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: RBI
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: A guaranteed fixed interest loan
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Total revenue multiplied by profit margin
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_28
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: SEBI-registered Research Analyst (RA)
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Artificial urgency pressures people to skip basic verification
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: A routine annual formality with no significance
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A market order can only be placed after 3:30 PM
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_29
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The annual dividend yield
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: A guaranteed fixed interest loan
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Total revenue multiplied by profit margin
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_30
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Artificial urgency pressures people to skip basic verification
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Sponsorships guarantee factual accuracy
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Total revenue multiplied by profit margin
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_31
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: RBI
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: The stock won a corporate governance award
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A market order can only be placed after 3:30 PM
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_32
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: A guaranteed fixed interest loan
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_33
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Sponsorships guarantee factual accuracy
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: A company's annual dividend announcement
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_34
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Artificial urgency pressures people to skip basic verification
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: RBI
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: Customers are prepaying in cash
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A market order can only be placed after 3:30 PM
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: It doubles automatically
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_35
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Shares in electronic form
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: A guaranteed fixed interest loan
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: Customers are prepaying in cash
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Total revenue multiplied by profit margin
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_36
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Artificial urgency pressures people to skip basic verification
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_37
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: NSE trading holiday
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 95
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 90
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: RBI
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: Exchanges flagged unusual price/volume volatility or concentration for investor
+    caution
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Sponsorships guarantee factual accuracy
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A market order can only be placed after 3:30 PM
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_38
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A standard SEBI-approved scheme
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: SEBI-registered Research Analyst (RA)
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Showing only winning trades while hiding or deleting losing calls
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Audited institutional research
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: SENSEX 30
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Wednesday
+  confidence: 85
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 85
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: The stock won a corporate governance award
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Sponsorships guarantee factual accuracy
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Share price multiplied by total outstanding shares
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: 'It stays the same: share count doubles and price halves'
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_39
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_judging_info_01
+  answer: A classic red flag — equity market returns cannot be guaranteed
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_judging_info_03
+  answer: SEBI-registered Research Analyst (RA)
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_judging_info_04
+  answer: Upper circuits are announced 10 minutes in advance
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_judging_info_05
+  answer: Using dark mode charts
+  confidence: 80
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_judging_info_06
+  answer: Vague and unscorable claim
+  confidence: 90
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_basics_01
+  answer: SEBI
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_basics_02
+  answer: Physical gold coins
+  confidence: 75
+  correct: false
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_basics_03
+  answer: NIFTY 50
+  confidence: 75
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_basics_04
+  answer: Tuesday
+  confidence: 95
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_basics_05
+  answer: Fractional ownership in the business
+  confidence: 80
+  correct: true
+  context: study_pre
+  created_at: '2026-11-18T10:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_judging_info_07
+  answer: The stock won a corporate governance award
+  confidence: 55
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_judging_info_08
+  answer: Undisclosed conflicts of interest can bias commentary toward pumping a stock
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_judging_info_09
+  answer: Pump-and-dump manipulation
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l2_reading_stock_03
+  answer: The company may be struggling to collect cash or aggressively pushing credit
+    sales (channel stuffing)
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l2_reading_stock_07
+  answer: Serious concern over financial statement reliability or scope limitations
+    that warrants caution
+  confidence: 85
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_basics_06
+  answer: A limit order sets the maximum buy or minimum sell price; a market order
+    executes at the best available price
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_basics_07
+  answer: Total revenue multiplied by profit margin
+  confidence: 65
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_basics_08
+  answer: The first time a private company offers shares to the public on a stock
+    exchange
+  confidence: 75
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_basics_09
+  answer: It doubles automatically
+  confidence: 60
+  correct: false
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
+- user_id: study_user_40
+  item_type: question
+  item_id: q_l1_basics_10
+  answer: The gap between the highest buyer bid and lowest seller ask price
+  confidence: 80
+  correct: true
+  context: study_post
+  created_at: '2026-11-19T18:00:00Z'
