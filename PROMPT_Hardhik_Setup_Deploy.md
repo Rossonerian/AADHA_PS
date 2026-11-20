@@ -57,3 +57,6 @@ Append every update to STATUS.md under "## Hardhik" (team summaries at the top) 
 
 START: create the repo structure and commit the two docs, then begin Phase 1.
 ```
+
+---
+**Addendum: Finnhub.** Add `FINNHUB_API_KEY` (see `.env.example`) to Render/API secrets; without it the capstone endpoints return `503 FINNHUB_UNAVAILABLE` and the UI falls back to SYNTHETIC demo data. `core/finnhub.py` enforces the endpoint allowlist. Please review the `contract:` change in `SOURCE_OF_TRUTH.md` Sections 3, 6, 7, 8 (new tool `nasdaq_verifier`, two endpoints).

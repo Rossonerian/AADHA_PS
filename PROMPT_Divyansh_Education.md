@@ -51,3 +51,6 @@ Append every update to STATUS.md under "## Divyansh" and also print it to me.
 
 START: read the two docs, list any contract gaps you see (as a MAJOR update if they block you), then begin Phase 1.
 ```
+
+---
+**Addendum: capstone gate inputs.** `nasdaq_verifier` unlocks only when `user.level == 4`, `plans.progress` (the `progress_pct`) is 100, and mean `skill_scores.brier` <= 0.25. The gate (`app/nasdaq_verifier/gate.py`) reads `plans.progress` and `skill_scores.brier` by `user_id` and fails closed if the tables or rows are missing, so please populate them. Keep `GET /plan.progress_pct` consistent with `plans.progress`.

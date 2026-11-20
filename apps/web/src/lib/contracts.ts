@@ -19,7 +19,8 @@ export type RedFlagCode =
 
 export type UserLevel = 1 | 2 | 3 | 4;
 
-export type ToolName = "scenarios" | "red_flag_check" | "explain_stock" | "verifier" | "dashboard";
+export type ToolName =
+  "scenarios" | "red_flag_check" | "explain_stock" | "verifier" | "dashboard" | "nasdaq_verifier";
 
 export type SkillArea = "basics" | "reading_stock" | "judging_info" | "risk";
 
@@ -33,6 +34,7 @@ export interface ApiErrorDetail {
   code: string;
   message: string;
   required_level?: UserLevel;
+  missing_requirements?: string[];
 }
 
 export interface ApiErrorEnvelope {
@@ -357,4 +359,60 @@ export interface SubmissionMineItem {
 
 export interface SubmissionsMineResponse {
   items: SubmissionMineItem[];
+}
+
+/* -------------------------------------------------------------------------- */
+/* 16–17. Nasdaq literacy verifier (capstone, gated server-side)              */
+/* -------------------------------------------------------------------------- */
+
+export interface NasdaqSnapshot {
+  symbol: string;
+  name: string;
+  sector: string | null;
+  price: number | null;
+  day_low: number | null;
+  day_high: number | null;
+  week52_low: number | null;
+  week52_high: number | null;
+  market_cap_musd: number | null;
+  pe_ttm: number | null;
+  chart: { date: string; close: number }[];
+  data_origin: DataOrigin;
+}
+
+export interface NasdaqQuestion {
+  id: string;
+  text: string;
+  options: string[];
+}
+
+/** GET /api/v1/nasdaq-verifier/challenge?symbol= */
+export interface NasdaqChallengeResponse {
+  challenge_id: string;
+  data_origin: DataOrigin;
+  as_of: string;
+  snapshot: NasdaqSnapshot;
+  nasdaq_url: string;
+  disclaimer: string;
+  questions: NasdaqQuestion[];
+}
+
+export interface NasdaqAnswerInput {
+  question_id: string;
+  answer: string;
+  confidence: number;
+}
+
+/** POST /api/v1/nasdaq-verifier/submit */
+export interface NasdaqSubmitRequest {
+  challenge_id: string;
+  answers: NasdaqAnswerInput[];
+}
+
+export interface NasdaqSubmitResponse {
+  passed: boolean;
+  score: number;
+  brier: number;
+  results: { question_id: string; correct: boolean; correct_answer: string; explanation: string }[];
+  feedback: string;
 }
