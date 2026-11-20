@@ -81,6 +81,24 @@ Blockers: docs/PRD.md export; Divyansh education endpoints for full C2/C3 smoke 
 _Append updates here._
 
 ```text
+[Arnav] 80% | Verifier audit fixes (items 1–3 on PR #13; items 4–7 merged in PR #9) (2026-11-21)
+Done: Fixed audit items 1–3 off main: (1) GET /sources/{id} below Level 3 now returns standard 403 {"error": {"code": "TOOL_LOCKED", "message": ..., "required_level": 3}}; (2) POST /verify without OPENROUTER_API_KEY now catches ConfigurationError and returns user-safe 503 {"error": {"code": "VERIFIER_UNAVAILABLE", "message": ...}} without leaking env vars or tracebacks; (3) added top-level data_origin to GET /sources/{id} and GET /submissions/mine while keeping red_flags[].evidence as an object, and updated docs/SOURCE_OF_TRUTH.md §7. Audit items 4 (Postgres Nasdaq challenge persistence + fail-closed gate + 503 FINNHUB_UNAVAILABLE), 5 (live F1 runner + quota blocker/held-out MAJOR), 6 (30×5 real public-research seed + DATA_MANIFEST), and 7 (submissions.user_id -> users.id FK migration) are merged in PR #9. No apps/web/ edits.
+Next: Await Hardhik review/merge of PR #13 (and decisions on 61 default-horizon claims and OpenRouter quota / held-out F1 set).
+Minor: docs/SOURCE_OF_TRUTH.md §7 updated for the unified error envelope, 503 VERIFIER_UNAVAILABLE, top-level data_origin, and red_flags[].evidence object shape (pending Hardhik approval).
+Blockers: Live extraction F1 remains blocked on OpenRouter daily quota + held-out set decision.
+
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m pytest services/api/tests -q
+316 passed, 1 warning in 49.15s
+$ .venv/Scripts/python.exe -m ruff check services/api infra db/migrations
+All checks passed!
+$ .venv/Scripts/python.exe -m black --check services/api infra db/migrations
+All done! ✨ 🍰 ✨
+90 files would be left unchanged.
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m mypy services/api/app
+Success: no issues found in 58 source files
+```
+
+```text
 [Arnav] 76.25% | Phase 6/6: Real-source seed verification & PR #9 update (2026-11-21)
 Done: Validated 30-publisher × 5-claim real seed (150 claims, 2023-01-12 to 2025-11-17, core.market prices cut off 2026-11-20); 150/150 public PDF HTTP 200 + SHA256 verified; idempotent --load passed on disposable Postgres schema at Alembic head 20261121_submission_owner_fk (30 sources, 150 submissions, 150 claims, data_origin=real; production DB untouched). Spot-checked 10 random claims across 10 publishers against fetched PDFs (10/10 matched publisher, date, security, direction, price levels). Confirmed 0 analyst emails/phones, max excerpt 42 chars, no report bodies, data/market_cache/ gitignored. Re-ran evaluate_extraction.py: OpenRouter daily quota still exhausted (0 calls, ExternalServiceError). Deletion evidence remains empty (missing evidence = no finding). All 342 pytest (zero skips, including 6 isolated Postgres + 9 real_seed tests), ruff, black, and mypy passed on Python 3.11.16.
 Next: Await Hardhik review/decisions on the 3 MAJORs below (SoT seed policy, 61 default-horizon claims, OpenRouter quota + independent held-out set); leave PR #9 unmerged and production migrations unapplied.
@@ -203,6 +221,7 @@ Commands above used `.venv/Scripts/python.exe`; pytest's warning is Starlette's
 deprecation of `httpx` with `starlette.testclient` in favor of `httpx2`.
 
 ```text
+>>>>>>> origin/main
 [Arnav] MAJOR | Platform scaffold and PRD are missing; the supplied SoT is the only available contract.
 Impact: Fresh-DB migration, authenticated API integration, and live extraction and market checks are blocked.
 Options: A) Hardhik provides the missing scaffold and interfaces while Orca workers build independent Verifier modules (recommended); B) pause all work.

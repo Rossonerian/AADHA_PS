@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 
 from app.core.auth import current_user as platform_current_user
 from app.core.db import get_session_factory
+from app.core.errors import ConfigurationError
 
 from .extraction import AdviceRequest
 from .ingestion import IngestionError
@@ -56,6 +57,15 @@ def create_router(
                         "SOURCE_NOT_FOUND",
                         service.safe_text("The source was not found."),
                     )
+                except ConfigurationError:
+                    return _error(
+                        503,
+                        "VERIFIER_UNAVAILABLE",
+                        service.safe_text(
+                            "Tip verification is temporarily unavailable while the "
+                            "extraction service is not configured."
+                        ),
+                    )
 
             return handle
 
@@ -70,7 +80,14 @@ def create_router(
     def source(id: UUID, user: User = auth) -> SourceResponse | JSONResponse:
         if user.level < 3:
             return JSONResponse(
-                status_code=403, content={"code": "TOOL_LOCKED", "required_level": 3}
+                status_code=403,
+                content={
+                    "error": {
+                        "code": "TOOL_LOCKED",
+                        "message": service.safe_text("This tool unlocks at level 3."),
+                        "required_level": 3,
+                    }
+                },
             )
         return service.source(UUID(str(user.id)), id)
 
