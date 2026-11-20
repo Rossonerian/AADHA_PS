@@ -81,6 +81,24 @@ Blockers: docs/PRD.md export; Divyansh education endpoints for full C2/C3 smoke 
 _Append updates here._
 
 ```text
+[Arnav] 80% | Verifier audit fixes (items 1–3 on feat/verifier-audit-fixes; items 4–7 on PR #9) (2026-11-21)
+Done: Fixed audit items 1–3 off main: (1) GET /sources/{id} below Level 3 now returns standard 403 {"error": {"code": "TOOL_LOCKED", "message": ..., "required_level": 3}}; (2) POST /verify without OPENROUTER_API_KEY now catches ConfigurationError and returns user-safe 503 {"error": {"code": "VERIFIER_UNAVAILABLE", "message": ...}} without leaking env vars or tracebacks; (3) added top-level data_origin to GET /sources/{id} and GET /submissions/mine while keeping red_flags[].evidence as an object, and updated docs/SOURCE_OF_TRUTH.md §7. Audit items 4 (Postgres Nasdaq challenge persistence + fail-closed gate + 503 FINNHUB_UNAVAILABLE), 5 (live F1 runner + quota blocker/held-out MAJOR), 6 (30×5 real public-research seed + DATA_MANIFEST), and 7 (submissions.user_id -> users.id FK migration) are already green and mergeable in PR #9. No apps/web/ edits.
+Next: Await Hardhik review/merge of this PR and PR #9 (with decisions on SoT updates, 61 default-horizon claims, and OpenRouter quota / held-out F1 set).
+Minor: docs/SOURCE_OF_TRUTH.md §7 updated for the unified error envelope, 503 VERIFIER_UNAVAILABLE, top-level data_origin, and red_flags[].evidence object shape (pending Hardhik approval).
+Blockers: Live extraction F1 remains blocked on OpenRouter daily quota + held-out set decision (tracked in PR #9).
+
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m pytest services/api/tests -q
+316 passed, 1 warning in 49.15s
+$ .venv/Scripts/python.exe -m ruff check services/api infra db/migrations
+All checks passed!
+$ .venv/Scripts/python.exe -m black --check services/api infra db/migrations
+All done! ✨ 🍰 ✨
+90 files would be left unchanged.
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m mypy services/api/app
+Success: no issues found in 58 source files
+```
+
+```text
 [Arnav] MAJOR | Platform scaffold and PRD are missing; the supplied SoT is the only available contract.
 Impact: Fresh-DB migration, authenticated API integration, and live extraction and market checks are blocked.
 Options: A) Hardhik provides the missing scaffold and interfaces while Orca workers build independent Verifier modules (recommended); B) pause all work.

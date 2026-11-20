@@ -103,13 +103,13 @@ All endpoints under `/api/v1`, JSON, auth required except `/health`.
 | `POST /assessments/{id}/submit` | Divyansh | `{answers[{item_id, answer, confidence}]}` | `{passed, score, brier, new_level?, unlocked[]}` |
 | `GET /explain?symbol=&year=` | Divyansh | – | `{chart[], moves[{date, pct, events[{text, source}]}], summary}` |
 | `GET /me/dashboard` | Divyansh | – | `{level, skills_over_time[], brier_over_time[], scenario_accuracy[]}` |
-| `POST /verify` | Arnav | one of `{url}`, `{text}`, `{image_base64}`; optional `{user_guess, user_confidence}` | `{submission_id, source{id, platform, handle, label, score, facts{}}, claim{...}, red_flags[{code, text, evidence}], mode: "basic" or "full"}` |
-| `GET /sources/{id}` | Arnav | – | `{source, history[], recent_claims[]}` |
-| `GET /submissions/mine` | Arnav | – | `{items[{submission_id, claim, status, outcome}]}` |
+| `POST /verify` | Arnav | one of `{url}`, `{text}`, `{image_base64}`; optional `{user_guess, user_confidence}` | `{submission_id, source{id, platform, handle, label, score, facts{}, data_origin}, claim{...}, red_flags[{code, text, evidence{}, data_origin}], mode: "basic" or "full", data_origin}` |
+| `GET /sources/{id}` | Arnav | – | `{source, history[], recent_claims[], data_origin}` |
+| `GET /submissions/mine` | Arnav | – | `{items[{submission_id, claim, status, outcome, data_origin}], data_origin}` |
 | `GET /nasdaq-verifier/challenge?symbol=` | Arnav (gate: shared core) | – | `{challenge_id, data_origin: "real", as_of, snapshot{symbol, name, sector, price, day_low, day_high, week52_low, week52_high, market_cap_musd, pe_ttm, chart[], data_origin}, nasdaq_url, disclaimer, questions[{id, text, options[]}]}` |
 | `POST /nasdaq-verifier/submit` | Arnav (gate: shared core) | `{challenge_id, answers[{question_id, answer, confidence 50–100}]}` | `{passed, score, brier, results[{question_id, correct, correct_answer, explanation}], feedback}` |
 
-Errors: `{error: {code, message}}` with HTTP 4xx/5xx. Locked tool → `403 {code: "TOOL_LOCKED", required_level}`.
+Errors: `{error: {code, message}}` with HTTP 4xx/5xx. Locked tool → `403 {error: {code: "TOOL_LOCKED", message, required_level}}`. Missing `OPENROUTER_API_KEY` on `/verify` → `503 {error: {code: "VERIFIER_UNAVAILABLE", message}}`.
 
 **Nasdaq literacy verifier (final capstone, `nasdaq_verifier`).** Not level-granted: unlocked only when `user.level == 4` **and** `plan.progress_pct == 100` **and** calibration `brier <= 0.25`, checked server-side on both endpoints (missing data fails closed). Locked → `403 {error: {code: "TOOL_LOCKED", message, required_level: 4, missing_requirements["level_4"|"plan_progress_100"|"brier_lte_0.25"]}}`. `GET /me` adds `nasdaq_verifier` to `unlocks` only when the gate passes. Data comes from Finnhub (`FINNHUB_API_KEY`), allowlist `/quote`, `/stock/profile2`, `/stock/metric`, `/stock/candle` only; never `/stock/recommendation`, `/stock/price-target` or `/stock/upgrade-downgrade`. Every record is `data_origin: "real"` (REAL badge); questions are template-generated from the numbers; feedback passes `core.guardrails.check_output()`. `nasdaq.com` cannot be iframed, so the UI shows its own snapshot + Recharts chart with an external "Open on Nasdaq.com" link. Extra errors: `FINNHUB_UNAVAILABLE` 503, `NOT_NASDAQ` 422, `INVALID_SYMBOL` 422.
 
