@@ -81,6 +81,13 @@ Blockers: docs/PRD.md export; Divyansh education endpoints for full C2/C3 smoke 
 _Append updates here._
 
 ```text
+[Arnav] MAJOR | Live F1 retry blocked by OpenRouter daily quota (2026-11-21)
+Impact: Key loads after copying .env.txt to ignored .env; 41 real structured calls completed before ExternalServiceError. Diagnostic confirmed HTTP 429 with a daily-limit message. Full F1 remains unmeasured.
+Options: A) Hardhik provides enough OpenRouter quota for all 150 rows (recommended); B) wait for quota reset, then rerun without tuning. Existing corpus independence issue remains open.
+Need from: Hardhik — sufficient quota and held-out evaluation decision. Raw summary saved in docs/evidence/extraction_f1.md. FINNHUB_API_KEY still absent; Postgres URL now configured but not exercised. Tasks 2–6 pending per stop rule.
+```
+
+```text
 [Arnav] MAJOR | First real test blocked at Step 1 (2026-11-21)
 Impact: OPENROUTER_API_KEY is absent; live exact-match F1 is unmeasured, not zero. Existing grounding updates below report development against eval.jsonl, compromising its held-out status.
 Options: A) Hardhik configures OpenRouter and supplies an independent held-out acceptance set (recommended); B) explicitly accept the existing corpus as a diagnostic only. No tuning performed in this run.
