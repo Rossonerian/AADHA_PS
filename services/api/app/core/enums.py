@@ -40,6 +40,8 @@ class ToolName(StrEnum):
     EXPLAIN_STOCK = "explain_stock"
     VERIFIER = "verifier"
     DASHBOARD = "dashboard"
+    # Capstone: not level-granted; /me adds it only when the server-side gate passes.
+    NASDAQ_VERIFIER = "nasdaq_verifier"
 
 
 LEVEL_UNLOCKS: dict[int, list[ToolName]] = {

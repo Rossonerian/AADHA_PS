@@ -52,3 +52,6 @@ Append every update to STATUS.md under "## Ananya" and also print it to me.
 
 START: read the two docs, list any contract gaps you see, set up mocks, then begin Phase 1.
 ```
+
+---
+**Addendum: Nasdaq literacy verifier screen.** Route `/nasdaq-verifier` (built; see `apps/web/src/components/nasdaq-verifier.tsx`). Unlock key `nasdaq_verifier` appears in `/me` `unlocks` only after Level 4 + plan 100% + Brier <= 0.25; the server returns `403 TOOL_LOCKED` with `missing_requirements` otherwise, so show the locked checklist card. Unlocked: neutral disclaimer, REAL DATA badge, snapshot + Recharts chart, external "Open full page on Nasdaq.com" link (never an iframe), comprehension questions with a 50-100% confidence slider. No buy/sell/hold copy. Typed calls: `getNasdaqChallenge`, `submitNasdaqVerifier` in `api-client.ts` (SYNTHETIC mock only when API/key is absent).

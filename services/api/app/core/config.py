@@ -41,6 +41,8 @@ class Settings(BaseSettings):
     openrouter_default_model: str = "nvidia/nemotron-3.5-lightning:free"
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
 
+    finnhub_api_key: str = ""
+
     market_data_dir: str = "data/seed/market"
 
     @field_validator("database_url", "database_url_unpooled", mode="before")
