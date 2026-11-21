@@ -7,7 +7,7 @@ from uuid import UUID, uuid4, uuid5
 from sqlalchemy import exists, func, select
 from sqlalchemy.orm import Session
 
-from app.core.errors import ConfigurationError
+from app.core.errors import ConfigurationError, ExternalServiceError
 from app.core.provenance import aggregate_data_origin
 
 from .extraction import (
@@ -110,7 +110,7 @@ class VerifierService:
                 if tip.transcript_segments
                 else [extract_claim(tip.text, self.core)]
             )
-        except ConfigurationError:
+        except (ConfigurationError, ExternalServiceError, Exception):
             degraded = True
             mode = Mode.BASIC
             extracted = [ExtractedClaim(status=ClaimStatus.NEEDS_REVIEW)]

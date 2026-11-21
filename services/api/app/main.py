@@ -4,7 +4,7 @@ from datetime import UTC, datetime
 from datetime import date as DateType
 from typing import Any
 
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
@@ -82,6 +82,7 @@ def create_app() -> FastAPI:
     register_education_exception_handlers(application)
 
     @application.get("/api/v1/health", tags=["platform"])
+    @application.get("/health", tags=["platform"], include_in_schema=False)
     def health() -> dict[str, Any]:
         settings = get_settings()
         db_status = check_db_health()
@@ -93,6 +94,21 @@ def create_app() -> FastAPI:
             "db": db_status,
             "market_data_as_of": market_as_of,
         }
+
+    @application.get("/", include_in_schema=False)
+    def root() -> dict[str, Any]:
+        settings = get_settings()
+        return {
+            "name": "PaisaProof API",
+            "status": "ok",
+            "version": settings.app_version,
+            "web_url": "https://paisaproof.vercel.app",
+            "health": "/api/v1/health",
+        }
+
+    @application.get("/favicon.ico", include_in_schema=False)
+    def favicon() -> Response:
+        return Response(status_code=204)
 
     @application.get("/api/v1/me", tags=["platform"])
     def read_me(
