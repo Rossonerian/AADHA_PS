@@ -230,14 +230,12 @@ def _responses(skills: list[str], correct: bool) -> list[dict[str, Any]]:
     return [{"skill_area": s, "correct": correct} for s in skills]
 
 
-def test_onboarding_stop_requires_three_questions_per_skill():
+def test_onboarding_stops_at_six_regardless_of_skill_balance():
     rotation = ["basics", "reading_stock", "judging_info", "risk"]
-    lopsided = _responses(["basics"] * 12, True)
-    assert _should_stop_onboarding(lopsided, 12, 15) is False
-    balanced = _responses(rotation * 3, True)
-    assert _should_stop_onboarding(balanced, 12, 15) is True
-    assert _should_stop_onboarding(_responses(rotation * 2, True), 12, 15) is False
-    assert _should_stop_onboarding(lopsided + lopsided[:3], 12, 15) is True  # max
+    assert _should_stop_onboarding(_responses(["basics"] * 5, True), 6) is False
+    assert _should_stop_onboarding(_responses(["basics"] * 6, True), 6) is True
+    assert _should_stop_onboarding(_responses(rotation + rotation[:2], True), 6) is True
+    assert _should_stop_onboarding(_responses(rotation, True), 6) is False
 
 
 def test_failed_retry_does_not_regress_completed_lesson(edu):

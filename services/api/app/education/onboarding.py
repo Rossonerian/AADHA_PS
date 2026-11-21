@@ -1,4 +1,4 @@
-"""Phase 2: Adaptive onboarding engine (12-15 questions, 4 skills, confidence 50-100, Brier)."""
+"""Phase 2: Adaptive onboarding check-in (6 questions, 4 skills, confidence 50-100, Brier)."""
 
 from __future__ import annotations
 
@@ -27,9 +27,11 @@ SKILL_ROTATION: list[str] = [
 ]
 
 
-def _public_question(q: dict[str, Any]) -> dict[str, Any]:
+def _public_question(q: dict[str, Any], index: int) -> dict[str, Any]:
     return {
         "id": q["id"],
+        "index": index,
+        "number": index,
         "level": q["level"],
         "skill_area": q["skill_area"],
         "difficulty": q["difficulty"],
@@ -66,7 +68,7 @@ def start_onboarding(
     user_name: str = "Learner",
     cfg: EducationConfig = DEFAULT_CONFIG,
 ) -> dict[str, Any]:
-    """Starts an adaptive onboarding quiz session starting at medium difficulty (3)."""
+    """Starts a 6-question adaptive check-in starting at medium difficulty (3)."""
     repo.ensure_user(user_id, name=user_name)
     first_skill = SKILL_ROTATION[0]
     first_q = _select_next_question(
@@ -87,8 +89,7 @@ def start_onboarding(
         "asked_ids": [first_q["id"]],
         "current_question_id": first_q["id"],
         "responses": [],
-        "min_questions": cfg.onboarding_min_questions,
-        "max_questions": cfg.onboarding_max_questions,
+        "total_questions": cfg.onboarding_question_count,
     }
     repo.create_session(
         session_id=session_id,
@@ -98,30 +99,21 @@ def start_onboarding(
     )
     return {
         "session_id": session_id,
-        "question": _public_question(first_q),
+        "total_questions": cfg.onboarding_question_count,
+        "question": _public_question(first_q, index=1),
         "data_origin": aggregate_data_origin(
             [first_q.get("data_origin", "synthetic")], empty_default="synthetic"
         ),
     }
 
 
-def _should_stop_onboarding(
-    responses: list[dict[str, Any]], min_q: int, max_q: int
-) -> bool:
-    """Stops between min_q (12) and max_q (15) once skill coverage & signal stabilize."""
-    n = len(responses)
-    if n >= max_q:
-        return True
-    if n < min_q:
-        return False
-    # Check if all 4 skills have >= 3 questions and performance is decisive (very high or very low)
-    per_skill = {skill: 0 for skill in SKILL_ROTATION}
-    for r in responses:
-        per_skill[r["skill_area"]] = per_skill.get(r["skill_area"], 0) + 1
-    if any(per_skill.get(skill, 0) < 3 for skill in SKILL_ROTATION):
-        return False
-    acc = sum(1 for r in responses if r["correct"]) / n
-    return acc >= 0.85 or acc <= 0.25
+def _should_stop_onboarding(responses: list[dict[str, Any]], total_q: int) -> bool:
+    """The check-in ends after exactly ``total_q`` answers, with no other gate.
+
+    Skill balance is handled by round-robin question selection, not by a
+    stop rule, so a lopsided run can never keep the check-in going.
+    """
+    return len(responses) >= total_q
 
 
 def answer_onboarding(
@@ -150,6 +142,8 @@ def answer_onboarding(
         raise ValidationDomainError(
             "SESSION_COMPLETED", "Onboarding session is already completed."
         )
+    # Always the configured count, even for sessions created before a change.
+    total_q = cfg.onboarding_question_count
 
     state = session["state"]
     if state.get("current_question_id") != question_id:
@@ -191,11 +185,8 @@ def answer_onboarding(
     new_diff = next_adaptive_difficulty(int(state["current_difficulty"]), is_correct)
     state["current_difficulty"] = new_diff
 
-    min_q = int(state.get("min_questions", cfg.onboarding_min_questions))
-    max_q = int(state.get("max_questions", cfg.onboarding_max_questions))
-
     response_origins = [r.get("data_origin", "synthetic") for r in responses]
-    if not _should_stop_onboarding(responses, min_q=min_q, max_q=max_q):
+    if not _should_stop_onboarding(responses, total_q=total_q):
         next_skill = SKILL_ROTATION[len(responses) % len(SKILL_ROTATION)]
         asked = set(state["asked_ids"])
         next_q = _select_next_question(repo, next_skill, new_diff, asked)
@@ -204,7 +195,8 @@ def answer_onboarding(
             state["current_question_id"] = next_q["id"]
             repo.update_session(session_id, state, completed=False)
             return {
-                "next_question": _public_question(next_q),
+                "total_questions": total_q,
+                "next_question": _public_question(next_q, index=len(responses) + 1),
                 "result": None,
                 "data_origin": aggregate_data_origin(
                     [*response_origins, next_q.get("data_origin", "synthetic")],
@@ -237,6 +229,7 @@ def answer_onboarding(
     repo.update_session(session_id, state, completed=True)
 
     return {
+        "total_questions": total_q,
         "next_question": None,
         "result": {"level": level, "skills": skills, "brier": brier},
         "data_origin": aggregate_data_origin(
