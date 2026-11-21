@@ -202,6 +202,10 @@ def evaluate_claim(
     )
 
 
+# Minimum scored outcomes before a source shows a score/label.
+MIN_SCORED_FOR_RATING = 5
+
+
 def rate_source(
     *,
     scored: int,
@@ -253,7 +257,7 @@ def rate_source(
         + tip_quality_weight * quality
     )
 
-    if scored < 5:
+    if scored < MIN_SCORED_FOR_RATING:
         label = SourceLabel.NOT_ENOUGH_HISTORY
     elif score >= 65:
         label = SourceLabel.RELIABLE

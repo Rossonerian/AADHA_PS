@@ -427,3 +427,38 @@ def test_verify_jwt_jwks_outage_is_not_401(monkeypatch: pytest.MonkeyPatch) -> N
     )
     with pytest.raises(ExternalServiceError):
         verify_jwt(token)
+
+
+def _hs_token(secret: str, **extra: Any) -> str:
+    payload = {
+        "sub": str(uuid.uuid4()),
+        "exp": int((datetime.now(tz=UTC) + timedelta(hours=1)).timestamp()),
+        **extra,
+    }
+    return jwt.encode(payload, secret, algorithm="HS256")
+
+
+def test_verify_jwt_enforces_issuer_and_audience_when_configured(
+    monkeypatch: pytest.MonkeyPatch, jwt_secret: str
+) -> None:
+    monkeypatch.setenv("SUPABASE_JWT_SECRET", jwt_secret)
+    monkeypatch.delenv("JWT_ISSUER", raising=False)
+    monkeypatch.delenv("JWT_AUDIENCE", raising=False)
+    get_settings.cache_clear()
+    # Unset -> neither claim is required (backwards compatible).
+    assert verify_jwt(_hs_token(jwt_secret))["sub"]
+
+    monkeypatch.setenv("JWT_ISSUER", "https://auth.example.com")
+    monkeypatch.setenv("JWT_AUDIENCE", "paisaproof-api")
+    get_settings.cache_clear()
+    good = _hs_token(jwt_secret, iss="https://auth.example.com", aud="paisaproof-api")
+    assert verify_jwt(good)["sub"]
+    for bad in (
+        _hs_token(jwt_secret),
+        _hs_token(jwt_secret, iss="https://evil.example", aud="paisaproof-api"),
+        _hs_token(jwt_secret, iss="https://auth.example.com", aud="other"),
+        _hs_token(jwt_secret, iss="https://auth.example.com"),
+    ):
+        with pytest.raises(UnauthorizedError):
+            verify_jwt(bad)
+    get_settings.cache_clear()

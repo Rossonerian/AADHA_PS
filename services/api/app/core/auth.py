@@ -7,7 +7,7 @@ from typing import Any
 from urllib.parse import urlsplit
 
 import jwt
-from fastapi import Depends
+from fastapi import Depends, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jwt import PyJWKClient
 from jwt.types import Options
@@ -19,6 +19,7 @@ from app.core.config import Settings, get_settings
 from app.core.db import get_db
 from app.core.errors import ExternalServiceError, ToolLockedError, UnauthorizedError
 from app.core.models import UserRecord
+from app.core.rate_limit import enforce_user_rate_limit
 from app.profiles.service import upsert_profile_from_claims
 
 security = HTTPBearer(auto_error=False)
@@ -37,6 +38,24 @@ class User(BaseModel):
     level: int
     name: str = ""
     email: str | None = None
+
+
+def _decode_kwargs(current_settings: Settings) -> dict[str, Any]:
+    """Extra `jwt.decode` arguments enforcing optional JWT_ISSUER / JWT_AUDIENCE."""
+    kwargs: dict[str, Any] = {
+        "options": dict(_DECODE_OPTIONS),
+        "leeway": _CLOCK_SKEW_LEEWAY_SECONDS,
+    }
+    issuer = current_settings.jwt_issuer.strip()
+    audience = current_settings.jwt_audience.strip()
+    if issuer:
+        kwargs["issuer"] = issuer
+        kwargs["options"]["require"] = [*_DECODE_OPTIONS["require"], "iss"]
+    if audience:
+        kwargs["audience"] = audience
+        kwargs["options"]["verify_aud"] = True
+        kwargs["options"]["require"] = [*kwargs["options"]["require"], "aud"]
+    return kwargs
 
 
 @lru_cache(maxsize=4)
@@ -145,8 +164,7 @@ def verify_jwt(token: str) -> dict[str, Any]:
                 token,
                 secret,
                 algorithms=["HS256"],
-                options=_DECODE_OPTIONS,
-                leeway=_CLOCK_SKEW_LEEWAY_SECONDS,
+                **_decode_kwargs(current_settings),
             )
         except jwt.ExpiredSignatureError as exc:
             raise UnauthorizedError("Authentication token has expired") from exc
@@ -165,8 +183,7 @@ def verify_jwt(token: str) -> dict[str, Any]:
                     token,
                     signing_key.key,
                     algorithms=[alg],
-                    options=_DECODE_OPTIONS,
-                    leeway=_CLOCK_SKEW_LEEWAY_SECONDS,
+                    **_decode_kwargs(current_settings),
                 )
                 _check_issuer(claims, jwks_url)
                 break
@@ -223,6 +240,7 @@ def _extract_user_name(claims: dict[str, Any]) -> str:
 
 
 def current_user(
+    request: Request,
     credentials: HTTPAuthorizationCredentials | None = Depends(security),
     db: Session = Depends(get_db),
 ) -> User:
@@ -236,6 +254,8 @@ def current_user(
 
     claims = verify_jwt(credentials.credentials)
     user_id = claims["sub"]
+    # Per-user rate limiting is keyed on the verified subject only.
+    enforce_user_rate_limit(request.scope, user_id)
     email_raw = claims.get("email")
     email = email_raw if isinstance(email_raw, str) else None
 

@@ -1,5 +1,6 @@
 """FastAPI application entrypoint and core platform routes."""
 
+from datetime import UTC, datetime
 from datetime import date as DateType
 from typing import Any
 
@@ -40,7 +41,8 @@ def _warn_if_market_data_stale(as_of_raw: str | None, max_stale_days: int) -> No
     except ValueError:
         _logger.warning("market_data_stale", extra={"market_data_as_of": as_of_raw})
         return
-    age_days = (DateType.today() - as_of_date).days
+    # Compare in UTC so the age does not depend on the host's local timezone.
+    age_days = (datetime.now(UTC).date() - as_of_date).days
     if age_days > max_stale_days:
         _logger.warning(
             "market_data_stale",
@@ -56,9 +58,14 @@ def create_app() -> FastAPI:
     """Construct and configure the PaisaProof FastAPI application."""
     current_settings = get_settings()
 
+    # Interactive docs and the schema are not exposed in production.
+    docs_enabled = not current_settings.is_production
     application = FastAPI(
         title="PaisaProof API",
         version=current_settings.app_version,
+        docs_url="/docs" if docs_enabled else None,
+        redoc_url="/redoc" if docs_enabled else None,
+        openapi_url="/openapi.json" if docs_enabled else None,
     )
 
     application.add_middleware(RequestLoggingMiddleware)
@@ -68,8 +75,8 @@ def create_app() -> FastAPI:
         CORSMiddleware,
         allow_origins=current_settings.cors_origins_list,
         allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
+        allow_methods=["GET", "POST", "PATCH", "OPTIONS"],
+        allow_headers=["Authorization", "Content-Type", "Accept"],
     )
     register_exception_handlers(application)
     register_education_exception_handlers(application)

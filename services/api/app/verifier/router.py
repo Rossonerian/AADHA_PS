@@ -4,7 +4,7 @@ from collections.abc import Callable, Coroutine
 from typing import Any
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Request, Response
+from fastapi import APIRouter, Depends, Query, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from fastapi.routing import APIRoute
@@ -92,8 +92,18 @@ def create_router(
         return service.source(UUID(str(user.id)), id)
 
     @router.get("/submissions/mine", response_model=SubmissionsResponse)
-    def my_submissions(user: User = auth) -> SubmissionsResponse:
-        return service.submissions(UUID(str(user.id)), user.level)
+    def my_submissions(
+        response: Response,
+        limit: int = Query(default=50, ge=1, le=100),
+        offset: int = Query(default=0, ge=0),
+        user: User = auth,
+    ) -> SubmissionsResponse:
+        page = service.submissions(
+            UUID(str(user.id)), user.level, limit=limit, offset=offset
+        )
+        if page.next_offset is not None:
+            response.headers["X-Next-Offset"] = str(page.next_offset)
+        return page
 
     return router
 

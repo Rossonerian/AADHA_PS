@@ -1,10 +1,10 @@
 """Verifier use cases; the platform binds the core interfaces and DB session."""
 
-from datetime import UTC
+from datetime import UTC, datetime, timedelta
 from hashlib import sha256
 from uuid import UUID, uuid4, uuid5
 
-from sqlalchemy import exists, select
+from sqlalchemy import exists, func, select
 from sqlalchemy.orm import Session
 
 from app.core.errors import ConfigurationError
@@ -49,6 +49,14 @@ from .schemas import (
     VerifyResponse,
 )
 from .tip_quality import VERSION, compute, facts
+
+# Only submitters at or above this level may move a third-party public source's rating.
+RATING_MIN_SUBMITTER_LEVEL = 3
+
+
+def _claim_order(claim: Claim) -> int:
+    raw = (claim.tip_quality or {}).get("claim_order", 0)
+    return raw if isinstance(raw, int) and not isinstance(raw, bool) else 0
 
 
 class SourceNotFound(LookupError):
@@ -125,6 +133,9 @@ class VerifierService:
         public = bool(
             tip.author_verified and tip.post_url and tip.handle and tip.published_at
         )
+        # Low-level accounts can still verify tips, but their claims never count toward a
+        # shared public source's rating (anti-poisoning). Private sources are unaffected.
+        counts_toward_rating = public and level >= RATING_MIN_SUBMITTER_LEVEL
         if public and tip.handle:
             handle = tip.handle.casefold()
         else:
@@ -203,7 +214,9 @@ class VerifierService:
                     scorable=status == ClaimStatus.OPEN,
                     status=status,
                     data_origin=DataOrigin.REAL,
-                    rating_eligible=public and prior is None and not degraded,
+                    rating_eligible=counts_toward_rating
+                    and prior is None
+                    and not degraded,
                 ),
             )
             if submission.id != proposed_id:
@@ -225,7 +238,9 @@ class VerifierService:
                         scorable=extra_status == ClaimStatus.OPEN,
                         status=extra_status,
                         data_origin=DataOrigin.REAL,
-                        rating_eligible=public and prior is None and not degraded,
+                        rating_eligible=counts_toward_rating
+                        and prior is None
+                        and not degraded,
                         tip_quality=quality,
                         tip_quality_version=VERSION,
                     )
@@ -233,14 +248,16 @@ class VerifierService:
             session.flush()
             if public and not degraded:
                 refresh(session, source, self.core)
-                update_rating(session, source)
+                if counts_toward_rating:
+                    update_rating(session, source)
             return self._verification(session, submission, stored, mode)
 
     def source(self, owner: UUID, source_id: UUID) -> SourceResponse:
         with self.sessions() as session, session.begin():
-            source = session.scalar(
-                select(Source).where(Source.id == source_id).with_for_update()
-            )
+            # No row lock is taken, and the rating is never recomputed here: ratings are
+            # written by verify() and the scheduled jobs. Mentions are refreshed lazily,
+            # only when stored ones are older than 24 hours.
+            source = session.scalar(select(Source).where(Source.id == source_id))
             if source is None:
                 raise SourceNotFound
             query = (
@@ -259,9 +276,12 @@ class VerifierService:
                 query = query.where(
                     Claim.rating_eligible.is_(True), Submission.deleted_at.is_(None)
                 )
-            refresh(session, source, self.core)
-            if not source.handle.startswith("private-"):
-                update_rating(session, source)
+            if (
+                self.core.web_search is not None
+                and not source.handle.startswith("private-")
+                and self._mentions_stale(session, source)
+            ):
+                refresh(session, source, self.core)
             recent = session.scalars(
                 query.order_by(Submission.captured_at.desc(), Claim.id).limit(20)
             )
@@ -309,7 +329,23 @@ class VerifierService:
                 data_origin=DataOrigin(source.data_origin),
             )
 
-    def submissions(self, owner: UUID, level: int) -> SubmissionsResponse:
+    @staticmethod
+    def _mentions_stale(session: Session, source: Source) -> bool:
+        latest = session.scalar(
+            select(func.max(SourceMention.fetched_at)).where(
+                SourceMention.source_id == source.id
+            )
+        )
+        if latest is None:
+            return True
+        latest = latest.replace(tzinfo=UTC) if latest.tzinfo is None else latest
+        return datetime.now(UTC) - latest >= timedelta(hours=24)
+
+    def submissions(
+        self, owner: UUID, level: int, *, limit: int = 50, offset: int = 0
+    ) -> SubmissionsResponse:
+        limit = max(1, min(int(limit), 100))
+        offset = max(0, int(offset))
         with self.sessions() as session:
             rows = session.execute(
                 select(Submission, Claim)
@@ -318,8 +354,12 @@ class VerifierService:
                     Claim.submission_id == Submission.id,
                 )
                 .where(Submission.user_id == owner)
-                .order_by(Submission.captured_at.desc(), Submission.id)
-            )
+                .order_by(Submission.captured_at.desc(), Submission.id, Claim.id)
+                .limit(limit + 1)
+                .offset(offset)
+            ).all()
+            has_more = len(rows) > limit
+            rows = rows[:limit]
             items = [
                 SubmissionItem(
                     submission_id=submission.id,
@@ -338,7 +378,11 @@ class VerifierService:
                 [item.data_origin.value for item in items],
                 empty_default="real",
             )
-            return SubmissionsResponse(items=items, data_origin=origin)
+            return SubmissionsResponse(
+                items=items,
+                data_origin=origin,
+                next_offset=offset + limit if has_more else None,
+            )
 
     def _claim_view(self, claim: Claim) -> ClaimView:
         view = ClaimView.model_validate(claim)
@@ -405,7 +449,7 @@ class VerifierService:
         retained = list(
             session.scalars(select(Claim).where(Claim.submission_id == submission.id))
         )
-        retained.sort(key=lambda c: str((c.tip_quality or {}).get("claim_order", 0)))
+        retained.sort(key=lambda c: (_claim_order(c), c.id))
         views = [self._claim_view(c) for c in retained]
         return VerifyResponse(
             submission_id=submission.id,
