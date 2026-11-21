@@ -66,6 +66,7 @@ import { authClient } from "@/lib/neon-auth-client";
 import type { LessonCheckResponse } from "@/lib/contracts";
 import { AUTH_EXPIRED_EVENT, SESSION_EXPIRED_MESSAGE } from "@/lib/auth-errors";
 import { AuthScreen } from "@/components/auth/auth-screen";
+import { consumeWelcomeBack } from "@/lib/auth-flow-storage";
 import { avatarInitials } from "@/components/auth/profile-options";
 import { ProfileOnboarding } from "@/components/onboarding/profile-onboarding";
 import { AvatarImage } from "@/components/ui/avatar";
@@ -288,6 +289,15 @@ export default function PaisaProofApp() {
   }, [view]);
   const clearError = () => setError("");
   const showError = (reason: unknown) => setError(friendlyError(reason));
+
+  const signedInProfileId = profile?.id;
+  useEffect(() => {
+    if (!signedInProfileId) return;
+    const timer = window.setTimeout(() => {
+      if (consumeWelcomeBack()) notify("Welcome back");
+    }, 400);
+    return () => window.clearTimeout(timer);
+  }, [signedInProfileId]);
 
   async function loadAuthenticatedUser() {
     const me = await api.me();

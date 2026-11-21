@@ -8,6 +8,9 @@ import { Separator } from "@/components/minor/separator";
 import { mockAuthBridge, mocksEnabled } from "@/lib/api";
 import { ApiClientError } from "@/lib/api-client";
 import { classifyAuthError } from "@/lib/auth-errors";
+import { readOAuthUrlError, stripOAuthErrorParams } from "@/lib/auth-flow";
+import { flagWelcomeBack, saveIntent } from "@/lib/auth-flow-storage";
+import { GoogleCreateConfirm } from "@/components/auth/google-create-confirm";
 import { authClient } from "@/lib/neon-auth-client";
 import { SilkBackground } from "@/components/effects/silk-background";
 
@@ -65,6 +68,7 @@ export function AuthScreen({
   const [busyProvider, setBusyProvider] = useState<"google" | "email" | "reset" | null>(null);
   const [error, setError] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+  const [pendingGoogleEmail, setPendingGoogleEmail] = useState("");
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -78,10 +82,15 @@ export function AuthScreen({
     let cancelled = false;
     void Promise.resolve().then(() => {
       if (cancelled) return;
-      const params = new URLSearchParams(window.location.search);
-      const oauthError = params.get("error_description") ?? params.get("error");
+      const oauthError = readOAuthUrlError(window.location.search);
       if (oauthError) {
-        setError(`Sign-in did not complete: ${oauthError}`);
+        setError(oauthError);
+        const rest = stripOAuthErrorParams(window.location.search);
+        window.history.replaceState(
+          window.history.state,
+          "",
+          `${window.location.pathname}${rest}${window.location.hash}`,
+        );
       }
     });
     return () => {
@@ -96,20 +105,38 @@ export function AuthScreen({
 
   const busy = busyProvider !== null;
 
+  async function finishMockGoogle(existed: boolean) {
+    if (!mockAuthBridge) return;
+    await mockAuthBridge.signInGoogle();
+    if (mode === "signup" && existed) flagWelcomeBack();
+    await onAuthenticated();
+  }
+
   async function handleGoogleContinue() {
     setError("");
     setStatusMessage("");
+    setPendingGoogleEmail("");
     setBusyProvider("google");
     try {
       if (mocksEnabled && mockAuthBridge) {
-        await mockAuthBridge.signInGoogle();
-        await onAuthenticated();
+        const existed = mockAuthBridge.googleAccountExists();
+        if (mode === "signin" && !existed) {
+          setPendingGoogleEmail(mockAuthBridge.googleEmail);
+          setBusyProvider(null);
+          return;
+        }
+        await finishMockGoogle(existed);
         return;
       }
+      // Remember which tab started this so the callback page can tell sign-in from sign-up.
+      saveIntent(mode);
+      const origin = window.location.origin;
       const res = await authClient.signIn.social({
         provider: "google",
-        callbackURL: `${window.location.origin}/auth/callback`,
-        errorCallbackURL: window.location.origin,
+        callbackURL: `${origin}/auth/callback`,
+        newUserCallbackURL: `${origin}/auth/callback?new=1`,
+        errorCallbackURL: origin,
+        ...(mode === "signup" ? { requestSignUp: true } : {}),
       });
       if (res?.error) {
         throw res.error;
@@ -137,14 +164,19 @@ export function AuthScreen({
       return;
     }
     setEmail(trimmed);
-    setMode("signin");
     setStep("password");
   }
 
-  function switchToSignUp() {
+  function selectMode(next: PasswordMode) {
+    if (next === mode) return;
     setError("");
     setStatusMessage("");
-    setMode("signup");
+    setPendingGoogleEmail("");
+    setMode(next);
+    if (next === "signup") suggestName();
+  }
+
+  function suggestName() {
     if (!fullName.trim()) {
       const local = email.trim().split("@", 1)[0] ?? "";
       const suggested = local.replace(/[._-]+/g, " ").trim();
@@ -152,6 +184,10 @@ export function AuthScreen({
         setFullName(suggested.replace(/\b\w/g, (ch) => ch.toUpperCase()).slice(0, 80));
       }
     }
+  }
+
+  function switchToSignUp() {
+    selectMode("signup");
     passwordRef.current?.focus();
   }
 
@@ -323,20 +359,28 @@ export function AuthScreen({
             ✳
           </div>
           <span className="eyebrow">YOUR LEARNING SPACE</span>
-          <h2>
-            {step === "email"
-              ? "Welcome to PaisaProof"
-              : mode === "signup"
-                ? "Create your account"
-                : "Sign in to continue"}
-          </h2>
+          <h2>{mode === "signup" ? "Create your account" : "Welcome back"}</h2>
           <p>
-            {step === "email"
-              ? "Sign in or create an account in seconds."
-              : mode === "signup"
-                ? "Set a password to save your progress and learning path."
-                : "Enter your password or create a new account if you are new."}
+            {mode === "signup"
+              ? "Set up a free PaisaProof account to save your progress and learning path."
+              : "Sign in to pick up where you left off."}
           </p>
+
+          <div className="pp-auth-tabs" role="tablist" aria-label="Sign in or create account">
+            {(["signin", "signup"] as const).map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                role="tab"
+                aria-selected={mode === tab}
+                className="pp-auth-tab"
+                disabled={busy}
+                onClick={() => selectMode(tab)}
+              >
+                {tab === "signin" ? "Sign in" : "Create account"}
+              </button>
+            ))}
+          </div>
 
           <Button
             type="button"
@@ -347,13 +391,33 @@ export function AuthScreen({
           >
             <GoogleMark />
             <span>
-              {busyProvider === "google" ? "Connecting with Google…" : "Continue with Google"}
+              {busyProvider === "google"
+                ? "Connecting with Google…"
+                : mode === "signup"
+                  ? "Sign up with Google"
+                  : "Sign in with Google"}
             </span>
           </Button>
 
+          {pendingGoogleEmail && (
+            <GoogleCreateConfirm
+              email={pendingGoogleEmail}
+              busy={busy}
+              onCancel={() => setPendingGoogleEmail("")}
+              onCreate={() => {
+                setPendingGoogleEmail("");
+                setMode("signup");
+                setBusyProvider("google");
+                void finishMockGoogle(false)
+                  .catch((err: unknown) => setError(classifyAuthError(err, "google").message))
+                  .finally(() => setBusyProvider(null));
+              }}
+            />
+          )}
+
           <div className="pp-auth-or" aria-hidden="true">
             <Separator />
-            <span>or continue with email</span>
+            <span>{mode === "signup" ? "or sign up with email" : "or sign in with email"}</span>
             <Separator />
           </div>
 
@@ -378,7 +442,7 @@ export function AuthScreen({
                 />
               </div>
               <Button type="submit" disabled={busy}>
-                <span>Continue with email</span>
+                <span>{mode === "signup" ? "Sign up with email" : "Sign in with email"}</span>
                 <ArrowRight size={15} aria-hidden="true" />
               </Button>
             </form>

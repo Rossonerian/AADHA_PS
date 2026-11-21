@@ -5406,6 +5406,44 @@ html[data-theme="dark"] body {
 .pp-auth-feedback {
   width: 100%;
 }
+.pp-auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  width: 100%;
+  margin: 14px 0 12px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
+.pp-auth-tab {
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.pp-auth-tab[aria-selected="true"] {
+  background: var(--paper, var(--canvas));
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+}
+.pp-auth-tab:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.pp-auth-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 12px;
+  text-align: left;
+}
 
 /* Profile onboarding stepper */
 .pp-onboarding-shell {

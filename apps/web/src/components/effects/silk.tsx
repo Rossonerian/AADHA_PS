@@ -366,7 +366,6 @@ const Silk = ({
           antialias: false,
           depth: false,
           stencil: false,
-          powerPreference: "high-performance",
         }) ?? null;
     } catch {
       context = null;

@@ -178,6 +178,12 @@ export const mockAuth = {
     return nextMe;
   },
 
+  googleEmail: "ananya.verma@gmail.com",
+
+  googleAccountExists(): boolean {
+    return Boolean(readMockUsers()["ananya.verma@gmail.com"]);
+  },
+
   async signInGoogle(): Promise<MeResponse> {
     const googleEmail = "ananya.verma@gmail.com";
     const users = readMockUsers();
