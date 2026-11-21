@@ -154,32 +154,63 @@ def update_rating(session: Session, source: Source) -> None:
         tip_quality=mean(quality_values) if quality_values else None,
         tip_quality_weight=weight,
     )
-    changed = True  # Every recomputation records the formula and configured weight.
     source.scored_claims = scored
+    last = session.execute(
+        select(
+            SourceRatingHistory.score,
+            SourceRatingHistory.label,
+            SourceRatingHistory.changed_at,
+        )
+        .where(SourceRatingHistory.source_id == source.id)
+        .order_by(SourceRatingHistory.changed_at.desc(), SourceRatingHistory.id.desc())
+        .limit(1)
+    ).first()
+    changed = (
+        last is None
+        or last.score != score
+        or last.label != label
+        or source.score != score
+        or source.label != label
+    )
     source.score, source.label = score, label
-    if changed:
-        # All writers hold the source lock. Ensure ordering on clocks with coarse resolution.
-        last = session.scalar(
-            select(SourceRatingHistory.changed_at)
-            .where(SourceRatingHistory.source_id == source.id)
-            .order_by(SourceRatingHistory.changed_at.desc())
-            .limit(1)
+    if not changed:
+        return
+    # All writers hold the source lock. Ensure ordering on clocks with coarse resolution.
+    changed_at = datetime.now(UTC)
+    if last is not None:
+        prev = last.changed_at
+        prev = prev.replace(tzinfo=UTC) if prev.tzinfo is None else prev
+        changed_at = max(changed_at, prev + timedelta(microseconds=1))
+    session.add(
+        SourceRatingHistory(
+            source_id=source.id,
+            score=score,
+            label=label,
+            reason="Updated from tracked claims and source evidence.",
+            formula_version=f"source-v2-q{weight}",
+            changed_at=changed_at,
+            data_origin=source.data_origin,
         )
-        changed_at = datetime.now(UTC)
-        if last is not None:
-            last = last.replace(tzinfo=UTC) if last.tzinfo is None else last
-            changed_at = max(changed_at, last + timedelta(microseconds=1))
-        session.add(
-            SourceRatingHistory(
-                source_id=source.id,
-                score=score,
-                label=label,
-                reason="Updated from tracked claims and source evidence.",
-                formula_version=f"source-v2-q{weight}",
-                changed_at=changed_at,
-                data_origin=source.data_origin,
-            )
+    )
+
+
+HISTORY_LIMIT = 50
+
+
+def rating_history(
+    session: Session, source_id: UUID, limit: int = HISTORY_LIMIT
+) -> list[SourceRatingHistory]:
+    """Latest `limit` meaningful rating changes, returned oldest first."""
+    rows = session.scalars(
+        select(SourceRatingHistory)
+        .where(
+            SourceRatingHistory.source_id == source_id,
+            SourceRatingHistory.label != "not_enough_history",
         )
+        .order_by(SourceRatingHistory.changed_at.desc(), SourceRatingHistory.id.desc())
+        .limit(limit)
+    ).all()
+    return list(reversed(rows))
 
 
 def source_view(session: Session, source: Source, *, basic: bool = False) -> SourceView:

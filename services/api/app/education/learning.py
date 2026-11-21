@@ -275,9 +275,11 @@ def submit_lesson_check(
 
     if plan:
         progress = dict(plan["progress"])
-        progress[lesson_id] = (
-            LessonStatus.COMPLETED.value if passed else LessonStatus.IN_PROGRESS.value
-        )
+        if passed:
+            progress[lesson_id] = LessonStatus.COMPLETED.value
+        elif progress.get(lesson_id) != LessonStatus.COMPLETED.value:
+            # A failed retry never regresses an already completed lesson.
+            progress[lesson_id] = LessonStatus.IN_PROGRESS.value
         if lesson_id not in plan["lesson_ids"]:
             plan["lesson_ids"].append(lesson_id)
         repo.upsert_plan(user_id, plan["level"], plan["lesson_ids"], progress)

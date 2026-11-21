@@ -28,6 +28,83 @@ from app.verifier.jobs import score_open_claims
 _logger = get_logger("paisaproof.daily_job")
 
 
+def _error_summary(exc: BaseException) -> dict[str, Any]:
+    return {"status": "error", "type": type(exc).__name__, "error": str(exc)[:500]}
+
+
+def _record_run(session: Session, summary: dict[str, Any]) -> None:
+    try:
+        session.add(
+            JobRunRecord(
+                job_name="daily_job",
+                status=summary["status"],
+                market_data_as_of=summary["market_data_as_of"],
+                details_json=json.dumps(summary, default=str),
+            )
+        )
+        session.commit()
+    except SQLAlchemyError:
+        session.rollback()
+        raise
+
+
+def _execute(
+    session: Session | None,
+    *,
+    symbols: list[str] | None,
+    active_refresh: Callable[..., dict[str, Any]],
+    active_scoring: Callable[[Session | None], dict[str, Any]],
+) -> dict[str, Any]:
+    """Run refresh then scoring; never raises, always returns a summary."""
+    try:
+        refresh_summary = (
+            active_refresh(symbols=symbols) if symbols is not None else active_refresh()
+        )
+    except Exception as exc:
+        _logger.exception("daily_job_refresh_failed")
+        refresh_summary = _error_summary(exc)
+    refresh_ok = refresh_summary.get("status") in {"ok", "partial"}
+    try:
+        market_as_of = (
+            str(refresh_summary.get("as_of") or get_market_data_as_of() or "") or None
+        )
+    except Exception:  # noqa: BLE001
+        market_as_of = None
+
+    scoring_summary: dict[str, Any] = {"status": "skipped", "scored": 0}
+    if not refresh_ok:
+        # Scoring against stale or missing bars would produce wrong outcomes.
+        scoring_summary = {
+            "status": "skipped",
+            "scored": 0,
+            "reason": "market_refresh_failed",
+        }
+    else:
+        try:
+            scoring_summary = active_scoring(session)
+        except Exception as exc:
+            _logger.exception("daily_job_scoring_failed")
+            if session is not None:
+                session.rollback()
+            scoring_summary = {**_error_summary(exc), "scored": 0}
+
+    if not refresh_ok or scoring_summary.get("status") == "error":
+        status = "failed"
+    elif refresh_summary.get("status") == "partial" or scoring_summary.get("failed"):
+        status = "degraded"
+    else:
+        status = "ok"
+    return {
+        "job_name": "daily_job",
+        "status": status,
+        "market_data_as_of": market_as_of,
+        "market_refresh": refresh_summary,
+        "claim_scoring": scoring_summary,
+        "db_recorded": False,
+        "ran_at": datetime.now(tz=UTC).isoformat(),
+    }
+
+
 def run_daily_job(
     *,
     db: Session | None = None,
@@ -35,90 +112,38 @@ def run_daily_job(
     refresh_fn: Callable[..., dict[str, Any]] | None = None,
     scoring_fn: Callable[[Session | None], dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    """Execute market refresh + open-claim scoring and record a `job_runs` entry."""
-    active_refresh = refresh_fn or refresh_all
-    active_scoring = scoring_fn or score_open_claims
+    """Execute market refresh + open-claim scoring and always record a `job_runs` entry.
 
-    refresh_summary = (
-        active_refresh(symbols=symbols) if symbols is not None else active_refresh()
-    )
-    market_as_of = (
-        str(refresh_summary.get("as_of") or get_market_data_as_of() or "") or None
-    )
-
-    scoring_summary: dict[str, Any] = {"status": "skipped", "scored": 0}
-    db_recorded = False
-
+    Failures (refresh error, scoring exception) are captured in the summary with
+    status `failed`; scoring is skipped when the market refresh failed.
+    """
+    kwargs: dict[str, Any] = {
+        "symbols": symbols,
+        "active_refresh": refresh_fn or refresh_all,
+        "active_scoring": scoring_fn or score_open_claims,
+    }
     if db is not None:
-        scoring_summary = active_scoring(db)
-        status = "ok" if refresh_summary.get("status") in {"ok", "partial"} else "error"
-        summary: dict[str, Any] = {
-            "job_name": "daily_job",
-            "status": status,
-            "market_data_as_of": market_as_of,
-            "market_refresh": refresh_summary,
-            "claim_scoring": scoring_summary,
-            "db_recorded": True,
-            "ran_at": datetime.now(tz=UTC).isoformat(),
-        }
-        db.add(
-            JobRunRecord(
-                job_name="daily_job",
-                status=status,
-                market_data_as_of=market_as_of,
-                details_json=json.dumps(summary, default=str),
-            )
-        )
-        db.commit()
+        summary = _execute(db, **kwargs)
+        summary["db_recorded"] = True
+        _record_run(db, summary)
         _logger.info("daily_job_completed", extra=summary)
         return summary
 
     has_job_runs = False
     try:
-        engine = get_engine()
-        has_job_runs = inspect(engine).has_table("job_runs")
+        has_job_runs = inspect(get_engine()).has_table("job_runs")
     except (SQLAlchemyError, OSError, RuntimeError) as exc:
         _logger.warning("daily_job_db_unavailable", extra={"error": str(exc)})
 
     if has_job_runs:
         with get_session_factory()() as session:
-            scoring_summary = active_scoring(session)
-            status = (
-                "ok" if refresh_summary.get("status") in {"ok", "partial"} else "error"
-            )
-            summary = {
-                "job_name": "daily_job",
-                "status": status,
-                "market_data_as_of": market_as_of,
-                "market_refresh": refresh_summary,
-                "claim_scoring": scoring_summary,
-                "db_recorded": True,
-                "ran_at": datetime.now(tz=UTC).isoformat(),
-            }
-            session.add(
-                JobRunRecord(
-                    job_name="daily_job",
-                    status=status,
-                    market_data_as_of=market_as_of,
-                    details_json=json.dumps(summary, default=str),
-                )
-            )
-            session.commit()
-            db_recorded = True
+            summary = _execute(session, **kwargs)
+            summary["db_recorded"] = True
+            _record_run(session, summary)
             _logger.info("daily_job_completed", extra=summary)
             return summary
 
-    scoring_summary = active_scoring(None)
-    status = "ok" if refresh_summary.get("status") in {"ok", "partial"} else "error"
-    summary = {
-        "job_name": "daily_job",
-        "status": status,
-        "market_data_as_of": market_as_of,
-        "market_refresh": refresh_summary,
-        "claim_scoring": scoring_summary,
-        "db_recorded": db_recorded,
-        "ran_at": datetime.now(tz=UTC).isoformat(),
-    }
+    summary = _execute(None, **kwargs)
     _logger.info("daily_job_completed", extra=summary)
     return summary
 
@@ -137,7 +162,7 @@ def main() -> int:
     args = parser.parse_args()
     summary = run_daily_job(symbols=args.symbols)
     print(json.dumps(summary, indent=2))
-    return 0 if summary["status"] != "error" else 1
+    return 0 if summary["status"] in {"ok", "degraded"} else 1
 
 
 if __name__ == "__main__":

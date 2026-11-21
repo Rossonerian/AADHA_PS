@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
-from sqlalchemy import delete
+from sqlalchemy import delete, func, select
 from sqlalchemy.orm import Session
 
 from app.core.errors import AppError, NotFoundError
@@ -17,6 +17,9 @@ DISCLAIMER = (
     "or holding any security."
 )
 CHALLENGE_TTL = 1800
+MAX_ACTIVE_CHALLENGES = 3
+MIN_ACCURACY = 0.7
+MAX_BRIER = 0.25
 
 
 @dataclass
@@ -98,6 +101,18 @@ def issue(
     """Store the answer key; return challenge id and public questions."""
     now = datetime.now(UTC)
     db.execute(delete(NasdaqChallenge).where(NasdaqChallenge.expires_at <= now))
+    active = db.scalar(
+        select(func.count())
+        .select_from(NasdaqChallenge)
+        .where(NasdaqChallenge.user_id == user_id)
+    )
+    if (active or 0) >= MAX_ACTIVE_CHALLENGES:
+        db.rollback()
+        raise AppError(
+            "TOO_MANY_CHALLENGES",
+            "Finish or wait out your open challenges before requesting another.",
+            429,
+        )
     cid = "c_" + secrets.token_hex(32)
     db.add(
         NasdaqChallenge(
@@ -160,14 +175,15 @@ def score(challenge: Challenge, answers: list[dict[str, Any]]) -> dict[str, Any]
     n = len(results)
     right = sum(1 for r in results if r["correct"])
     brier = round(sq / n, 4)
+    accuracy = right / n
     fb = check_output(
         f"You read {right} of {n} figures correctly with a Brier score of {brier:.2f}. "
         "Lower Brier means your confidence matched your accuracy."
     )
     return {
         "data_origin": "real",
-        "passed": brier <= 0.25,
-        "score": round(right / n, 4),
+        "passed": accuracy >= MIN_ACCURACY and brier <= MAX_BRIER,
+        "score": round(accuracy, 4),
         "brier": brier,
         "results": results,
         "feedback": fb.text,
