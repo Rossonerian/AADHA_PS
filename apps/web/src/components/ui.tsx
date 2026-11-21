@@ -134,25 +134,6 @@ export function SectionHeading({
   );
 }
 
-export function Toast({ message, onClose }: { message: string; onClose: () => void }) {
-  return (
-    <LooseleafAlert className="toast" variant="success" role="status">
-      <span className="toast-icon" aria-hidden="true">
-        ✓
-      </span>
-      <span>{message}</span>
-      <Button
-        variant="quiet"
-        className="toast-dismiss"
-        onClick={onClose}
-        aria-label="Dismiss message"
-      >
-        ×
-      </Button>
-    </LooseleafAlert>
-  );
-}
-
 export function LockNotice({
   level,
   current,

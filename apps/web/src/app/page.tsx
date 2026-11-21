@@ -35,8 +35,13 @@ import {
   TabsList,
   TabsTrigger,
   Textarea,
-  Toast,
 } from "@/components/ui";
+import { Chip } from "@/components/minor/chip";
+import { Separator } from "@/components/minor/separator";
+import { Skeleton } from "@/components/minor/skeleton";
+import { Toaster, notify } from "@/components/minor/toaster";
+import { Tooltip, TooltipProvider } from "@/components/minor/tooltip";
+import { BUILD_LABEL } from "@/lib/build-info";
 import { api, isToolLocked, mocksEnabled } from "@/lib/api";
 import { ApiClientError } from "@/lib/api-client";
 import type {
@@ -139,7 +144,6 @@ export default function PaisaProofApp() {
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
   }, [theme]);
-  const [toast, setToast] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
@@ -373,7 +377,7 @@ export default function PaisaProofApp() {
 
   async function beginAssessment() {
     if ((profile?.level ?? 1) >= 4) {
-      setToast("You have completed every level. Try the Nasdaq capstone next.");
+      notify("You have completed every level. Try the Nasdaq capstone next.");
       return;
     }
     setBusy(true);
@@ -724,312 +728,322 @@ export default function PaisaProofApp() {
 
   const isLocked = (entry: NavItem) => Boolean(entry.level && profile.level < entry.level);
   return (
-    <div className="app-shell" data-theme={theme}>
-      <div className="ambient-backdrop" aria-hidden="true">
-        <span />
-        <span />
-        <span />
-      </div>
-      <aside className="sidebar">
-        <Button
-          variant="quiet"
-          className="sidebar-brand"
-          onClick={() => navigate("home")}
-          aria-label="PaisaProof overview"
-        >
-          <span className="brand-mark">P</span>
-          <span>
-            PaisaProof<small>LEARNING STUDIO</small>
-          </span>
-        </Button>
-        <div className="side-label">YOUR SPACE</div>
-        <nav aria-label="Main navigation">
-          {navItems.map((item) => (
-            <Button
-              variant="quiet"
-              key={item.id}
-              className={`nav-link ${view === item.id || (view === "lesson" && item.id === "learn") || (view === "assessment" && item.id === "learn") ? "selected" : ""} ${isLocked(item) ? "locked" : ""}`}
-              onClick={() => navigate(item.id)}
-              aria-current={view === item.id ? "page" : undefined}
-            >
-              <span className="nav-icon" aria-hidden="true">
-                <item.icon size={19} strokeWidth={1.8} />
-              </span>
-              <span>{item.label}</span>
-              {isLocked(item) && <span className="nav-level">Level {item.level}</span>}
-            </Button>
-          ))}
-        </nav>
-        <div className="sidebar-bottom">
-          <div className="level-card">
-            <div className="level-card-head">
-              <span className="level-star">✦</span>
-              <span>YOUR LEVEL</span>
-              <strong>
-                {profile.level}
-                <small>/ 4</small>
-              </strong>
-            </div>
-            <ProgressBar value={(profile.level / 4) * 100} />
-            <p>
-              {profile.level < 4
-                ? `Next tools open at Level ${profile.level + 1}`
-                : "All learning tools are open"}
-            </p>
-          </div>
+    <TooltipProvider>
+      <div className="app-shell" data-theme={theme}>
+        <div className="ambient-backdrop" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
+        <aside className="sidebar">
           <Button
             variant="quiet"
-            className="sidebar-help"
-            onClick={() =>
-              setToast(
-                "Questions or feedback? Tell your team lead; it goes straight to the builders.",
-              )
-            }
+            className="sidebar-brand"
+            onClick={() => navigate("home")}
+            aria-label="PaisaProof overview"
           >
-            <CircleHelp size={17} aria-hidden="true" /> Help & feedback
-          </Button>
-        </div>
-      </aside>
-      <div className="main-column">
-        <header className="topbar">
-          <Button variant="quiet" className="mobile-brand" onClick={() => navigate("home")}>
-            <span className="brand-mark">P</span>PaisaProof
-          </Button>
-          <div className="breadcrumb">
-            <span>Workspace</span>
-            <span className="crumb-sep">/</span>
-            <strong>{activeNav}</strong>
-          </div>
-          <div className="topbar-right">
-            <Button
-              variant="quiet"
-              className="theme-toggle"
-              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-              aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
-              aria-pressed={theme === "dark"}
-            >
-              {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}
-            </Button>
-            <span className="streak-chip">
-              <span aria-hidden="true">✦</span> Level {profile.level} of 4
+            <span className="brand-mark">P</span>
+            <span>
+              PaisaProof<small>LEARNING STUDIO</small>
             </span>
-            <Button
-              variant="quiet"
-              className="avatar-button"
-              aria-label={`${profile.name} profile`}
-              title={profile.name}
-            >
-              <Avatar>
-                <AvatarFallback>{profile.name.slice(0, 1).toUpperCase()}</AvatarFallback>
-              </Avatar>
-            </Button>
-            <Button
-              variant="quiet"
-              className="theme-toggle"
-              onClick={() => void signOut()}
-              aria-label="Sign out"
-              title="Sign out"
-            >
-              <LogOut size={17} />
-            </Button>
-          </div>
-        </header>
-        <main className="page-content">
-          {error && (
-            <div className="inline-error" role="alert">
-              <span aria-hidden="true">!</span>
-              {error}
+          </Button>
+          <div className="side-label">YOUR SPACE</div>
+          <nav aria-label="Main navigation">
+            {navItems.map((item) => (
               <Button
                 variant="quiet"
-                className="error-dismiss"
-                onClick={clearError}
-                aria-label="Dismiss error"
+                key={item.id}
+                className={`nav-link ${view === item.id || (view === "lesson" && item.id === "learn") || (view === "assessment" && item.id === "learn") ? "selected" : ""} ${isLocked(item) ? "locked" : ""}`}
+                onClick={() => navigate(item.id)}
+                aria-current={view === item.id ? "page" : undefined}
               >
-                ×
+                <span className="nav-icon" aria-hidden="true">
+                  <item.icon size={19} strokeWidth={1.8} />
+                </span>
+                <span>{item.label}</span>
+                {isLocked(item) && <span className="nav-level">Level {item.level}</span>}
               </Button>
+            ))}
+          </nav>
+          <div className="sidebar-bottom">
+            <div className="level-card">
+              <div className="level-card-head">
+                <span className="level-star">✦</span>
+                <span>YOUR LEVEL</span>
+                <strong>
+                  {profile.level}
+                  <small>/ 4</small>
+                </strong>
+              </div>
+              <ProgressBar value={(profile.level / 4) * 100} />
+              <p>
+                {profile.level < 4
+                  ? `Next tools open at Level ${profile.level + 1}`
+                  : "All learning tools are open"}
+              </p>
             </div>
-          )}
-          {view === "home" && (
-            <HomeView
-              profile={profile}
-              plan={plan}
-              submissions={submissions}
-              busy={busy}
-              onStart={beginOnboarding}
-              onLearn={() => navigate("learn")}
-              onScenario={openScenario}
-              onVerifier={() => navigate("verifier")}
-            />
-          )}
-          {view === "onboarding" && (
-            <OnboardingView
-              state={onboarding}
-              result={onboardingResult}
-              busy={busy}
-              onAnswer={(answer) =>
-                setOnboarding((current) => (current ? { ...current, answer } : current))
-              }
-              onConfidence={(confidence) =>
-                setOnboarding((current) => (current ? { ...current, confidence } : current))
-              }
-              onNext={submitOnboarding}
-              onStart={beginOnboarding}
-              onContinue={() => {
-                setOnboardingResult(null);
-                setView("home");
-                setToast("Your learning path is ready.");
-              }}
-            />
-          )}
-          {view === "learn" && (
-            <LearningView plan={plan} busy={busy} onOpen={openLesson} onAssess={beginAssessment} />
-          )}
-          {view === "lesson" && (
-            <LessonView
-              lesson={lesson}
-              check={lessonCheck}
-              setCheck={setLessonCheck}
-              saved={lessonSaved}
-              result={lessonResult}
-              busy={busy}
-              onBack={() => setView("learn")}
-              onContinue={finishLesson}
-              onAssess={beginAssessment}
-            />
-          )}
-          {view === "assessment" && (
-            <AssessmentView
-              assessment={assessment}
-              answers={assessmentAnswers}
-              setAnswers={setAssessmentAnswers}
-              result={assessmentResult}
-              busy={busy}
-              level={profile.level}
-              onSubmit={submitAssessment}
-              onLearn={() => {
-                setAssessmentResult(null);
-                setView("learn");
-              }}
-              onContinue={() => {
-                setAssessmentResult(null);
-                setView("home");
-              }}
-            />
-          )}
-          {view === "scenario" &&
-            (profile.level < 1 ? (
-              <LockNotice level={1} current={profile.level} onLearn={() => navigate("learn")} />
-            ) : (
-              <ScenarioView
-                scenario={scenario}
-                result={scenarioResult}
-                answer={scenarioAnswer}
-                confidence={scenarioConfidence}
-                clues={selectedClues}
-                busy={busy}
-                setAnswer={setScenarioAnswer}
-                setConfidence={setScenarioConfidence}
-                setClues={setSelectedClues}
-                onReveal={revealScenario}
-                onNext={openScenario}
-              />
-            ))}
-          {view === "explain" &&
-            (profile.level < 2 ? (
-              <LockNotice level={2} current={profile.level} onLearn={() => navigate("learn")} />
-            ) : (
-              <ExplainView
-                symbol={symbol}
-                year={year}
-                result={explain}
-                busy={busy}
-                setSymbol={setSymbol}
-                setYear={setYear}
-                onSubmit={runExplain}
-              />
-            ))}
-          {view === "verifier" &&
-            (profile.level < 3 ? (
-              <LockNotice level={3} current={profile.level} onLearn={() => navigate("learn")} />
-            ) : (
-              <VerifierView
-                text={verifyText}
-                setText={setVerifyText}
-                url={verifyUrl}
-                setUrl={setVerifyUrl}
-                guess={userGuess}
-                setGuess={setUserGuess}
-                confidence={userConfidence}
-                setConfidence={setUserConfidence}
-                result={verification}
-                source={sourceDetail}
-                submissions={submissions}
-                busy={busy}
-                verifyProgress={verifyProgress}
-                unavailable={verifyUnavailable}
-                level={profile.level}
-                searchSource={searchSource}
-                setSearchSource={setSearchSource}
-                onSubmit={runVerify}
-                onScreenshot={onScreenshot}
-              />
-            ))}
-          {view === "nasdaq" &&
-            (profile.level < 4 ? (
-              <LockNotice level={4} current={profile.level} onLearn={() => navigate("learn")} />
-            ) : (
-              <NasdaqVerifier />
-            ))}
-          {view === "progress" &&
-            (profile.level < 4 ? (
-              <LockNotice level={4} current={profile.level} onLearn={() => navigate("learn")} />
-            ) : (
-              <ProgressView data={dashboard} />
-            ))}
-        </main>
-        <footer className="app-footer">
-          <span>PaisaProof · Learn to read the signal</span>
-          <span>Progress is personal. The market is uncertain.</span>
-        </footer>
-      </div>
-      <nav className="mobile-nav" aria-label="Mobile navigation">
-        {navItems.map((item) => {
-          const current =
-            view === item.id ||
-            ((view === "lesson" || view === "assessment") && item.id === "learn");
-          return (
             <Button
               variant="quiet"
-              key={item.id}
-              className={`mobile-nav-item ${current ? "selected" : ""} ${isLocked(item) ? "locked" : ""}`}
-              onClick={() => navigate(item.id)}
-              aria-current={view === item.id ? "page" : undefined}
-              aria-label={
-                isLocked(item) ? `${item.label} (unlocks at Level ${item.level})` : item.label
+              className="sidebar-help"
+              onClick={() =>
+                notify(
+                  "Questions or feedback? Tell your team lead; it goes straight to the builders.",
+                )
               }
             >
-              <item.icon size={18} strokeWidth={1.8} aria-hidden="true" />
-              <span>{item.label.split(" ")[0]}</span>
-              {isLocked(item) && (
-                <em role="img" aria-label={`Unlocks at Level ${item.level}`}>
-                  L{item.level}
-                </em>
-              )}
+              <CircleHelp size={17} aria-hidden="true" /> Help & feedback
             </Button>
-          );
-        })}
-        <Button
-          variant="quiet"
-          className="mobile-nav-item"
-          onClick={() => void signOut()}
-          aria-label="Sign out"
-        >
-          <LogOut size={18} strokeWidth={1.8} aria-hidden="true" />
-          <span>Sign out</span>
-        </Button>
-      </nav>
-      {toast && <Toast message={toast} onClose={() => setToast("")} />}
-    </div>
+          </div>
+        </aside>
+        <div className="main-column">
+          <header className="topbar">
+            <Button variant="quiet" className="mobile-brand" onClick={() => navigate("home")}>
+              <span className="brand-mark">P</span>PaisaProof
+            </Button>
+            <div className="breadcrumb">
+              <span>Workspace</span>
+              <Separator orientation="vertical" className="crumb-sep" />
+              <strong>{activeNav}</strong>
+            </div>
+            <div className="topbar-right">
+              <Button
+                variant="quiet"
+                className="theme-toggle"
+                onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+                aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
+                aria-pressed={theme === "dark"}
+              >
+                {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}
+              </Button>
+              <Chip className="streak-chip">
+                <span aria-hidden="true">✦</span> Level {profile.level} of 4
+              </Chip>
+              <Tooltip label={profile.name}>
+                <Button
+                  variant="quiet"
+                  className="avatar-button"
+                  aria-label={`${profile.name} profile`}
+                >
+                  <Avatar>
+                    <AvatarFallback>{profile.name.slice(0, 1).toUpperCase()}</AvatarFallback>
+                  </Avatar>
+                </Button>
+              </Tooltip>
+              <Tooltip label="Sign out">
+                <Button
+                  variant="quiet"
+                  className="theme-toggle"
+                  onClick={() => void signOut()}
+                  aria-label="Sign out"
+                >
+                  <LogOut size={17} />
+                </Button>
+              </Tooltip>
+            </div>
+          </header>
+          <main className="page-content">
+            {error && (
+              <div className="inline-error" role="alert">
+                <span aria-hidden="true">!</span>
+                {error}
+                <Button
+                  variant="quiet"
+                  className="error-dismiss"
+                  onClick={clearError}
+                  aria-label="Dismiss error"
+                >
+                  ×
+                </Button>
+              </div>
+            )}
+            {view === "home" && (
+              <HomeView
+                profile={profile}
+                plan={plan}
+                submissions={submissions}
+                busy={busy}
+                onStart={beginOnboarding}
+                onLearn={() => navigate("learn")}
+                onScenario={openScenario}
+                onVerifier={() => navigate("verifier")}
+              />
+            )}
+            {view === "onboarding" && (
+              <OnboardingView
+                state={onboarding}
+                result={onboardingResult}
+                busy={busy}
+                onAnswer={(answer) =>
+                  setOnboarding((current) => (current ? { ...current, answer } : current))
+                }
+                onConfidence={(confidence) =>
+                  setOnboarding((current) => (current ? { ...current, confidence } : current))
+                }
+                onNext={submitOnboarding}
+                onStart={beginOnboarding}
+                onContinue={() => {
+                  setOnboardingResult(null);
+                  setView("home");
+                  notify("Your learning path is ready.");
+                }}
+              />
+            )}
+            {view === "learn" && (
+              <LearningView
+                plan={plan}
+                busy={busy}
+                onOpen={openLesson}
+                onAssess={beginAssessment}
+              />
+            )}
+            {view === "lesson" && (
+              <LessonView
+                lesson={lesson}
+                check={lessonCheck}
+                setCheck={setLessonCheck}
+                saved={lessonSaved}
+                result={lessonResult}
+                busy={busy}
+                onBack={() => setView("learn")}
+                onContinue={finishLesson}
+                onAssess={beginAssessment}
+              />
+            )}
+            {view === "assessment" && (
+              <AssessmentView
+                assessment={assessment}
+                answers={assessmentAnswers}
+                setAnswers={setAssessmentAnswers}
+                result={assessmentResult}
+                busy={busy}
+                level={profile.level}
+                onSubmit={submitAssessment}
+                onLearn={() => {
+                  setAssessmentResult(null);
+                  setView("learn");
+                }}
+                onContinue={() => {
+                  setAssessmentResult(null);
+                  setView("home");
+                }}
+              />
+            )}
+            {view === "scenario" &&
+              (profile.level < 1 ? (
+                <LockNotice level={1} current={profile.level} onLearn={() => navigate("learn")} />
+              ) : (
+                <ScenarioView
+                  scenario={scenario}
+                  result={scenarioResult}
+                  answer={scenarioAnswer}
+                  confidence={scenarioConfidence}
+                  clues={selectedClues}
+                  busy={busy}
+                  setAnswer={setScenarioAnswer}
+                  setConfidence={setScenarioConfidence}
+                  setClues={setSelectedClues}
+                  onReveal={revealScenario}
+                  onNext={openScenario}
+                />
+              ))}
+            {view === "explain" &&
+              (profile.level < 2 ? (
+                <LockNotice level={2} current={profile.level} onLearn={() => navigate("learn")} />
+              ) : (
+                <ExplainView
+                  symbol={symbol}
+                  year={year}
+                  result={explain}
+                  busy={busy}
+                  setSymbol={setSymbol}
+                  setYear={setYear}
+                  onSubmit={runExplain}
+                />
+              ))}
+            {view === "verifier" &&
+              (profile.level < 3 ? (
+                <LockNotice level={3} current={profile.level} onLearn={() => navigate("learn")} />
+              ) : (
+                <VerifierView
+                  text={verifyText}
+                  setText={setVerifyText}
+                  url={verifyUrl}
+                  setUrl={setVerifyUrl}
+                  guess={userGuess}
+                  setGuess={setUserGuess}
+                  confidence={userConfidence}
+                  setConfidence={setUserConfidence}
+                  result={verification}
+                  source={sourceDetail}
+                  submissions={submissions}
+                  busy={busy}
+                  verifyProgress={verifyProgress}
+                  unavailable={verifyUnavailable}
+                  level={profile.level}
+                  searchSource={searchSource}
+                  setSearchSource={setSearchSource}
+                  onSubmit={runVerify}
+                  onScreenshot={onScreenshot}
+                />
+              ))}
+            {view === "nasdaq" &&
+              (profile.level < 4 ? (
+                <LockNotice level={4} current={profile.level} onLearn={() => navigate("learn")} />
+              ) : (
+                <NasdaqVerifier />
+              ))}
+            {view === "progress" &&
+              (profile.level < 4 ? (
+                <LockNotice level={4} current={profile.level} onLearn={() => navigate("learn")} />
+              ) : (
+                <ProgressView data={dashboard} />
+              ))}
+          </main>
+          <footer className="app-footer">
+            <span>PaisaProof · Learn to read the signal</span>
+            <span>Progress is personal. The market is uncertain.</span>
+            {BUILD_LABEL && <small className="build-label">{BUILD_LABEL}</small>}
+          </footer>
+        </div>
+        <nav className="mobile-nav" aria-label="Mobile navigation">
+          {navItems.map((item) => {
+            const current =
+              view === item.id ||
+              ((view === "lesson" || view === "assessment") && item.id === "learn");
+            return (
+              <Button
+                variant="quiet"
+                key={item.id}
+                className={`mobile-nav-item ${current ? "selected" : ""} ${isLocked(item) ? "locked" : ""}`}
+                onClick={() => navigate(item.id)}
+                aria-current={view === item.id ? "page" : undefined}
+                aria-label={
+                  isLocked(item) ? `${item.label} (unlocks at Level ${item.level})` : item.label
+                }
+              >
+                <item.icon size={18} strokeWidth={1.8} aria-hidden="true" />
+                <span>{item.label.split(" ")[0]}</span>
+                {isLocked(item) && (
+                  <em role="img" aria-label={`Unlocks at Level ${item.level}`}>
+                    L{item.level}
+                  </em>
+                )}
+              </Button>
+            );
+          })}
+          <Button
+            variant="quiet"
+            className="mobile-nav-item"
+            onClick={() => void signOut()}
+            aria-label="Sign out"
+          >
+            <LogOut size={18} strokeWidth={1.8} aria-hidden="true" />
+            <span>Sign out</span>
+          </Button>
+        </nav>
+        <Toaster theme={theme} />
+      </div>
+    </TooltipProvider>
   );
 }
 
@@ -1159,7 +1173,9 @@ function HomeView({
               <span className="eyebrow">RECENT ACTIVITY</span>
               <h3>Your checked tips</h3>
             </div>
-            <span className="count-pill">{submissions.length}</span>
+            <Chip shape="round" className="count-pill">
+              {submissions.length}
+            </Chip>
           </div>
           {submissions.length ? (
             <ul className="recent-list">
@@ -1327,7 +1343,7 @@ function LearningView({
           <span>path complete</span>
         </div>
         <ProgressBar value={plan?.progress_pct ?? 0} />
-        <span className="level-pill">LEVEL {plan?.level ?? 2}</span>
+        <Chip className="level-pill">LEVEL {plan?.level ?? 2}</Chip>
       </div>
       <div className="lesson-list">
         {(plan?.lessons ?? []).map((item, index) => (
@@ -1395,7 +1411,7 @@ function LessonView({
   onAssess: () => void;
 }) {
   const questions = lesson?.check_questions ?? [];
-  const answered = Object.values(check).filter(Boolean).length;
+  const allAnswered = questions.length > 0 && questions.every((q) => Boolean(check[q.id]));
   const feedbackFor = (id: string) => result?.feedback?.find((item) => item.question_id === id);
   const total = result?.total_count ?? questions.length;
   const hasCounts = result?.correct_count !== undefined && total > 0;
@@ -1483,7 +1499,7 @@ function LessonView({
             <Button variant="secondary" onClick={onBack}>
               Save and leave
             </Button>
-            <Button onClick={onContinue} disabled={busy || answered === 0 || Boolean(saved)}>
+            <Button onClick={onContinue} disabled={busy || !allAnswered || Boolean(saved)}>
               {saved ? "Saved" : "Check my answers"} <span>→</span>
             </Button>
             {saved && (
@@ -1577,7 +1593,7 @@ function AssessmentView({
         <SectionHeading eyebrow="QUICK CHECK" title="A few questions to reflect." />
         <Panel>
           <p>Loading your questions…</p>
-          {busy && <div className="skeleton-line" />}
+          {busy && <Skeleton className="skeleton-line" />}
         </Panel>
       </div>
     );
@@ -2019,9 +2035,9 @@ function VerifierView({
         eyebrow="SOURCE VERIFIER"
         title="Look closer at a shared claim."
         action={
-          <span className="mode-pill">
+          <Chip tone="violet" className="mode-pill">
             {(result?.mode ?? "full").toUpperCase()} MODE · LEVEL {level}
-          </span>
+          </Chip>
         }
       />
       <div className="verifier-layout">
@@ -2129,7 +2145,9 @@ function VerifierView({
                   <span className="eyebrow">YOUR HISTORY</span>
                   <h3>My checked tips</h3>
                 </div>
-                <span className="count-pill">{submissions.length}</span>
+                <Chip shape="round" className="count-pill">
+                  {submissions.length}
+                </Chip>
               </div>
               {submissions.map((item) => (
                 <div className="checked-item" key={item.submission_id}>
