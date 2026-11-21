@@ -1,0 +1,65 @@
+name: E2E Smoke
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Web base URL to test
+        required: false
+        default: https://aadha-ps.vercel.app
+      api_base_url:
+        description: API base URL for /api/v1/health
+        required: false
+        default: https://aadha-ps.onrender.com
+  deployment_status:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    name: Production Read-Only Smoke
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'deployment_status' &&
+        github.event.deployment_status.state == 'success' &&
+        github.event.deployment.environment == 'Production')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: e2e
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: e2e/package-lock.json
+
+      - name: Install Playwright dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run read-only smoke suite
+        env:
+          BASE_URL: ${{ github.event.inputs.base_url || 'https://aadha-ps.vercel.app' }}
+          API_BASE_URL: ${{ github.event.inputs.api_base_url || 'https://aadha-ps.onrender.com' }}
+        run: npm run smoke
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-smoke-report
+          path: e2e/playwright-report
+          retention-days: 7
