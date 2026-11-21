@@ -10,6 +10,7 @@ import {
   YAxis,
 } from "recharts";
 import { DataBadge } from "@/components/ui";
+import { chartHasIndex } from "@/components/lazy/chart-utils";
 import type { DashboardData, ExplainResult, PricePoint, Scenario } from "@/lib/types";
 
 const tooltipStyle = {
@@ -49,11 +50,6 @@ function makeDateTick(values: unknown[]) {
 function fullDate(value: unknown) {
   const p = parseIso(value);
   return p ? `${p.d} ${MONTHS[p.m]} ${p.y}` : String(value);
-}
-
-/** True when any point carries a numeric benchmark/index value, so callers can show an "Index" legend only then. */
-export function chartHasIndex(data: unknown[]) {
-  return data.some((p) => typeof (p as { index?: unknown }).index === "number");
 }
 
 function EmptyChart({ height }: { height: number }) {

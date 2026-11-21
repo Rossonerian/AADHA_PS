@@ -1,9 +1,11 @@
-name: Daily Cron Fallback
+name: Daily Cron (manual)
 
+# Manual fallback only. The single schedule lives in infra/render.yaml (Render cron).
 on:
-  schedule:
-    - cron: "15 13 * * 1-5"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   daily-job:
