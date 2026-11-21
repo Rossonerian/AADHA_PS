@@ -7,11 +7,10 @@ import pytest
 from alembic.migration import MigrationContext
 from alembic.operations import Operations
 from pydantic import ValidationError
-from sqlalchemy import create_engine, inspect
+from sqlalchemy import MetaData, Table, create_engine, inspect
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.verifier.models import Source
 from app.verifier.schemas import VerifyRequest
 
 
@@ -36,6 +35,8 @@ def test_verifier_revision_upgrades_downgrades_and_enforces_origin():
             "claims",
             "source_rating_history",
         }
+    # Exercise this historical revision with its reflected schema, not future ORM columns.
+    legacy_source = Table("sources", MetaData(), autoload_with=engine)
     with Session(engine) as session:
         values = {
             "platform": "telegram",
@@ -44,15 +45,24 @@ def test_verifier_revision_upgrades_downgrades_and_enforces_origin():
             "scored_claims": 5,
             "label": "semi_reliable",
         }
-        session.add(Source(id=uuid4(), **values, data_origin="real"))
+        session.execute(
+            legacy_source.insert().values(id=uuid4().hex, **values, data_origin="real")
+        )
         session.commit()
-        session.add(Source(id=uuid4(), **values, data_origin="unknown"))
         with pytest.raises(IntegrityError, match="ck_sources_origin"):
-            session.flush()
+            session.execute(
+                legacy_source.insert().values(
+                    id=uuid4().hex, **values, data_origin="unknown"
+                )
+            )
         session.rollback()
-        session.add(Source(id=uuid4(), **values, data_origin="real"))
         with pytest.raises(IntegrityError):
-            session.flush()
+            session.execute(
+                legacy_source.insert().values(
+                    id=uuid4().hex, **values, data_origin="real"
+                )
+            )
+        session.rollback()
     with engine.begin() as connection:
         with Operations.context(MigrationContext.configure(connection)):
             revision.downgrade()
