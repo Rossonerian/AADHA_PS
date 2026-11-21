@@ -292,6 +292,7 @@ def test_plan_restricted_candles_keep_real_snapshot(monkeypatch):
         return original(self, path, **params)
 
     monkeypatch.setattr(FakeFinnhub, "_get", restricted)
+    monkeypatch.setattr(FakeFinnhub, "_yahoo_chart", lambda self, symbol: [])
     snap = FakeFinnhub().snapshot("AAPL")
     assert snap["chart"] == [] and snap["data_origin"] == "real"
     assert snap["price"] == 190 and len(service.build_questions(snap)) >= 3

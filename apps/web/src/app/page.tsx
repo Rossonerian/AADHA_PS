@@ -599,12 +599,19 @@ export default function PaisaProofApp() {
       });
       setVerifyProgress(2);
       setVerification(result);
-      const [detail, mine] = await Promise.all([
-        result.source ? api.source(result.source.id) : Promise.resolve(null),
+      const [detail, mine] = await Promise.allSettled([
+        result.mode === "full" && result.source
+          ? api.source(result.source.id)
+          : Promise.resolve(null),
         api.submissions(),
       ]);
-      setSourceDetail(detail);
-      setSubmissions(mine);
+      if (detail.status === "fulfilled") setSourceDetail(detail.value);
+      if (mine.status === "fulfilled") setSubmissions(mine.value);
+      if (detail.status === "rejected" || mine.status === "rejected") {
+        setError(
+          "Message checked. Some source history could not load. Try checking again shortly.",
+        );
+      }
       setVerifyProgress(3);
     } catch (reason) {
       if (isToolLocked(reason))
@@ -2237,6 +2244,12 @@ function VerifierView({
         <div className={`verifier-results ${result || busy ? "" : "fb-verifier-empty"}`}>
           {result ? (
             <>
+              {result.extraction_available === false && (
+                <Alert variant="warning" role="status">
+                  AI claim extraction is temporarily unavailable. Showing basic message checks only;
+                  the claim needs review and has not been scored.
+                </Alert>
+              )}
               <Panel className="source-summary">
                 <div className="source-heading">
                   <div className="source-avatar">
@@ -2273,9 +2286,15 @@ function VerifierView({
                     </div>
                   ))}
                 </div>
-                <Button variant="quiet" className="text-link" onClick={() => setSearchSource(true)}>
-                  See source rating history <span>→</span>
-                </Button>
+                {result.mode === "full" && (
+                  <Button
+                    variant="quiet"
+                    className="text-link"
+                    onClick={() => setSearchSource(true)}
+                  >
+                    See source rating history <span>→</span>
+                  </Button>
+                )}
               </Panel>
               <Panel>
                 <div className="panel-heading">
@@ -2288,7 +2307,11 @@ function VerifierView({
                 <div className="claim-outcome">
                   <span>Reported direction</span>
                   <strong>
-                    {result.claim?.direction === "up" ? "Expected to rise" : "Expected to fall"}
+                    {result.claim?.direction === "up"
+                      ? "Expected to rise"
+                      : result.claim?.direction === "down"
+                        ? "Expected to fall"
+                        : "Not identified"}
                   </strong>
                   <span>Scoring status</span>
                   <strong>{sentenceCase(result.claim?.status ?? "needs_review")}</strong>

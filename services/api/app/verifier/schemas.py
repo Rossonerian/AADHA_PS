@@ -162,6 +162,7 @@ class VerifyResponse(BaseModel):
     tip_facts: list[TipFact] = Field(default_factory=list)
     claims: list[ClaimView] = Field(default_factory=list)
     mode: Mode
+    extraction_available: bool = True
     data_origin: DataOrigin
 
 

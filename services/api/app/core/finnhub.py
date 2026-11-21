@@ -1,11 +1,13 @@
 """Finnhub client: factual endpoints only (allowlist), cached, every record `data_origin="real"`."""
 
+import math
 import re
 import time
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
 import requests
+import yfinance as yf  # type: ignore[import-untyped]
 
 from app.core.config import get_settings
 from app.core.enums import DataOrigin
@@ -93,6 +95,10 @@ class FinnhubClient:
         }
 
     def _chart(self, symbol: str) -> list[dict[str, Any]]:
+        cache_key = ("chart", symbol)
+        hit = self._cache.get(cache_key)
+        if hit and time.monotonic() - hit[0] < CACHE_TTL_SECONDS:
+            return list(hit[1])
         now = datetime.now(UTC)
         try:
             data = self._get(
@@ -105,13 +111,50 @@ class FinnhubClient:
                 },
             )
         except FinnhubUnavailableError:
-            return []  # candles can be plan-restricted; snapshot still works
-        if not isinstance(data, dict) or data.get("s") != "ok":
+            data = None  # Candle access can be plan-restricted independently of quotes.
+        points: dict[str, float] = {}
+        if isinstance(data, dict) and data.get("s") == "ok":
+            for timestamp, close in zip(
+                data.get("t") or [], data.get("c") or [], strict=False
+            ):
+                try:
+                    day = datetime.fromtimestamp(timestamp, UTC).date()
+                    value = float(close)
+                except (TypeError, ValueError, OverflowError, OSError):
+                    continue
+                if math.isfinite(value) and value > 0 and day <= now.date():
+                    points[day.isoformat()] = value
+        chart = [{"date": day, "close": value} for day, value in sorted(points.items())]
+        if len(chart) < 2:
+            chart = self._yahoo_chart(symbol)
+        self._cache[cache_key] = (time.monotonic(), chart)
+        return chart
+
+    def _yahoo_chart(self, symbol: str) -> list[dict[str, Any]]:
+        """Real daily closes when Finnhub candles are unavailable; never synthesize bars."""
+        try:
+            history = yf.Ticker(symbol).history(
+                period="1y", interval="1d", auto_adjust=False, actions=False, timeout=8
+            )
+            if history.empty or "Close" not in history:
+                return []
+            points: dict[str, float] = {}
+            for timestamp, close in history["Close"].items():
+                day = timestamp.date()
+                value = float(close)
+                if (
+                    math.isfinite(value)
+                    and value > 0
+                    and day <= datetime.now(UTC).date()
+                ):
+                    points[day.isoformat()] = value
+            chart = [
+                {"date": day, "close": value} for day, value in sorted(points.items())
+            ]
+            return chart if len(chart) > 1 else []
+        except Exception:
+            # Provider/network failures must not take down the factual snapshot or quiz.
             return []
-        return [
-            {"date": datetime.fromtimestamp(t, UTC).date().isoformat(), "close": c}
-            for t, c in zip(data.get("t", []), data.get("c", []), strict=False)
-        ]
 
 
 _client: FinnhubClient | None = None
