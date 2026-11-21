@@ -115,6 +115,11 @@ def _should_stop_onboarding(
     if n < min_q:
         return False
     # Check if all 4 skills have >= 3 questions and performance is decisive (very high or very low)
+    per_skill = {skill: 0 for skill in SKILL_ROTATION}
+    for r in responses:
+        per_skill[r["skill_area"]] = per_skill.get(r["skill_area"], 0) + 1
+    if any(per_skill.get(skill, 0) < 3 for skill in SKILL_ROTATION):
+        return False
     acc = sum(1 for r in responses if r["correct"]) / n
     return acc >= 0.85 or acc <= 0.25
 
@@ -216,13 +221,15 @@ def answer_onboarding(
     )
     correct_diffs = [r["difficulty"] for r in responses if r["correct"]]
     avg_diff_correct = sum(correct_diffs) / len(correct_diffs) if correct_diffs else 1.0
-    level = determine_onboarding_level(accuracy_pct, brier, avg_diff_correct)
+    measured = determine_onboarding_level(accuracy_pct, brier, avg_diff_correct)
+    # Retakes are allowed but never demote a learner or reset lesson progress.
+    level = max(repo.get_user_level(user_id, default_level=1), measured)
 
     repo.set_user_level(user_id, level)
     repo.record_skill_scores(user_id, skills, brier)
     ensure_level_unlocks(repo, user_id, level)
     build_or_update_plan(
-        repo, user_id, level=level, skill_scores=skills, preserve_completed=False
+        repo, user_id, level=level, skill_scores=skills, preserve_completed=True
     )
 
     state["current_question_id"] = None

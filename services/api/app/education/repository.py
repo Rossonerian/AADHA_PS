@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any
 
 from sqlalchemy import func, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from .models import (
@@ -93,8 +94,21 @@ class EducationRepository:
                     "name": user.name,
                     "current_level": user.current_level,
                 }
-            user = User(id=user_id, name=name, current_level=int(level))
-            self.conn.add(user)
+            try:
+                with self.conn.begin_nested():
+                    self.conn.add(User(id=user_id, name=name, current_level=int(level)))
+                    self.conn.flush()
+            except IntegrityError:
+                # A concurrent request created the row first; use the winner.
+                existing = self.conn.get(User, user_id)
+                if existing is None:
+                    raise
+                self.conn.commit()
+                return {
+                    "id": existing.id,
+                    "name": existing.name,
+                    "current_level": existing.current_level,
+                }
             self.conn.commit()
             return {"id": user_id, "name": name, "current_level": level}
 
@@ -104,11 +118,19 @@ class EducationRepository:
         ).fetchone()
         if row:
             return dict(row)
-        self.conn.execute(
-            "INSERT INTO users (id, name, current_level, created_at) VALUES (?, ?, ?, ?)",
+        cur = self.conn.execute(
+            "INSERT OR IGNORE INTO users (id, name, current_level, created_at) "
+            "VALUES (?, ?, ?, ?)",
             (user_id, name, level, utc_now_iso()),
         )
         self.conn.commit()
+        if cur.rowcount == 0:
+            row = self.conn.execute(
+                "SELECT id, name, current_level, created_at FROM users WHERE id = ?",
+                (user_id,),
+            ).fetchone()
+            if row:
+                return dict(row)
         return {"id": user_id, "name": name, "current_level": level}
 
     def get_user_level(self, user_id: str, default_level: int = 1) -> int:

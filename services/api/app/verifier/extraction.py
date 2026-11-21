@@ -779,10 +779,15 @@ def extract_video_claims(
             seen.add(identity)
             if claim.evidence:
                 begin = text.find(claim.evidence, offset, offset + 4000)
+                if begin == -1:
+                    begin = text.find(claim.evidence)  # whole-text fallback
                 finish = begin + len(claim.evidence)
-                touched = [
-                    s for left, right, s in spans if left < finish and right > begin
-                ]
+                # Never derive timestamps from a missing (-1) match.
+                touched = (
+                    [s for left, right, s in spans if left < finish and right > begin]
+                    if begin != -1
+                    else []
+                )
                 if touched:
                     claim = replace(
                         claim,

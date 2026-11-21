@@ -15,6 +15,7 @@ from app.core.errors import ToolLockedError
 
 REQUIRED_LEVEL = 4
 MAX_BRIER = 0.25
+MIN_ACCURACY_PCT = 70.0  # a low Brier alone is gameable (confidently wrong)
 
 
 @dataclass(frozen=True)
@@ -23,6 +24,8 @@ class GateInputs:
 
     progress_pct: float | None
     brier: float | None
+    # Mean latest skill score (0-100) from the same rows as `brier`; None = not supplied.
+    accuracy_pct: float | None = None
 
 
 def read_gate_inputs(db: Session, user: User) -> GateInputs:
@@ -36,6 +39,7 @@ def read_gate_inputs(db: Session, user: User) -> GateInputs:
     inspector = inspect(db.get_bind())
     progress: float | None = None
     brier: float | None = None
+    accuracy: float | None = None
     owner = bindparam("u", type_=Uuid(as_uuid=False))
     if inspector.has_table("plans"):
         row = db.execute(
@@ -65,7 +69,7 @@ def read_gate_inputs(db: Session, user: User) -> GateInputs:
     if inspector.has_table("skill_scores"):
         row = db.execute(
             text(
-                "SELECT AVG(brier) FROM (SELECT brier, ROW_NUMBER() OVER "
+                "SELECT AVG(brier), AVG(score) FROM (SELECT brier, score, ROW_NUMBER() OVER "
                 "(PARTITION BY skill_area ORDER BY measured_at DESC, id DESC) AS rn "
                 "FROM skill_scores WHERE user_id = :u) latest WHERE rn = 1"
             ).bindparams(owner),
@@ -74,7 +78,10 @@ def read_gate_inputs(db: Session, user: User) -> GateInputs:
         if row and row[0] is not None:
             with suppress(TypeError, ValueError):
                 brier = float(row[0])
-    return GateInputs(progress, brier)
+            if row[1] is not None:
+                with suppress(TypeError, ValueError):
+                    accuracy = float(row[1])
+    return GateInputs(progress, brier, accuracy)
 
 
 def get_gate_inputs(
@@ -101,6 +108,10 @@ def missing_requirements(user: User, inputs: GateInputs) -> list[str]:
         or not 0 <= inputs.brier <= MAX_BRIER
     ):
         missing.append("brier_lte_0.25")
+    if inputs.accuracy_pct is not None and (
+        not isfinite(inputs.accuracy_pct) or inputs.accuracy_pct < MIN_ACCURACY_PCT
+    ):
+        missing.append("accuracy_gte_70")
     return missing
 
 

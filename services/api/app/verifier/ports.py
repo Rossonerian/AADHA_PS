@@ -1,5 +1,6 @@
 """Bindings supplied by Hardhik's shared core at integration."""
 
+import os
 from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import date, timedelta, timezone
@@ -108,6 +109,24 @@ class _PlatformMarket:
         }
 
 
+def _nominal_price_basis(symbol: str, start: date, end: date) -> bool:
+    """Whether quoted nominal levels may be compared with `app.core.market` bars.
+
+    Platform bars are split/dividend adjusted, so quoted levels match only when
+    corporate actions did not move them materially. The daily job additionally
+    checks each claim's levels against the first bar (see `jobs._levels_match_bars`).
+    Operators can disable level-based scoring entirely with
+    `VERIFIER_NOMINAL_PRICE_BASIS=false`.
+    """
+    del symbol, start, end
+    return os.environ.get("VERIFIER_NOMINAL_PRICE_BASIS", "true").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+        "on",
+    }
+
+
 def platform_core() -> VerifierCore:
     """Bind Verifier dependencies to Hardhik's shared `app.core` modules."""
     from app.core import guardrails, llm, transcribe, web_search
@@ -124,6 +143,7 @@ def platform_core() -> VerifierCore:
         complete=_complete,
         check_output=guardrails.check_output,
         market=_PlatformMarket(),
+        nominal_price_basis=_nominal_price_basis,
         transcribe=transcribe.transcribe,
         web_search=web_search.web_search,
         market_cap_bucket=evidence.market_cap_bucket,

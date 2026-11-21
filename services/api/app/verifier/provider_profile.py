@@ -1,6 +1,8 @@
 """Curated SEBI identity facts and unscored, guardrail-checked search links."""
 
 import csv
+import re
+from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from typing import Any
@@ -71,38 +73,64 @@ def enforcement(
     return (True if refs else None), refs
 
 
-def refresh(session: Session, source: Source, core: VerifierCore) -> None:
-    if source.handle.startswith("private-"):
-        return
-    now = datetime.now(UTC)
+@dataclass(frozen=True, slots=True)
+class MentionResult:
+    """A guardrail-checked search hit, ready for a short database write."""
+
+    url: str
+    title: str
+    published_at: datetime | None
+
+
+_HANDLE_RE = re.compile(r"[\w@ .&-]{1,255}")
+
+
+def apply_enforcement(source: Source, now: datetime | None = None) -> None:
+    """Pure local CSV lookup; no network."""
+    now = now or datetime.now(UTC)
     source.enforcement_flag, source.enforcement_refs = enforcement(
         reg_no=source.sebi_reg_no,
         legal_name=source.handle,
         origin=source.data_origin,
         as_of=now.date(),
     )
-    if core.web_search is None:
-        return
+
+
+def needs_mention_refresh(
+    session: Session, source: Source, core: VerifierCore, now: datetime | None = None
+) -> bool:
+    """Cheap read-only staleness check (no network, no row lock needed)."""
+    now = now or datetime.now(UTC)
+    if (
+        source.handle.startswith("private-")
+        or core.web_search is None
+        or not _HANDLE_RE.fullmatch(source.handle)
+    ):
+        return False
     latest = session.scalar(
         select(SourceMention.fetched_at)
         .where(SourceMention.source_id == source.id)
         .order_by(SourceMention.fetched_at.desc())
         .limit(1)
     )
-    if latest is not None and now - latest.replace(tzinfo=UTC) < timedelta(hours=24):
-        return
-    # Never include tip text, search operators supplied by a user, or learner data.
-    import re
+    return latest is None or now - latest.replace(tzinfo=UTC) >= timedelta(hours=24)
 
-    if not re.fullmatch(r"[\w@ .&-]{1,255}", source.handle):
-        return
-    query = f'"{source.handle}" "{source.platform}"'
+
+def fetch_mentions(
+    *, handle: str, platform: str, origin: str, core: VerifierCore
+) -> list[MentionResult]:
+    """Network + guardrail phase. Takes plain values, never a Session or ORM row, so
+    it can run outside any transaction that holds a row lock."""
+    if core.web_search is None or not _HANDLE_RE.fullmatch(handle):
+        return []
+    # Never include tip text, search operators supplied by a user, or learner data.
     try:
-        results = core.web_search(query, limit=5)
+        results = core.web_search(f'"{handle}" "{platform}"', limit=5)
     except AppError:
-        return
+        return []
+    out: list[MentionResult] = []
     for result in results:
-        if result.data_origin != source.data_origin or len(str(result.url)) > 2048:
+        if result.data_origin != origin or len(str(result.url)) > 2048:
             continue
         parsed = urlsplit(str(result.url))
         if parsed.scheme != "https" or parsed.username or parsed.password:
@@ -110,23 +138,57 @@ def refresh(session: Session, source: Source, core: VerifierCore) -> None:
         guard = core.check_output(result.title)
         if not guard.ok:
             continue
+        out.append(MentionResult(str(result.url), guard.text, result.published_at))
+    return out
+
+
+def apply_mentions(
+    session: Session,
+    source: Source,
+    mentions: list[MentionResult],
+    now: datetime | None = None,
+) -> None:
+    """Short database write; call under the source lock, after `fetch_mentions`."""
+    now = now or datetime.now(UTC)
+    for item in mentions:
         row = session.scalar(
             select(SourceMention).where(
-                SourceMention.source_id == source.id,
-                SourceMention.url == str(result.url),
+                SourceMention.source_id == source.id, SourceMention.url == item.url
             )
         )
         if row is None:
             row = SourceMention(
                 source_id=source.id,
-                url=str(result.url),
+                url=item.url,
                 platform=source.platform,
                 data_origin=source.data_origin,
             )
             session.add(row)
+        # Search descriptions are not verified verbatim page quotes; never store them.
         row.title, row.published_at, row.fetched_at = (
-            guard.text,
-            result.published_at,
+            item.title,
+            item.published_at,
             now,
         )
-        # Search descriptions are not verified verbatim page quotes; never store/display them.
+
+
+def refresh(session: Session, source: Source, core: VerifierCore) -> None:
+    """Compatibility wrapper: enforcement, then (if stale) fetch + write.
+
+    Callers that hold a source row lock should instead call `needs_mention_refresh`,
+    release the lock, run `fetch_mentions`, then re-lock and `apply_mentions`, so
+    no HTTP happens inside a locked transaction.
+    """
+    if source.handle.startswith("private-"):
+        return
+    now = datetime.now(UTC)
+    apply_enforcement(source, now)
+    if not needs_mention_refresh(session, source, core, now):
+        return
+    mentions = fetch_mentions(
+        handle=source.handle,
+        platform=source.platform,
+        origin=source.data_origin,
+        core=core,
+    )
+    apply_mentions(session, source, mentions, now)
