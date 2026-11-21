@@ -25,4 +25,4 @@ jobs:
 
       - name: Ping web root (non-fatal)
         run: |
-          curl -fsS --retry 3 --retry-delay 10 --max-time 60 -o /dev/null -w "%{http_code} %{time_total}s\n" "https://aadha-ps.vercel.app" || true
+          curl -fsS --retry 3 --retry-delay 10 --max-time 60 -o /dev/null -w "%{http_code} %{time_total}s\n" "https://paisaproof.vercel.app" || true

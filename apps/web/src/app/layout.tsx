@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : "https://aadha-ps.vercel.app",
+      : "https://paisaproof.vercel.app",
   ),
   title: "PaisaProof",
   description:

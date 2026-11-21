@@ -1,6 +1,6 @@
 # PaisaProof Pre-Test Deployment Checklist
 
-Verify these items across **Render**, **Vercel**, **Neon Auth**, and **Google Cloud** before running an end-to-end test pass on production (`https://aadha-ps.vercel.app`).
+Verify these items across **Render**, **Vercel**, **Neon Auth**, and **Google Cloud** before running an end-to-end test pass on production (`https://paisaproof.vercel.app`).
 
 ---
 
@@ -10,7 +10,7 @@ Verify these items across **Render**, **Vercel**, **Neon Auth**, and **Google Cl
 - **Database Migrations (`preDeployCommand`):** `preDeployCommand` (`alembic -c /app/db/alembic.ini upgrade head`) only runs on **Render paid plans (`starter` or above)**. If testing on a free tier, run `alembic -c db/alembic.ini upgrade head` manually against `DATABASE_URL_UNPOOLED` before verifying new endpoints.
 - **Required Environment Variables:**
   - `APP_ENV=production`
-  - `CORS_ORIGINS=https://aadha-ps.vercel.app` *(comma-separated if adding preview/local origins; no trailing slash)*
+  - `CORS_ORIGINS=https://paisaproof.vercel.app` *(comma-separated if adding preview/local origins; no trailing slash)*
   - `TRUSTED_PROXY_HOPS=1` *(required behind Render's load balancer so per-IP rate limiting reads the real client IP from `X-Forwarded-For`)*
   - `GEMINI_API_KEY` *(captionless video transcription for Verifier v2)*
   - `TAVILY_API_KEY` *(display-only web search mentions in Verifier v2)*
@@ -33,7 +33,7 @@ Verify these items across **Render**, **Vercel**, **Neon Auth**, and **Google Cl
 
 Open **Neon Console → Project → Auth** and confirm:
 
-- **Trusted Domains / Origins:** Includes `https://aadha-ps.vercel.app` (and `http://localhost:3000` for local dev).
+- **Trusted Domains / Origins:** Includes `https://paisaproof.vercel.app` (and `http://localhost:3000` for local dev).
 - **Google OAuth Provider:** Enabled with your custom **Google Client ID** and **Google Client Secret**.
 - **Authorized Redirect URI (Google Cloud → Neon Auth):** Ensure the Google OAuth Web Client authorizes the exact callback URL:
   ```text
@@ -48,13 +48,13 @@ Open **Neon Console → Project → Auth** and confirm:
 Open **Google Cloud Console → APIs & Services → OAuth consent screen**:
 
 - **Testing Mode vs Production:** While **Publishing status** is set to **Testing**, add every tester's Gmail address explicitly under **Test users** (or **Publish App** to Production if opening access). Unlisted accounts receive Google `403 access_denied` in Testing mode.
-- **Credentials Check:** Confirm your OAuth 2.0 **Web application** client contains both your Google redirect URI above and Authorized JavaScript origin `https://aadha-ps.vercel.app`.
+- **Credentials Check:** Confirm your OAuth 2.0 **Web application** client contains both your Google redirect URI above and Authorized JavaScript origin `https://paisaproof.vercel.app`.
 
 ---
 
 ## 5. 5-Minute End-to-End Smoke Test
 
-Run this quick pass on `https://aadha-ps.vercel.app` once all four checklists above are green:
+Run this quick pass on `https://paisaproof.vercel.app` once all four checklists above are green:
 
 - [ ] **Health Check:** Confirm `GET <API_BASE>/api/v1/health` returns `200` with `"status": "ok"` and `"db": "ok"`.
 - [ ] **Email Sign-Up:** Enter a fresh email → confirm inline unknown-user → click **Create account** → verify redirect into Step 1 of profile onboarding.

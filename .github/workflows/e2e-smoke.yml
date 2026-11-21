@@ -6,7 +6,7 @@ on:
       base_url:
         description: Web base URL to test
         required: false
-        default: https://aadha-ps.vercel.app
+        default: https://paisaproof.vercel.app
       api_base_url:
         description: API base URL for /api/v1/health
         required: false
@@ -52,7 +52,7 @@ jobs:
 
       - name: Run read-only smoke suite
         env:
-          BASE_URL: ${{ github.event.inputs.base_url || 'https://aadha-ps.vercel.app' }}
+          BASE_URL: ${{ github.event.inputs.base_url || 'https://paisaproof.vercel.app' }}
           API_BASE_URL: ${{ github.event.inputs.api_base_url || 'https://aadha-ps.onrender.com' }}
         run: npm run smoke
 

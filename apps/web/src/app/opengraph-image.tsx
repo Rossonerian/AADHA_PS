@@ -284,7 +284,7 @@ export default function OpenGraphImage() {
               Educational only
             </span>
             <span style={{ fontSize: "14px", fontWeight: 700, color: "#f6f3ea" }}>
-              aadha-ps.vercel.app
+              paisaproof.vercel.app
             </span>
           </div>
         </div>

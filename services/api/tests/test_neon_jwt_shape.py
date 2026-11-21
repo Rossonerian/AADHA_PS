@@ -14,7 +14,7 @@ from app.core.config import get_settings
 from app.core.errors import UnauthorizedError
 
 NEON_BASE = "https://ep-test.neonauth.c-3.ap-southeast-1.aws.neon.tech/neondb/auth"
-WEB_ORIGIN = "https://aadha-ps.vercel.app"
+WEB_ORIGIN = "https://paisaproof.vercel.app"
 
 
 @pytest.fixture
