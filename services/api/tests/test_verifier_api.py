@@ -367,34 +367,79 @@ def test_platform_app_mounts_verifier_routes_with_auth(migrated_db, make_jwt):
         assert advice.json()["error"]["code"] == "ADVICE_NOT_SUPPORTED"
 
 
-def test_verify_without_openrouter_key_returns_user_safe_503(
-    migrated_db, make_jwt, monkeypatch
+def test_verify_without_openrouter_key_degrades_to_basic_red_flags(
+    db_session, make_jwt, monkeypatch
 ):
     from app.core.config import get_settings
     from app.core.guardrails import check_output
+    from app.core.models import UserRecord
     from app.main import create_app
 
-    del migrated_db
+    user_id = str(uuid4())
+    db_session.add(UserRecord(id=user_id, name="Level 3 User", current_level=3))
+    db_session.commit()
+
     monkeypatch.setenv("OPENROUTER_API_KEY", "")
     get_settings.cache_clear()
     try:
         application = create_app()
-        token = make_jwt(str(uuid4()), email="verifier@example.com")
+        token = make_jwt(user_id, email="verifier@example.com")
         headers = {"Authorization": f"Bearer {token}"}
         with TestClient(application) as platform_client:
             response = platform_client.post(
                 "/api/v1/verify",
-                json={"text": "TCS will rise to 4200 next week."},
+                json={
+                    "text": "TCS will rise to 4200 next week. Guaranteed returns, act now!"
+                },
                 headers=headers,
             )
-        assert response.status_code == 503
+        assert response.status_code == 200
         body = response.json()
-        assert body["error"]["code"] == "VERIFIER_UNAVAILABLE"
+        assert body["mode"] == "basic"
+        assert body["data_origin"] == "real"
+        assert body["claim"]["status"] == "needs_review"
+        assert body["claim"]["scorable"] is False
+        assert body["source"]["score"] is None
+        assert body["source"]["label"] is None
+        assert body["source"]["facts"] is None
+        flag_codes = {flag["code"] for flag in body["red_flags"]}
+        assert {"guaranteed_returns", "urgency"}.issubset(flag_codes)
+        assert all(check_output(flag["text"]).ok for flag in body["red_flags"])
         assert "OPENROUTER_API_KEY" not in response.text
         assert "Traceback" not in response.text
-        assert check_output(body["error"]["message"]).ok
     finally:
         get_settings.cache_clear()
+
+
+def test_verify_router_non_degradable_configuration_error_returns_503_service_unavailable(
+    migrated_db, make_jwt, monkeypatch
+):
+    from app.core.errors import ConfigurationError
+    from app.core.guardrails import check_output
+    from app.main import create_app
+    from app.verifier.service import VerifierService
+
+    del migrated_db
+
+    def _raise_config_error(self, owner, level, request):
+        del self, owner, level, request
+        raise ConfigurationError("Missing upstream verifier configuration")
+
+    monkeypatch.setattr(VerifierService, "verify", _raise_config_error)
+    application = create_app()
+    token = make_jwt(str(uuid4()), email="verifier@example.com")
+    headers = {"Authorization": f"Bearer {token}"}
+    with TestClient(application) as platform_client:
+        response = platform_client.post(
+            "/api/v1/verify",
+            json={"text": "TCS will rise to 4200 next week."},
+            headers=headers,
+        )
+    assert response.status_code == 503
+    body = response.json()
+    assert body["error"]["code"] == "SERVICE_UNAVAILABLE"
+    assert isinstance(body["error"]["message"], str) and body["error"]["message"]
+    assert check_output(body["error"]["message"]).ok
 
 
 def test_sources_and_submissions_carry_top_level_data_origin(api):

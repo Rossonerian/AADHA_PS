@@ -5,6 +5,7 @@ from __future__ import annotations
 import uuid
 from typing import Any
 
+from ..core.provenance import aggregate_data_origin
 from .config import DEFAULT_CONFIG, EducationConfig
 from .enums import AttemptContext, AttemptItemType, SkillArea
 from .exceptions import NotFoundError, ValidationDomainError
@@ -15,6 +16,7 @@ from .scoring import (
     compute_skill_scores,
     determine_onboarding_level,
     next_adaptive_difficulty,
+    shuffle_options_for_question,
 )
 
 SKILL_ROTATION: list[str] = [
@@ -32,7 +34,7 @@ def _public_question(q: dict[str, Any]) -> dict[str, Any]:
         "skill_area": q["skill_area"],
         "difficulty": q["difficulty"],
         "text": q["text"],
-        "options": q["options"],
+        "options": shuffle_options_for_question(q["id"], q["options"]),
         "data_origin": q.get("data_origin", "synthetic"),
     }
 
@@ -97,6 +99,9 @@ def start_onboarding(
     return {
         "session_id": session_id,
         "question": _public_question(first_q),
+        "data_origin": aggregate_data_origin(
+            [first_q.get("data_origin", "synthetic")], empty_default="synthetic"
+        ),
     }
 
 
@@ -174,6 +179,7 @@ def answer_onboarding(
             "difficulty": int(question["difficulty"]),
             "confidence": int(confidence),
             "correct": is_correct,
+            "data_origin": question.get("data_origin", "synthetic"),
         }
     )
 
@@ -183,6 +189,7 @@ def answer_onboarding(
     min_q = int(state.get("min_questions", cfg.onboarding_min_questions))
     max_q = int(state.get("max_questions", cfg.onboarding_max_questions))
 
+    response_origins = [r.get("data_origin", "synthetic") for r in responses]
     if not _should_stop_onboarding(responses, min_q=min_q, max_q=max_q):
         next_skill = SKILL_ROTATION[len(responses) % len(SKILL_ROTATION)]
         asked = set(state["asked_ids"])
@@ -191,7 +198,14 @@ def answer_onboarding(
             state["asked_ids"].append(next_q["id"])
             state["current_question_id"] = next_q["id"]
             repo.update_session(session_id, state, completed=False)
-            return {"next_question": _public_question(next_q), "result": None}
+            return {
+                "next_question": _public_question(next_q),
+                "result": None,
+                "data_origin": aggregate_data_origin(
+                    [*response_origins, next_q.get("data_origin", "synthetic")],
+                    empty_default="synthetic",
+                ),
+            }
 
     # Finalize onboarding: compute per-skill scores, Brier, level, unlocks,
     # and initial learning plan
@@ -218,4 +232,7 @@ def answer_onboarding(
     return {
         "next_question": None,
         "result": {"level": level, "skills": skills, "brier": brier},
+        "data_origin": aggregate_data_origin(
+            response_origins, empty_default="synthetic"
+        ),
     }

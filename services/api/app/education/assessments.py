@@ -5,17 +5,18 @@ from __future__ import annotations
 import uuid
 from typing import Any
 
+from ..core.provenance import aggregate_data_origin
 from .config import DEFAULT_CONFIG, EducationConfig
 from .enums import AttemptContext, AttemptItemType, SkillArea
 from .exceptions import NotFoundError, ValidationDomainError
 from .learning import build_or_update_plan, ensure_level_unlocks
 from .repository import EducationRepository
-from .scenarios import (
-    build_public_scenario,
-    recompute_scenario_outcome,
-    scenario_outcome,
+from .scenarios import build_public_scenario, scenario_outcome
+from .scoring import (
+    compute_brier_score,
+    compute_skill_scores,
+    shuffle_options_for_question,
 )
-from .scoring import compute_brier_score, compute_skill_scores
 
 
 def start_assessment(
@@ -100,7 +101,7 @@ def start_assessment(
                     "skill_area": q["skill_area"],
                     "difficulty": q["difficulty"],
                     "text": q["text"],
-                    "options": q["options"],
+                    "options": shuffle_options_for_question(q["id"], q["options"]),
                     "data_origin": q.get("data_origin", "synthetic"),
                 },
             }
@@ -145,6 +146,10 @@ def start_assessment(
         "assessment_id": assessment_id,
         "level": int(target_level),
         "items": items_public,
+        "data_origin": aggregate_data_origin(
+            [item["prompt"].get("data_origin", "synthetic") for item in items_public],
+            empty_default="synthetic",
+        ),
     }
 
 
@@ -193,6 +198,7 @@ def submit_assessment(
 
     graded_records: list[dict[str, Any]] = []
     brier_pairs: list[tuple[int, bool]] = []
+    item_origins: list[str] = []
     correct_count = 0
 
     for ans in answers:
@@ -211,6 +217,7 @@ def submit_assessment(
                 raise NotFoundError(
                     "QUESTION_NOT_FOUND", f"Question '{item_id}' missing."
                 )
+            item_origins.append(str(q.get("data_origin", "synthetic")))
             is_correct = user_ans == str(q["answer"]).strip()
         else:
             sc = repo.get_scenario(item_id)
@@ -218,9 +225,8 @@ def submit_assessment(
                 raise NotFoundError(
                     "SCENARIO_NOT_FOUND", f"Scenario '{item_id}' missing."
                 )
-            outcome = recompute_scenario_outcome(
-                sc["symbol"], sc["as_of_date"], sc["window_days"], cfg=cfg
-            )
+            outcome, sc_origin = scenario_outcome(sc, cfg=cfg)
+            item_origins.append(sc_origin)
             is_correct = user_ans.lower() == outcome["actual_direction"]
 
         if is_correct:
@@ -278,6 +284,7 @@ def submit_assessment(
             preserve_completed=True,
         )
 
+    origin = aggregate_data_origin(item_origins, empty_default="synthetic")
     state = dict(session["state"])
     state["result"] = {
         "passed": passed,
@@ -285,6 +292,7 @@ def submit_assessment(
         "brier": brier,
         "new_level": new_level,
         "unlocked": newly_unlocked,
+        "data_origin": origin,
     }
     repo.update_session(assessment_id, state, completed=True)
 
@@ -294,4 +302,5 @@ def submit_assessment(
         "brier": brier,
         "new_level": new_level,
         "unlocked": newly_unlocked,
+        "data_origin": origin,
     }

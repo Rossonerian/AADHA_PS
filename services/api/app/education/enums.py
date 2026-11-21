@@ -46,6 +46,11 @@ class Direction(StrEnum):
     FLAT = "flat"
 
 
+class ScenarioGuessDirection(StrEnum):
+    UP = "up"
+    DOWN = "down"
+
+
 class LessonStatus(StrEnum):
     NOT_STARTED = "not_started"
     IN_PROGRESS = "in_progress"

@@ -97,6 +97,7 @@ def create_app() -> FastAPI:
             "name": user.name,
             "level": user.level,
             "unlocks": unlocks,
+            "data_origin": "real",
         }
 
     application.include_router(education_router, prefix="/api/v1")

@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 from ..core import guardrails
+from ..core.provenance import aggregate_data_origin
 from .enums import (
     TOOL_REQUIRED_LEVEL,
     AttemptContext,
@@ -16,6 +17,7 @@ from .enums import (
 )
 from .exceptions import NotFoundError, ToolLockedError, ValidationDomainError
 from .repository import EducationRepository
+from .scoring import shuffle_options_for_question
 
 
 def get_user_unlocks(
@@ -129,6 +131,7 @@ def get_plan(
         return build_or_update_plan(repo, user_id, level=lvl)
 
     lessons_out: list[dict[str, Any]] = []
+    lesson_origins: list[str] = []
     completed = 0
     for lid in plan["lesson_ids"]:
         lesson = repo.get_lesson(lid)
@@ -137,6 +140,7 @@ def get_plan(
         status = plan["progress"].get(lid, LessonStatus.NOT_STARTED.value)
         if status == LessonStatus.COMPLETED.value:
             completed += 1
+        lesson_origins.append(str(lesson.get("data_origin", "synthetic")))
         lessons_out.append(
             {
                 "id": lesson["id"],
@@ -152,6 +156,7 @@ def get_plan(
         "level": plan["level"],
         "progress_pct": progress_pct,
         "lessons": lessons_out,
+        "data_origin": aggregate_data_origin(lesson_origins, empty_default="synthetic"),
     }
 
 
@@ -178,7 +183,11 @@ def get_lesson_detail(repo: EducationRepository, lesson_id: str) -> dict[str, An
         )
 
     public_checks = [
-        {"id": cq["id"], "text": cq["text"], "options": cq["options"]}
+        {
+            "id": cq["id"],
+            "text": cq["text"],
+            "options": shuffle_options_for_question(cq["id"], cq["options"]),
+        }
         for cq in lesson["check_questions"]
     ]
     return {

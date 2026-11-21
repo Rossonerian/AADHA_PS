@@ -102,6 +102,7 @@ def test_me_auto_provisions_level_1_user(
         "name": "Riya Sharma",
         "level": 1,
         "unlocks": ["scenarios", "red_flag_check"],
+        "data_origin": "real",
     }
 
     db_session.expire_all()
@@ -135,6 +136,7 @@ def test_me_existing_level_3_user_returns_level_3_unlocks(
         "name": "Arjun Mehta",
         "level": 3,
         "unlocks": ["scenarios", "red_flag_check", "explain_stock", "verifier"],
+        "data_origin": "real",
     }
 
 
@@ -234,6 +236,7 @@ def test_me_neon_auth_eddsa_auto_provisions_level_1_user(
         "name": "Kavya Iyer",
         "level": 1,
         "unlocks": ["scenarios", "red_flag_check"],
+        "data_origin": "real",
     }
     assert requested_urls == [jwks_url]
 

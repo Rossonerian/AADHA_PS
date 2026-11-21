@@ -194,6 +194,10 @@ def answer_scenario(
 ) -> dict[str, Any]:
     """Scores a scenario answer against price-recomputed outcome & NIFTY50, passing guardrails."""
     require_tool_unlocked(repo, user_id, ToolName.SCENARIOS, user_level=user_level)
+    if str(direction).lower() not in ("up", "down"):
+        raise ValidationDomainError(
+            "VALIDATION_ERROR", "Scenario direction must be 'up' or 'down'."
+        )
     sc = repo.get_scenario(scenario_id)
     if not sc:
         raise NotFoundError(

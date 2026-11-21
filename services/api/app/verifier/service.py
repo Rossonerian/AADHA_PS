@@ -7,7 +7,10 @@ from uuid import UUID, uuid5
 from sqlalchemy import exists, select
 from sqlalchemy.orm import Session
 
-from .extraction import extract_claim, reject_advice_request
+from app.core.errors import ConfigurationError
+from app.core.provenance import aggregate_data_origin
+
+from .extraction import ExtractedClaim, extract_claim, reject_advice_request
 from .ingestion import CapturedTip, ingest
 from .models import Claim, Source, SourceRatingHistory, Submission
 from .ports import MARKET_TZ, SessionFactory, VerifierCore
@@ -66,7 +69,13 @@ class VerifierService:
                 demo = self._find_demo(session, tip)
                 if demo is not None:
                     return self._copy_demo(session, owner, request, tip, *demo, mode)
-        claim = extract_claim(tip.text, self.core)
+        degraded = False
+        try:
+            claim = extract_claim(tip.text, self.core)
+        except ConfigurationError:
+            degraded = True
+            mode = Mode.BASIC
+            claim = ExtractedClaim(status=ClaimStatus.NEEDS_REVIEW)
         # Only stable, provider-verified authors may drive a shared real source rating.
         # A YouTube transcript can be unlisted or quote a guest; never rate the uploader from it.
         public = bool(
@@ -142,10 +151,10 @@ class VerifierService:
                     scorable=status == ClaimStatus.OPEN,
                     status=status,
                     data_origin=DataOrigin.REAL,
-                    rating_eligible=public and prior is None,
+                    rating_eligible=public and prior is None and not degraded,
                 ),
             )
-            if public:
+            if public and not degraded:
                 update_rating(session, source)
             return self._verification(session, submission, stored, mode)
 
@@ -222,10 +231,9 @@ class VerifierService:
                 )
                 for submission, claim in rows
             ]
-            origin = (
-                DataOrigin.SYNTHETIC
-                if any(item.data_origin == DataOrigin.SYNTHETIC for item in items)
-                else DataOrigin.REAL
+            origin = aggregate_data_origin(
+                [item.data_origin.value for item in items],
+                empty_default="real",
             )
             return SubmissionsResponse(items=items, data_origin=origin)
 
