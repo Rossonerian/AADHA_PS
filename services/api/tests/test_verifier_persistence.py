@@ -229,7 +229,8 @@ def test_migrations_down_up_preserve_submissions_and_enforce_owner(persistence_e
         db.commit()
         sid = submission.id
         migrate(db, "20261120_01_edu", downgrade=True)
-        assert db.get(Submission, sid) is not None
+        # The old schema has no transcript column; verify retention by its stable key.
+        assert db.scalar(select(Submission.id).where(Submission.id == sid)) == sid
         assert not inspect(db.connection()).has_table("nasdaq_challenges")
         migrate(db, "head")
         assert db.get(Submission, sid) is not None

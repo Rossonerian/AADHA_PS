@@ -9,6 +9,9 @@ from uuid import UUID
 from pandas import DataFrame
 from sqlalchemy.orm import Session
 
+from app.core.transcribe import Transcript
+from app.core.web_search import SearchResult
+
 MARKET_TZ = timezone(timedelta(hours=5, minutes=30), "IST")
 
 
@@ -42,6 +45,10 @@ class Market(Protocol):
     def sebi_registered(self, name_or_reg_no: str) -> Registration: ...
 
 
+class Search(Protocol):
+    def __call__(self, query: str, *, limit: int = 5) -> list[SearchResult]: ...
+
+
 class Complete(Protocol):
     def __call__(self, prompt: str, schema: dict[str, Any] | None = None) -> object: ...
 
@@ -51,6 +58,8 @@ class VerifierCore:
     complete: Complete
     check_output: Callable[[str], GuardResult]
     market: Market
+    transcribe: Callable[[str], Transcript] | None = None
+    web_search: Search | None = None
     # These facts are not exposed by the current SoT market interface. Unknown is not false.
     market_cap_bucket: Callable[[str, date], str | None] | None = None
     post_deleted: Callable[[str], bool | None] | None = None
@@ -101,7 +110,7 @@ class _PlatformMarket:
 
 def platform_core() -> VerifierCore:
     """Bind Verifier dependencies to Hardhik's shared `app.core` modules."""
-    from app.core import guardrails, llm
+    from app.core import guardrails, llm, transcribe, web_search
     from app.verifier.evidence import EvidenceProviders
 
     evidence = EvidenceProviders()
@@ -115,6 +124,8 @@ def platform_core() -> VerifierCore:
         complete=_complete,
         check_output=guardrails.check_output,
         market=_PlatformMarket(),
+        transcribe=transcribe.transcribe,
+        web_search=web_search.web_search,
         market_cap_bucket=evidence.market_cap_bucket,
         market_cap_provenance=evidence.market_cap_provenance,
         post_deleted=evidence.post_deleted,

@@ -2,15 +2,16 @@
 
 from datetime import UTC
 from hashlib import sha256
-from uuid import UUID, uuid5
+from uuid import UUID, uuid4, uuid5
 
 from sqlalchemy import exists, select
 from sqlalchemy.orm import Session
 
-from .extraction import extract_claim, reject_advice_request
+from .extraction import extract_claim, extract_video_claims, reject_advice_request
 from .ingestion import CapturedTip, ingest
-from .models import Claim, Source, SourceRatingHistory, Submission
+from .models import Claim, Source, SourceMention, SourceRatingHistory, Submission
 from .ports import MARKET_TZ, SessionFactory, VerifierCore
+from .provider_profile import refresh
 from .red_flags import collect_flags
 from .repository import (
     save_submission,
@@ -24,6 +25,8 @@ from .schemas import (
     ClaimStatus,
     ClaimView,
     DataOrigin,
+    EnforcementView,
+    MentionView,
     Mode,
     RatingChange,
     RedFlag,
@@ -33,9 +36,11 @@ from .schemas import (
     SourceView,
     SubmissionItem,
     SubmissionsResponse,
+    TipFact,
     VerifyRequest,
     VerifyResponse,
 )
+from .tip_quality import VERSION, compute, facts
 
 
 class SourceNotFound(LookupError):
@@ -48,9 +53,17 @@ class VerifierService:
         self.core = core
 
     def verify(self, owner: UUID, level: int, request: VerifyRequest) -> VerifyResponse:
-        tip = ingest(
-            text=request.text, url=request.url, image_base64=request.image_base64
-        )
+        if self.core.transcribe is None:
+            tip = ingest(
+                text=request.text, url=request.url, image_base64=request.image_base64
+            )
+        else:
+            tip = ingest(
+                text=request.text,
+                url=request.url,
+                image_base64=request.image_base64,
+                transcribe=self.core.transcribe,
+            )
         digest = (
             sha256(f"{tip.post_url}\n{tip.content_hash}".encode()).hexdigest()
             if tip.post_url
@@ -66,9 +79,35 @@ class VerifierService:
                 demo = self._find_demo(session, tip)
                 if demo is not None:
                     return self._copy_demo(session, owner, request, tip, *demo, mode)
-        claim = extract_claim(tip.text, self.core)
+        extracted = (
+            extract_video_claims(tip.transcript_segments, self.core)
+            if tip.transcript_segments
+            else [extract_claim(tip.text, self.core)]
+        )
+        claim = extracted[0]
+        published = (
+            tip.published_at.astimezone(MARKET_TZ).date() if tip.published_at else None
+        )
+        qualities = []
+        for order, item in enumerate(extracted):
+            quality = compute(
+                symbol=item.symbol,
+                direction=item.direction,
+                target=item.target,
+                stop=item.stop,
+                window=item.window_days,
+                posted=published,
+                core=self.core,
+                origin=DataOrigin.REAL,
+            )
+            quality.update(
+                claim_order=order,
+                evidence_start_s=item.evidence_start_s,
+                evidence_end_s=item.evidence_end_s,
+            )
+            qualities.append(quality)
         # Only stable, provider-verified authors may drive a shared real source rating.
-        # A YouTube transcript can be unlisted or quote a guest; never rate the uploader from it.
+        # Preserve existing eligibility: a transcript alone cannot establish authorship.
         public = bool(
             tip.author_verified and tip.post_url and tip.handle and tip.published_at
         )
@@ -100,6 +139,9 @@ class VerifierService:
         )
         with self.sessions() as session, session.begin():
             source = source_for(session, tip.platform, handle, DataOrigin.REAL)
+            existing = submission_for(session, owner, digest)
+            if existing is not None:
+                return self._verification(session, *existing, mode)
             if registered is not None:
                 source.sebi_registered = found
                 source.sebi_reg_no = registered["reg_no"] if found else None
@@ -116,12 +158,15 @@ class VerifierService:
                 )
             changed_revision = prior is not None and prior != digest
             status = ClaimStatus.NEEDS_REVIEW if changed_revision else claim.status
+            proposed_id = uuid4()
             submission, stored = save_submission(
                 session,
                 Submission(
+                    id=proposed_id,
                     user_id=owner,
                     source_id=source.id,
                     raw_content=tip.text,
+                    transcript_segments=tip.transcript_segments,
                     content_hash=digest,
                     captured_at=tip.captured_at,
                     published_at=tip.published_at,
@@ -133,6 +178,8 @@ class VerifierService:
                     data_origin=DataOrigin.REAL,
                 ),
                 Claim(
+                    tip_quality=qualities[0],
+                    tip_quality_version=VERSION,
                     symbol=claim.symbol,
                     direction=claim.direction,
                     entry=claim.entry,
@@ -145,13 +192,41 @@ class VerifierService:
                     rating_eligible=public and prior is None,
                 ),
             )
+            if submission.id != proposed_id:
+                return self._verification(session, submission, stored, mode)
+            # The source row lock serializes first-sighting ownership across writers.
+            for item, quality in zip(extracted[1:], qualities[1:], strict=True):
+                extra_status = (
+                    ClaimStatus.NEEDS_REVIEW if changed_revision else item.status
+                )
+                session.add(
+                    Claim(
+                        submission_id=submission.id,
+                        symbol=item.symbol,
+                        direction=item.direction,
+                        entry=item.entry,
+                        target=item.target,
+                        stop=item.stop,
+                        window_days=item.window_days,
+                        scorable=extra_status == ClaimStatus.OPEN,
+                        status=extra_status,
+                        data_origin=DataOrigin.REAL,
+                        rating_eligible=public and prior is None,
+                        tip_quality=quality,
+                        tip_quality_version=VERSION,
+                    )
+                )
+            session.flush()
             if public:
+                refresh(session, source, self.core)
                 update_rating(session, source)
             return self._verification(session, submission, stored, mode)
 
     def source(self, owner: UUID, source_id: UUID) -> SourceResponse:
-        with self.sessions() as session:
-            source = session.get(Source, source_id)
+        with self.sessions() as session, session.begin():
+            source = session.scalar(
+                select(Source).where(Source.id == source_id).with_for_update()
+            )
             if source is None:
                 raise SourceNotFound
             query = (
@@ -170,6 +245,9 @@ class VerifierService:
                 query = query.where(
                     Claim.rating_eligible.is_(True), Submission.deleted_at.is_(None)
                 )
+            refresh(session, source, self.core)
+            if not source.handle.startswith("private-"):
+                update_rating(session, source)
             recent = session.scalars(
                 query.order_by(Submission.captured_at.desc(), Claim.id).limit(20)
             )
@@ -189,11 +267,31 @@ class VerifierService:
                         label=SourceLabel(row.label),
                         reason=self.safe_text(row.reason),
                         changed_at=row.changed_at,
+                        formula_version=row.formula_version,
                         data_origin=DataOrigin(row.data_origin),
                     )
                     for row in history
                 ],
-                recent_claims=[ClaimView.model_validate(row) for row in recent],
+                recent_claims=[self._claim_view(row) for row in recent],
+                enforcement=EnforcementView(
+                    flag=source.enforcement_flag,
+                    refs=[
+                        {key: self.safe_text(str(value)) for key, value in ref.items()}
+                        for ref in (source.enforcement_refs or [])
+                    ],
+                    data_origin=DataOrigin(source.data_origin),
+                ),
+                mentions=[
+                    MentionView.model_validate(row).model_copy(
+                        update={"title": self.safe_text(row.title)}
+                    )
+                    for row in session.scalars(
+                        select(SourceMention)
+                        .where(SourceMention.source_id == source.id)
+                        .order_by(SourceMention.fetched_at.desc(), SourceMention.id)
+                        .limit(20)
+                    )
+                ],
                 data_origin=DataOrigin(source.data_origin),
             )
 
@@ -211,7 +309,7 @@ class VerifierService:
             items = [
                 SubmissionItem(
                     submission_id=submission.id,
-                    claim=ClaimView.model_validate(claim),
+                    claim=self._claim_view(claim),
                     status=ClaimStatus(claim.status),
                     outcome=(
                         ClaimOutcome.model_validate(claim.outcome)
@@ -228,6 +326,28 @@ class VerifierService:
                 else DataOrigin.REAL
             )
             return SubmissionsResponse(items=items, data_origin=origin)
+
+    def _claim_view(self, claim: Claim) -> ClaimView:
+        view = ClaimView.model_validate(claim)
+        view.tip_facts = [
+            TipFact.model_validate(row) for row in facts(claim.tip_quality, self.core)
+        ]
+        if claim.tip_quality:
+            view.evidence_start_s = (
+                float(v)
+                if isinstance(
+                    (v := claim.tip_quality.get("evidence_start_s")), (float, int)
+                )
+                else None
+            )
+            view.evidence_end_s = (
+                float(v)
+                if isinstance(
+                    (v := claim.tip_quality.get("evidence_end_s")), (float, int)
+                )
+                else None
+            )
+        return view
 
     def safe_text(self, text: str) -> str:
         return self.core.check_output(text).text
@@ -269,10 +389,17 @@ class VerifierService:
                 key: self.safe_text(value) if isinstance(value, str) else value
                 for key, value in flag.evidence.items()
             }
+        retained = list(
+            session.scalars(select(Claim).where(Claim.submission_id == submission.id))
+        )
+        retained.sort(key=lambda c: str((c.tip_quality or {}).get("claim_order", 0)))
+        views = [self._claim_view(c) for c in retained]
         return VerifyResponse(
             submission_id=submission.id,
             source=self._source_view(session, source, basic=mode == Mode.BASIC),
-            claim=ClaimView.model_validate(claim),
+            claim=views[0],
+            claims=views,
+            tip_facts=views[0].tip_facts,
             red_flags=flags,
             mode=mode,
             data_origin=DataOrigin(submission.data_origin),

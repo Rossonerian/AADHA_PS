@@ -210,6 +210,9 @@ def rate_source(
     deleted: int,
     registered: bool | None,
     flagged: int,
+    enforcement: bool | None = None,
+    tip_quality: float | None = None,
+    tip_quality_weight: int = 0,
 ) -> tuple[int, SourceLabel]:
     """Return a rounded 0–100 score and its history-gated label.
 
@@ -220,6 +223,12 @@ def rate_source(
     counts distinct tips, not individual flags. Empty shares are neutral (½).
     Counts are bounded to their denominators; exact half scores round to even.
     """
+    if not 0 <= tip_quality_weight <= 10:
+        raise ValueError("Tip quality weight must be manually configured in 0..10")
+    if tip_quality is not None and (
+        not isfinite(tip_quality) or not 0 <= tip_quality <= 1
+    ):
+        raise ValueError("Invalid quality aggregate")
     scored, tracked = max(0, scored), max(0, tracked)
     track_record = Fraction(2 + min(scored, max(0, correct)), scored + 4)
     neutral = Fraction(1, 2)
@@ -234,8 +243,14 @@ def rate_source(
         else neutral
     )
     registration = neutral if registered is None else Fraction(int(registered))
+    if enforcement is True:
+        registration = Fraction(0)
+    quality = Fraction(str(tip_quality)) if tip_quality is not None else neutral
     score = round(
-        60 * track_record + Fraction(25, 2) * (retention + registration) + 15 * clean
+        60 * track_record
+        + Fraction(25, 2) * (retention + registration)
+        + (15 - tip_quality_weight) * clean
+        + tip_quality_weight * quality
     )
 
     if scored < 5:
