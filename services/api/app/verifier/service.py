@@ -7,7 +7,7 @@ from uuid import UUID, uuid4, uuid5
 from sqlalchemy import exists, func, select
 from sqlalchemy.orm import Session
 
-from app.core.errors import ConfigurationError
+from app.core.errors import ConfigurationError, ExternalServiceError
 from app.core.provenance import aggregate_data_origin
 
 from .extraction import (
@@ -110,7 +110,7 @@ class VerifierService:
                 if tip.transcript_segments
                 else [extract_claim(tip.text, self.core)]
             )
-        except ConfigurationError:
+        except (ConfigurationError, ExternalServiceError):
             degraded = True
             mode = Mode.BASIC
             extracted = [ExtractedClaim(status=ClaimStatus.NEEDS_REVIEW)]
@@ -134,6 +134,7 @@ class VerifierService:
                 claim_order=order,
                 evidence_start_s=item.evidence_start_s,
                 evidence_end_s=item.evidence_end_s,
+                extraction_available=not degraded,
             )
             qualities.append(quality)
         # Only stable, provider-verified authors may drive a shared real source rating.
@@ -488,6 +489,11 @@ class VerifierService:
         )
         retained.sort(key=lambda c: (_claim_order(c), c.id))
         views = [self._claim_view(c) for c in retained]
+        extraction_available = all(
+            (c.tip_quality or {}).get("extraction_available", True) for c in retained
+        )
+        if not extraction_available:
+            mode = Mode.BASIC
         return VerifyResponse(
             submission_id=submission.id,
             source=self._source_view(session, source, basic=mode == Mode.BASIC),
@@ -496,6 +502,7 @@ class VerifierService:
             tip_facts=views[0].tip_facts,
             red_flags=flags,
             mode=mode,
+            extraction_available=extraction_available,
             data_origin=DataOrigin(submission.data_origin),
         )
 

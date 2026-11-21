@@ -406,6 +406,7 @@ export interface SourceMention {
 }
 
 export interface VerifyResponse {
+  extraction_available?: boolean;
   submission_id: string;
   source: VerifySourceSummary | null;
   claim: ClaimRecord | null;
