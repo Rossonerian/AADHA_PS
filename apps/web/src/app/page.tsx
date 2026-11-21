@@ -63,6 +63,7 @@ import type {
 } from "@/lib/types";
 import { authClient } from "@/lib/neon-auth-client";
 import type { LessonCheckResponse } from "@/lib/contracts";
+import { AUTH_EXPIRED_EVENT, SESSION_EXPIRED_MESSAGE } from "@/lib/auth-errors";
 import { AuthScreen } from "@/components/auth/auth-screen";
 import { avatarInitials } from "@/components/auth/profile-options";
 import { ProfilePanel } from "@/components/auth/profile-panel";
@@ -179,6 +180,7 @@ export default function PaisaProofApp() {
   const [userGuess, setUserGuess] = useState("");
   const [userConfidence, setUserConfidence] = useState(65);
   const [searchSource, setSearchSource] = useState(false);
+  const [authNotice, setAuthNotice] = useState("");
 
   useEffect(() => {
     let cancelled = false;
@@ -207,16 +209,37 @@ export default function PaisaProofApp() {
               if (!cancelled) setProfile(nextMe);
             })
             .catch((reason: unknown) => {
-              if (!cancelled) setError(friendlyError(reason));
+              if (!cancelled) setAuthNotice(friendlyError(reason));
             });
         }
       })
       .catch((reason: unknown) => {
-        if (!cancelled) setError(friendlyError(reason));
+        if (!cancelled) setAuthNotice(friendlyError(reason));
       });
     return () => {
       cancelled = true;
     };
+  }, []);
+
+  // A 401 that survives a token refresh means the session is dead: return to sign-in
+  // with an explanation instead of leaving a half-working screen.
+  useEffect(() => {
+    if (mocksEnabled) return;
+    const onExpired = () => {
+      void Promise.resolve(authClient.signOut()).catch(() => undefined);
+      setProfile(null);
+      setPlan(null);
+      setDashboard(null);
+      setSubmissions([]);
+      setVerification(null);
+      setOnboarding(null);
+      setOnboardingResult(null);
+      setView("home");
+      setError("");
+      setAuthNotice(SESSION_EXPIRED_MESSAGE);
+    };
+    window.addEventListener(AUTH_EXPIRED_EVENT, onExpired);
+    return () => window.removeEventListener(AUTH_EXPIRED_EVENT, onExpired);
   }, []);
 
   useEffect(() => {
@@ -267,14 +290,19 @@ export default function PaisaProofApp() {
   const showError = (reason: unknown) => setError(friendlyError(reason));
 
   async function loadAuthenticatedUser() {
-    setProfile(await api.me());
+    const me = await api.me();
+    setAuthNotice("");
+    setProfile(me);
   }
 
   async function signOut() {
     try {
       if (mocksEnabled) mockAuthBridge?.signOut();
       else await authClient.signOut();
+    } catch {
+      // Local state is cleared below even if the server could not be reached.
     } finally {
+      setAuthNotice("");
       setProfile(null);
       setPlan(null);
       setDashboard(null);
@@ -601,6 +629,7 @@ export default function PaisaProofApp() {
         theme={theme}
         onToggleTheme={() => setTheme(theme === "light" ? "dark" : "light")}
         onAuthenticated={loadAuthenticatedUser}
+        notice={authNotice}
       />
     );
   }
