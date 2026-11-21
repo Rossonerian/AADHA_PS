@@ -175,6 +175,98 @@ Need from: Arnav/Hardhik — review separate seed correction. V2 does not silent
 _Append updates here._
 
 ```text
+[Verifier v2] 100% | Phase 8/8: Backend implementation and acceptance complete (2026-11-21)
+Done: All eight implementation phases passed their gates. Python 3.11.16 full local suite: 398 passed, 1 warning, zero skips/errors; Ruff/Black/mypy green. CI run 44850097125 passed API (Postgres 16 migrations and all 398 tests) and Web (lint, formatting, types, build). PR #16: https://github.com/Rossonerian/AADHA_PS/pull/16. Only contracts.ts changed under apps/web; no Education implementation changes. SoT copies match. No production migration or production seed write.
+Next: Hardhik reviews core/transcribe.py, core/web_search.py, config and migration on PR #16; UI owner can render the additive contracts. Configure Gemini/Exa keys before enabling provider calls. Leave PR unmerged.
+Minor: This is implementation completion, not empirical quality/F1 acceptance. Actual quality validation correctly REFUSEs 150 eligible claims / 30 providers / 0 quality-covered claims. TIP_QUALITY_WEIGHT remains 0. Local Postgres is 18.7; Postgres 16 was verified in CI. Web lint has ten existing warnings; the single Python warning is the existing Starlette/httpx deprecation. Managed-Postgres teardown initially lost an idle connection; pool_pre_ping and confirmed disposable cleanup fixed it, followed by a fully green rerun. Raw Windows Prettier warnings are CRLF checkout differences; LF-normalized checks and Linux CI pass without rewriting UI files.
+Blockers: none for v2 implementation acceptance. Core review/deployment credentials and the separate v0 real-seed/F1 decisions remain outstanding; no validated predictive claim or automatic weight activation is asserted.
+```
+
+### Verifier v2 API checks — real command output
+
+Python 3.11.16. The local pytest run sets APP_ENV=test and VERIFIER_POSTGRES_TEST_URL to the configured database; every database test migrates only a new private disposable schema. Provider keys are blank in the test process; provider HTTP is mocked by tests. All seven Postgres variants executed, with zero skips.
+
+```text
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m pytest services/api/tests -q
+398 passed, 1 warning in 168.06s (0:02:48)
+$ .venv/Scripts/python.exe -m ruff check services/api infra db/migrations
+All checks passed!
+$ .venv/Scripts/python.exe -m black --check services/api infra db/migrations
+All done!
+116 files would be left unchanged.
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m mypy services/api/app
+Success: no issues found in 66 source files
+$ git diff --check
+(no output; exit 0)
+```
+
+### Verifier v2 migration checks
+
+SQLite (FKs enabled) and Postgres upgrade -> downgrade -1 -> upgrade head pass. The migration refuses to discard multi-claim data on downgrade. Historical revision tests use reflected/stable columns at the revision being tested rather than querying future ORM columns. Production schema/migrations were untouched. Local server: `Postgres 18.7 (84da7d8)`; CI container: `postgres:16-alpine`.
+
+[CI evidence](https://github.com/Rossonerian/AADHA_PS/actions/runs/44850097125):
+
+```text
+API (Lint, Typecheck, Migrate, Test): success
+All checks passed!
+116 files would be left unchanged.
+Success: no issues found in 66 source files
+398 passed, 1 warning in 87.34s (0:01:27)
+Web (Lint, Format, Typecheck, Build): success
+```
+
+The existing frozen real seed was loaded twice at the v2 migration head in a new disposable schema, then that schema was dropped:
+
+```text
+$ PYTHONPATH=services/api .venv/Scripts/python.exe infra/scripts/load_real_verifier_seed.py --load
+{"status": "loaded", "data_origin": "real", "sources": 30, "claims": 150, "min_scored_claims": 5}
+$ PYTHONPATH=services/api .venv/Scripts/python.exe infra/scripts/load_real_verifier_seed.py --load
+{"status": "loaded", "data_origin": "real", "sources": 30, "claims": 150, "min_scored_claims": 5}
+```
+
+This checks migration/import compatibility, not the separate unresolved horizon/provenance acceptance noted below.
+
+### Verifier v2 web checks
+
+`npm ci`: 645 packages added, zero vulnerabilities. `npm run lint`: zero errors, ten existing warnings. `npm run typecheck`: exit 0. `npm run build` with the same placeholder public/Auth settings as CI:
+
+```text
+Compiled successfully in 3.1s
+Finished TypeScript in 7.5s
+Generating static pages using 8 workers (4/4)
+```
+
+Raw `npm run format:check` flags 115 CRLF checkout files. Checking all 117 tracked web files with the same Prettier config after LF normalization in memory returns `failed: []`, `files_modified: 0`; Linux CI formatting passes. No UI source was reformatted.
+
+### Verifier v2 offline validation checks
+
+Synthetic fixtures exercise REFUSE, PASS, FAIL, timestamp ties, calibration buckets and provider confounding. The CLI's database access is read-only and never changes weights/scores. Actual disposable-seed output (exit 2, expected refusal):
+
+```json
+{
+  "claims": 0,
+  "providers": 0,
+  "version": "tip-quality-v1",
+  "weight_changed": false,
+  "status": "REFUSE",
+  "reason": "Requires >=300 eligible scored claims and >=30 providers",
+  "rating_eligible_scored_claims": 150,
+  "rating_eligible_providers": 30,
+  "quality_covered_claims": 0
+}
+```
+
+No actual-data AUC or quality acceptance PASS is claimed. An independent quality-labelled outcome corpus is still needed before considering a manual nonzero weight.
+
+```text
+[Verifier v2] MAJOR | Prior v0 live extraction F1 remains unmeasured after the latest retry
+Impact: The latest live retry completed 58 structured calls before ExternalServiceError; no complete 150-row F1 exists. Previous attempts confirmed daily HTTP 429, but this retry's safe runner reports only the exception type. eval.jsonl has already supplied grounding-development feedback and is diagnostic only.
+Options: Build an independent, frozen acceptance set and evaluate after quota/paid-model access is available; do not tune further on eval.jsonl (recommended).
+Need from: Hardhik/Arnav — independent acceptance corpus and provider quota decision. This remains separate from the completed v2 implementation gates.
+```
+
+
+```text
 [Verifier v2] 85% | Phase 8/8: Full acceptance and PR review in progress (2026-11-21)
 Done: Phase 1 contracts mirrored; Phases 3–7 implemented and exercised (provider HTTP success/timeout/429/bad payload, caption fallback, grounded multi-claim storage, chunk-edge omission guard, historical facts and no-lookahead, API score privacy, golden weight-zero ratings, exact SEBI matching, display-only mentions, offline validation refuse/pass/fail). Targeted run: 60 passed, 7 skipped, 1 warning in 4.97s (Postgres variants intentionally absent in that invocation). Ruff passes; Black leaves 116 files unchanged; mypy checks 66 files. SQLite migration up/down/up passes with FK enforcement enabled, including refusal to downgrade multi-claim data.
 Next: Finish local isolated-Postgres full suite and CI Postgres 16 round-trips, publish PR, paste final output. Phase 2's Postgres 16 gate is pending CI, so the 85% excludes that 10% and the final 5% gate.
