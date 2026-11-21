@@ -1,0 +1,28 @@
+name: Keep API warm
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: keepalive
+  cancel-in-progress: true
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      API_HEALTH_URL: ${{ vars.API_HEALTH_URL || 'https://aadha-ps.onrender.com/api/v1/health' }}
+    steps:
+      - name: Ping API health endpoint
+        run: |
+          curl -fsS --retry 3 --retry-delay 10 --max-time 60 -o /dev/null -w "%{http_code} %{time_total}s\n" "${API_HEALTH_URL}"
+
+      - name: Ping web root (non-fatal)
+        run: |
+          curl -fsS --retry 3 --retry-delay 10 --max-time 60 -o /dev/null -w "%{http_code} %{time_total}s\n" "https://aadha-ps.vercel.app" || true
