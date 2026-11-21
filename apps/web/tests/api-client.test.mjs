@@ -19,6 +19,11 @@ function client() {
     FormData,
     process: { env: { NODE_ENV: "production" } },
     require(name) {
+      if (name === "./auth-token")
+        return {
+          fetchProxyToken: async () => "signed-in-token",
+          createTokenProvider: ({ fetchToken }) => ({ get: fetchToken }),
+        };
       assert.equal(name, "./neon-auth-client");
       return { authClient: { getJWTToken: async () => "signed-in-token" } };
     },
