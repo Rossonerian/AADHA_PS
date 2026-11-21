@@ -157,9 +157,9 @@ Need from: Hardhik/User (PR #10 merge & PR #9 policy decisions, OpenRouter quota
 ## Arnav
 
 ```text
-[Verifier v2] 0% | Phase 1/8: Docs and contracts in progress (2026-11-21)
-Done: Read approved design; branched feat/verifier-v2 from origin/main ebede08. Prior PRs #9 and #13 are already merged by others. Prepared authorized contract additions, synchronized SoT copies, and provider/config documentation.
-Next: Complete contract types, then migration/models and core adapters.
+[Verifier v2] 10% | Phase 1/8: Docs and contracts complete (2026-11-21)
+Done: Read approved design; branched feat/verifier-v2 from origin/main ebede08. Prior PRs #9 and #13 are already merged by others. Verified SoT copies match and all eight fact codes are documented; added API types and provider placeholders. No doc describes a displayed per-tip reliability score.
+Next: Complete migration/Postgres and full acceptance checks for the implemented backend phases.
 Minor: Preserve current eligibility; YouTube channel/date alone does not establish authorship of every spoken claim. Design's multi-claim assumption requires removing the existing unique claims.submission_id constraint.
 Blockers: none for v2 implementation; existing seed/F1 acceptance remains open.
 ```
@@ -173,6 +173,15 @@ Need from: Arnav/Hardhik — review separate seed correction. V2 does not silent
 
 
 _Append updates here._
+
+```text
+[Verifier v2] 85% | Phase 8/8: Full acceptance and PR review in progress (2026-11-21)
+Done: Phase 1 contracts mirrored; Phases 3–7 implemented and exercised (provider HTTP success/timeout/429/bad payload, caption fallback, grounded multi-claim storage, chunk-edge omission guard, historical facts and no-lookahead, API score privacy, golden weight-zero ratings, exact SEBI matching, display-only mentions, offline validation refuse/pass/fail). Targeted run: 60 passed, 7 skipped, 1 warning in 4.97s (Postgres variants intentionally absent in that invocation). Ruff passes; Black leaves 116 files unchanged; mypy checks 66 files. SQLite migration up/down/up passes with FK enforcement enabled, including refusal to downgrade multi-claim data.
+Next: Finish local isolated-Postgres full suite and CI Postgres 16 round-trips, publish PR, paste final output. Phase 2's Postgres 16 gate is pending CI, so the 85% excludes that 10% and the final 5% gate.
+Minor: Local Postgres is 18.7, not 16. Web lint/typecheck/build pass after npm ci; lint has 10 existing warnings. Windows CRLF checkout causes raw Prettier check warnings; all 117 tracked web files pass after LF normalization in memory (zero file writes). Only contracts.ts changed under apps/web. Gemini and Exa require deployment keys; Hardhik must review core modules. Unknown nominal/adjusted compatibility leaves quoted-price comparison facts null.
+Blockers: none for implementation; CI/local full gate pending. Prior v0 seed/F1 and quota decisions remain separate acceptance blockers below.
+```
+
 
 ```text
 [Arnav] 80% | Verifier audit fixes (items 1–3 on PR #13; items 4–7 merged in PR #9) (2026-11-21)

@@ -388,6 +388,7 @@ export interface VerifyResponse {
 /* -------------------------------------------------------------------------- */
 
 export interface SourceRatingHistoryItem {
+  formula_version?: string | null;
   score: number | null;
   label: SourceLabel;
   reason: string;
