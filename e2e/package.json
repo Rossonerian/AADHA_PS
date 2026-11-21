@@ -1,0 +1,13 @@
+{
+  "name": "paisaproof-e2e-smoke",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Read-only Playwright production smoke checks for PaisaProof.",
+  "scripts": {
+    "smoke": "playwright test",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0"
+  }
+}
