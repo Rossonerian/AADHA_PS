@@ -1,0 +1,91 @@
+.silk-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.silk-background .silk-container {
+  pointer-events: none;
+}
+
+/* Translucent scrim keeps text contrast AA over the animated fabric. */
+.silk-background-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgb(251 250 247 / 0.35);
+}
+
+.silk-background[data-theme="dark"] .silk-background-scrim {
+  background: rgb(7 19 8 / 0.45);
+}
+
+/* Translucent glass surfaces over the silk (auth screen only). */
+.welcome-screen {
+  --glass-surface: #ffffff;
+  --glass-border: rgb(32 42 36 / 0.14);
+  --glass-shadow: 0 10px 34px rgb(37 51 40 / 0.12);
+}
+
+.welcome-screen[data-theme="dark"] {
+  --glass-surface: #14291a;
+  --glass-border: rgb(237 249 237 / 0.16);
+  --glass-shadow: 0 12px 38px rgb(0 0 0 / 0.32);
+}
+
+.welcome-screen .welcome-copy,
+.welcome-screen .signin-panel.pp-auth-card {
+  background: color-mix(in srgb, var(--glass-surface) 64%, transparent);
+  background-image: none;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .welcome-screen .welcome-copy,
+  .welcome-screen .signin-panel.pp-auth-card {
+    background: color-mix(in srgb, var(--glass-surface) 94%, transparent);
+  }
+}
+
+/* Copy card keeps light text, so it stays a dark glass in both themes. */
+.welcome-screen .welcome-copy {
+  background: rgb(6 19 7 / 0.7);
+  border-color: rgb(237 249 237 / 0.2);
+  box-shadow: 0 12px 38px rgb(0 0 0 / 0.28);
+}
+
+/* The sign-in card's paper texture is an SVG sheet: make it see-through. */
+.welcome-screen .signin-panel.pp-auth-card {
+  background-color: transparent;
+}
+
+.welcome-screen .signin-panel.pp-auth-card > svg[data-ink="sheet"] {
+  opacity: 0.66;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .welcome-screen .welcome-copy {
+    background: rgb(6 19 7 / 0.92);
+  }
+
+  .welcome-screen .signin-panel.pp-auth-card > svg[data-ink="sheet"] {
+    opacity: 0.96;
+  }
+}
+
+/* Mobile: form first so the sign-in buttons sit above the fold. */
+@media (max-width: 639.98px) {
+  .welcome-screen .welcome-content {
+    gap: 20px;
+    padding-top: 20px;
+  }
+
+  .welcome-screen .signin-panel.pp-auth-card {
+    order: -1;
+    max-width: none;
+    justify-self: stretch;
+  }
+}
