@@ -63,3 +63,9 @@ Run this quick pass on `https://aadha-ps.vercel.app` once all four checklists ab
 - [ ] **Lesson Check:** Open Level 1 lesson from Learning Path → submit quick-check answers → confirm score feedback renders and learning path progress updates (`200`).
 - [ ] **Verifier Check:** Submit a sample claim/URL (or video tip if Level 3+) → confirm structured claim, red flags, and source summary render cleanly (no 500s).
 - [ ] **Sign-Out:** Click **Sign out** → verify session clears and reloading returns to the sign-in screen without cached authenticated data.
+
+## 6. Keep-Alive Ping
+
+- A GitHub Actions workflow (`.github/workflows/keepalive.yml`) requests the Render API health endpoint every 5 minutes to reduce cold starts; the target can be overridden with the `API_HEALTH_URL` repository variable.
+- GitHub may delay scheduled runs by several minutes, so the keep-alive is best-effort, not a guarantee.
+- For a more reliable backup, add an external pinger such as an UptimeRobot 5-minute HTTP monitor on the same health URL.
