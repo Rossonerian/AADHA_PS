@@ -10,19 +10,24 @@ import jwt
 from fastapi import Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jwt import PyJWKClient
+from jwt.types import Options
 from pydantic import BaseModel
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.core.config import Settings, get_settings
 from app.core.db import get_db
-from app.core.errors import ToolLockedError, UnauthorizedError
+from app.core.errors import ExternalServiceError, ToolLockedError, UnauthorizedError
 from app.core.models import UserRecord
 from app.profiles.service import upsert_profile_from_claims
 
 security = HTTPBearer(auto_error=False)
 
 _JWKS_ALGORITHMS = frozenset({"EdDSA", "RS256", "ES256"})
+# Tolerate small clock drift between Neon Auth and this API (seconds).
+_CLOCK_SKEW_LEEWAY_SECONDS = 30
+# Tokens without an expiry must never be accepted.
+_DECODE_OPTIONS: Options = {"verify_aud": False, "require": ["exp", "sub"]}
 
 
 class User(BaseModel):
@@ -82,6 +87,17 @@ def _resolve_jwks_urls(token: str, current_settings: Settings) -> list[str]:
     return candidates
 
 
+def _check_issuer(claims: dict[str, Any], jwks_url: str) -> None:
+    """Reject tokens whose `iss` origin differs from the JWKS host that signed them."""
+    iss = claims.get("iss")
+    if not isinstance(iss, str) or not iss:
+        return
+    expected = _extract_origin(jwks_url)
+    actual = _extract_origin(iss)
+    if expected and actual and expected != actual:
+        raise jwt.InvalidIssuerError("Token issuer does not match the JWKS origin")
+
+
 def verify_jwt(token: str) -> dict[str, Any]:
     """Validate a Neon Auth (EdDSA/JWKS) or Supabase (HS256/RS256/ES256) JWT."""
     if not token or not token.strip():
@@ -105,7 +121,8 @@ def verify_jwt(token: str) -> dict[str, Any]:
                 token,
                 secret,
                 algorithms=["HS256"],
-                options={"verify_aud": False},
+                options=_DECODE_OPTIONS,
+                leeway=_CLOCK_SKEW_LEEWAY_SECONDS,
             )
         except jwt.ExpiredSignatureError as exc:
             raise UnauthorizedError("Authentication token has expired") from exc
@@ -116,6 +133,7 @@ def verify_jwt(token: str) -> dict[str, Any]:
         if not jwks_urls:
             raise UnauthorizedError("JWKS URL is not configured for JWT verification")
         last_exc: Exception | None = None
+        unreachable = False
         for jwks_url in jwks_urls:
             try:
                 signing_key = _get_jwk_client(jwks_url).get_signing_key_from_jwt(token)
@@ -123,13 +141,24 @@ def verify_jwt(token: str) -> dict[str, Any]:
                     token,
                     signing_key.key,
                     algorithms=[alg],
-                    options={"verify_aud": False},
+                    options=_DECODE_OPTIONS,
+                    leeway=_CLOCK_SKEW_LEEWAY_SECONDS,
                 )
+                _check_issuer(claims, jwks_url)
                 break
             except jwt.ExpiredSignatureError as exc:
                 raise UnauthorizedError("Authentication token has expired") from exc
+            except jwt.PyJWKClientConnectionError as exc:
+                unreachable = True
+                last_exc = exc
+                claims = None
             except Exception as exc:
                 last_exc = exc
+                claims = None
+        if claims is None and unreachable:
+            raise ExternalServiceError(
+                "Authentication keys are temporarily unavailable"
+            )
         if claims is None:
             raise UnauthorizedError("Invalid authentication token") from last_exc
     else:

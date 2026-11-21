@@ -332,3 +332,98 @@ def test_verify_jwt_neon_auth_issuer_routing_and_error_cases(
     )
     with pytest.raises(UnauthorizedError, match="Invalid authentication token"):
         verify_jwt(wrong_sig_token)
+
+
+def _neon_setup(monkeypatch: pytest.MonkeyPatch, key_for_url: Callable[[], Any]) -> str:
+    base = "https://ep-hard.neonauth.us-east-2.aws.neon.tech/neondb/auth"
+    monkeypatch.setenv("NEON_AUTH_JWKS_URL", "")
+    monkeypatch.setenv("NEON_AUTH_BASE_URL", base)
+    monkeypatch.setenv("SUPABASE_URL", "")
+    get_settings.cache_clear()
+    _get_jwk_client.cache_clear()
+
+    class _Fake:
+        def __init__(self, url: str) -> None:
+            del url
+
+        def get_signing_key_from_jwt(self, token: str) -> Any:
+            del token
+            return SimpleNamespace(key=key_for_url())
+
+    monkeypatch.setattr("app.core.auth.PyJWKClient", _Fake)
+    return base
+
+
+def test_verify_jwt_rejects_token_without_exp(monkeypatch: pytest.MonkeyPatch) -> None:
+    """A signed token lacking `exp` would never expire and must be rejected."""
+    key = ed25519.Ed25519PrivateKey.generate()
+    base = _neon_setup(monkeypatch, key.public_key)
+    token = jwt.encode(
+        {"sub": str(uuid.uuid4()), "iss": base},
+        key,
+        algorithm="EdDSA",
+        headers={"kid": "k"},
+    )
+    with pytest.raises(UnauthorizedError):
+        verify_jwt(token)
+
+
+def test_verify_jwt_accepts_small_clock_skew(monkeypatch: pytest.MonkeyPatch) -> None:
+    """A token that expired a few seconds ago (clock drift) still verifies."""
+    key = ed25519.Ed25519PrivateKey.generate()
+    base = _neon_setup(monkeypatch, key.public_key)
+    now = datetime.now(tz=UTC)
+    token = jwt.encode(
+        {
+            "sub": str(uuid.uuid4()),
+            "iss": base,
+            "exp": int((now - timedelta(seconds=5)).timestamp()),
+        },
+        key,
+        algorithm="EdDSA",
+        headers={"kid": "k"},
+    )
+    assert verify_jwt(token)["iss"] == base
+
+
+def test_verify_jwt_rejects_foreign_issuer(monkeypatch: pytest.MonkeyPatch) -> None:
+    """A token whose issuer origin differs from the JWKS host is rejected."""
+    key = ed25519.Ed25519PrivateKey.generate()
+    _neon_setup(monkeypatch, key.public_key)
+    now = datetime.now(tz=UTC)
+    token = jwt.encode(
+        {
+            "sub": str(uuid.uuid4()),
+            "iss": "https://evil.example.com/auth",
+            "exp": int((now + timedelta(minutes=5)).timestamp()),
+        },
+        key,
+        algorithm="EdDSA",
+        headers={"kid": "k"},
+    )
+    with pytest.raises(UnauthorizedError):
+        verify_jwt(token)
+
+
+def test_verify_jwt_jwks_outage_is_not_401(monkeypatch: pytest.MonkeyPatch) -> None:
+    """A JWKS fetch failure is an upstream error (502), not a 401 that would sign users out."""
+    from app.core.errors import ExternalServiceError
+
+    def _boom() -> Any:
+        raise jwt.PyJWKClientConnectionError("down")
+
+    key = ed25519.Ed25519PrivateKey.generate()
+    base = _neon_setup(monkeypatch, _boom)
+    now = datetime.now(tz=UTC)
+    token = jwt.encode(
+        {
+            "sub": str(uuid.uuid4()),
+            "iss": base,
+            "exp": int((now + timedelta(minutes=5)).timestamp()),
+        },
+        key,
+        algorithm="EdDSA",
+        headers={"kid": "k"},
+    )
+    with pytest.raises(ExternalServiceError):
+        verify_jwt(token)

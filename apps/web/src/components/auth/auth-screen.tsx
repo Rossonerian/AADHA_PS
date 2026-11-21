@@ -6,34 +6,14 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button, Input, Panel } from "@/components/ui";
 import { Separator } from "@/components/minor/separator";
 import { mockAuthBridge, mocksEnabled } from "@/lib/api";
+import { ApiClientError } from "@/lib/api-client";
+import { classifyAuthError } from "@/lib/auth-errors";
 import { authClient } from "@/lib/neon-auth-client";
 
 type AuthStep = "email" | "password";
 type PasswordMode = "signin" | "signup";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-function formatErrorMessage(err: unknown, fallback: string): string {
-  if (err && typeof err === "object" && "message" in err) {
-    const msg = String((err as { message: unknown }).message ?? "").trim();
-    if (msg) return msg;
-  }
-  return fallback;
-}
-
-function isUnknownUserError(err: unknown): boolean {
-  if (!err || typeof err !== "object") return false;
-  const code = "code" in err ? String((err as { code?: unknown }).code ?? "") : "";
-  const msg = "message" in err ? String((err as { message?: unknown }).message ?? "") : "";
-  const combined = `${code} ${msg}`.toLowerCase();
-  return (
-    code === "USER_NOT_FOUND" ||
-    combined.includes("not found") ||
-    combined.includes("invalid email or password") ||
-    combined.includes("user does not exist") ||
-    combined.includes("no account")
-  );
-}
 
 function GoogleMark() {
   return (
@@ -68,10 +48,12 @@ export function AuthScreen({
   theme,
   onToggleTheme,
   onAuthenticated,
+  notice = "",
 }: {
   theme: "light" | "dark";
   onToggleTheme: () => void;
   onAuthenticated: () => Promise<void>;
+  notice?: string;
 }) {
   const [step, setStep] = useState<AuthStep>("email");
   const [mode, setMode] = useState<PasswordMode>("signin");
@@ -82,7 +64,6 @@ export function AuthScreen({
   const [busyProvider, setBusyProvider] = useState<"google" | "email" | "reset" | null>(null);
   const [error, setError] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
-  const [suggestCreateAccount, setSuggestCreateAccount] = useState(false);
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -117,7 +98,6 @@ export function AuthScreen({
   async function handleGoogleContinue() {
     setError("");
     setStatusMessage("");
-    setSuggestCreateAccount(false);
     setBusyProvider("google");
     try {
       if (mocksEnabled && mockAuthBridge) {
@@ -127,16 +107,19 @@ export function AuthScreen({
       }
       const res = await authClient.signIn.social({
         provider: "google",
-        callbackURL: window.location.origin,
+        callbackURL: `${window.location.origin}/auth/callback`,
+        errorCallbackURL: window.location.origin,
       });
       if (res?.error) {
         throw res.error;
       }
-      // signIn.social redirects the browser on success unless disableRedirect is set;
-      // keep busy indicator only briefly if a popup/redirect didn't immediately unload.
-      await onAuthenticated().catch(() => undefined);
+      if (!res?.data?.url) {
+        // Success without a redirect target means the provider is not wired up.
+        throw { status: 404, message: "Provider not found" };
+      }
+      // The SDK navigates the browser to Google; keep the busy state until it unloads.
     } catch (err) {
-      setError(formatErrorMessage(err, "Google sign-in could not be started. Try again."));
+      setError(classifyAuthError(err, "google").message);
       setBusyProvider(null);
     }
   }
@@ -145,7 +128,6 @@ export function AuthScreen({
     event.preventDefault();
     setError("");
     setStatusMessage("");
-    setSuggestCreateAccount(false);
 
     const trimmed = email.trim();
     if (!EMAIL_PATTERN.test(trimmed)) {
@@ -161,7 +143,6 @@ export function AuthScreen({
   function switchToSignUp() {
     setError("");
     setStatusMessage("");
-    setSuggestCreateAccount(false);
     setMode("signup");
     if (!fullName.trim()) {
       const local = email.trim().split("@", 1)[0] ?? "";
@@ -178,7 +159,6 @@ export function AuthScreen({
     setPassword("");
     setError("");
     setStatusMessage("");
-    setSuggestCreateAccount(false);
     setShowPassword(false);
   }
 
@@ -186,7 +166,6 @@ export function AuthScreen({
     event.preventDefault();
     setError("");
     setStatusMessage("");
-    setSuggestCreateAccount(false);
 
     const normalizedEmail = email.trim();
     if (!EMAIL_PATTERN.test(normalizedEmail)) {
@@ -240,17 +219,20 @@ export function AuthScreen({
       }
       await onAuthenticated();
     } catch (err) {
-      if (mode === "signin" && isUnknownUserError(err)) {
-        setSuggestCreateAccount(true);
-        setError(
-          formatErrorMessage(
-            err,
-            "We could not match that email and password. New here? Create your account below.",
-          ),
-        );
-      } else {
-        setError(formatErrorMessage(err, "Authentication failed. Please try again."));
+      if (mode === "signup" && err instanceof ApiClientError && err.status === 401) {
+        // Account created but no session yet: email verification is required.
+        setStatusMessage("Account created. Check your inbox to verify your email, then sign in.");
+        setMode("signin");
+        setPassword("");
+        return;
       }
+      const failure = classifyAuthError(err);
+      if (failure.kind === "already_exists" && mode === "signup") {
+        setMode("signin");
+        setStatusMessage("You already have an account. Enter your password to sign in.");
+        return;
+      }
+      setError(failure.message);
     } finally {
       setBusyProvider(null);
     }
@@ -259,7 +241,6 @@ export function AuthScreen({
   async function handleForgotPassword() {
     setError("");
     setStatusMessage("");
-    setSuggestCreateAccount(false);
     const normalizedEmail = email.trim();
     if (!EMAIL_PATTERN.test(normalizedEmail)) {
       setError("Enter your email address first so we know where to send the reset link.");
@@ -282,9 +263,7 @@ export function AuthScreen({
         `If an account exists for ${normalizedEmail}, password reset instructions have been sent.`,
       );
     } catch (err) {
-      setError(
-        formatErrorMessage(err, "Could not start password reset. Please try again shortly."),
-      );
+      setError(classifyAuthError(err).message);
     } finally {
       setBusyProvider(null);
     }
@@ -522,6 +501,11 @@ export function AuthScreen({
           )}
 
           <div id="auth-feedback" aria-live="polite" className="pp-auth-feedback">
+            {notice && !error && !statusMessage && (
+              <Alert variant="info" className="mt-3">
+                <AlertDescription>{notice}</AlertDescription>
+              </Alert>
+            )}
             {statusMessage && (
               <Alert variant="info" className="mt-3">
                 <AlertDescription>{statusMessage}</AlertDescription>
@@ -531,16 +515,6 @@ export function AuthScreen({
               <Alert variant="destructive" className="mt-3">
                 <AlertDescription>
                   <span>{error}</span>
-                  {suggestCreateAccount && mode === "signin" && (
-                    <Button
-                      type="button"
-                      variant="secondary"
-                      className="mt-2 w-full"
-                      onClick={switchToSignUp}
-                    >
-                      Create account for {email}
-                    </Button>
-                  )}
                 </AlertDescription>
               </Alert>
             )}
