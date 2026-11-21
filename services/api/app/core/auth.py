@@ -87,15 +87,39 @@ def _resolve_jwks_urls(token: str, current_settings: Settings) -> list[str]:
     return candidates
 
 
+def _trusted_issuer_origins(jwks_url: str) -> set[str]:
+    """Origins a token `iss` may legitimately carry.
+
+    Better Auth derives `iss` from the request origin it sees. Behind the Next.js auth
+    proxy that is the web app origin (CORS origin), not the Neon Auth host, so accept the
+    JWKS host, the configured Neon Auth base URL and the configured web origins. The
+    signature is still verified against the pinned JWKS, so this is defence in depth.
+    """
+    current = get_settings()
+    origins = {
+        _extract_origin(jwks_url),
+        _extract_origin(current.neon_auth_base_url),
+        _extract_origin(current.neon_auth_jwks_url),
+    }
+    origins.update(_extract_origin(origin) for origin in current.cors_origins_list)
+    origins.update(
+        _extract_origin(origin)
+        for origin in current.neon_auth_extra_issuers.split(",")
+        if origin.strip()
+    )
+    origins.discard("")
+    return origins
+
+
 def _check_issuer(claims: dict[str, Any], jwks_url: str) -> None:
-    """Reject tokens whose `iss` origin differs from the JWKS host that signed them."""
+    """Reject tokens whose `iss` origin is not one of the trusted origins."""
     iss = claims.get("iss")
     if not isinstance(iss, str) or not iss:
         return
-    expected = _extract_origin(jwks_url)
     actual = _extract_origin(iss)
-    if expected and actual and expected != actual:
-        raise jwt.InvalidIssuerError("Token issuer does not match the JWKS origin")
+    trusted = _trusted_issuer_origins(jwks_url)
+    if actual and trusted and actual not in trusted:
+        raise jwt.InvalidIssuerError("Token issuer is not trusted")
 
 
 def verify_jwt(token: str) -> dict[str, Any]:
