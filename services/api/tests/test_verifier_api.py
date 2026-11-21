@@ -380,10 +380,15 @@ def test_platform_app_mounts_verifier_routes_with_auth(migrated_db, make_jwt):
         assert advice.json()["error"]["code"] == "ADVICE_NOT_SUPPORTED"
 
 
-def test_verify_without_openrouter_key_degrades_to_basic_red_flags(
-    db_session, make_jwt, monkeypatch
+@pytest.mark.parametrize(
+    "failure", ["missing_key", "rate_limit", "timeout", "provider_5xx"]
+)
+def test_verify_extraction_outage_degrades_to_basic_red_flags(
+    db_session, make_jwt, monkeypatch, failure
 ):
+    from app.core import llm
     from app.core.config import get_settings
+    from app.core.errors import ExternalServiceError
     from app.core.guardrails import check_output
     from app.core.models import UserRecord
     from app.main import create_app
@@ -393,6 +398,12 @@ def test_verify_without_openrouter_key_degrades_to_basic_red_flags(
     db_session.commit()
 
     monkeypatch.setenv("OPENROUTER_API_KEY", "")
+    if failure != "missing_key":
+
+        def unavailable(*args, **kwargs):
+            raise ExternalServiceError(f"OpenRouter unavailable: {failure}")
+
+        monkeypatch.setattr(llm, "complete", unavailable)
     get_settings.cache_clear()
     try:
         application = create_app()
@@ -406,9 +417,21 @@ def test_verify_without_openrouter_key_degrades_to_basic_red_flags(
                 },
                 headers=headers,
             )
+            cached = platform_client.post(
+                "/api/v1/verify",
+                json={
+                    "text": "TCS will rise to 4200 next week. Guaranteed returns, act now!"
+                },
+                headers=headers,
+            )
         assert response.status_code == 200
         body = response.json()
         assert body["mode"] == "basic"
+        assert body["extraction_available"] is False
+        assert cached.status_code == 200
+        assert cached.json()["mode"] == "basic"
+        assert cached.json()["extraction_available"] is False
+        assert cached.json()["submission_id"] == body["submission_id"]
         assert body["data_origin"] == "real"
         assert body["claim"]["status"] == "needs_review"
         assert body["claim"]["scorable"] is False

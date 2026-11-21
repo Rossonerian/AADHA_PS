@@ -77,7 +77,13 @@ function Alert({
       {...props}
     >
       {node}
-      {children}
+      {React.Children.map(children, (child) =>
+        typeof child === "string" || typeof child === "number" ? (
+          <div className="col-start-2 min-w-0">{child}</div>
+        ) : (
+          child
+        ),
+      )}
     </div>
   );
 }
