@@ -57,7 +57,12 @@ def _token(key: ed25519.Ed25519PrivateKey, **overrides: Any) -> str:
 
 
 @pytest.mark.parametrize(
-    "iss", [WEB_ORIGIN, "https://ep-test.neonauth.c-3.ap-southeast-1.aws.neon.tech", NEON_BASE]
+    "iss",
+    [
+        WEB_ORIGIN,
+        "https://ep-test.neonauth.c-3.ap-southeast-1.aws.neon.tech",
+        NEON_BASE,
+    ],
 )
 def test_neon_shaped_token_accepted_for_known_issuers(
     signer: ed25519.Ed25519PrivateKey, iss: str
@@ -69,7 +74,10 @@ def test_neon_shaped_token_accepted_for_known_issuers(
 def test_token_without_iss_accepted(signer: ed25519.Ed25519PrivateKey) -> None:
     now = datetime.now(tz=UTC)
     token = jwt.encode(
-        {"sub": str(uuid.uuid4()), "exp": int((now + timedelta(minutes=5)).timestamp())},
+        {
+            "sub": str(uuid.uuid4()),
+            "exp": int((now + timedelta(minutes=5)).timestamp()),
+        },
         signer,
         algorithm="EdDSA",
         headers={"kid": "k1"},
