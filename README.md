@@ -108,6 +108,9 @@ Templates with safe placeholder values live in [`.env.example`](.env.example).
 | `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_ENDPOINT_URL_S3`, `AWS_REGION` | Vercel, Local | Neon S3-compatible Object Storage credentials (`assets` bucket) |
 | `NEON_REALTIME_URL`, `NEON_REALTIME_SECRET`, `NEXT_PUBLIC_NEON_REALTIME_URL` | Vercel, Local | Neon Realtime WebSocket endpoint and signing secret |
 | `OPENROUTER_API_KEY`, `OPENROUTER_DEFAULT_MODEL`, `OPENROUTER_BASE_URL` | Render, Local | OpenRouter LLM credentials and model (`nvidia/nemotron-3.5-lightning:free`) |
+| `GEMINI_API_KEY`, `GEMINI_TRANSCRIBE_MODEL` | Render, Local | Google AI Studio key and video transcription model; GOOGLE_AI_STUDIO_API_KEY is an optional alias, not a second key |
+| `TAVILY_API_KEY`, `WEB_SEARCH_PROVIDER` | Render, Local | Tavily general search; set provider to `tavily`. WEB_SEARCH_API_KEY is an optional fallback alias |
+| `TIP_QUALITY_WEIGHT` | Render, Local | Keep `0` until independent validation and manual approval |
 | `FINNHUB_API_KEY` | Render, Local | Finnhub factual quotes/profile key for `/api/v1/nasdaq-verifier/*` |
 | `MARKET_DATA_DIR`, `MARKET_DATA_MAX_STALE_DAYS` | Render, Local | Seed/cache path (`data/seed/market`) and stale-refresh warning threshold |
 | `RATE_LIMIT_ENABLED`, `RATE_LIMIT_WINDOW_SECONDS`, `RATE_LIMIT_USER_PER_WINDOW`, `RATE_LIMIT_IP_PER_WINDOW` | Render, Local | Sliding-window rate limiter configuration (`true`, `60s`, `20/user`, `60/IP`) |

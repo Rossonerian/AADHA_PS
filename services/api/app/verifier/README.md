@@ -16,7 +16,7 @@ app.include_router(create_router(VerifierService(session_factory, bindings), aut
 
 `session_factory` is a synchronous SQLAlchemy session factory. `current_user` must enforce authentication and return the platform UUID and level. Level 1–2 `/verify` returns `mode="basic"` and null rating facts, label, and score; `/submissions/mine` hides outcomes below Level 3 and source detail requires Level 3. A source score is displayed only after five scored calls. Private submissions are owner-only. Pasted or OCR content and YouTube transcripts can be checked but do not contribute to a public author rating; a transcript does not establish visibility or who made a claim. Edited, forwarded, or otherwise unattributable Telegram captures are not historical rating evidence.
 
-Alembic follows the platform's linear revision chain. Verifier v2 chains `20261121_verifier_v2` after `20261121_submission_owner_fk`; the owner FK is already part of that history. Apply the reviewed platform migration chain before mounting or seeding; never apply production migrations as a local test.
+Alembic's current single head, `20261121_merge_verifier_profiles`, joins the independently merged Verifier v2 and profile revisions after `20261121_submission_owner_fk`. The merge adds no schema/data operations. For a complete rollback of both branches, name `20261121_submission_owner_fk` explicitly; relative `-1` is ambiguous at a merge point. Apply only the reviewed migration history before mounting or seeding; never apply production migrations as a local test.
 
 Three evidence bindings are not in SoT §5: `market_cap_bucket(symbol, date)`, `post_deleted(canonical_public_url)`, and `nominal_price_basis(symbol, start, end)`. Supply them only from authoritative observations. Without them, unknown cap and deletion produce no flag, and two-barrier claims stay open rather than comparing nominal prices to potentially incompatible adjusted OHLCV. Linked tips without publication evidence are never scored using the date on which they were found. Price windows use completed NSE sessions after the post; one-session relative claims use that session's open and close. Indistinguishable target/stop order goes to review rather than counting as a win or loss. Confirmed deleted posts stop appearing in shared recent claims but remain in aggregate evidence.
 
@@ -49,8 +49,8 @@ SEBI enforcement and display-only search links. `claim` remains the first claim;
 quality score is serialized. Existing eligibility remains conservative, including
 YouTube uploader attribution.
 
-Exa is the sole search adapter: URL/title/page text plus explicit nullable
-`publishedDate`; unknown publication dates stay null. No query
+Tavily is the sole search adapter: URL/title/content plus optional
+`published_date` (ISO or RFC date); unknown publication dates stay null. No query
 contains submitted tip text or learner information. Titles are guardrail checked;
 search snippets are not presented as verified quotations. Gemini accepts only
 canonical public YouTube URLs and transcribes verbatim through `core.transcribe`.
@@ -70,3 +70,12 @@ prove that a historical nominal target shares their basis. Without that evidence
 required-move, target base-rate and stop/reward distances stay null; other
 historical facts may remain available. Risk distances are descriptive only and
 do not offset a harder target in the private quality formula.
+
+For the complete Verifier, enter `OPENROUTER_API_KEY`, `GEMINI_API_KEY`,
+`TAVILY_API_KEY` and `FINNHUB_API_KEY` in the API environment. Tavily uses
+`WEB_SEARCH_PROVIDER=tavily`; `WEB_SEARCH_API_KEY` remains an optional legacy
+alias if `TAVILY_API_KEY` is unset. `GOOGLE_AI_STUDIO_API_KEY` is likewise an
+optional alias for Gemini, not a second required key. Root `.env.example` labels
+Neon connection values, generated secrets, and settings that can keep defaults.
+General/basic Tavily search requests publication dates, disables generated
+answers/raw-page downloads, and retains the 24-hour cache.

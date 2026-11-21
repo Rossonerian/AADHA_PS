@@ -175,6 +175,45 @@ Need from: Arnav/Hardhik — review separate seed correction. V2 does not silent
 _Append updates here._
 
 ```text
+[Verifier v2] MAJOR | Independently merged profile and Verifier revisions left main with two Alembic heads
+Impact: Fresh upgrade head and migration-backed tests fail on main after PRs #16/#17 merged; this is separate from the Tavily adapter.
+Options: Include an empty merge revision joining 20261121_verifier_v2 and 20261121_user_profiles (implemented for review; no schema/data changes). Keep the full v2 downgrade tests, not just a no-op merge round-trip.
+Need from: Hardhik — review the integration merge revision in the follow-up PR before deployment. No production migration applied.
+```
+
+```text
+[Verifier v2] 95% | Tavily follow-up: final acceptance in progress (2026-11-21)
+Done: Switched the sole web-search adapter to Tavily at the user's request. Requests general/basic search with publication dates, no generated answers or raw page content; preserves 24-hour cache, display-only mentions, guardrails and weight 0. TAVILY_API_KEY is canonical; WEB_SEARCH_API_KEY is a fallback alias. Updated .env.example with provider keys, shared Neon settings, generated secrets, service placement and defaults; no real .env file edited.
+Next: Confirm CI on the new feat/verifier-tavily follow-up PR (#16 was merged by others during this task).
+Minor: Tavily published_date supports ISO and RFC dates; absent/invalid dates remain null. Quota 432/433 is typed and not retried. Only one Gemini key is required; its legacy alias is commented out in the example.
+Blockers: none for this follow-up; existing v0 data/F1 decisions remain unchanged.
+```
+
+### Tavily follow-up API checks (Python 3.11.16, updated main)
+
+All Postgres checks use disposable private schemas. No provider HTTP is live in tests; no production migrations or .env writes were performed.
+
+```text
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m pytest services/api/tests -q
+415 passed, 1 warning in 181.18s (0:03:01)
+$ .venv/Scripts/python.exe -m ruff check services/api infra db/migrations
+All checks passed!
+$ .venv/Scripts/python.exe -m black --check services/api infra db/migrations
+All done!
+124 files would be left unchanged.
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m mypy services/api/app
+Success: no issues found in 71 source files
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m alembic -c db/alembic.ini heads
+20261121_merge_verifier_profiles (head)
+```
+
+### Tavily follow-up environment check
+
+The example parses with four provider keys: OPENROUTER_API_KEY, GEMINI_API_KEY, TAVILY_API_KEY, FINNHUB_API_KEY. WEB_SEARCH_PROVIDER=tavily and TIP_QUALITY_WEIGHT=0. Optional alias lines are comments; the shared postgresql:// URL is valid for Node and normalized to psycopg by the API. Google OAuth Client ID/Secret are configured in the Neon Console, separately from the Google AI Studio Gemini key.
+
+
+
+```text
 [Verifier v2] 100% | Phase 8/8: Backend implementation and acceptance complete (2026-11-21)
 Done: All eight implementation phases passed their gates. Python 3.11.16 full local suite: 398 passed, 1 warning, zero skips/errors; Ruff/Black/mypy green. CI run 44850097125 passed API (Postgres 16 migrations and all 398 tests) and Web (lint, formatting, types, build). PR #16: https://github.com/Rossonerian/AADHA_PS/pull/16. Only contracts.ts changed under apps/web; no Education implementation changes. SoT copies match. No production migration or production seed write.
 Next: Hardhik reviews core/transcribe.py, core/web_search.py, config and migration on PR #16; UI owner can render the additive contracts. Configure Gemini/Exa keys before enabling provider calls. Leave PR unmerged.

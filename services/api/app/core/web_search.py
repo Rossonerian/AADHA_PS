@@ -1,8 +1,9 @@
-"""Exa web search; cached excerpts are display evidence, never rating inputs."""
+"""Tavily web search; cached excerpts are display evidence, never rating inputs."""
 
 import hashlib
 from collections import OrderedDict
-from datetime import datetime
+from datetime import UTC, datetime
+from email.utils import parsedate_to_datetime
 from threading import Lock
 from time import monotonic
 from typing import Literal
@@ -47,15 +48,32 @@ _cache: OrderedDict[tuple[str, str, int], tuple[float, list[SearchResult]]] = (
 _lock = Lock()
 
 
+def _published_at(value: object) -> datetime | None:
+    """Accept provider ISO/RFC dates; never infer a date from a snippet."""
+    if not isinstance(value, str) or not value.strip():
+        return None
+    try:
+        result = datetime.fromisoformat(value.strip())
+    except ValueError:
+        try:
+            result = parsedate_to_datetime(value.strip())
+        except (ValueError, TypeError, OverflowError):
+            return None
+    return (
+        result.replace(tzinfo=UTC) if result.tzinfo is None else result.astimezone(UTC)
+    )
+
+
 def web_search(query: str, *, limit: int = 5) -> list[SearchResult]:
-    """One adapter. Preserve explicit publishedDate; unknown dates remain null."""
+    """One adapter. Preserve Tavily published_date; unknown dates remain null."""
     if not query.strip() or len(query) > 600 or not 1 <= limit <= 20:
         raise SearchError("INVALID_SEARCH")
     settings = get_settings()
-    if settings.web_search_provider != "exa" or not settings.web_search_api_key:
+    api_key = settings.tavily_api_key or settings.web_search_api_key
+    if settings.web_search_provider != "tavily" or not api_key:
         raise SearchError("SEARCH_NOT_CONFIGURED")
     key = (
-        hashlib.sha256(settings.web_search_api_key.encode()).hexdigest(),
+        hashlib.sha256(api_key.encode()).hexdigest(),
         query,
         limit,
     )
@@ -77,14 +95,19 @@ def web_search(query: str, *, limit: int = 5) -> list[SearchResult]:
                     attempt,
                     client.stream(
                         "POST",
-                        "https://api.exa.ai/search",
+                        "https://api.tavily.com/search",
                         json={
                             "query": query,
-                            "numResults": limit,
-                            "type": "auto",
-                            "contents": {"text": {"maxCharacters": 4000}},
+                            "max_results": limit,
+                            "topic": "general",
+                            "search_depth": "basic",
+                            "include_published_date": True,
+                            "include_answer": False,
+                            "include_raw_content": False,
+                            "include_images": False,
+                            "auto_parameters": False,
                         },
-                        headers={"x-api-key": settings.web_search_api_key},
+                        headers={"Authorization": f"Bearer {api_key}"},
                     ) as response,
                 ):
                     response.raise_for_status()
@@ -114,8 +137,8 @@ def web_search(query: str, *, limit: int = 5) -> list[SearchResult]:
                             SearchResult(
                                 url=url,
                                 title=row["title"],
-                                snippet=row.get("text") or "",
-                                published_at=row.get("publishedDate"),
+                                snippet=(row.get("content") or "")[:4000],
+                                published_at=_published_at(row.get("published_date")),
                             )
                         )
         with _lock:
@@ -128,7 +151,11 @@ def web_search(query: str, *, limit: int = 5) -> list[SearchResult]:
         raise SearchError(
             "SEARCH_RATE_LIMITED"
             if exc.response.status_code == 429
-            else "SEARCH_UNAVAILABLE"
+            else (
+                "SEARCH_QUOTA_EXCEEDED"
+                if exc.response.status_code in (432, 433)
+                else "SEARCH_UNAVAILABLE"
+            )
         ) from None
     except (
         httpx.HTTPError,

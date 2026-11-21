@@ -13,14 +13,15 @@ from app.core.web_search import SearchError, _cache, web_search
 
 VIDEO = "https://www.youtube.com/watch?v=abcdefghijk"
 GEMINI = "https://generativelanguage.googleapis.com/v1beta/interactions"
-EXA = "https://api.exa.ai/search"
+TAVILY = "https://api.tavily.com/search"
 
 
 @pytest.fixture(autouse=True)
 def config(monkeypatch):
     monkeypatch.setenv("GEMINI_API_KEY", "fixture-key")
-    monkeypatch.setenv("WEB_SEARCH_API_KEY", "fixture-search-key")
-    monkeypatch.setenv("WEB_SEARCH_PROVIDER", "exa")
+    monkeypatch.setenv("TAVILY_API_KEY", "fixture-search-key")
+    monkeypatch.setenv("WEB_SEARCH_API_KEY", "")
+    monkeypatch.setenv("WEB_SEARCH_PROVIDER", "tavily")
     get_settings.cache_clear()
     _cache.clear()
     yield
@@ -135,26 +136,34 @@ def test_search_cache_is_24_hours_defensive_and_does_not_invent_publication(
 
     clock = [0.0]
     monkeypatch.setattr(module, "monotonic", lambda: clock[0])
-    route = respx.post(EXA).respond(
+    route = respx.post(TAVILY).respond(
         json={
             "results": [
                 {
                     "url": "https://example.org/post",
                     "title": "Discussion",
-                    "text": "Page text",
+                    "content": "Page text",
                 },
                 {
                     "url": "https://example.org/dated",
                     "title": "Dated discussion",
-                    "text": "Page text",
-                    "publishedDate": "2024-01-01T00:00:00Z",
+                    "content": "Page text",
+                    "published_date": "Tue, 11 Mar 2025 17:00:00 GMT",
                 },
             ]
         }
     )
     first = web_search('"desk" "telegram"', limit=3)
     assert first[0].published_at is None
-    assert first[1].published_at.year == 2024
+    assert first[1].published_at.isoformat() == "2025-03-11T17:00:00+00:00"
+    request = route.calls[0].request
+    assert request.headers["Authorization"] == "Bearer fixture-search-key"
+    payload = json.loads(request.content)
+    assert payload["topic"] == "general" and payload["max_results"] == 3
+    assert payload["include_published_date"] is True
+    assert (
+        payload["include_answer"] is False and payload["include_raw_content"] is False
+    )
     first[0].title = "mutated"
     clock[0] = 86399
     assert web_search('"desk" "telegram"', limit=3)[0].title == "Discussion"
@@ -167,7 +176,7 @@ def test_search_cache_is_24_hours_defensive_and_does_not_invent_publication(
 @pytest.mark.parametrize("failure", ["timeout", "limit", "payload"])
 @respx.mock
 def test_search_failure_is_typed_and_not_cached(failure):
-    route = respx.post(EXA)
+    route = respx.post(TAVILY)
     if failure == "timeout":
         route.side_effect = httpx.ReadTimeout("provider details")
     elif failure == "limit":
@@ -178,6 +187,61 @@ def test_search_failure_is_typed_and_not_cached(failure):
         web_search("fixture desk", limit=2)
     assert "provider details" not in str(error.value)
     assert not _cache
+
+
+@pytest.mark.parametrize("status", [432, 433])
+@respx.mock
+def test_tavily_quota_errors_are_not_retried_or_cached(status):
+    route = respx.post(TAVILY).respond(status, text="private quota details")
+    with pytest.raises(SearchError) as error:
+        web_search("fixture desk", limit=2)
+    assert error.value.code == "SEARCH_QUOTA_EXCEEDED"
+    assert route.call_count == 1 and not _cache
+    assert "private quota" not in str(error.value)
+
+
+@pytest.mark.parametrize(
+    "published,expected",
+    [
+        ("2024-01-01T10:00:00Z", "2024-01-01T10:00:00+00:00"),
+        ("unknown", None),
+        (None, None),
+    ],
+)
+@respx.mock
+def test_tavily_optional_dates_and_content_limit(published, expected):
+    respx.post(TAVILY).respond(
+        json={
+            "results": [
+                {
+                    "url": "https://example.org/post",
+                    "title": "Discussion",
+                    "content": "x" * 5000,
+                    "published_date": published,
+                }
+            ]
+        }
+    )
+    result = web_search("fixture desk")[0]
+    assert len(result.snippet) == 4000
+    assert (
+        result.published_at.isoformat() if result.published_at else None
+    ) == expected
+
+
+@respx.mock
+def test_tavily_key_precedence_and_legacy_alias(monkeypatch):
+    monkeypatch.setenv("WEB_SEARCH_API_KEY", "legacy-key")
+    get_settings.cache_clear()
+    route = respx.post(TAVILY).respond(json={"results": []})
+    web_search("fixture desk")
+    assert (
+        route.calls[-1].request.headers["Authorization"] == "Bearer fixture-search-key"
+    )
+    monkeypatch.setenv("TAVILY_API_KEY", "")
+    get_settings.cache_clear()
+    web_search("fixture desk")
+    assert route.calls[-1].request.headers["Authorization"] == "Bearer legacy-key"
 
 
 def test_config_cannot_silently_enable_an_invalid_weight():
