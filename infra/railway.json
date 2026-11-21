@@ -5,6 +5,7 @@
     "dockerfilePath": "infra/Dockerfile.api"
   },
   "deploy": {
+    "preDeployCommand": ["alembic -c /app/db/alembic.ini upgrade head"],
     "healthcheckPath": "/api/v1/health",
     "healthcheckTimeout": 60,
     "restartPolicyType": "ON_FAILURE",

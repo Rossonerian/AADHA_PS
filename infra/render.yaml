@@ -6,6 +6,8 @@ services:
     dockerContext: .
     plan: starter
     healthCheckPath: /api/v1/health
+    # Runs before each deploy goes live (paid plans only); failure aborts the deploy.
+    preDeployCommand: alembic -c /app/db/alembic.ini upgrade head
     envVars:
       - key: APP_ENV
         value: production
@@ -39,8 +41,24 @@ services:
         value: nvidia/nemotron-3.5-lightning:free
       - key: OPENROUTER_BASE_URL
         value: https://openrouter.ai/api/v1
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_TRANSCRIBE_MODEL
+        value: gemini-4-hydrogen
+      - key: WEB_SEARCH_PROVIDER
+        value: tavily
+      - key: TAVILY_API_KEY
+        sync: false
+      - key: TIP_QUALITY_WEIGHT
+        value: "0"
       - key: FINNHUB_API_KEY
         sync: false
+      - key: LOG_LEVEL
+        value: INFO
+      - key: EDU_PASS_ACCURACY
+        value: "0.70"
+      - key: EDU_MAX_BRIER
+        value: "0.25"
       - key: MARKET_DATA_DIR
         value: data/seed/market
       - key: MARKET_DATA_MAX_STALE_DAYS
