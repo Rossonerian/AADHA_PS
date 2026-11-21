@@ -17,11 +17,19 @@ from .extraction import (
     reject_advice_request,
 )
 from .ingestion import CapturedTip, ingest
-from .models import Claim, Source, SourceMention, SourceRatingHistory, Submission
+from .models import Claim, Source, SourceMention, Submission
 from .ports import MARKET_TZ, SessionFactory, VerifierCore
-from .provider_profile import refresh
+from .provider_profile import (
+    MentionResult,
+    apply_enforcement,
+    apply_mentions,
+    fetch_mentions,
+    needs_mention_refresh,
+    refresh,
+)
 from .red_flags import collect_flags
 from .repository import (
+    rating_history,
     save_submission,
     source_for,
     source_view,
@@ -162,6 +170,12 @@ class VerifierService:
             origin=DataOrigin.REAL,
             core=self.core,
         )
+        # Network I/O happens here, before the source row lock is taken below.
+        mentions = (
+            self._fetch_mentions_unlocked(tip.platform, handle)
+            if public and not degraded
+            else None
+        )
         with self.sessions() as session, session.begin():
             source = source_for(session, tip.platform, handle, DataOrigin.REAL)
             existing = submission_for(session, owner, digest)
@@ -247,7 +261,9 @@ class VerifierService:
                 )
             session.flush()
             if public and not degraded:
-                refresh(session, source, self.core)
+                if not handle.startswith("private-"):
+                    apply_enforcement(source)
+                    apply_mentions(session, source, mentions or [])
                 if counts_toward_rating:
                     update_rating(session, source)
             return self._verification(session, submission, stored, mode)
@@ -285,14 +301,7 @@ class VerifierService:
             recent = session.scalars(
                 query.order_by(Submission.captured_at.desc(), Claim.id).limit(20)
             )
-            history = session.scalars(
-                select(SourceRatingHistory)
-                .where(
-                    SourceRatingHistory.source_id == source_id,
-                    SourceRatingHistory.label != "not_enough_history",
-                )
-                .order_by(SourceRatingHistory.changed_at, SourceRatingHistory.id)
-            )
+            history = rating_history(session, source_id)
             return SourceResponse(
                 source=self._source_view(session, source),
                 history=[
@@ -328,6 +337,34 @@ class VerifierService:
                 ],
                 data_origin=DataOrigin(source.data_origin),
             )
+
+    def _fetch_mentions_unlocked(
+        self, platform: str, handle: str
+    ) -> list[MentionResult] | None:
+        """Staleness check (read-only session), then network fetch with no transaction open.
+
+        Returns None when no refresh is due. The caller stores the result under the lock.
+        """
+        if handle.startswith("private-"):
+            return None
+        with self.sessions() as session:
+            source = session.scalar(
+                select(Source).where(
+                    Source.platform == platform,
+                    Source.handle == handle,
+                    Source.data_origin == DataOrigin.REAL,
+                )
+            )
+            # A source not yet created has no mentions; a transient row with no id
+            # reads as "never fetched" in `needs_mention_refresh`.
+            probe = source or Source(
+                platform=platform, handle=handle, data_origin=DataOrigin.REAL
+            )
+            if not needs_mention_refresh(session, probe, self.core):
+                return None
+        return fetch_mentions(
+            handle=handle, platform=platform, origin=DataOrigin.REAL, core=self.core
+        )
 
     @staticmethod
     def _mentions_stale(session: Session, source: Source) -> bool:

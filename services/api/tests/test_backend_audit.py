@@ -130,6 +130,55 @@ def test_fetch_mentions_needs_no_session_and_write_is_separate(vsessions):
     assert check_output  # guard import used by the core fixture
 
 
+def test_verify_fetches_mentions_before_taking_the_source_lock(tmp_path, monkeypatch):
+    from app.verifier import service as verifier_service
+    from app.verifier.ingestion import CapturedTip
+    from app.verifier.models import SourceMention
+    from app.verifier.provider_profile import MentionResult
+    from app.verifier.schemas import VerifyRequest
+
+    engine = create_engine(f"sqlite:///{tmp_path / 'lock_order.db'}")
+    Base.metadata.create_all(engine)
+    sessions = sessionmaker(engine)
+    opened: list[Session] = []
+
+    def tracked_session() -> Session:
+        session = sessions()
+        opened.append(session)
+        return session
+
+    now = datetime.now(UTC)
+    text = "TCS will rise; target 120; stop 90."
+    tip = CapturedTip(
+        text=text,
+        platform="telegram",
+        handle="Lock-Order-Desk",
+        content_hash="a" * 64,
+        captured_at=now,
+        published_at=now,
+        post_url="https://t.me/lock_order/1",
+        author_verified=True,
+    )
+    monkeypatch.setattr(verifier_service, "ingest", lambda **_: tip)
+    calls: list[bool] = []
+
+    def spy_fetch(**kwargs):
+        # No session may hold an open transaction (and so a row lock) during HTTP.
+        calls.append(any(s.in_transaction() for s in opened))
+        return [MentionResult("https://example.org/mention", "Public", None)]
+
+    monkeypatch.setattr(verifier_service, "fetch_mentions", spy_fetch)
+    service = verifier_service.VerifierService(
+        tracked_session, v2_core(search=lambda query, *, limit: [])
+    )
+    service.verify(uuid.uuid4(), 3, VerifyRequest(text=text))
+    assert calls == [False]
+    with sessions() as db:
+        stored = db.scalars(select(SourceMention)).all()
+        assert [m.url for m in stored] == ["https://example.org/mention"]
+    engine.dispose()
+
+
 # ---- 3. ensure_user race-safety --------------------------------------------
 
 
