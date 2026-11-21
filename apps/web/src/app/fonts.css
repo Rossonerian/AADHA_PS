@@ -1,5 +1,7 @@
-@import "@fontsource/ibm-plex-mono/400.css";
-@import "@fontsource/ibm-plex-mono/500.css";
+/* IBM Plex Mono is loaded via next/font/local in layout.tsx (no render-blocking @import). */
+html.plex-mono {
+  --font-mono: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
 
 @font-face {
   font-family: "Kevin Sans";

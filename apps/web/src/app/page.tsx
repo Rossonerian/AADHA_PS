@@ -14,7 +14,8 @@ import {
   Sparkles,
   Sun,
 } from "lucide-react";
-import { DashboardCharts, ExplainChart, ScenarioChart, chartHasIndex } from "@/components/charts";
+import { chartHasIndex } from "@/components/lazy/chart-utils";
+import { DashboardCharts, ExplainChart, ScenarioChart } from "@/components/lazy/lazy-charts";
 import {
   Alert,
   Avatar,
@@ -66,10 +67,9 @@ import type { LessonCheckResponse } from "@/lib/contracts";
 import { AUTH_EXPIRED_EVENT, SESSION_EXPIRED_MESSAGE } from "@/lib/auth-errors";
 import { AuthScreen } from "@/components/auth/auth-screen";
 import { avatarInitials } from "@/components/auth/profile-options";
-import { ProfilePanel } from "@/components/auth/profile-panel";
 import { ProfileOnboarding } from "@/components/onboarding/profile-onboarding";
 import { AvatarImage } from "@/components/ui/avatar";
-import { NasdaqVerifier } from "@/components/nasdaq-verifier";
+import { NasdaqVerifier, ProfilePanel } from "@/components/lazy/lazy-views";
 
 type View =
   | "home"
