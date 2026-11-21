@@ -58,7 +58,9 @@ def persistence_engine(
         pytest.skip(
             "Set VERIFIER_POSTGRES_TEST_URL for isolated-schema Postgres checks"
         )
-    admin = create_engine(url)
+    # Managed Postgres may close an idle admin connection while the test runs.
+    # Check it before cleanup; do not suppress a failed assertion or DROP.
+    admin = create_engine(url, pool_pre_ping=True)
     schema = "verifier_acceptance_" + uuid4().hex
     assert (
         schema.startswith("verifier_acceptance_") and schema.replace("_", "").isalnum()
@@ -231,7 +233,8 @@ def test_migrations_down_up_preserve_submissions_and_enforce_owner(persistence_e
         db.commit()
         sid = submission.id
         migrate(db, "20261120_01_edu", downgrade=True)
-        assert db.get(Submission, sid) is not None
+        # The old schema has no transcript column; verify retention by its stable key.
+        assert db.scalar(select(Submission.id).where(Submission.id == sid)) == sid
         assert not inspect(db.connection()).has_table("nasdaq_challenges")
         migrate(db, "head")
         assert db.get(Submission, sid) is not None

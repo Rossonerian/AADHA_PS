@@ -120,6 +120,17 @@ Templates with safe placeholder values live in [`.env.example`](.env.example).
 - **Render:** Hosts the Python 3.11 FastAPI service (`alembic -c db/alembic.ini upgrade head && uvicorn app.main:app --app-dir services/api --host 0.0.0.0 --port $PORT`, health check `/api/v1/health`) and daily cron (`infra/scripts/daily_job.py`).
 - **Vercel:** Deploys Next.js from `apps/web` with Neon service env vars, `NEXT_PUBLIC_USE_MOCKS=false`, and `NEXT_PUBLIC_API_URL` pointing to the Render `/api/v1` base.
 
+### Google OAuth & Neon Auth Setup (Human Console Step)
+
+"Continue with Google" uses Neon Managed Better Auth (`authClient.signIn.social({ provider: "google" })`) and requires one-time console configuration outside git:
+
+1. In the **Neon Console**, open **Project → Auth → Providers → Google** and copy the **Authorized redirect URI** shown for your Neon Auth instance.
+2. In **Google Cloud Console**, open **APIs & Services → Credentials → Create Credentials → OAuth client ID** (`Web application`), add the Neon Auth callback URL to **Authorized redirect URIs**, and save the generated Client ID and Client Secret.
+3. Back in the **Neon Console** Google provider panel, paste the Google Client ID and Client Secret and enable the Google provider.
+4. Under **Neon Console → Auth → Domains / Trusted Origins**, add `http://localhost:3000`, `https://aadha-ps.vercel.app`, and any Vercel preview domains you test on.
+
+No extra Next.js or FastAPI environment variables are needed beyond `NEON_AUTH_BASE_URL`, `NEON_AUTH_JWKS_URL`, and `NEON_AUTH_COOKIE_SECRET` (Google OAuth secrets live exclusively in the Neon Auth console).
+
 ## Repository Layout & Ownership
 
 ```text

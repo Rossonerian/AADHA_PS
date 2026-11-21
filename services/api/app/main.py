@@ -21,6 +21,9 @@ from app.education.router import router as education_router
 from app.education.unlocks import get_user_unlocks
 from app.nasdaq_verifier.gate import missing_requirements, read_gate_inputs
 from app.nasdaq_verifier.router import router as nasdaq_router
+from app.profiles.router import router as profiles_router
+from app.profiles.schemas import UserProfileOut
+from app.profiles.service import get_or_create_profile
 from app.verifier.router import router as verifier_router
 
 _logger = get_logger("paisaproof.main")
@@ -92,15 +95,21 @@ def create_app() -> FastAPI:
         unlocks = get_user_unlocks(db, user.id, user.level)
         if not missing_requirements(user, read_gate_inputs(db, user)):
             unlocks = [*unlocks, "nasdaq_verifier"]
+        profile_record = get_or_create_profile(db, user.id, fallback_name=user.name)
         return {
             "id": user.id,
-            "name": user.name,
+            "name": profile_record.display_name or user.name,
             "level": user.level,
             "unlocks": unlocks,
+            "profile": UserProfileOut.model_validate(profile_record).model_dump(
+                mode="json"
+            ),
+            "onboarding_completed": profile_record.onboarding_completed_at is not None,
             "data_origin": "real",
         }
 
     application.include_router(education_router, prefix="/api/v1")
+    application.include_router(profiles_router, prefix="/api/v1")
     application.include_router(verifier_router, prefix="/api/v1")
     application.include_router(nasdaq_router, prefix="/api/v1")
 

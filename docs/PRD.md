@@ -17,3 +17,14 @@ No-recommendation compliance:
 - All records carry `data_origin: "real"` and show a REAL badge; numbers come from templates, not an LLM; any worded feedback passes `core.guardrails.check_output()`.
 - The unlock is enforced server-side (`403 TOOL_LOCKED`); the UI is never the gate.
 - `nasdaq.com` blocks iframes, so the app renders its own data and links out to `https://www.nasdaq.com/market-activity/stocks/<symbol>` for cross-checking.
+
+## Verifier v2 (approved design)
+
+[Design](superpowers/specs/2026-11-21-verifier-v2-design.md): show templated
+pre-publication tip facts and evidence-backed provider enforcement facts, plus
+display-only search links. Timestamped verbatim transcripts support up to five
+grounded claims. Individual tips have no displayed reliability score or verdict.
+Store versioned tip quality privately; its source-rating weight remains 0 until
+independent temporal and provider-grouped validation and manual config approval.
+The source rating retains its 60-point outcome term. SEBI enforcement removes
+registration credit. No education or UI implementation changes.

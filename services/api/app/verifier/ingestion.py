@@ -2,6 +2,7 @@
 
 import re
 from base64 import b64decode
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from functools import cache
@@ -19,9 +20,12 @@ from defusedxml.common import DefusedXmlException  # type: ignore[import-untyped
 from PIL import Image, ImageOps
 from youtube_transcript_api import (
     NoTranscriptFound,
+    TranscriptsDisabled,
     YouTubeTranscriptApi,
     YouTubeTranscriptApiException,
 )
+
+from app.core.transcribe import Segment, Transcript, TranscriptionError
 
 
 @dataclass(frozen=True, slots=True)
@@ -34,6 +38,7 @@ class CapturedTip:
     published_at: datetime | None = None
     post_url: str | None = None
     author_verified: bool = False
+    transcript_segments: list[dict[str, Any]] | None = None
 
 
 class IngestionError(ValueError):
@@ -388,22 +393,50 @@ def _youtube_author(client: _PublicSession, post_url: str) -> str | None:
 
 
 def _youtube_transcript(
-    video_id: str, post_url: str
-) -> tuple[str, str | None, datetime | None]:
+    video_id: str,
+    post_url: str,
+    transcribe: Callable[[str], Transcript] | None = None,
+) -> tuple[str, str | None, datetime | None, list[dict[str, Any]]]:
     unavailable = (
         "No accessible YouTube transcript. Paste the transcript or upload a screenshot."
     )
     with _YouTubeSession(post_url) as client:
         try:
-            tracks = YouTubeTranscriptApi(http_client=client).list(video_id)
             try:
-                selected = tracks.find_transcript(("en", "en-IN", "hi", "hi-IN"))
-            except NoTranscriptFound:
-                alternative = next(iter(tracks), None)
-                if alternative is None:
-                    raise
-                selected = alternative
-            text = " ".join(snippet.text for snippet in selected.fetch()).strip()
+                tracks = YouTubeTranscriptApi(http_client=client).list(video_id)
+                try:
+                    selected = tracks.find_transcript(("en", "en-IN", "hi", "hi-IN"))
+                except NoTranscriptFound:
+                    alternative = next(iter(tracks), None)
+                    if alternative is None:
+                        raise
+                    selected = alternative
+                transcript = selected.fetch()
+                segments = [
+                    Segment(
+                        start_s=snippet.start,
+                        end_s=snippet.start + snippet.duration,
+                        text=snippet.text,
+                    )
+                    for snippet in transcript
+                ]
+            except (NoTranscriptFound, TranscriptsDisabled):
+                # Never bypass privacy/login/denial/network failures with a second provider.
+                if transcribe is None:
+                    raise IngestionError(
+                        "YOUTUBE_TRANSCRIPT_UNAVAILABLE", unavailable
+                    ) from None
+                segments = transcribe(post_url).segments
+            rows = [
+                segment.model_dump()
+                | {"text": redact_phone_numbers(segment.text), "data_origin": "real"}
+                for segment in segments
+            ]
+            text = " ".join(row["text"] for row in rows).strip()
+            if not text or len(text) > 100_000:
+                raise IngestionError("YOUTUBE_TRANSCRIPT_UNAVAILABLE", unavailable)
+            author = _youtube_author(client, post_url)
+            return text, author, _youtube_publication_date(client.watch_html), rows
         except (
             YouTubeTranscriptApiException,
             requests.RequestException,
@@ -413,14 +446,11 @@ def _youtube_transcript(
             KeyError,
             TypeError,
             AttributeError,
+            TranscriptionError,
         ):
             raise IngestionError(
                 "YOUTUBE_TRANSCRIPT_UNAVAILABLE", unavailable
             ) from None
-        if not text:
-            raise IngestionError("YOUTUBE_TRANSCRIPT_UNAVAILABLE", unavailable)
-        author = _youtube_author(client, post_url)
-        return text, author, _youtube_publication_date(client.watch_html)
 
 
 def _video_id(url: SplitResult) -> str | None:
@@ -499,6 +529,7 @@ def ingest(
     url: str | None,
     image_base64: str | None,
     now: datetime | None = None,
+    transcribe: Callable[[str], Transcript] | None = None,
 ) -> CapturedTip:
     """Capture exactly one input; hash the redacted text, not the URL or source metadata."""
     if sum(value is not None for value in (text, url, image_base64)) != 1:
@@ -513,6 +544,7 @@ def ingest(
     )
     published_at = post_url = handle = None
     author_verified = False
+    transcript_segments = None
     if url is not None:
         unsupported = (
             "Use a public Telegram post or YouTube video link, "
@@ -546,7 +578,9 @@ def ingest(
                 raise IngestionError("UNSUPPORTED_URL", unsupported)
             platform = "youtube"
             post_url = f"https://{_YOUTUBE_HOST}/watch?v={video_id}"
-            text, handle, published_at = _youtube_transcript(video_id, post_url)
+            text, handle, published_at, transcript_segments = _youtube_transcript(
+                video_id, post_url, transcribe
+            )
         else:
             raise IngestionError("UNSUPPORTED_URL", unsupported)
     elif image_base64 is not None:
@@ -575,4 +609,5 @@ def ingest(
         published_at,
         post_url,
         author_verified,
+        transcript_segments,
     )

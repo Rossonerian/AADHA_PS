@@ -1,11 +1,14 @@
 """Transactional data access for submissions and public-source ratings."""
 
 from datetime import UTC, datetime, timedelta
+from statistics import mean
 from uuid import UUID
 
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
+
+from app.core.config import get_settings
 
 from .models import Claim, Source, SourceRatingHistory, Submission
 from .schemas import DataOrigin, SourceFacts, SourceLabel, SourceView
@@ -46,7 +49,8 @@ def submission_for(
             Submission.user_id == owner,
             Submission.content_hash == digest,
         )
-    ).one_or_none()
+        .order_by(Claim.id)
+    ).first()
     return (pair[0], pair[1]) if pair is not None else None
 
 
@@ -82,7 +86,17 @@ def rating_evidence(session: Session, source: Source) -> tuple[SourceFacts, int,
     for submission, claim in rows:
         if not claim.rating_eligible or claim.data_origin != source.data_origin:
             continue
-        key = submission.post_url or submission.content_hash
+        key = str(
+            (
+                submission.post_url or submission.content_hash,
+                claim.symbol,
+                claim.direction,
+                claim.entry,
+                claim.target,
+                claim.stop,
+                claim.window_days,
+            )
+        )
         deleted, flagged, correct = seen.get(key, (False, False, None))
         outcome = claim.outcome if claim.status == "scored" else None
         observed = outcome.get("correct") if outcome is not None else None
@@ -111,6 +125,24 @@ def rating_evidence(session: Session, source: Source) -> tuple[SourceFacts, int,
 
 def update_rating(session: Session, source: Source) -> None:
     facts, scored, flagged = rating_evidence(session, source)
+    weight = get_settings().tip_quality_weight
+    qualities = [
+        c.tip_quality.get("tip_quality_score")
+        for c in session.scalars(
+            select(Claim)
+            .join(Submission)
+            .where(
+                Submission.source_id == source.id,
+                Claim.rating_eligible.is_(True),
+                Claim.status == "scored",
+                Claim.data_origin == source.data_origin,
+            )
+        )
+        if c.tip_quality
+    ]
+    quality_values = [
+        float(q) for q in qualities if isinstance(q, (int, float)) and 0 <= q <= 1
+    ]
     score, label = rate_source(
         scored=scored,
         correct=facts.correct,
@@ -118,8 +150,11 @@ def update_rating(session: Session, source: Source) -> None:
         deleted=facts.deleted,
         registered=facts.sebi_registered,
         flagged=flagged,
+        enforcement=source.enforcement_flag,
+        tip_quality=mean(quality_values) if quality_values else None,
+        tip_quality_weight=weight,
     )
-    changed = (source.score, source.label) != (score, label)
+    changed = True  # Every recomputation records the formula and configured weight.
     source.scored_claims = scored
     source.score, source.label = score, label
     if changed:
@@ -140,6 +175,7 @@ def update_rating(session: Session, source: Source) -> None:
                 score=score,
                 label=label,
                 reason="Updated from tracked claims and source evidence.",
+                formula_version=f"source-v2-q{weight}",
                 changed_at=changed_at,
                 data_origin=source.data_origin,
             )

@@ -94,10 +94,48 @@ class ClaimOutcome(BaseModel):
     data_origin: DataOrigin
 
 
+class TipFactCode(StrEnum):
+    REQUIRED_MOVE_PCT = "required_move_pct"
+    MOVE_BASE_RATE = "move_base_rate"
+    PRE_POST_RUN_UP_PCT = "pre_post_run_up_pct"
+    PRE_POST_VOLUME_RATIO = "pre_post_volume_ratio"
+    ILLIQUID_SMALL_CAP = "illiquid_small_cap"
+    SURVEILLANCE_LIST = "surveillance_list"
+    STOP_DISTANCE_PCT = "stop_distance_pct"
+    REWARD_RISK = "reward_risk"
+
+
+class TipFact(BaseModel):
+    code: TipFactCode
+    text: str
+    value: float | bool | str | None
+    as_of: date
+    data_origin: DataOrigin
+
+
+class EnforcementView(BaseModel):
+    flag: bool | None = None
+    refs: list[dict[str, str]] = Field(default_factory=list)
+    data_origin: DataOrigin
+
+
+class MentionView(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    url: str
+    title: str
+    published_at: datetime | None
+    platform: str
+    fetched_at: datetime
+    data_origin: DataOrigin
+
+
 class ClaimView(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: UUID
+    tip_facts: list[TipFact] = Field(default_factory=list)
+    evidence_start_s: float | None = None
+    evidence_end_s: float | None = None
     symbol: str | None
     direction: Direction | None
     entry: float | None
@@ -121,6 +159,8 @@ class VerifyResponse(BaseModel):
     source: SourceView
     claim: ClaimView
     red_flags: list[RedFlag]
+    tip_facts: list[TipFact] = Field(default_factory=list)
+    claims: list[ClaimView] = Field(default_factory=list)
     mode: Mode
     data_origin: DataOrigin
 
@@ -132,6 +172,7 @@ class RatingChange(BaseModel):
     label: SourceLabel
     reason: str
     changed_at: datetime
+    formula_version: str | None = None
     data_origin: DataOrigin
 
 
@@ -139,6 +180,8 @@ class SourceResponse(BaseModel):
     source: SourceView
     history: list[RatingChange]
     recent_claims: list[ClaimView]
+    enforcement: EnforcementView
+    mentions: list[MentionView] = Field(default_factory=list)
     data_origin: DataOrigin
 
 

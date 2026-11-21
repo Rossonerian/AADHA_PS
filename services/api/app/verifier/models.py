@@ -46,6 +46,8 @@ class Source(Base):
     handle: Mapped[str] = mapped_column(String(255))
     sebi_reg_no: Mapped[str | None] = mapped_column(String(32))
     sebi_registered: Mapped[bool | None] = mapped_column(Boolean)
+    enforcement_flag: Mapped[bool | None] = mapped_column(Boolean)
+    enforcement_refs: Mapped[list[dict[str, object]] | None] = mapped_column(JSON)
     score: Mapped[int] = mapped_column(Integer, default=0)
     label: Mapped[str] = mapped_column(String(24), default="not_enough_history")
     scored_claims: Mapped[int] = mapped_column(Integer, default=0)
@@ -71,6 +73,7 @@ class Submission(Base):
         Uuid, ForeignKey(UserRecord.id, name="fk_submissions_user_id_users")
     )
     source_id: Mapped[UUID] = mapped_column(ForeignKey("sources.id"))
+    transcript_segments: Mapped[list[dict[str, object]] | None] = mapped_column(JSON)
     raw_content: Mapped[str] = mapped_column(Text)
     content_hash: Mapped[str] = mapped_column(String(64))
     captured_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
@@ -99,9 +102,9 @@ class Claim(Base):
     )
 
     id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
-    submission_id: Mapped[UUID] = mapped_column(
-        ForeignKey("submissions.id"), unique=True
-    )
+    submission_id: Mapped[UUID] = mapped_column(ForeignKey("submissions.id"))
+    tip_quality: Mapped[dict[str, object] | None] = mapped_column(JSON)
+    tip_quality_version: Mapped[str | None] = mapped_column(String(64))
     rating_eligible: Mapped[bool] = mapped_column(Boolean, default=False)
     symbol: Mapped[str | None] = mapped_column(String(32))
     direction: Mapped[str | None] = mapped_column(String(4))
@@ -137,6 +140,25 @@ class SourceRatingHistory(Base):
     source_id: Mapped[UUID] = mapped_column(ForeignKey("sources.id"))
     score: Mapped[int] = mapped_column(Integer)
     label: Mapped[str] = mapped_column(String(24))
+    formula_version: Mapped[str | None] = mapped_column(String(64))
     reason: Mapped[str] = mapped_column(String(255))
     changed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    data_origin: Mapped[str] = mapped_column(String(9))
+
+
+class SourceMention(Base):
+    __tablename__ = "source_mentions"
+    __table_args__ = (
+        UniqueConstraint("source_id", "url", name="uq_source_mentions_url"),
+        CheckConstraint(
+            "data_origin IN ('real', 'synthetic')", name="ck_source_mentions_origin"
+        ),
+    )
+    id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
+    source_id: Mapped[UUID] = mapped_column(ForeignKey("sources.id"), index=True)
+    url: Mapped[str] = mapped_column(String(2048))
+    title: Mapped[str] = mapped_column(String(1000))
+    published_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    platform: Mapped[str] = mapped_column(String(32))
+    fetched_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     data_origin: Mapped[str] = mapped_column(String(9))
