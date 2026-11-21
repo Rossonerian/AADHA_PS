@@ -30,6 +30,36 @@ export type ClaimDirection = "up" | "down";
 
 export type LessonStatus = "locked" | "not_started" | "in_progress" | "completed";
 
+export type ProfileGoal = "learn_basics" | "avoid_scams" | "invest_smarter" | "other";
+
+export type ProfileExperience = "new" | "some" | "experienced";
+
+export interface ProfileRecord {
+  user_id: string;
+  display_name: string;
+  avatar_url: string | null;
+  goal: ProfileGoal | null;
+  experience: ProfileExperience | null;
+  weekly_minutes: number | null;
+  onboarding_completed_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ProfileUpdateInput {
+  display_name?: string;
+  avatar_url?: string | null;
+  goal?: ProfileGoal | null;
+  experience?: ProfileExperience | null;
+  weekly_minutes?: number | null;
+}
+
+export interface ProfileResponse {
+  profile: ProfileRecord;
+  onboarding_completed: boolean;
+  data_origin: DataOrigin;
+}
+
 export interface ApiErrorDetail {
   code: string;
   message: string;
@@ -116,6 +146,9 @@ export interface MeResponse {
   name: string;
   level: UserLevel;
   unlocks: ToolName[];
+  profile: ProfileRecord;
+  onboarding_completed: boolean;
+  data_origin?: DataOrigin;
 }
 
 /* -------------------------------------------------------------------------- */

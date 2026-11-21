@@ -14,6 +14,8 @@ import type {
   OnboardingAnswerResponse,
   OnboardingStartResponse,
   PlanResponse,
+  ProfileResponse,
+  ProfileUpdateInput,
   QuestionItem,
   ScenarioAnswerRequest,
   ScenarioAnswerResponse,
@@ -231,7 +233,10 @@ async function getOriginated<T extends object, R extends object = T>(
 }
 
 const post = (body?: unknown): ApiFetchOptions => ({ method: "POST", body });
+const patch = (body?: unknown): ApiFetchOptions => ({ method: "PATCH", body });
 const delay = () => new Promise((resolve) => setTimeout(resolve, 180));
+
+export const mockAuthBridge = useMocks ? demo.mockAuth : null;
 
 export const api = {
   async health(): Promise<HealthResponse> {
@@ -245,9 +250,25 @@ export const api = {
   async me(): Promise<MeResponse> {
     if (useMocks) {
       await delay();
-      return demo.me;
+      return demo.mockAuth.getMe();
     }
     return request<MeResponse>("/me");
+  },
+
+  async updateProfile(payload: ProfileUpdateInput): Promise<ProfileResponse> {
+    if (useMocks) {
+      await delay();
+      return demo.mockAuth.updateProfile(payload);
+    }
+    return request<ProfileResponse>("/me/profile", patch(payload));
+  },
+
+  async completeOnboarding(): Promise<ProfileResponse> {
+    if (useMocks) {
+      await delay();
+      return demo.mockAuth.completeOnboarding();
+    }
+    return request<ProfileResponse>("/me/onboarding/complete", post({}));
   },
 
   async onboardingStart(): Promise<OnboardingStart> {

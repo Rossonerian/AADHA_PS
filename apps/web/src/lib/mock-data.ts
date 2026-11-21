@@ -8,6 +8,9 @@ import type {
   MeResponse,
   OnboardingResult,
   PlanResponse,
+  ProfileRecord,
+  ProfileResponse,
+  ProfileUpdateInput,
   QuestionItem,
   ScenarioAnswerResponse,
   ScenarioNextResponse,
@@ -31,12 +34,248 @@ const LESSON_STATUS_BY_LEVEL = {
   4: ["completed", "completed", "completed", "in_progress"],
 } as const;
 
+const BASE_TIMESTAMP = "2026-11-20T09:00:00Z";
+
 export const me = {
   id: "demo-user",
   name: "Test learner",
   level: MOCK_LEVEL,
   unlocks: ["scenarios", "red_flag_check", "explain_stock"],
+  onboarding_completed: true,
+  data_origin: "synthetic",
+  profile: {
+    user_id: "demo-user",
+    display_name: "Test learner",
+    avatar_url: null,
+    goal: "learn_basics",
+    experience: "some",
+    weekly_minutes: 20,
+    onboarding_completed_at: BASE_TIMESTAMP,
+    created_at: BASE_TIMESTAMP,
+    updated_at: BASE_TIMESTAMP,
+  },
 } satisfies MeResponse;
+
+const MOCK_SESSION_KEY = "pp.mock.session.email";
+const MOCK_USERS_KEY = "pp.mock.users.v1";
+
+type StoredMockUser = {
+  password: string | null;
+  me: MeResponse;
+};
+
+function defaultMockUsers(): Record<string, StoredMockUser> {
+  return {
+    "demo@paisaproof.in": {
+      password: "paisaproof",
+      me,
+    },
+  };
+}
+
+function readMockUsers(): Record<string, StoredMockUser> {
+  if (typeof window === "undefined") return defaultMockUsers();
+  try {
+    const raw = window.localStorage.getItem(MOCK_USERS_KEY);
+    if (!raw) return defaultMockUsers();
+    const parsed = JSON.parse(raw) as Record<string, StoredMockUser>;
+    return { ...defaultMockUsers(), ...parsed };
+  } catch {
+    return defaultMockUsers();
+  }
+}
+
+function writeMockUsers(users: Record<string, StoredMockUser>): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(MOCK_USERS_KEY, JSON.stringify(users));
+  } catch {
+    // Ignore storage quota issues in mock fixtures.
+  }
+}
+
+function makeMockError(code: string, message: string): Error & { code: string } {
+  const err = new Error(message) as Error & { code: string };
+  err.code = code;
+  return err;
+}
+
+const GOOGLE_MOCK_AVATAR =
+  "data:image/svg+xml;utf8," +
+  encodeURIComponent(
+    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>" +
+      "<rect width='64' height='64' rx='32' fill='#315c4c'/>" +
+      "<text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' " +
+      "fill='#ffffff' font-family='Georgia, serif' font-size='26'>A</text>" +
+      "</svg>",
+  );
+
+export const mockAuth = {
+  getActiveEmail(): string | null {
+    if (typeof window === "undefined") return null;
+    try {
+      return window.localStorage.getItem(MOCK_SESSION_KEY);
+    } catch {
+      return null;
+    }
+  },
+
+  getMe(): MeResponse {
+    const email = mockAuth.getActiveEmail();
+    if (!email) return me;
+    const users = readMockUsers();
+    return users[email]?.me ?? me;
+  },
+
+  async signInEmail(email: string, password: string): Promise<MeResponse> {
+    const normalized = email.trim().toLowerCase();
+    const users = readMockUsers();
+    const entry = users[normalized];
+    if (!entry) {
+      throw makeMockError("USER_NOT_FOUND", `No account found for ${normalized}.`);
+    }
+    if (entry.password && entry.password !== password) {
+      throw makeMockError("INVALID_PASSWORD", "Incorrect password. Please try again.");
+    }
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(MOCK_SESSION_KEY, normalized);
+    }
+    return entry.me;
+  },
+
+  async signUpEmail(email: string, password: string, name?: string): Promise<MeResponse> {
+    const normalized = email.trim().toLowerCase();
+    const users = readMockUsers();
+    const now = new Date().toISOString();
+    const localName = normalized.split("@", 1)[0] || "Learner";
+    const resolvedName = (name?.trim() || localName).slice(0, 80);
+    const userId = `mock-${normalized.replace(/[^a-z0-9]/g, "-")}`;
+    const createdProfile: ProfileRecord = {
+      user_id: userId,
+      display_name: resolvedName,
+      avatar_url: null,
+      goal: null,
+      experience: null,
+      weekly_minutes: null,
+      onboarding_completed_at: null,
+      created_at: now,
+      updated_at: now,
+    };
+    const nextMe: MeResponse = {
+      id: userId,
+      name: resolvedName,
+      level: 1,
+      unlocks: ["scenarios", "red_flag_check"],
+      onboarding_completed: false,
+      data_origin: "synthetic",
+      profile: createdProfile,
+    };
+    users[normalized] = { password, me: nextMe };
+    writeMockUsers(users);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(MOCK_SESSION_KEY, normalized);
+    }
+    return nextMe;
+  },
+
+  async signInGoogle(): Promise<MeResponse> {
+    const googleEmail = "ananya.verma@gmail.com";
+    const users = readMockUsers();
+    if (!users[googleEmail]) {
+      const now = new Date().toISOString();
+      const userId = "mock-google-ananya";
+      users[googleEmail] = {
+        password: null,
+        me: {
+          id: userId,
+          name: "Ananya Verma",
+          level: 1,
+          unlocks: ["scenarios", "red_flag_check"],
+          onboarding_completed: false,
+          data_origin: "synthetic",
+          profile: {
+            user_id: userId,
+            display_name: "Ananya Verma",
+            avatar_url: GOOGLE_MOCK_AVATAR,
+            goal: null,
+            experience: null,
+            weekly_minutes: null,
+            onboarding_completed_at: null,
+            created_at: now,
+            updated_at: now,
+          },
+        },
+      };
+      writeMockUsers(users);
+    }
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(MOCK_SESSION_KEY, googleEmail);
+    }
+    return users[googleEmail].me;
+  },
+
+  async requestPasswordReset(email: string): Promise<void> {
+    if (!email.trim()) throw makeMockError("INVALID_EMAIL", "Email is required.");
+  },
+
+  updateProfile(patch: ProfileUpdateInput): ProfileResponse {
+    const email = mockAuth.getActiveEmail() ?? "demo@paisaproof.in";
+    const users = readMockUsers();
+    const current = users[email]?.me ?? me;
+    const now = new Date().toISOString();
+    const nextProfile: ProfileRecord = {
+      ...current.profile,
+      ...(patch.display_name !== undefined ? { display_name: patch.display_name.trim() } : {}),
+      ...(patch.avatar_url !== undefined ? { avatar_url: patch.avatar_url } : {}),
+      ...(patch.goal !== undefined ? { goal: patch.goal } : {}),
+      ...(patch.experience !== undefined ? { experience: patch.experience } : {}),
+      ...(patch.weekly_minutes !== undefined ? { weekly_minutes: patch.weekly_minutes } : {}),
+      updated_at: now,
+    };
+    const nextMe: MeResponse = {
+      ...current,
+      name: nextProfile.display_name || current.name,
+      profile: nextProfile,
+    };
+    users[email] = { password: users[email]?.password ?? null, me: nextMe };
+    writeMockUsers(users);
+    return {
+      profile: nextProfile,
+      onboarding_completed: nextMe.onboarding_completed,
+      data_origin: "synthetic",
+    };
+  },
+
+  completeOnboarding(): ProfileResponse {
+    const email = mockAuth.getActiveEmail() ?? "demo@paisaproof.in";
+    const users = readMockUsers();
+    const current = users[email]?.me ?? me;
+    const now = current.profile.onboarding_completed_at ?? new Date().toISOString();
+    const nextProfile: ProfileRecord = {
+      ...current.profile,
+      onboarding_completed_at: now,
+      updated_at: new Date().toISOString(),
+    };
+    const nextMe: MeResponse = {
+      ...current,
+      onboarding_completed: true,
+      profile: nextProfile,
+    };
+    users[email] = { password: users[email]?.password ?? null, me: nextMe };
+    writeMockUsers(users);
+    return {
+      profile: nextProfile,
+      onboarding_completed: true,
+      data_origin: "synthetic",
+    };
+  },
+
+  signOut(): void {
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem(MOCK_SESSION_KEY);
+    }
+  },
+};
 
 export const onboardingQuestions = [
   {

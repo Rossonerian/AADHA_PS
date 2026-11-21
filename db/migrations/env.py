@@ -16,6 +16,7 @@ if str(API_DIR) not in sys.path:
 from app.core import models as _models  # noqa: F401
 from app.core.config import get_settings, normalize_database_url
 from app.core.db import Base
+from app.profiles import models as _profile_models  # noqa: F401
 
 config = context.config
 
