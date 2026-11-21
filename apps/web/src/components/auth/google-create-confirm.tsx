@@ -24,7 +24,7 @@ export function GoogleCreateConfirm({
       <Button type="button" disabled={busy} onClick={onCreate}>
         Create account
       </Button>
-      <Button type="button" variant="secondary" disabled={busy} onClick={onCancel}>
+      <Button type="button" variant="destructive" disabled={busy} onClick={onCancel}>
         Cancel
       </Button>
     </div>

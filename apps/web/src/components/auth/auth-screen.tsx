@@ -7,14 +7,11 @@ import { Button, Input, Panel } from "@/components/ui";
 import { Separator } from "@/components/minor/separator";
 import { mockAuthBridge, mocksEnabled } from "@/lib/api";
 import { ApiClientError } from "@/lib/api-client";
-import { classifyAuthError } from "@/lib/auth-errors";
+import { classifyAuthError, type AuthFailure } from "@/lib/auth-errors";
 import { readOAuthUrlError, stripOAuthErrorParams } from "@/lib/auth-flow";
-import { flagWelcomeBack, saveIntent } from "@/lib/auth-flow-storage";
-import { GoogleCreateConfirm } from "@/components/auth/google-create-confirm";
 import { authClient } from "@/lib/neon-auth-client";
 import { SilkBackground } from "@/components/effects/silk-background";
 
-type AuthStep = "email" | "password";
 type PasswordMode = "signin" | "signup";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -48,6 +45,18 @@ function GoogleMark() {
   );
 }
 
+function isUnknownUserFailure(err: unknown, failure: AuthFailure): boolean {
+  if ((failure.kind as string) === "unknown_user") return true;
+  const code =
+    err && typeof err === "object" && "code" in err
+      ? String((err as { code?: unknown }).code ?? "").toUpperCase()
+      : "";
+  return (
+    code === "USER_NOT_FOUND" ||
+    /no account found|user not found|user does not exist/i.test(failure.message)
+  );
+}
+
 export function AuthScreen({
   theme,
   onToggleTheme,
@@ -59,7 +68,6 @@ export function AuthScreen({
   onAuthenticated: () => Promise<void>;
   notice?: string;
 }) {
-  const [step, setStep] = useState<AuthStep>("email");
   const [mode, setMode] = useState<PasswordMode>("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -68,7 +76,7 @@ export function AuthScreen({
   const [busyProvider, setBusyProvider] = useState<"google" | "email" | "reset" | null>(null);
   const [error, setError] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
-  const [pendingGoogleEmail, setPendingGoogleEmail] = useState("");
+  const [suggestCreateAccount, setSuggestCreateAccount] = useState(false);
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -99,44 +107,27 @@ export function AuthScreen({
   }, []);
 
   useEffect(() => {
-    if (step === "email") emailRef.current?.focus();
-    else passwordRef.current?.focus();
-  }, [step, mode]);
+    emailRef.current?.focus();
+  }, []);
 
   const busy = busyProvider !== null;
-
-  async function finishMockGoogle(existed: boolean) {
-    if (!mockAuthBridge) return;
-    await mockAuthBridge.signInGoogle();
-    if (mode === "signup" && existed) flagWelcomeBack();
-    await onAuthenticated();
-  }
 
   async function handleGoogleContinue() {
     setError("");
     setStatusMessage("");
-    setPendingGoogleEmail("");
+    setSuggestCreateAccount(false);
     setBusyProvider("google");
     try {
       if (mocksEnabled && mockAuthBridge) {
-        const existed = mockAuthBridge.googleAccountExists();
-        if (mode === "signin" && !existed) {
-          setPendingGoogleEmail(mockAuthBridge.googleEmail);
-          setBusyProvider(null);
-          return;
-        }
-        await finishMockGoogle(existed);
+        await mockAuthBridge.signInGoogle();
+        await onAuthenticated();
         return;
       }
-      // Remember which tab started this so the callback page can tell sign-in from sign-up.
-      saveIntent(mode);
       const origin = window.location.origin;
       const res = await authClient.signIn.social({
         provider: "google",
         callbackURL: `${origin}/auth/callback`,
-        newUserCallbackURL: `${origin}/auth/callback?new=1`,
-        errorCallbackURL: origin,
-        ...(mode === "signup" ? { requestSignUp: true } : {}),
+        errorCallbackURL: `${origin}/auth/callback`,
       });
       if (res?.error) {
         throw res.error;
@@ -152,33 +143,9 @@ export function AuthScreen({
     }
   }
 
-  function handleEmailContinue(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setError("");
-    setStatusMessage("");
-
-    const trimmed = email.trim();
-    if (!EMAIL_PATTERN.test(trimmed)) {
-      setError("Enter a valid email address to continue.");
-      emailRef.current?.focus();
-      return;
-    }
-    setEmail(trimmed);
-    setStep("password");
-  }
-
-  function selectMode(next: PasswordMode) {
-    if (next === mode) return;
-    setError("");
-    setStatusMessage("");
-    setPendingGoogleEmail("");
-    setMode(next);
-    if (next === "signup") suggestName();
-  }
-
-  function suggestName() {
+  function suggestName(sourceEmail: string) {
     if (!fullName.trim()) {
-      const local = email.trim().split("@", 1)[0] ?? "";
+      const local = sourceEmail.trim().split("@", 1)[0] ?? "";
       const suggested = local.replace(/[._-]+/g, " ").trim();
       if (suggested) {
         setFullName(suggested.replace(/\b\w/g, (ch) => ch.toUpperCase()).slice(0, 80));
@@ -187,29 +154,38 @@ export function AuthScreen({
   }
 
   function switchToSignUp() {
-    selectMode("signup");
-    passwordRef.current?.focus();
-  }
-
-  function resetToEmailStep() {
-    setStep("email");
-    setPassword("");
     setError("");
     setStatusMessage("");
-    setShowPassword(false);
+    setSuggestCreateAccount(false);
+    suggestName(email);
+    setMode("signup");
+    if (!EMAIL_PATTERN.test(email.trim())) {
+      emailRef.current?.focus();
+    } else if (!password) {
+      passwordRef.current?.focus();
+    }
   }
 
-  async function handlePasswordSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function switchToSignIn() {
+    setError("");
+    setStatusMessage("");
+    setSuggestCreateAccount(false);
+    setMode("signin");
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
     setStatusMessage("");
+    setSuggestCreateAccount(false);
 
     const normalizedEmail = email.trim();
     if (!EMAIL_PATTERN.test(normalizedEmail)) {
-      setStep("email");
       setError("Enter a valid email address.");
+      emailRef.current?.focus();
       return;
     }
+    setEmail(normalizedEmail);
 
     if (!password) {
       setError("Enter your password to continue.");
@@ -266,8 +242,14 @@ export function AuthScreen({
       const failure = classifyAuthError(err);
       if (failure.kind === "already_exists" && mode === "signup") {
         setMode("signin");
-        setStatusMessage("You already have an account. Enter your password to sign in.");
+        setStatusMessage("You already have an account. Click Sign in to continue.");
         return;
+      }
+      if (
+        mode === "signin" &&
+        (isUnknownUserFailure(err, failure) || failure.kind === "invalid_credentials")
+      ) {
+        setSuggestCreateAccount(true);
       }
       setError(failure.message);
     } finally {
@@ -278,9 +260,11 @@ export function AuthScreen({
   async function handleForgotPassword() {
     setError("");
     setStatusMessage("");
+    setSuggestCreateAccount(false);
     const normalizedEmail = email.trim();
     if (!EMAIL_PATTERN.test(normalizedEmail)) {
       setError("Enter your email address first so we know where to send the reset link.");
+      emailRef.current?.focus();
       return;
     }
     setBusyProvider("reset");
@@ -366,22 +350,6 @@ export function AuthScreen({
               : "Sign in to pick up where you left off."}
           </p>
 
-          <div className="pp-auth-tabs" role="tablist" aria-label="Sign in or create account">
-            {(["signin", "signup"] as const).map((tab) => (
-              <button
-                key={tab}
-                type="button"
-                role="tab"
-                aria-selected={mode === tab}
-                className="pp-auth-tab"
-                disabled={busy}
-                onClick={() => selectMode(tab)}
-              >
-                {tab === "signin" ? "Sign in" : "Create account"}
-              </button>
-            ))}
-          </div>
-
           <Button
             type="button"
             variant="secondary"
@@ -391,180 +359,136 @@ export function AuthScreen({
           >
             <GoogleMark />
             <span>
-              {busyProvider === "google"
-                ? "Connecting with Google…"
-                : mode === "signup"
-                  ? "Sign up with Google"
-                  : "Sign in with Google"}
+              {busyProvider === "google" ? "Connecting with Google…" : "Sign in with Google"}
             </span>
           </Button>
 
-          {pendingGoogleEmail && (
-            <GoogleCreateConfirm
-              email={pendingGoogleEmail}
-              busy={busy}
-              onCancel={() => setPendingGoogleEmail("")}
-              onCreate={() => {
-                setPendingGoogleEmail("");
-                setMode("signup");
-                setBusyProvider("google");
-                void finishMockGoogle(false)
-                  .catch((err: unknown) => setError(classifyAuthError(err, "google").message))
-                  .finally(() => setBusyProvider(null));
-              }}
-            />
-          )}
-
           <div className="pp-auth-or" aria-hidden="true">
             <Separator />
-            <span>{mode === "signup" ? "or sign up with email" : "or sign in with email"}</span>
+            <span>or continue with email</span>
             <Separator />
           </div>
 
-          {step === "email" ? (
-            <form onSubmit={handleEmailContinue} className="signin-form" noValidate>
+          <form onSubmit={(e) => void handleSubmit(e)} className="signin-form" noValidate>
+            {mode === "signup" && (
               <div className="field-group">
-                <label htmlFor="auth-email">Email address</label>
+                <label htmlFor="auth-name">Your name (optional)</label>
                 <Input
-                  ref={emailRef}
-                  id="auth-email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="you@example.com"
-                  value={email}
+                  id="auth-name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Maya Rao"
+                  value={fullName}
+                  onChange={(event) => setFullName(event.target.value)}
+                />
+              </div>
+            )}
+
+            <div className="field-group">
+              <label htmlFor="auth-email">Email address</label>
+              <Input
+                ref={emailRef}
+                id="auth-email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                  if (error) setError("");
+                  if (suggestCreateAccount) setSuggestCreateAccount(false);
+                }}
+                aria-invalid={Boolean(error)}
+                aria-describedby={error ? "auth-feedback" : undefined}
+              />
+            </div>
+
+            <div className="field-group">
+              <div className="pp-label-row">
+                <label htmlFor="auth-password">Password</label>
+                {mode === "signin" && supportsReset && (
+                  <button
+                    type="button"
+                    className="pp-link-btn"
+                    onClick={() => void handleForgotPassword()}
+                    disabled={busy}
+                  >
+                    {busyProvider === "reset" ? "Sending…" : "Forgot password?"}
+                  </button>
+                )}
+              </div>
+              <div className="pp-password-wrap">
+                <Input
+                  ref={passwordRef}
+                  id="auth-password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete={mode === "signup" ? "new-password" : "current-password"}
+                  placeholder={mode === "signup" ? "At least 8 characters" : "Enter your password"}
+                  value={password}
                   onChange={(event) => {
-                    setEmail(event.target.value);
+                    setPassword(event.target.value);
                     if (error) setError("");
+                    if (suggestCreateAccount) setSuggestCreateAccount(false);
                   }}
                   aria-invalid={Boolean(error)}
                   aria-describedby={error ? "auth-feedback" : undefined}
                 />
-              </div>
-              <Button type="submit" disabled={busy}>
-                <span>{mode === "signup" ? "Sign up with email" : "Sign in with email"}</span>
-                <ArrowRight size={15} aria-hidden="true" />
-              </Button>
-            </form>
-          ) : (
-            <form onSubmit={(e) => void handlePasswordSubmit(e)} className="signin-form" noValidate>
-              <div className="pp-auth-email-chip">
-                <span className="truncate">{email}</span>
                 <button
                   type="button"
-                  className="pp-link-btn"
-                  onClick={resetToEmailStep}
-                  disabled={busy}
+                  className="pp-password-toggle"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  aria-pressed={showPassword}
                 >
-                  Change
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
+            </div>
 
-              {mode === "signup" && (
-                <div className="field-group">
-                  <label htmlFor="auth-name">Your name (optional)</label>
-                  <Input
-                    id="auth-name"
-                    name="name"
-                    type="text"
-                    autoComplete="name"
-                    placeholder="Maya Rao"
-                    value={fullName}
-                    onChange={(event) => setFullName(event.target.value)}
-                  />
-                </div>
-              )}
+            <Button type="submit" disabled={busy}>
+              <span>
+                {busyProvider === "email"
+                  ? mode === "signup"
+                    ? "Creating account…"
+                    : "Signing in…"
+                  : mode === "signup"
+                    ? "Create account"
+                    : "Sign in"}
+              </span>
+              <ArrowRight size={15} aria-hidden="true" />
+            </Button>
 
-              <div className="field-group">
-                <div className="pp-label-row">
-                  <label htmlFor="auth-password">Password</label>
-                  {mode === "signin" && supportsReset && (
-                    <button
-                      type="button"
-                      className="pp-link-btn"
-                      onClick={() => void handleForgotPassword()}
-                      disabled={busy}
-                    >
-                      {busyProvider === "reset" ? "Sending…" : "Forgot password?"}
-                    </button>
-                  )}
-                </div>
-                <div className="pp-password-wrap">
-                  <Input
-                    ref={passwordRef}
-                    id="auth-password"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    autoComplete={mode === "signup" ? "new-password" : "current-password"}
-                    placeholder={
-                      mode === "signup" ? "At least 8 characters" : "Enter your password"
-                    }
-                    value={password}
-                    onChange={(event) => {
-                      setPassword(event.target.value);
-                      if (error) setError("");
-                    }}
-                    aria-invalid={Boolean(error)}
-                    aria-describedby={error ? "auth-feedback" : undefined}
-                  />
+            <div className="pp-auth-switch">
+              {mode === "signin" ? (
+                <>
+                  <span>New here?</span>
                   <button
                     type="button"
-                    className="pp-password-toggle"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                    aria-pressed={showPassword}
+                    className="pp-link-btn"
+                    onClick={switchToSignUp}
+                    disabled={busy}
                   >
-                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    Create an account
                   </button>
-                </div>
-              </div>
-
-              <Button type="submit" disabled={busy}>
-                <span>
-                  {busyProvider === "email"
-                    ? mode === "signup"
-                      ? "Creating account…"
-                      : "Signing in…"
-                    : mode === "signup"
-                      ? "Create account"
-                      : "Sign in"}
-                </span>
-                <ArrowRight size={15} aria-hidden="true" />
-              </Button>
-
-              <div className="pp-auth-switch">
-                {mode === "signin" ? (
-                  <>
-                    <span>New here?</span>
-                    <button
-                      type="button"
-                      className="pp-link-btn"
-                      onClick={switchToSignUp}
-                      disabled={busy}
-                    >
-                      Create an account
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <span>Already have an account?</span>
-                    <button
-                      type="button"
-                      className="pp-link-btn"
-                      onClick={() => {
-                        setError("");
-                        setStatusMessage("");
-                        setMode("signin");
-                      }}
-                      disabled={busy}
-                    >
-                      Sign in instead
-                    </button>
-                  </>
-                )}
-              </div>
-            </form>
-          )}
+                </>
+              ) : (
+                <>
+                  <span>Already have an account?</span>
+                  <button
+                    type="button"
+                    className="pp-link-btn"
+                    onClick={switchToSignIn}
+                    disabled={busy}
+                  >
+                    Sign in
+                  </button>
+                </>
+              )}
+            </div>
+          </form>
 
           <div id="auth-feedback" aria-live="polite" className="pp-auth-feedback">
             {notice && !error && !statusMessage && (
@@ -581,6 +505,16 @@ export function AuthScreen({
               <Alert variant="destructive" className="mt-3">
                 <AlertDescription>
                   <span>{error}</span>
+                  {suggestCreateAccount && mode === "signin" && (
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      className="mt-2 w-full"
+                      onClick={switchToSignUp}
+                    >
+                      {email.trim() ? `Create account for ${email.trim()}` : "Create an account"}
+                    </Button>
+                  )}
                 </AlertDescription>
               </Alert>
             )}

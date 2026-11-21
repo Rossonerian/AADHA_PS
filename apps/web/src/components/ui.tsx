@@ -29,11 +29,17 @@ export function Button({
   className = "",
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary" | "quiet";
+  variant?: "primary" | "secondary" | "quiet" | "destructive";
   children: ReactNode;
 }) {
   const looseleafVariant =
-    variant === "primary" ? "default" : variant === "secondary" ? "secondary" : "ghost";
+    variant === "primary"
+      ? "default"
+      : variant === "secondary"
+        ? "secondary"
+        : variant === "destructive"
+          ? "destructive"
+          : "ghost";
   return (
     <LooseleafButton
       variant={looseleafVariant}
