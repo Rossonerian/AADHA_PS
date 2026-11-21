@@ -66,6 +66,9 @@ export function getApiBaseUrl(): string {
     }
     return trimmed;
   }
+  if (process.env.NODE_ENV === "production") {
+    return "https://aadha-ps.onrender.com/api/v1";
+  }
   return "/api/v1";
 }
 
