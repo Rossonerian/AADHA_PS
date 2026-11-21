@@ -5,6 +5,7 @@
 - **Live Web:** https://aadha-ps.vercel.app
 - **Architecture & Contracts:** [`docs/SOURCE_OF_TRUTH.md`](docs/SOURCE_OF_TRUTH.md)
 - **Team Progress:** [`STATUS.md`](STATUS.md)
+- **Deploy Checklist:** [`docs/DEPLOY_CHECKLIST.md`](docs/DEPLOY_CHECKLIST.md)
 
 ## How it works (and what the AI does not do)
 
