@@ -349,7 +349,9 @@ def test_v2_migration_roundtrip(persistence_engine):  # noqa: F811
         assert "tip_quality" in {
             c["name"] for c in inspect(connection).get_columns("claims")
         }
-        command.downgrade(cfg, "-1")
+        # Relative -1 is ambiguous at a merge point; name the shared parent
+        # and exercise both branches rather than only removing the merge marker.
+        command.downgrade(cfg, "20261121_submission_owner_fk")
         assert "tip_quality" not in {
             c["name"] for c in inspect(connection).get_columns("claims")
         }
@@ -389,6 +391,6 @@ def test_v2_migration_roundtrip(persistence_engine):  # noqa: F811
                 )
             db.flush()
             with pytest.raises(RuntimeError, match="Reconcile multi-claim"):
-                command.downgrade(cfg, "-1")
+                command.downgrade(cfg, "20261121_submission_owner_fk")
             assert len(list(db.scalars(select(Claim)))) == 2
             assert inspect(connection).has_table("source_mentions")
