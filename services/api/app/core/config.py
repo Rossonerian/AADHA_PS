@@ -44,7 +44,8 @@ class Settings(BaseSettings):
     gemini_api_key: str = ""
     google_ai_studio_api_key: str = ""
     gemini_transcribe_model: str = "gemini-4-hydrogen"
-    web_search_provider: str = "exa"
+    web_search_provider: str = "tavily"
+    tavily_api_key: str = ""
     web_search_api_key: str = ""
     tip_quality_weight: int = Field(default=0, ge=0, le=10)
 
