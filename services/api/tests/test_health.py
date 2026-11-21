@@ -110,8 +110,8 @@ def _app_with_env(monkeypatch, **env: str):
     from app.core.config import get_settings
     from app.main import create_app
 
-    for key in ("APP_ENV", "CORS_ORIGINS"):
-        monkeypatch.delenv(key, raising=False)
+    monkeypatch.delenv("APP_ENV", raising=False)
+    monkeypatch.setenv("CORS_ORIGINS", "")
     for key, value in env.items():
         monkeypatch.setenv(key, value)
     get_settings.cache_clear()
