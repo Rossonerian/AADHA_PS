@@ -1,5 +1,6 @@
 import { apiFetch, ApiClientError, type ApiFetchOptions } from "@/lib/api-client";
 import { AUTH_EXPIRED_EVENT, SESSION_EXPIRED_MESSAGE } from "@/lib/auth-errors";
+import { createTokenProvider, fetchProxyToken } from "@/lib/auth-token";
 import { authClient } from "@/lib/neon-auth-client";
 import type {
   AssessmentStartResponse,
@@ -54,12 +55,19 @@ export const mocksEnabled = useMocks;
 const demo = (useMocks ? require("@/lib/mock-data") : null) as typeof import("@/lib/mock-data");
 /* eslint-enable @typescript-eslint/no-require-imports */
 
-async function readToken(): Promise<string | null> {
+const tokenProvider = createTokenProvider({
+  fetchToken: fetchProxyToken,
+  sdkToken: async () => {
+    const client = authClient as typeof authClient & {
+      getJWTToken?: () => Promise<string | null>;
+    };
+    return (await client.getJWTToken?.()) ?? null;
+  },
+});
+
+async function readToken(forceRefresh = false): Promise<string | null> {
   try {
-    const token = await (
-      authClient as typeof authClient & { getJWTToken?: () => Promise<string | null> }
-    ).getJWTToken?.();
-    return token ?? null;
+    return await tokenProvider.get(forceRefresh);
   } catch {
     return null;
   }
@@ -77,7 +85,7 @@ async function request<T>(path: string, options: ApiFetchOptions = {}): Promise<
   } catch (err) {
     if (!(err instanceof ApiClientError) || err.status !== 401 || mocksEnabled) throw err;
     // The token may have expired between refreshes: fetch a fresh one and retry once.
-    const fresh = await readToken();
+    const fresh = await readToken(true);
     if (!fresh || fresh === token) throw expireSession();
     try {
       return await apiFetch<T>(path, { ...options, token: fresh });

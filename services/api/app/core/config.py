@@ -32,6 +32,8 @@ class Settings(BaseSettings):
 
     neon_auth_base_url: str = ""
     neon_auth_jwks_url: str = ""
+    # Comma-separated extra issuer origins to trust (see core.auth._trusted_issuer_origins).
+    neon_auth_extra_issuers: str = ""
 
     supabase_url: str = ""
     supabase_anon_key: str = ""
