@@ -15,11 +15,20 @@ from sqlalchemy.orm import Session
 
 from app.core.config import get_settings
 from app.core.db import configure_engine, get_engine, get_session_factory
+from app.core.rate_limit import reset_rate_limiter
 from app.main import create_app
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 ALEMBIC_INI_PATH = REPO_ROOT / "db" / "alembic.ini"
 TEST_JWT_SECRET = "test-supabase-jwt-secret-at-least-32-bytes"
+
+
+@pytest.fixture(autouse=True)
+def _reset_rate_limit_state() -> Generator[None, None, None]:
+    """Reset the global rate limiter around each test for strict test isolation."""
+    reset_rate_limiter()
+    yield
+    reset_rate_limiter()
 
 
 @pytest.fixture
@@ -39,6 +48,7 @@ def migrated_db(
     monkeypatch.setenv("DATABASE_URL", db_url)
     monkeypatch.setenv("SUPABASE_JWT_SECRET", jwt_secret)
     monkeypatch.setenv("APP_ENV", "test")
+    monkeypatch.setenv("RATE_LIMIT_ENABLED", "false")
     get_settings.cache_clear()
 
     alembic_cfg = Config(str(ALEMBIC_INI_PATH))

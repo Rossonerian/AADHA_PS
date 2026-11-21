@@ -20,12 +20,13 @@ Run the full walkthrough twice end-to-end before demo:
    - [ ] `GET /api/v1/health` returns `200` with `db: ok` and recent `market_data_as_of`.
    - [ ] Onboarding flow (`POST /onboarding/start` -> `POST /onboarding/answer`) completes and assigns level + skills + Brier score.
    - [ ] Learning plan & lesson (`GET /plan`, `GET /lessons/{id}`) load cleanly.
+   - [ ] Level-up assessment (`POST /assessments/{level}/start`, `POST /assessments/{id}/submit`) passes and unlocks the next level.
    - [ ] Scenario practice (`GET /scenarios/next`, `POST /scenarios/{id}/answer`) renders chart/context and evaluates answer + clues.
    - [ ] Stock explainer (`GET /explain?symbol=&year=`) renders chart, moves, and guardrailed summary.
    - [ ] Verifier (`POST /verify`, `GET /sources/{id}`, `GET /submissions/mine`) evaluates pasted claim, shows source rating, red flags, and `data_origin` badge.
    - [ ] Dashboard (`GET /me/dashboard`) displays skill progression, Brier score, and scenario accuracy.
 2. **Smoke Test 2 (Clean Browser / Fresh User Session)**
-   - [ ] Repeat full walkthrough in an incognito browser window using demo credentials.
+   - [ ] Repeat full walkthrough in an incognito browser window creating a fresh account via Neon Auth sign-up (no demo/seed user needed).
    - [ ] Confirm zero console errors, zero 500s, and fallback local environment ready if internet drops.
 
 ## 3. 3-Minute Backup Demo Recording Script

@@ -39,8 +39,24 @@ services:
         value: nvidia/nemotron-3.5-lightning:free
       - key: OPENROUTER_BASE_URL
         value: https://openrouter.ai/api/v1
+      - key: FINNHUB_API_KEY
+        sync: false
       - key: MARKET_DATA_DIR
         value: data/seed/market
+      - key: MARKET_DATA_MAX_STALE_DAYS
+        value: "5"
+      - key: RATE_LIMIT_ENABLED
+        value: "true"
+      - key: RATE_LIMIT_WINDOW_SECONDS
+        value: "60"
+      - key: RATE_LIMIT_USER_PER_WINDOW
+        value: "20"
+      - key: RATE_LIMIT_IP_PER_WINDOW
+        value: "60"
+      - key: MAX_REQUEST_BODY_BYTES
+        value: "1048576"
+      - key: MAX_VERIFY_BODY_BYTES
+        value: "10485760"
 
   - type: cron
     name: paisaproof-daily-cron

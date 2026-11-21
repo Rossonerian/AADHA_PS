@@ -7,10 +7,10 @@
 
 | Person | % | Phase | Blockers | Last Update |
 |---|---|---|---|---|
-| Hardhik | 80% | Phase 6/6 (Integration & Demo — Phases 1–5 complete; C1 live green) | docs/PRD.md export; Divyansh education routes for C2/C3 | 2026-11-21 |
-| Arnav | 76.25% | Real seed verified (30×5); Phase 3/6 & 6/6 acceptance open | Hardhik decisions: SoT seed policy, 61 default-horizon quota, OpenRouter quota + held-out set; vetted deletion evidence | 2026-11-21 |
-| Divyansh | 100% | Phase 6/6 (Education complete; 20/20 tests pass) | none | 2026-11-20 |
-| Ananya | 0% | Phase 1/6 (unblocked: Next.js scaffold & contracts.ts ready) | none | 2026-11-20 |
+| Hardhik | 92% | Phase 6/6 (PR #10 synced with main PRs #9/#11/#12/#13; Neon re-seeded with PR #11 real-data Education content; awaiting PR #10 merge & 2x live smoke) | PR #10 merge + Arnav 3 MAJOR decisions; OpenRouter quota / 2x live /verify smoke; `/api/neon/health` 403 in `apps/web/`; Render `FINNHUB_API_KEY`, cron confirm & service rename; Vercel project title; `docs/PRD.md` & C4 backup video | 2026-11-21 |
+| Arnav | 80% | Phase 6/6 (PR #9 & PR #13 merged onto main: 30x5 real seed, durable Nasdaq challenges, unified TOOL_LOCKED, 503 guard, top-level data_origin) | Live F1 (OpenRouter quota + held-out set); production Verifier real-seed load & SoT quota decision; vetted deletion evidence | 2026-11-21 |
+| Divyansh | 100% | Phase 6/6 (PR #11 merged — Education real-data provenance & Nasdaq gate hardened) | none | 2026-11-21 |
+| Ananya | ~90% (PR #12 merged & live on Vercel) | Phase 6/6 (v0 UI live: demo workspace removed, Neon Auth tabs, dev-only mocks, Looseleaf polish) | `/api/neon/health` 403 prod guard in `apps/web/`; mobile nav confirmation | 2026-11-21 |
 
 ## Checkpoint Targets
 
@@ -40,6 +40,27 @@ Behind target: Divyansh (target C1 25%; next target C2 50%) — prioritize P0 on
 Blockers: docs/PRD.md export pending; Arnav live F1 & real-source Option A/B sign-off; Divyansh education backend routes for C2
 ```
 
+```text
+[TEAM] C3 (Pre-Freeze) | Overall ~84% (est. — owner self-updates requested)
+Arnav 76.25% (Phase 3/6 & 6/6; please self-update) | Divyansh 100% (Phase 6/6; please confirm after main integration) | Hardhik 85% (Phase 6/6) | Ananya ~75% est. (PRs #2,#3,#6,#7,#8 merged; please self-update)
+Behind target: Arnav 76.25% vs C3 85% (live extraction F1 blocked on OpenRouter quota + Phase 6 real-source Option A/B sign-off); Ananya UI unverified with mocks=false
+Blockers: OpenRouter free daily limit exhausted (53/50, $0 credits); Vercel NEXT_PUBLIC_USE_MOCKS=false & Render FINNHUB_API_KEY/cron confirm; docs/PRD.md export & C4 backup video
+```
+
+```text
+[TEAM] Pre-Judging Audit | Overall ~85% (est. — Ananya self-update requested)
+Arnav 76.25% (PR #9 open) | Divyansh 100% | Hardhik 90% (PR #10 open) | Ananya ~75% est. (PRs #2,#3,#6,#7,#8 merged on main)
+Behind target: Arnav 76.25% vs C3 85% (live F1 blocked on OpenRouter quota + Phase 6 real-source Option A/B); Ananya UI mocks-off & `/api/neon/health` 403 not yet on main (`5f4a89d`)
+Blockers: OpenRouter free daily limit exhausted (53/50, 0 remaining); Vercel `NEXT_PUBLIC_USE_MOCKS=false` + project title; Render dashboard `FINNHUB_API_KEY` + cron schedule confirm + service name; remaining `Aacharya` strings in `education/` & `nasdaq_verifier/`; `docs/PRD.md` export & C4 backup video
+```
+
+```text
+[TEAM] Pre-Judging Rollup (Post-PR #9/#11/#12/#13) | Overall ~91%
+Arnav 80% (PR #9 & PR #13 merged on main) | Divyansh 100% (PR #11 merged on main) | Hardhik 92% (PR #10 synced & CI-ready) | Ananya ~90% (PR #12 merged & live on Vercel)
+Behind target: Final C4 demo freeze pending PR #10 merge, 2x live staging smoke, and dashboard/docs completion
+Blockers: PR #10 review/merge; Arnav 3 MAJOR decisions (SoT public-research seed policy, 61 default-horizon quota, OpenRouter quota + held-out F1 set); 2x live staging smoke; `/api/neon/health` 403 prod guard in `apps/web/`; Render `FINNHUB_API_KEY`, cron confirm & service rename; Vercel project title; `docs/PRD.md` export & C4 backup video
+```
+
 ## Hardhik
 
 _Append updates here._
@@ -62,7 +83,7 @@ Blockers: Live Supabase/OpenRouter/Vercel/Render creds and `docs/PRD.md` export 
 
 ```text
 [Hardhik] 80% | Phase 4/6: CI & deployment
-Done: Provisioned Neon (`dawn-silence-66045214`), live Alembic (`0001_initial_platform`), wired Next 16 + Neon SDKs (`@neon/auth`, `files-sdk`, `@neon/realtime`, `pg`) & FastAPI EdDSA JWKS; live E2E proved Postgres, Auth (`/api/v1/me` 401->200), Storage, Realtime; `59/59` pytest + build green.
+Done: Provisioned Neon (Lakebase Postgres, Auth, Storage, Realtime), live Alembic (`0001_initial_platform`), wired Next 16 + Neon SDKs (`@neon/auth`, `files-sdk`, `@neon/realtime`, `pg`) & FastAPI EdDSA JWKS; live E2E proved Postgres, Auth (`/api/v1/me` 401->200), Storage, Realtime; `59/59` pytest + build green.
 Next: Deploy API (Render) + Web (Vercel) with Neon/OpenRouter cloud secrets for C1 staging URLs.
 Minor: Updated `core.llm` default model to `nvidia/nemotron-3.5-lightning:free` ($0 fallback pricing); enabled `http://127.0.0.1:3000` in Neon Auth dev trusted origins.
 Blockers: Render/Vercel deploy URLs, OPENROUTER_API_KEY in cloud, docs/PRD.md export.
@@ -70,10 +91,67 @@ Blockers: Render/Vercel deploy URLs, OPENROUTER_API_KEY in cloud, docs/PRD.md ex
 
 ```text
 [Hardhik] 80% | Phase 4/6: CI & deployment (complete -> entering Phase 6/6)
-Done: Live C1 verified end-to-end across Vercel (https://aadha-ps.vercel.app), Render API, and Neon (Postgres, Auth, Object Storage, Realtime); CORS preflight 200, /api/neon/health 200 (all 4 services ok), Vercel Auth -> EdDSA JWT -> Render /api/v1/me (401->200), POST /api/v1/verify 200 & GET /api/v1/submissions/mine 200, live daily_job cron logged in job_runs, CI & 286/286 pytest green.
+Done: Live C1 verified end-to-end across Vercel (https://aadha-ps.vercel.app), Render API, and Neon (Postgres, Auth, Object Storage, Realtime); CORS preflight 200, /api/neon/health 200 (all 4 services ok), Vercel Auth -> EdDSA JWT -> Render /api/v1/me (401->200), POST /api/v1/verify 200 & GET /api/v1/submissions/mine 200, `daily_job.py` executed against live Neon Postgres and logged in `job_runs`, CI & 286/286 pytest green.
 Next: Checkpoint C2/C3 integration with Divyansh education routes & Ananya live UI wiring, update data/DATA_MANIFEST.md, and run full staging smoke test twice before C4.
 Minor: Disabled reasoning token overhead for Nemotron models in core.llm so structured outputs do not truncate; guarded /api/neon/verify with 403 in production, hardened CORS/base-URL normalization, and cleaned up README.md and Makefile check commands.
 Blockers: docs/PRD.md export; Divyansh education endpoints for full C2/C3 smoke path.
+```
+
+```text
+[Hardhik] 85% | Phase 6/6: Staging hardening, content seeding & fresh-user smoke harness
+Done:
+- Added sliding-window per-user (20/min) & per-IP (60/min) 429 rate limiting, 413 payload caps (1 MiB / 10 MiB /verify, Content-Length & streamed), and /health stale-market warning (`market_data_stale`).
+- Updated `infra/scripts/seed.py` to load Education content tables only (live Neon DB verified: questions=120, lessons=12, scenarios=24, edu_explain_cache=30, users=0); updated `README.md`, `.env.example`, and `data/DATA_MANIFEST.md` (zero leaked secrets; zero edits in apps/web/).
+- Extended `infra/scripts/smoke_test.py` (`--fresh-user --cleanup-db --max-stale-days` across onboarding -> plan -> lesson -> scenario -> explain -> verify -> dashboard); live staging run passed Steps 1-7 (`health`, `/me`, 12-Q `onboarding`, `plan/lesson`, `scenarios`, `explain`) then hit OpenRouter 429 at `/verify`; offline full walkthrough passes in pytest.
+- Local verification output:
+  `pytest services/api/tests -q`: `312 passed, 1 warning in 23.84s`
+  `ruff check services/api infra db/migrations`: `All checks passed!`
+  `black --check services/api infra db/migrations`: `91 files would be left unchanged.`
+  `mypy services/api/app`: `Success: no issues found in 58 source files`
+Next: Re-run `infra/scripts/smoke_test.py --fresh-user --cleanup-db` twice on staging once OpenRouter quota & Vercel `NEXT_PUBLIC_USE_MOCKS=false` are resolved, complete `docs/DEMO_BACKUP_CHECKLIST.md`, and freeze C4.
+Minor: Branch `infra/staging-hardening` opened via PR (not self-merged); verified live Vercel `/api/neon/verify` returns 403 (`https://aadha-ps.vercel.app`) while `/api/neon/health` currently returns 200 and live bundle still compiles `NEXT_PUBLIC_USE_MOCKS !== "false"`.
+Blockers: OpenRouter free-models-per-day quota exhausted (53/50, $0 credits); Vercel `NEXT_PUBLIC_USE_MOCKS=false` & Render `FINNHUB_API_KEY`/cron check; Ananya `apps/web/.env.example` & `/api/neon/health` 403 decision; `docs/PRD.md` export & C4 video.
+```
+
+```text
+[Hardhik] 90% | Phase 6/6: Pre-judging audit fixes & L3->L4 assessment smoke extension
+Done:
+- Repo hygiene & single naming: moved root `PROMPT_*.md` into `docs/team/`, removed duplicate `SOURCE_OF_TRUTH_1.md` (keeping single `docs/SOURCE_OF_TRUTH.md`), updated GitHub repo description to `PaisaProof — Indian retail investor literacy and financial claim verification platform`, and renamed CI database `aacharya_test` -> `paisaproof_test` in `.github/workflows/ci.yml` (`infra/render.yaml` & `infra/docker-compose.yml` already use `paisaproof*`).
+- Blueprint, docs & checklist sync: added `FINNHUB_API_KEY`, `MARKET_DATA_MAX_STALE_DAYS`, `RATE_LIMIT_*`, and `MAX_*_BODY_BYTES` to `infra/render.yaml` (`paisaproof-api`); updated `README.md` (assessment step in smoke command + dev-only `/api/neon/*` 403 note) and `docs/DEMO_BACKUP_CHECKLIST.md` (level-up assessment checkbox + fresh Neon Auth sign-up note); scrubbed Neon project ID from `STATUS.md`.
+- Extended `infra/scripts/smoke_test.py` (calibrated onboarding `conf=55` -> L3, added `POST /assessments/{level}/start` + `POST /assessments/{id}/submit` -> L4 promotion, then `scenarios` -> `explain` -> `verify` -> `dashboard` at L4) and updated `test_smoke_test_full_walkthrough_against_asgi_app`.
+- Observed staging & DB verification: Render `/health` `{"status":"ok","version":"0.1.0","db":"ok","market_data_as_of":"2026-11-20"}`; CORS preflight (`Origin: https://aadha-ps.vercel.app`) `200`; Neon Postgres `users=0`, `questions=120`, `lessons=12`, `scenarios=24`, `edu_explain_cache=30`, `job_runs` includes `daily_job` (`id=6`, `status=ok`, `market_data_as_of=2026-11-20`). Live `smoke_test.py --fresh-user --cleanup-db` cleared steps 1–8 (`health`, `/me`, fresh Neon Auth sign-up, `onboarding`, `plan_and_lesson`, `assessment`, `scenarios`, `explain`) and exited `1` at step 9 (`POST /verify`) with `{"status": "error", "error": "POST /verify failed with HTTP 502: ... Rate limit exceeded: free-models-per-day ..."}`; `--cleanup-db` restored `public.users=0` and `neon_auth.user=0`.
+- Python 3.11 verification output:
+  `PYTHONPATH=services/api pytest services/api/tests -q`: `312 passed, 1 warning in 19.29s`
+  `ruff check services/api infra db/migrations`: `All checks passed!`
+  `black --check services/api infra db/migrations`: `91 files would be left unchanged.`
+  `mypy services/api/app`: `Success: no issues found in 58 source files`
+Next: Re-run `infra/scripts/smoke_test.py --fresh-user --cleanup-db` twice from clean sessions once OpenRouter quota is restored, verify Vercel/Render dashboard items & Ananya's mocks-off PR on `main`, and record C4 backup video.
+Minor: Repo name decision: keep `AADHA_PS` until after judging so live Vercel/Render GitHub hooks and teammate PR remotes are not disrupted (`infra/render.yaml` & `docker-compose.yml` use `paisaproof-*`). Live Vercel (`https://aadha-ps.vercel.app`) currently returns `403` on POST `/api/neon/verify`, `200` on `/api/neon/health`, and still compiles `"false"!==env.NEXT_PUBLIC_USE_MOCKS` (serving `"Explore the demo workspace"`; `apps/web/.env.example` on `main` `5f4a89d` still has `NEXT_PUBLIC_USE_MOCKS=true`). Remaining `Aacharya` strings outside Hardhik scope noted for owners: `data/seed/education/lessons.yaml`, `data/seed/education/questions.yaml`, `services/api/app/education/{__init__.py,models.py,scripts/export_evidence.py}` (Divyansh), and `services/api/app/nasdaq_verifier/service.py` (Arnav).
+Blockers: OpenRouter free-models-per-day quota exhausted (`used: 53, limit: 50, remaining: 0`); Vercel dashboard `NEXT_PUBLIC_USE_MOCKS=false` + project title; Render dashboard `FINNHUB_API_KEY`, `paisaproof-daily-cron` schedule confirm & service rename; Ananya `apps/web/` mocks-off & `/api/neon/health` 403 PR on `main`; `docs/PRD.md` export & C4 backup video.
+```
+
+```text
+[Hardhik] 92% | Phase 6/6: Main integration (PRs #9-#13), live Neon real-data re-seed & rate-limit test fix
+Done:
+- Synced `infra/staging-hardening` (PR #10) with `origin/main` (`a12dea6`, incorporating PR #9, #11, #12, #13) with zero boundary edits (`apps/web/`, `education/`, `verifier/` untouched): kept `paisaproof_test` for `POSTGRES_DB`, `DATABASE_URL`, and `VERIFIER_POSTGRES_TEST_URL` in `.github/workflows/ci.yml`, combined `413 PAYLOAD_TOO_LARGE` + `/verify` validation redaction in `services/api/app/core/errors.py`, and merged `data/DATA_MANIFEST.md` + `STATUS.md`.
+- Resolved test-harness collision with PR #9's 401-iteration `test_adversarial_100_and_en_hinglish_300_submit_never_echo_or_store` by defaulting `RATE_LIMIT_ENABLED="false"` inside `conftest.py::migrated_db` while enabling `RATE_LIMIT_ENABLED="true"` explicitly in `services/api/tests/test_rate_limit.py::_make_client_with_env` (production/dev default stays `true`).
+- Re-seeded live Neon Postgres content tables via `infra/scripts/seed.py`: `files_validated=162`, `records_validated=71551`, `data_origins=["real", "synthetic"]`, `questions=120`, `lessons=12`, `scenarios=24` (`real=19`, `synthetic=5`), `edu_explain_cache=30` (`real=24`, `synthetic=6`), `0` `Aacharya` strings remaining in `lessons`/`questions`, `job_runs` recorded (`id=8`, `job_name="seed"`, `status="ok"`, `market_data_as_of="2026-11-20"`), `alembic_version=20261121_submission_owner_fk`, `public.users=1` and `neon_auth."user"=1` (existing user untouched).
+- Verified live staging endpoints post-PR-#12: Vercel (`https://aadha-ps.vercel.app`) returns HTTP `200` (`has_demo_workspace=False`, `has_sign_up=True`), `POST /api/neon/verify` returns `403`, `GET /api/neon/health` returns `200`; Render `/api/v1/health` returns `{"status": "ok", "version": "0.1.0", "db": "ok", "market_data_as_of": "2026-11-20"}` with CORS preflight `200`.
+- Python 3.11 verification output:
+  `PYTHONPATH=services/api services/api/.venv/bin/pytest services/api/tests -q`: `352 passed, 6 skipped, 1 warning in 42.03s` (6 Postgres tests in `test_verifier_persistence.py` skip locally when `VERIFIER_POSTGRES_TEST_URL` is unset and run in CI Postgres 16)
+  `services/api/.venv/bin/ruff check services/api infra db/migrations`: `All checks passed!`
+  `services/api/.venv/bin/black --check services/api infra db/migrations`: `107 files would be left unchanged.`
+  `PYTHONPATH=services/api services/api/.venv/bin/mypy services/api/app`: `Success: no issues found in 62 source files`
+Next: Await PR #10 merge + Hardhik sign-off on Arnav's 3 MAJORs, load PR #9 real verifier seed into production Neon DB once approved, re-run `infra/scripts/smoke_test.py --fresh-user --cleanup-db` twice on staging after OpenRouter quota resets/is funded, and complete C4 docs/video.
+Minor: PR #12 already merged the UI mocks-off fix (`apps/web/.env.example` `NEXT_PUBLIC_USE_MOCKS=false`) and cleaned up `Aacharya -> PaisaProof` in Education/Nasdaq files onto `main`; live OpenRouter key check prior to `00:00 UTC` (`05:30 IST`) showed `used: 53, limit: 50, remaining: 0` (needs fresh post-reset check before double smoke run).
+Blockers: PR #10 review/merge; Arnav 3 MAJOR decisions; live 2x full staging smoke; `/api/neon/health` 403 prod guard in `apps/web/`; Render dashboard `FINNHUB_API_KEY`, `paisaproof-daily-cron` schedule confirm & service rename; Vercel project title; `docs/PRD.md` export & C4 backup video.
+```
+
+```text
+[Hardhik] MAJOR | C4 freeze awaiting PR #10 merge, 2x live smoke, and dashboard/frontend hardening items
+Impact: 2x live full-walkthrough staging certification (`health -> me -> onboarding -> lesson -> assessment -> scenario -> explain -> verify -> dashboard`) has not yet completed cleanly end-to-end; live `/api/neon/health` on Vercel still returns HTTP `200` (`apps/web/` outside Hardhik's write boundary); Render `FINNHUB_API_KEY`, `paisaproof-daily-cron` schedule provisioning, and PR #9 real-seed production loading remain open pending Hardhik sign-off.
+Options: A) Merge PR #10, sign off on Arnav's 3 MAJORs (load 30×5 real Verifier seed if approved), add `/api/neon/health` 403 prod guard in `apps/web/`, confirm Render env/cron/service name & Vercel project title, verify OpenRouter quota and run `smoke_test.py --fresh-user --cleanup-db` twice, then export `docs/PRD.md` + record C4 video (recommended); B) Keep remaining open audit items explicitly documented for judging.
+Need from: Hardhik/User (PR #10 merge & PR #9 policy decisions, OpenRouter quota check, Vercel/Render dashboard confirmations, `docs/PRD.md`, C4 backup video) and Ananya (`/api/neon/health` 403 guard & mobile nav confirmation in `apps/web/`).
 ```
 
 ## Arnav
@@ -221,7 +299,6 @@ Commands above used `.venv/Scripts/python.exe`; pytest's warning is Starlette's
 deprecation of `httpx` with `starlette.testclient` in favor of `httpx2`.
 
 ```text
->>>>>>> origin/main
 [Arnav] MAJOR | Platform scaffold and PRD are missing; the supplied SoT is the only available contract.
 Impact: Fresh-DB migration, authenticated API integration, and live extraction and market checks are blocked.
 Options: A) Hardhik provides the missing scaffold and interfaces while Orca workers build independent Verifier modules (recommended); B) pause all work.
