@@ -9,6 +9,7 @@ import { mockAuthBridge, mocksEnabled } from "@/lib/api";
 import { ApiClientError } from "@/lib/api-client";
 import { classifyAuthError } from "@/lib/auth-errors";
 import { authClient } from "@/lib/neon-auth-client";
+import { SilkBackground } from "@/components/effects/silk-background";
 
 type AuthStep = "email" | "password";
 type PasswordMode = "signin" | "signup";
@@ -271,6 +272,7 @@ export function AuthScreen({
 
   return (
     <main className="welcome-screen" data-theme={theme}>
+      <SilkBackground theme={theme} />
       <div className="welcome-noise" aria-hidden="true" />
       <div className="welcome-brand">
         <div className="welcome-brand-name">

@@ -1,0 +1,21 @@
+.silk-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.silk-background .silk-container {
+  pointer-events: none;
+}
+
+/* Translucent scrim keeps text contrast AA over the animated fabric. */
+.silk-background-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgb(251 250 247 / 0.35);
+}
+
+.silk-background[data-theme="dark"] .silk-background-scrim {
+  background: rgb(7 19 8 / 0.45);
+}
