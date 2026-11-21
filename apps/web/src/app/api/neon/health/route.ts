@@ -30,11 +30,11 @@ async function checkPostgres() {
 }
 
 async function checkAuth() {
-  const baseUrl = process.env.NEON_AUTH_BASE_URL?.trim() || "";
+  const baseUrl =
+    process.env.NEON_AUTH_BASE_URL?.trim() ||
+    "https://ep-misty-paper-azc60pot.neonauth.c-3.ap-southeast-1.aws.neon.tech/neondb/auth";
   const trimmedBase = baseUrl.replace(/\/+$/, "");
-  const jwksUrl =
-    process.env.NEON_AUTH_JWKS_URL?.trim() ||
-    (trimmedBase ? `${trimmedBase}/.well-known/jwks.json` : "");
+  const jwksUrl = process.env.NEON_AUTH_JWKS_URL?.trim() || `${trimmedBase}/.well-known/jwks.json`;
   const baseUrlConfigured = Boolean(trimmedBase);
   const jwksUrlConfigured = Boolean(jwksUrl);
   const cookieSecretConfigured = isNeonAuthConfigured();
