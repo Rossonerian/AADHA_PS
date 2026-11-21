@@ -56,7 +56,9 @@ def persistence_engine(
         pytest.skip(
             "Set VERIFIER_POSTGRES_TEST_URL for isolated-schema Postgres checks"
         )
-    admin = create_engine(url)
+    # Managed Postgres may close an idle admin connection while the test runs.
+    # Check it before cleanup; do not suppress a failed assertion or DROP.
+    admin = create_engine(url, pool_pre_ping=True)
     schema = "verifier_acceptance_" + uuid4().hex
     assert (
         schema.startswith("verifier_acceptance_") and schema.replace("_", "").isalnum()
