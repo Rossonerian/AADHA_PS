@@ -205,6 +205,16 @@ def api_explain_stock(
     )
 
 
+@router.get("/explain/catalog")
+def api_explain_catalog(
+    user: User = Depends(current_user),
+    repo: EducationRepository = Depends(_repo),
+) -> list[dict[str, Any]]:
+    """List prepared company/year pairs so the UI can offer valid walkthroughs."""
+    _effective_level(repo, user)
+    return repo.list_explain_records()
+
+
 @router.get("/me/dashboard", response_model=DashboardResponse)
 def api_me_dashboard(
     user: User = Depends(current_user),
