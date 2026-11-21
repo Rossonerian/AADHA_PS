@@ -7,10 +7,10 @@
 
 | Person | % | Phase | Blockers | Last Update |
 |---|---|---|---|---|
-| Hardhik | 90% | Phase 6/6 (PR #10 staging hardening & audit fixes; awaiting OpenRouter quota & Render/Vercel dashboard checks) | OpenRouter free-tier 50/day limit exhausted (53/50, 0 remaining) blocking 2x live /verify smoke; Vercel NEXT_PUBLIC_USE_MOCKS=false & project title; Render dashboard FINNHUB_API_KEY, cron confirm & service rename; apps/web/ mocks-off & /api/neon/health 403 on main; docs/PRD.md & C4 backup video | 2026-11-21 |
-| Arnav | 76.25% | Phase 3/6 & 6/6 open (Phases 1,2,4,5 done; grounding 59/59; PR #9 open) | OpenRouter key for live F1; real-source dataset or Option B sign-off; vetted deletion evidence | 2026-11-21 |
-| Divyansh | 100% | Phase 6/6 (Education complete; 20/20 tests pass) | none | 2026-11-20 |
-| Ananya | ~75% (est. — self-update requested) | Phase 5/6 (UI PRs #2, #3, #6, #7, #8 merged on main) | Confirm NEXT_PUBLIC_USE_MOCKS=false on main (`apps/web/.env.example` still `true`), `/api/neon/health` 403 in prod & live API E2E; self-update % | 2026-11-21 |
+| Hardhik | 92% | Phase 6/6 (PR #10 synced with main PRs #9/#11/#12/#13; Neon re-seeded with PR #11 real-data Education content; awaiting PR #10 merge & 2x live smoke) | PR #10 merge + Arnav 3 MAJOR decisions; OpenRouter quota / 2x live /verify smoke; `/api/neon/health` 403 in `apps/web/`; Render `FINNHUB_API_KEY`, cron confirm & service rename; Vercel project title; `docs/PRD.md` & C4 backup video | 2026-11-21 |
+| Arnav | 80% | Phase 6/6 (PR #9 & PR #13 merged onto main: 30x5 real seed, durable Nasdaq challenges, unified TOOL_LOCKED, 503 guard, top-level data_origin) | Live F1 (OpenRouter quota + held-out set); production Verifier real-seed load & SoT quota decision; vetted deletion evidence | 2026-11-21 |
+| Divyansh | 100% | Phase 6/6 (PR #11 merged — Education real-data provenance & Nasdaq gate hardened) | none | 2026-11-21 |
+| Ananya | ~90% (PR #12 merged & live on Vercel) | Phase 6/6 (v0 UI live: demo workspace removed, Neon Auth tabs, dev-only mocks, Looseleaf polish) | `/api/neon/health` 403 prod guard in `apps/web/`; mobile nav confirmation | 2026-11-21 |
 
 ## Checkpoint Targets
 
@@ -52,6 +52,13 @@ Blockers: OpenRouter free daily limit exhausted (53/50, $0 credits); Vercel NEXT
 Arnav 76.25% (PR #9 open) | Divyansh 100% | Hardhik 90% (PR #10 open) | Ananya ~75% est. (PRs #2,#3,#6,#7,#8 merged on main)
 Behind target: Arnav 76.25% vs C3 85% (live F1 blocked on OpenRouter quota + Phase 6 real-source Option A/B); Ananya UI mocks-off & `/api/neon/health` 403 not yet on main (`5f4a89d`)
 Blockers: OpenRouter free daily limit exhausted (53/50, 0 remaining); Vercel `NEXT_PUBLIC_USE_MOCKS=false` + project title; Render dashboard `FINNHUB_API_KEY` + cron schedule confirm + service name; remaining `Aacharya` strings in `education/` & `nasdaq_verifier/`; `docs/PRD.md` export & C4 backup video
+```
+
+```text
+[TEAM] Pre-Judging Rollup (Post-PR #9/#11/#12/#13) | Overall ~91%
+Arnav 80% (PR #9 & PR #13 merged on main) | Divyansh 100% (PR #11 merged on main) | Hardhik 92% (PR #10 synced & CI-ready) | Ananya ~90% (PR #12 merged & live on Vercel)
+Behind target: Final C4 demo freeze pending PR #10 merge, 2x live staging smoke, and dashboard/docs completion
+Blockers: PR #10 review/merge; Arnav 3 MAJOR decisions (SoT public-research seed policy, 61 default-horizon quota, OpenRouter quota + held-out F1 set); 2x live staging smoke; `/api/neon/health` 403 prod guard in `apps/web/`; Render `FINNHUB_API_KEY`, cron confirm & service rename; Vercel project title; `docs/PRD.md` export & C4 backup video
 ```
 
 ## Hardhik
@@ -124,15 +131,172 @@ Blockers: OpenRouter free-models-per-day quota exhausted (`used: 53, limit: 50, 
 ```
 
 ```text
-[Hardhik] MAJOR | Live staging 2x smoke & production hardening blocked on OpenRouter quota and dashboard/frontend items
-Impact: `POST /api/v1/verify` returns HTTP 502 on live staging (OpenRouter `free-models-per-day`: `53/50` used, `0` remaining), blocking 2x live full-walkthrough certification (`health -> me -> onboarding -> lesson -> assessment -> scenario -> explain -> verify -> dashboard`). Live Vercel frontend (`main` `5f4a89d`) still evaluates mocks ON (`"Explore the demo workspace"`) and returns `200` on `/api/neon/health` (`apps/web/` outside Hardhik's write boundary); Render Cron Job provisioning & `FINNHUB_API_KEY` cannot be verified via local CLI.
-Options: A) Fund OpenRouter (>= $10 credits) or swap a fresh `OPENROUTER_API_KEY` on Render, set `NEXT_PUBLIC_USE_MOCKS=false` & update project title on Vercel, verify Render `FINNHUB_API_KEY` + `paisaproof-daily-cron` schedule + service name, merge Ananya's mocks-off & `/api/neon/health` 403 UI PR onto `main`, then re-run `smoke_test.py --fresh-user --cleanup-db` twice (recommended); B) Wait for OpenRouter daily UTC reset before re-running 2x live smoke tests.
-Need from: Hardhik/User (OpenRouter credits/new key; Vercel & Render dashboard checks; `docs/PRD.md` & C4 backup video), Ananya (push mocks-off default + `/api/neon/health` 403 guard to `main` & self-update `STATUS.md`), and Divyansh/Arnav (optional `Aacharya` string cleanup in `education/` & `nasdaq_verifier/`).
+[Hardhik] 92% | Phase 6/6: Main integration (PRs #9-#13), live Neon real-data re-seed & rate-limit test fix
+Done:
+- Synced `infra/staging-hardening` (PR #10) with `origin/main` (`a12dea6`, incorporating PR #9, #11, #12, #13) with zero boundary edits (`apps/web/`, `education/`, `verifier/` untouched): kept `paisaproof_test` for `POSTGRES_DB`, `DATABASE_URL`, and `VERIFIER_POSTGRES_TEST_URL` in `.github/workflows/ci.yml`, combined `413 PAYLOAD_TOO_LARGE` + `/verify` validation redaction in `services/api/app/core/errors.py`, and merged `data/DATA_MANIFEST.md` + `STATUS.md`.
+- Resolved test-harness collision with PR #9's 401-iteration `test_adversarial_100_and_en_hinglish_300_submit_never_echo_or_store` by defaulting `RATE_LIMIT_ENABLED="false"` inside `conftest.py::migrated_db` while enabling `RATE_LIMIT_ENABLED="true"` explicitly in `services/api/tests/test_rate_limit.py::_make_client_with_env` (production/dev default stays `true`).
+- Re-seeded live Neon Postgres content tables via `infra/scripts/seed.py`: `files_validated=162`, `records_validated=71551`, `data_origins=["real", "synthetic"]`, `questions=120`, `lessons=12`, `scenarios=24` (`real=19`, `synthetic=5`), `edu_explain_cache=30` (`real=24`, `synthetic=6`), `0` `Aacharya` strings remaining in `lessons`/`questions`, `job_runs` recorded (`id=8`, `job_name="seed"`, `status="ok"`, `market_data_as_of="2026-11-20"`), `alembic_version=20261121_submission_owner_fk`, `public.users=1` and `neon_auth."user"=1` (existing user untouched).
+- Verified live staging endpoints post-PR-#12: Vercel (`https://aadha-ps.vercel.app`) returns HTTP `200` (`has_demo_workspace=False`, `has_sign_up=True`), `POST /api/neon/verify` returns `403`, `GET /api/neon/health` returns `200`; Render `/api/v1/health` returns `{"status": "ok", "version": "0.1.0", "db": "ok", "market_data_as_of": "2026-11-20"}` with CORS preflight `200`.
+- Python 3.11 verification output:
+  `PYTHONPATH=services/api services/api/.venv/bin/pytest services/api/tests -q`: `352 passed, 6 skipped, 1 warning in 42.03s` (6 Postgres tests in `test_verifier_persistence.py` skip locally when `VERIFIER_POSTGRES_TEST_URL` is unset and run in CI Postgres 16)
+  `services/api/.venv/bin/ruff check services/api infra db/migrations`: `All checks passed!`
+  `services/api/.venv/bin/black --check services/api infra db/migrations`: `107 files would be left unchanged.`
+  `PYTHONPATH=services/api services/api/.venv/bin/mypy services/api/app`: `Success: no issues found in 62 source files`
+Next: Await PR #10 merge + Hardhik sign-off on Arnav's 3 MAJORs, load PR #9 real verifier seed into production Neon DB once approved, re-run `infra/scripts/smoke_test.py --fresh-user --cleanup-db` twice on staging after OpenRouter quota resets/is funded, and complete C4 docs/video.
+Minor: PR #12 already merged the UI mocks-off fix (`apps/web/.env.example` `NEXT_PUBLIC_USE_MOCKS=false`) and cleaned up `Aacharya -> PaisaProof` in Education/Nasdaq files onto `main`; live OpenRouter key check prior to `00:00 UTC` (`05:30 IST`) showed `used: 53, limit: 50, remaining: 0` (needs fresh post-reset check before double smoke run).
+Blockers: PR #10 review/merge; Arnav 3 MAJOR decisions; live 2x full staging smoke; `/api/neon/health` 403 prod guard in `apps/web/`; Render dashboard `FINNHUB_API_KEY`, `paisaproof-daily-cron` schedule confirm & service rename; Vercel project title; `docs/PRD.md` export & C4 backup video.
+```
+
+```text
+[Hardhik] MAJOR | C4 freeze awaiting PR #10 merge, 2x live smoke, and dashboard/frontend hardening items
+Impact: 2x live full-walkthrough staging certification (`health -> me -> onboarding -> lesson -> assessment -> scenario -> explain -> verify -> dashboard`) has not yet completed cleanly end-to-end; live `/api/neon/health` on Vercel still returns HTTP `200` (`apps/web/` outside Hardhik's write boundary); Render `FINNHUB_API_KEY`, `paisaproof-daily-cron` schedule provisioning, and PR #9 real-seed production loading remain open pending Hardhik sign-off.
+Options: A) Merge PR #10, sign off on Arnav's 3 MAJORs (load 30×5 real Verifier seed if approved), add `/api/neon/health` 403 prod guard in `apps/web/`, confirm Render env/cron/service name & Vercel project title, verify OpenRouter quota and run `smoke_test.py --fresh-user --cleanup-db` twice, then export `docs/PRD.md` + record C4 video (recommended); B) Keep remaining open audit items explicitly documented for judging.
+Need from: Hardhik/User (PR #10 merge & PR #9 policy decisions, OpenRouter quota check, Vercel/Render dashboard confirmations, `docs/PRD.md`, C4 backup video) and Ananya (`/api/neon/health` 403 guard & mobile nav confirmation in `apps/web/`).
 ```
 
 ## Arnav
 
 _Append updates here._
+
+```text
+[Arnav] 80% | Verifier audit fixes (items 1–3 on PR #13; items 4–7 merged in PR #9) (2026-11-21)
+Done: Fixed audit items 1–3 off main: (1) GET /sources/{id} below Level 3 now returns standard 403 {"error": {"code": "TOOL_LOCKED", "message": ..., "required_level": 3}}; (2) POST /verify without OPENROUTER_API_KEY now catches ConfigurationError and returns user-safe 503 {"error": {"code": "VERIFIER_UNAVAILABLE", "message": ...}} without leaking env vars or tracebacks; (3) added top-level data_origin to GET /sources/{id} and GET /submissions/mine while keeping red_flags[].evidence as an object, and updated docs/SOURCE_OF_TRUTH.md §7. Audit items 4 (Postgres Nasdaq challenge persistence + fail-closed gate + 503 FINNHUB_UNAVAILABLE), 5 (live F1 runner + quota blocker/held-out MAJOR), 6 (30×5 real public-research seed + DATA_MANIFEST), and 7 (submissions.user_id -> users.id FK migration) are merged in PR #9. No apps/web/ edits.
+Next: Await Hardhik review/merge of PR #13 (and decisions on 61 default-horizon claims and OpenRouter quota / held-out F1 set).
+Minor: docs/SOURCE_OF_TRUTH.md §7 updated for the unified error envelope, 503 VERIFIER_UNAVAILABLE, top-level data_origin, and red_flags[].evidence object shape (pending Hardhik approval).
+Blockers: Live extraction F1 remains blocked on OpenRouter daily quota + held-out set decision.
+
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m pytest services/api/tests -q
+316 passed, 1 warning in 49.15s
+$ .venv/Scripts/python.exe -m ruff check services/api infra db/migrations
+All checks passed!
+$ .venv/Scripts/python.exe -m black --check services/api infra db/migrations
+All done! ✨ 🍰 ✨
+90 files would be left unchanged.
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m mypy services/api/app
+Success: no issues found in 58 source files
+```
+
+```text
+[Arnav] 76.25% | Phase 6/6: Real-source seed verification & PR #9 update (2026-11-21)
+Done: Validated 30-publisher × 5-claim real seed (150 claims, 2023-01-12 to 2025-11-17, core.market prices cut off 2026-11-20); 150/150 public PDF HTTP 200 + SHA256 verified; idempotent --load passed on disposable Postgres schema at Alembic head 20261121_submission_owner_fk (30 sources, 150 submissions, 150 claims, data_origin=real; production DB untouched). Spot-checked 10 random claims across 10 publishers against fetched PDFs (10/10 matched publisher, date, security, direction, price levels). Confirmed 0 analyst emails/phones, max excerpt 42 chars, no report bodies, data/market_cache/ gitignored. Re-ran evaluate_extraction.py: OpenRouter daily quota still exhausted (0 calls, ExternalServiceError). Deletion evidence remains empty (missing evidence = no finding). All 342 pytest (zero skips, including 6 isolated Postgres + 9 real_seed tests), ruff, black, and mypy passed on Python 3.11.16.
+Next: Await Hardhik review/decisions on the 3 MAJORs below (SoT seed policy, 61 default-horizon claims, OpenRouter quota + independent held-out set); leave PR #9 unmerged and production migrations unapplied.
+Minor: Kept SOURCE_OF_TRUTH.md diff strictly to the 13-line proposed public-research seed policy; updated DATA_MANIFEST.md, docs/evidence/real_source_seed.md, and docs/evidence/extraction_f1.md; no apps/web/ edits.
+Blockers: 3 MAJORs below (SoT contract change, default-horizon quota decision, OpenRouter quota + held-out acceptance set); vetted deletion evidence still absent.
+
+$ PYTHONPATH=services/api .venv/Scripts/python.exe infra/scripts/load_real_verifier_seed.py
+{"status": "validated", "claims": 150}
+$ PYTHONPATH=services/api .venv/Scripts/python.exe infra/scripts/load_real_verifier_seed.py --check-publications
+{"public_pdfs_verified": 150, "digest_matches": 150}
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m pytest services/api/tests -q
+342 passed, 1 warning in 145.88s (0:02:25)
+$ .venv/Scripts/python.exe -m ruff check services/api infra db/migrations
+All checks passed!
+$ .venv/Scripts/python.exe -m black --check services/api infra db/migrations
+All done! ✨ 🍰 ✨
+104 files would be left unchanged.
+$ PYTHONPATH=services/api .venv/Scripts/python.exe -m mypy services/api/app
+Success: no issues found in 60 source files
+```
+
+```text
+[Arnav] MAJOR | Contract change proposed in docs/SOURCE_OF_TRUTH.md for public-research seed policy (2026-11-21)
+Impact: Adds 13 lines under Section 8 defining `broker_research` corporate-publisher identity (alias brands collapsed), Level-1 import owner, provenance/excerpt retention, end-of-day Asia/Kolkata storage for date-only reports, strict post-date scoring sessions, 20/252 session horizon mapping, explicit 20-session default for unstated horizons, benchmark-relative scoring for target-only reports, and sample-limitation disclosure. Blocks merging PR #9 until Hardhik approves.
+Options: A) Approve the 13-line public-research seed policy in docs/SOURCE_OF_TRUTH.md as part of PR #9 (recommended); B) request revisions to the contract before merge.
+Need from: Hardhik — contract review and approval on PR #9.
+```
+
+```text
+[Arnav] MAJOR | Decision needed: do the 61 default-horizon claims count toward the ">=5 scored claims" quota? (2026-11-21)
+Impact: 61 of 150 real-seed claims use `horizon_basis="verifier_default_20_sessions"` (20 trading sessions) because the source PDF states no horizon (89 have explicit stated horizons). If default-horizon claims are excluded from the ">=5 scored claims per publisher" quota, 13 of 30 publishers fall short by a total of 61 claims:
+  - asit_c_mehta: stated=1, default_20=4, shortfall=4
+  - axis_securities: stated=0, default_20=5, shortfall=5
+  - bp_wealth: stated=2, default_20=3, shortfall=3
+  - elara_securities: stated=0, default_20=5, shortfall=5
+  - hdfc_securities: stated=0, default_20=5, shortfall=5
+  - hem_securities: stated=0, default_20=5, shortfall=5
+  - idbi_capital: stated=0, default_20=5, shortfall=5
+  - lkp_securities: stated=1, default_20=4, shortfall=4
+  - nirmal_bang_institutional_equities: stated=0, default_20=5, shortfall=5
+  - nuvama: stated=0, default_20=5, shortfall=5
+  - prabhudas_lilladher: stated=0, default_20=5, shortfall=5
+  - religare: stated=0, default_20=5, shortfall=5
+  - sharekhan: stated=0, default_20=5, shortfall=5
+Options: A) Count the 61 explicitly labelled 20-session-default claims toward the 30×5 quota, retaining their `verifier_default_20_sessions` disclosure (recommended, matches existing Verifier extraction default); B) require stated horizons on all 150 claims and collect 61 replacement stated-horizon reports across the 13 publishers above.
+Need from: Hardhik — quota policy decision.
+```
+
+```text
+[Arnav] MAJOR | Live extraction F1 still blocked by OpenRouter quota; independent held-out set needed (2026-11-21)
+Impact: Re-running `infra/scripts/evaluate_extraction.py` hit `ExternalServiceError` immediately (0 calls; OpenRouter free-tier daily quota has not reset), so live F1 remains unmeasured (`null`). In addition, `data/seed/verifier/eval.jsonl` was used during earlier grounding recall work and is no longer a held-out acceptance set.
+Options: A) Once quota resets or a paid OpenRouter model is configured, run `evaluate_extraction.py` on `eval.jsonl` strictly as a diagnostic (no further tuning on `eval.jsonl`) and build a fresh independent held-out acceptance set for formal F1>=0.80 sign-off (recommended); B) explicitly accept a diagnostic-only `eval.jsonl` run once quota is available.
+Need from: Hardhik — OpenRouter quota/paid-model approval and sign-off on building an independent held-out acceptance set.
+```
+
+```text
+[Arnav] 76.25% | Nasdaq / Platform / Privacy hardening (2026-11-21)
+Done: Durable owner-scoped 30-minute challenge keys; fresh-process restart, one-winner concurrent submit, TTL and JSON-plan gate tests. Owner-FK revision up/down/re-up passed on isolated Postgres with existing submission preserved. Live Finnhub quote/profile/metrics 200, candles 403 -> empty chart; 4 real-data questions. Bound 2,245 official AMFI categories and reviewed-deletion provider; 100 + 300 EN/Hinglish adversarial cases exercised on each endpoint, phones redacted before hashing. 333 tests passed.
+Next: Review PR #9 and apply its migrations after approval; finish live F1 and real-source quota.
+Minor: SOURCE_OF_TRUTH.md proposes persistence, exact-answer and origin details for review; no apps/web edits. Production DB was read only; migrations tested in disposable schemas. See docs/evidence/verifier_hardening.md.
+Blockers: Real-data acceptance remains open (MAJOR below). No synthetic-only approval assumed.
+
+$ PYTHONPATH=services/api python -m pytest services/api/tests -q
+333 passed, 1 warning in 285.01s (0:04:45)
+$ python -m ruff check services/api infra db/migrations
+All checks passed!
+$ python -m black --check services/api infra db/migrations
+All done! ✨ 🍰 ✨
+98 files would be left unchanged.
+$ python -m mypy services/api/app
+Success: no issues found in 59 source files
+```
+
+Python 3.11.16 (`.venv/Scripts/python.exe`); the full pytest run used
+`VERIFIER_POSTGRES_TEST_URL` loaded privately from local settings, with the
+application `DATABASE_URL=sqlite://`, `DATABASE_URL_UNPOOLED=""`, `APP_ENV=test`.
+All 6 Postgres persistence cases ran (no skipped tests). Warning: Starlette's
+`httpx` TestClient deprecation. No API key or database URL was printed.
+
+```text
+[Arnav] MAJOR | Real-data acceptance gates remain open (2026-11-21)
+Impact: Read-only Postgres count is 0 qualifying public real sources (need >=30 with >=5 scored claims each). F1 remains unmeasured after OpenRouter daily quota; eval.jsonl also has prior development feedback. No vetted real deletion notice/capture pair is available, so no deletion finding is asserted.
+Options: A) Source and independently vet the required public dated claims, complete live F1 with enough quota and resolve held-out integrity (recommended); B) synthetic-only remains NOT approved — user explicitly chose to keep the real-data gate open.
+Need from: Hardhik/Arnav — verified public-source corpus and deletion provenance; OpenRouter quota and evaluation-integrity decision. Finnhub key now works. PR #9 is reviewable but not merged or deployed.
+```
+
+```text
+[Arnav] MAJOR | Live F1 retry blocked by OpenRouter daily quota (2026-11-21)
+Impact: Key loads after copying .env.txt to ignored .env; 41 real structured calls completed before ExternalServiceError. Diagnostic confirmed HTTP 429 with a daily-limit message. Full F1 remains unmeasured.
+Options: A) Hardhik provides enough OpenRouter quota for all 150 rows (recommended); B) wait for quota reset, then rerun without tuning. Existing corpus independence issue remains open.
+Need from: Hardhik — sufficient quota and held-out evaluation decision. Raw summary saved in docs/evidence/extraction_f1.md. FINNHUB_API_KEY still absent; Postgres URL now configured but not exercised. Tasks 2–6 pending per stop rule.
+```
+
+```text
+[Arnav] MAJOR | First real test blocked at Step 1 (2026-11-21)
+Impact: OPENROUTER_API_KEY is absent; live exact-match F1 is unmeasured, not zero. Existing grounding updates below report development against eval.jsonl, compromising its held-out status.
+Options: A) Hardhik configures OpenRouter and supplies an independent held-out acceptance set (recommended); B) explicitly accept the existing corpus as a diagnostic only. No tuning performed in this run.
+Need from: Hardhik — OpenRouter access and evaluation-integrity decision. Tasks 2–6 remain pending under the requested stop-on-blocker rule; no synthetic-only sign-off assumed.
+```
+
+```text
+[Arnav] 76.25% | Phase 3/6: First real-test preflight
+Done: Added real-core evaluation runner and raw blocked output in docs/evidence/extraction_f1.md; Python 3.11.16 validation below.
+Next: Configure OpenRouter and resolve held-out integrity, then resume the ordered task list.
+Minor: FINNHUB_API_KEY absent; configured DB is SQLite. No apps/web edits or contract changes.
+Blockers: Live F1 unmeasured; no acceptance progress claimed.
+
+$ PYTHONPATH=services/api python -m pytest services/api/tests -q
+306 passed, 1 warning in 31.37s
+$ python -m ruff check services/api infra db/migrations
+All checks passed!
+$ python -m black --check services/api infra db/migrations
+All done! ✨ 🍰 ✨
+90 files would be left unchanged.
+$ PYTHONPATH=services/api python -m mypy services/api/app
+Success: no issues found in 57 source files
+```
+
+Commands above used `.venv/Scripts/python.exe`; pytest's warning is Starlette's
+deprecation of `httpx` with `starlette.testclient` in favor of `httpx2`.
 
 ```text
 [Arnav] MAJOR | Platform scaffold and PRD are missing; the supplied SoT is the only available contract.

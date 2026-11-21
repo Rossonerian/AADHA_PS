@@ -145,6 +145,13 @@ def register_exception_handlers(app: FastAPI) -> None:
     async def handle_validation_error(
         _request: Request, exc: RequestValidationError
     ) -> JSONResponse:
+        if _request.url.path.rstrip("/") in {
+            "/api/v1/verify",
+            "/api/v1/nasdaq-verifier/submit",
+        }:
+            # Pydantic errors include input values (and arbitrary extra-field names).
+            # Never echo submitted tips, injected instructions or phone numbers.
+            return _error_json(422, "VALIDATION_ERROR", "Request validation failed")
         return _error_json(
             status_code=422,
             code="VALIDATION_ERROR",

@@ -137,6 +137,7 @@ class SourceResponse(BaseModel):
     source: SourceView
     history: list[RatingChange]
     recent_claims: list[ClaimView]
+    data_origin: DataOrigin
 
 
 class SubmissionItem(BaseModel):
@@ -149,3 +150,4 @@ class SubmissionItem(BaseModel):
 
 class SubmissionsResponse(BaseModel):
     items: list[SubmissionItem]
+    data_origin: DataOrigin

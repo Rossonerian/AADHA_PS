@@ -1,14 +1,15 @@
 """`/api/v1/nasdaq-verifier/*` endpoints (gated server-side)."""
 
-import time
 from datetime import UTC, datetime
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, Query
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
+from sqlalchemy.orm import Session
 
 from app.core.auth import User
-from app.core.errors import AppError, NotFoundError
+from app.core.db import get_db
+from app.core.errors import AppError
 from app.core.finnhub import FinnhubClient, get_finnhub, normalize_symbol
 from app.nasdaq_verifier import service
 from app.nasdaq_verifier.gate import require_nasdaq_gate
@@ -19,22 +20,25 @@ router = APIRouter(prefix="/nasdaq-verifier", tags=["nasdaq-verifier"])
 class AnswerIn(BaseModel):
     """One answer with 50–100 confidence."""
 
-    question_id: str
-    answer: str
-    confidence: int = Field(ge=50, le=100)
+    model_config = ConfigDict(extra="forbid")
+    question_id: str = Field(min_length=1, max_length=16)
+    answer: str = Field(max_length=128)
+    confidence: int = Field(ge=50, le=100, strict=True)
 
 
 class SubmitIn(BaseModel):
     """Submission body."""
 
-    challenge_id: str
-    answers: list[AnswerIn]
+    model_config = ConfigDict(extra="forbid")
+    challenge_id: str = Field(min_length=1, max_length=66)
+    answers: list[AnswerIn] = Field(max_length=4)
 
 
 @router.get("/challenge")
 def challenge(
     user: Annotated[User, Depends(require_nasdaq_gate)],
     fh: Annotated[FinnhubClient, Depends(get_finnhub)],
+    db: Annotated[Session, Depends(get_db)],
     symbol: str = Query("NDX"),
 ) -> dict[str, Any]:
     """Return a real-data snapshot and 3–4 objective data-reading questions."""
@@ -46,7 +50,7 @@ def challenge(
     questions = service.build_questions(snap)
     if len(questions) < 3:
         raise AppError("INSUFFICIENT_DATA", "Not enough data to build a check.", 502)
-    cid, public = service.issue(user.id, questions)
+    cid, public = service.issue(db, user.id, questions)
     if display == "NDX":
         snap["name"] = "Nasdaq-100 benchmark (QQQ)"
         url = "https://www.nasdaq.com/market-activity/etf/qqq"
@@ -65,10 +69,11 @@ def challenge(
 
 @router.post("/submit")
 def submit(
-    body: SubmitIn, user: Annotated[User, Depends(require_nasdaq_gate)]
+    body: SubmitIn,
+    user: Annotated[User, Depends(require_nasdaq_gate)],
+    db: Annotated[Session, Depends(get_db)],
 ) -> dict[str, Any]:
     """Score answers (accuracy + Brier); each challenge can be submitted once."""
-    ch = service._store.pop(body.challenge_id, None)
-    if ch is None or ch.user_id != user.id or ch.expires < time.time():
-        raise NotFoundError("Challenge not found or expired.")
-    return service.score(ch, [a.model_dump() for a in body.answers])
+    return service.submit(
+        db, body.challenge_id, user.id, [a.model_dump() for a in body.answers]
+    )

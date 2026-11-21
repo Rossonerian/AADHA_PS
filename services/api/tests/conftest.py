@@ -48,6 +48,7 @@ def migrated_db(
     monkeypatch.setenv("DATABASE_URL", db_url)
     monkeypatch.setenv("SUPABASE_JWT_SECRET", jwt_secret)
     monkeypatch.setenv("APP_ENV", "test")
+    monkeypatch.setenv("RATE_LIMIT_ENABLED", "false")
     get_settings.cache_clear()
 
     alembic_cfg = Config(str(ALEMBIC_INI_PATH))

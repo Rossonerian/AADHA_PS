@@ -1,7 +1,7 @@
 from datetime import UTC, date, datetime
 from time import perf_counter
 from types import SimpleNamespace
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 import pandas as pd
 import pytest
@@ -10,6 +10,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, func, select
 from sqlalchemy.orm import sessionmaker
 
+from app.core.guardrails import check_output
 from app.verifier import service as service_module
 from app.verifier.ingestion import CapturedTip
 from app.verifier.jobs import score_open_claims
@@ -66,7 +67,7 @@ def api(tmp_path):
 
     def guard(text):
         observations.checked.append(text)
-        return SimpleNamespace(ok=True, text=text)
+        return check_output(text)
 
     core = VerifierCore(
         complete, guard, TestMarket(), post_deleted=lambda _: observations.deleted
@@ -95,22 +96,32 @@ def test_basic_mode_deduplication_guard_and_owner_privacy(api):
     assert basic["source"]["label"] is None and basic["source"]["score"] is None
     assert basic["source"]["facts"] is None
     assert [flag["code"] for flag in basic["red_flags"]] == ["guaranteed_returns"]
-    assert basic["red_flags"][0]["text"] in observations.checked
+    assert any(
+        check_output(text).text == basic["red_flags"][0]["text"]
+        for text in observations.checked
+    )
     assert basic["claim"]["symbol"] == "TCS"
     source_url = f"/api/v1/sources/{basic['source']['id']}"
-    assert client.get(source_url, headers={"x-level": "2"}).json() == {
-        "code": "TOOL_LOCKED",
-        "required_level": 3,
+    locked = client.get(source_url, headers={"x-level": "2"})
+    assert locked.status_code == 403
+    assert locked.json() == {
+        "error": {
+            "code": "TOOL_LOCKED",
+            "message": "This tool unlocks at level 3.",
+            "required_level": 3,
+        }
     }
     full = client.post("/api/v1/verify", json=tip).json()
     assert full["mode"] == "full" and full["source"]["label"] == "not_enough_history"
+    assert isinstance(full["red_flags"][0]["evidence"], dict)
     assert (
         full["submission_id"] == basic["submission_id"] and observations.llm_calls == 1
     )
     stranger = {"x-user": str(uuid4())}
     assert client.get(source_url, headers=stranger).status_code == 404
     assert client.get("/api/v1/submissions/mine", headers=stranger).json() == {
-        "items": []
+        "items": [],
+        "data_origin": "real",
     }
     assert "WhatsApp: [REDACTED PHONE]" in observations.last_prompt
     assert "98765" not in observations.last_prompt
@@ -256,6 +267,41 @@ def test_adversarial_advice_queries_never_reach_llm_or_echo(api):
     assert len(observations.checked) == 100
 
 
+def test_verify_en_hinglish_guardrail_corpus_and_phone_storage(api):
+    import json
+    from hashlib import sha256
+    from pathlib import Path
+
+    client, sessions, _, _, _ = api
+    corpus = json.loads(
+        (Path(__file__).parent / "data/adversarial_prompts_300.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    for item in corpus:
+        response = client.post("/api/v1/verify", json={"text": item["text"]})
+        assert response.status_code in (200, 422), response.text
+        payload = response.json()
+        prose = (
+            [payload["error"]["message"]]
+            if response.status_code == 422
+            else [flag["text"] for flag in payload["red_flags"]]
+            + [payload["source"]["handle"]]
+        )
+        # Check rendered language, not JSON field names such as the quoted
+        # source claim's `target` or random numeric UUID substrings.
+        assert all(check_output(text).ok for text in prose), item["id"]
+        assert item["text"] not in response.text
+    text = "TCS will rise. WhatsApp: +91 98765 432 10."
+    response = client.post("/api/v1/verify", json={"text": text})
+    assert response.status_code == 200
+    with sessions() as db:
+        row = db.get_one(Submission, UUID(response.json()["submission_id"]))
+        assert "98765" not in row.raw_content
+        assert "[REDACTED PHONE]" in row.raw_content
+        assert row.content_hash == sha256(row.raw_content.encode()).hexdigest()
+
+
 def test_synthetic_demo_seed_and_local_latency(api):
     from importlib.util import module_from_spec, spec_from_file_location
     from pathlib import Path
@@ -302,14 +348,77 @@ def test_platform_app_mounts_verifier_routes_with_auth(migrated_db, make_jwt):
         assert platform_client.get("/api/v1/submissions/mine").status_code == 401
         mine = platform_client.get("/api/v1/submissions/mine", headers=headers)
         assert mine.status_code == 200
-        assert mine.json() == {"items": []}
+        assert mine.json() == {"items": [], "data_origin": "real"}
 
         locked = platform_client.get(f"/api/v1/sources/{uuid4()}", headers=headers)
         assert locked.status_code == 403
-        assert locked.json() == {"code": "TOOL_LOCKED", "required_level": 3}
+        assert locked.json() == {
+            "error": {
+                "code": "TOOL_LOCKED",
+                "message": "This tool unlocks at level 3.",
+                "required_level": 3,
+            }
+        }
 
         advice = platform_client.post(
             "/api/v1/verify", json={"text": "Should I buy INFY?"}, headers=headers
         )
         assert advice.status_code == 422
         assert advice.json()["error"]["code"] == "ADVICE_NOT_SUPPORTED"
+
+
+def test_verify_without_openrouter_key_returns_user_safe_503(
+    migrated_db, make_jwt, monkeypatch
+):
+    from app.core.config import get_settings
+    from app.core.guardrails import check_output
+    from app.main import create_app
+
+    del migrated_db
+    monkeypatch.setenv("OPENROUTER_API_KEY", "")
+    get_settings.cache_clear()
+    try:
+        application = create_app()
+        token = make_jwt(str(uuid4()), email="verifier@example.com")
+        headers = {"Authorization": f"Bearer {token}"}
+        with TestClient(application) as platform_client:
+            response = platform_client.post(
+                "/api/v1/verify",
+                json={"text": "TCS will rise to 4200 next week."},
+                headers=headers,
+            )
+        assert response.status_code == 503
+        body = response.json()
+        assert body["error"]["code"] == "VERIFIER_UNAVAILABLE"
+        assert "OPENROUTER_API_KEY" not in response.text
+        assert "Traceback" not in response.text
+        assert check_output(body["error"]["message"]).ok
+    finally:
+        get_settings.cache_clear()
+
+
+def test_sources_and_submissions_carry_top_level_data_origin(api):
+    client, sessions, _, _, _ = api
+    response = client.post(
+        "/api/v1/verify", json={"text": "TCS will rise. Guaranteed returns."}
+    )
+    assert response.status_code == 200
+    body = response.json()
+    assert body["data_origin"] == "real"
+    assert isinstance(body["red_flags"][0]["evidence"], dict)
+
+    source_body = client.get(f"/api/v1/sources/{body['source']['id']}").json()
+    assert source_body["data_origin"] == "real"
+    assert source_body["source"]["data_origin"] == "real"
+
+    mine_body = client.get("/api/v1/submissions/mine").json()
+    assert mine_body["data_origin"] == "real"
+    assert len(mine_body["items"]) == 1
+    assert mine_body["items"][0]["data_origin"] == "real"
+
+    with sessions.begin() as db:
+        sub = db.scalar(select(Submission))
+        sub.data_origin = "synthetic"
+    synthetic_mine = client.get("/api/v1/submissions/mine").json()
+    assert synthetic_mine["data_origin"] == "synthetic"
+    assert synthetic_mine["items"][0]["data_origin"] == "synthetic"

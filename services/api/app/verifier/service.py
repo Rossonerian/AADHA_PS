@@ -194,6 +194,7 @@ class VerifierService:
                     for row in history
                 ],
                 recent_claims=[ClaimView.model_validate(row) for row in recent],
+                data_origin=DataOrigin(source.data_origin),
             )
 
     def submissions(self, owner: UUID, level: int) -> SubmissionsResponse:
@@ -207,22 +208,26 @@ class VerifierService:
                 .where(Submission.user_id == owner)
                 .order_by(Submission.captured_at.desc(), Submission.id)
             )
-            return SubmissionsResponse(
-                items=[
-                    SubmissionItem(
-                        submission_id=submission.id,
-                        claim=ClaimView.model_validate(claim),
-                        status=ClaimStatus(claim.status),
-                        outcome=(
-                            ClaimOutcome.model_validate(claim.outcome)
-                            if level >= 3 and claim.outcome is not None
-                            else None
-                        ),
-                        data_origin=DataOrigin(submission.data_origin),
-                    )
-                    for submission, claim in rows
-                ]
+            items = [
+                SubmissionItem(
+                    submission_id=submission.id,
+                    claim=ClaimView.model_validate(claim),
+                    status=ClaimStatus(claim.status),
+                    outcome=(
+                        ClaimOutcome.model_validate(claim.outcome)
+                        if level >= 3 and claim.outcome is not None
+                        else None
+                    ),
+                    data_origin=DataOrigin(submission.data_origin),
+                )
+                for submission, claim in rows
+            ]
+            origin = (
+                DataOrigin.SYNTHETIC
+                if any(item.data_origin == DataOrigin.SYNTHETIC for item in items)
+                else DataOrigin.REAL
             )
+            return SubmissionsResponse(items=items, data_origin=origin)
 
     def safe_text(self, text: str) -> str:
         return self.core.check_output(text).text
@@ -253,6 +258,12 @@ class VerifierService:
                 )
             )
         for flag in flags:
+            if (
+                flag.code == RedFlagCode.DELETED_POST
+                and submission.post_url
+                and self.core.deletion_provenance
+            ):
+                flag.evidence.update(self.core.deletion_provenance(submission.post_url))
             flag.text = self.safe_text(flag.text)
             flag.evidence = {
                 key: self.safe_text(value) if isinstance(value, str) else value

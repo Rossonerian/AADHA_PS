@@ -85,6 +85,13 @@ paisaproof/
 
 > Platform note (Hardhik): `job_runs` (`id`, `job_name`, `status`, `market_data_as_of`, `details_json`, `ran_at`) is an internal platform table maintained by Hardhik for daily cron observability and `/health`.
 
+> Proposed Verifier hardening (review in this PR): internal `nasdaq_challenges`
+> stores `id`, owner `user_id -> users.id`, private template answer strings,
+> `expires_at` and `data_origin="real"`. Keys expire after 30 minutes and are
+> atomically consumed once by their owner. Expired keys are removed on issuance.
+> `submissions.user_id -> users.id` is enforced by a reconciliation revision;
+> existing orphaned submissions must be reconciled before deploying it.
+
 ## 7. API contract
 
 All endpoints under `/api/v1`, JSON, auth required except `/health`.
@@ -103,17 +110,46 @@ All endpoints under `/api/v1`, JSON, auth required except `/health`.
 | `POST /assessments/{id}/submit` | Divyansh | `{answers[{item_id, answer, confidence}]}` | `{passed, score, brier, new_level?, unlocked[]}` |
 | `GET /explain?symbol=&year=` | Divyansh | – | `{chart[], moves[{date, pct, events[{text, source}]}], summary}` |
 | `GET /me/dashboard` | Divyansh | – | `{level, skills_over_time[], brier_over_time[], scenario_accuracy[]}` |
-| `POST /verify` | Arnav | one of `{url}`, `{text}`, `{image_base64}`; optional `{user_guess, user_confidence}` | `{submission_id, source{id, platform, handle, label, score, facts{}}, claim{...}, red_flags[{code, text, evidence}], mode: "basic" or "full"}` |
-| `GET /sources/{id}` | Arnav | – | `{source, history[], recent_claims[]}` |
-| `GET /submissions/mine` | Arnav | – | `{items[{submission_id, claim, status, outcome}]}` |
+| `POST /verify` | Arnav | one of `{url}`, `{text}`, `{image_base64}`; optional `{user_guess, user_confidence}` | `{submission_id, source{id, platform, handle, label, score, facts{}, data_origin}, claim{...}, red_flags[{code, text, evidence{}, data_origin}], mode: "basic" or "full", data_origin}` |
+| `GET /sources/{id}` | Arnav | – | `{source, history[], recent_claims[], data_origin}` |
+| `GET /submissions/mine` | Arnav | – | `{items[{submission_id, claim, status, outcome, data_origin}], data_origin}` |
 | `GET /nasdaq-verifier/challenge?symbol=` | Arnav (gate: shared core) | – | `{challenge_id, data_origin: "real", as_of, snapshot{symbol, name, sector, price, day_low, day_high, week52_low, week52_high, market_cap_musd, pe_ttm, chart[], data_origin}, nasdaq_url, disclaimer, questions[{id, text, options[]}]}` |
-| `POST /nasdaq-verifier/submit` | Arnav (gate: shared core) | `{challenge_id, answers[{question_id, answer, confidence 50–100}]}` | `{passed, score, brier, results[{question_id, correct, correct_answer, explanation}], feedback}` |
+| `POST /nasdaq-verifier/submit` | Arnav (gate: shared core) | `{challenge_id, answers[{question_id, answer, confidence 50–100}]}` | `{data_origin: "real", passed, score, brier, results[{question_id, correct, correct_answer, explanation}], feedback}` |
 
-Errors: `{error: {code, message}}` with HTTP 4xx/5xx. Locked tool → `403 {code: "TOOL_LOCKED", required_level}`.
+Errors: `{error: {code, message}}` with HTTP 4xx/5xx. Locked tool → `403 {error: {code: "TOOL_LOCKED", message, required_level}}`. Missing `OPENROUTER_API_KEY` on `/verify` → `503 {error: {code: "VERIFIER_UNAVAILABLE", message}}`.
 
 **Nasdaq literacy verifier (final capstone, `nasdaq_verifier`).** Not level-granted: unlocked only when `user.level == 4` **and** `plan.progress_pct == 100` **and** calibration `brier <= 0.25`, checked server-side on both endpoints (missing data fails closed). Locked → `403 {error: {code: "TOOL_LOCKED", message, required_level: 4, missing_requirements["level_4"|"plan_progress_100"|"brier_lte_0.25"]}}`. `GET /me` adds `nasdaq_verifier` to `unlocks` only when the gate passes. Data comes from Finnhub (`FINNHUB_API_KEY`), allowlist `/quote`, `/stock/profile2`, `/stock/metric`, `/stock/candle` only; never `/stock/recommendation`, `/stock/price-target` or `/stock/upgrade-downgrade`. Every record is `data_origin: "real"` (REAL badge); questions are template-generated from the numbers; feedback passes `core.guardrails.check_output()`. `nasdaq.com` cannot be iframed, so the UI shows its own snapshot + Recharts chart with an external "Open on Nasdaq.com" link. Extra errors: `FINNHUB_UNAVAILABLE` 503, `NOT_NASDAQ` 422, `INVALID_SYMBOL` 422.
 
 ## 8. Shared enums
+
+Proposed hardening details (review in this PR): the capstone gate derives exact
+completion from Education's nonempty `plans.lesson_ids` and JSON `progress` map
+(every listed lesson must be `completed`), and uses mean Brier across the latest
+measurement of each measured skill. Missing, malformed, nonfinite or out-of-range
+facts fail closed. Submit requires each issued question exactly once; missing,
+duplicate or unknown question IDs return `422 INVALID_ANSWERS` without consuming
+the key. Wrong owner, expired, unknown or replayed keys return the same 404.
+Verifier validation errors return a neutral message without echoing request data.
+
+Production red-flag evidence is read from deployment-controlled
+`data/evidence/verifier/`: AMFI categories require a dated official URL, source
+digest and observation/expiry bounds; confirmed deletions require a previous
+capture digest, a later timestamp and explicit publisher/platform confirmation
+with evidence URL and digest. These files are not populated from user assertions.
+Missing evidence remains unknown and produces no finding.
+
+Proposed public-research seed policy (review in this PR): `broker_research`
+identifies a corporate publisher, with aliases/renamed brands collapsed. A
+dedicated Level-1 import owner owns the public submissions; no demo workspace or
+learner history is created. Each claim retains its dated report URL, PDF digest,
+page, short field excerpts and adjusted-price/benchmark digests. Date-only
+reports use end-of-day Asia/Kolkata for storage, not a claimed publication time.
+Scoring uses benchmark sessions strictly after that report date. Source-stated
+months map to 20 sessions each and years to 252 (existing extraction convention);
+unrepresentable or ranged horizons are excluded. An unstated horizon explicitly
+uses the existing 20-session default. Target-only reports use the existing
+benchmark-relative policy; their outcomes are not target-hit statistics. Imported
+source ratings are limited to this availability-selected historical sample.
 
 - Source labels: `reliable`, `semi_reliable`, `not_reliable`, `not_enough_history`.
 - Red-flag codes: `guaranteed_returns`, `urgency`, `illiquid_small_cap`, `surveillance_list`, `pre_post_volume_spike`, `not_sebi_registered`, `vague_claim`, `deleted_post`.

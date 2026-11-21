@@ -1,22 +1,20 @@
 """Server-side unlock gate for `nasdaq_verifier`. Fails closed when data is missing."""
 
 import json
-import math
+from contextlib import suppress
 from dataclasses import dataclass
-from typing import Any
+from math import isfinite
 
 from fastapi import Depends
-from sqlalchemy import func, inspect, select
+from sqlalchemy import Uuid, bindparam, inspect, text
 from sqlalchemy.orm import Session
 
 from app.core.auth import User, current_user
 from app.core.db import get_db
 from app.core.errors import ToolLockedError
-from app.education.models import Plan, SkillScore
 
 REQUIRED_LEVEL = 4
 MAX_BRIER = 0.25
-_COMPLETED = "completed"
 
 
 @dataclass(frozen=True)
@@ -28,52 +26,55 @@ class GateInputs:
 
 
 def read_gate_inputs(db: Session, user: User) -> GateInputs:
-    """Read calculated plan completion and mean Brier from the Education tables.
+    """Read calculated plan completion and latest mean Brier from Education tables.
 
     `plans.progress` is a map of lesson ID to status, not a stored percentage. Derive
-    completion from the plan's lesson list and status map so the gate consumes progress
-    written by actual lesson checks. Scalar percentages remain supported for older rows.
+    completion from the plan's nonempty unique lesson list and status map so the gate
+    consumes progress written by actual lesson checks. Missing or malformed rows fail
+    closed.
     """
     inspector = inspect(db.get_bind())
     progress: float | None = None
     brier: float | None = None
+    owner = bindparam("u", type_=Uuid(as_uuid=False))
     if inspector.has_table("plans"):
         row = db.execute(
-            select(Plan.lesson_ids, Plan.progress).where(Plan.user_id == user.id)
+            text(
+                "SELECT lesson_ids, progress FROM plans WHERE user_id = :u"
+            ).bindparams(owner),
+            {"u": user.id},
         ).fetchone()
-        if row and row[1] is not None:
-            lesson_ids = _decode_json(row[0])
-            statuses = _decode_json(row[1])
-            if isinstance(statuses, (int, float)):
-                progress = float(statuses)
-            elif isinstance(lesson_ids, list) and isinstance(statuses, dict):
-                total = len(lesson_ids)
-                if total:
-                    completed = sum(
-                        1
-                        for lesson_id in lesson_ids
-                        if statuses.get(lesson_id) == _COMPLETED
+        if row:
+            try:
+                ids = json.loads(row[0]) if isinstance(row[0], str) else row[0]
+                statuses = json.loads(row[1]) if isinstance(row[1], str) else row[1]
+                if (
+                    isinstance(ids, list)
+                    and ids
+                    and all(isinstance(x, str) for x in ids)
+                    and len(set(ids)) == len(ids)
+                    and isinstance(statuses, dict)
+                ):
+                    progress = (
+                        100.0
+                        * sum(statuses.get(x) == "completed" for x in ids)
+                        / len(ids)
                     )
-                    progress = round(100.0 * completed / total, 1)
+            except (ValueError, TypeError):
+                pass  # Malformed progress is not evidence of completion.
     if inspector.has_table("skill_scores"):
         row = db.execute(
-            select(func.avg(SkillScore.brier)).where(
-                SkillScore.user_id == user.id, SkillScore.brier.is_not(None)
-            )
+            text(
+                "SELECT AVG(brier) FROM (SELECT brier, ROW_NUMBER() OVER "
+                "(PARTITION BY skill_area ORDER BY measured_at DESC, id DESC) AS rn "
+                "FROM skill_scores WHERE user_id = :u) latest WHERE rn = 1"
+            ).bindparams(owner),
+            {"u": user.id},
         ).fetchone()
         if row and row[0] is not None:
-            brier = float(row[0])
+            with suppress(TypeError, ValueError):
+                brier = float(row[0])
     return GateInputs(progress, brier)
-
-
-def _decode_json(value: Any) -> Any:
-    """Decode JSON values from raw SQL across SQLite and PostgreSQL drivers."""
-    if isinstance(value, str):
-        try:
-            return json.loads(value)
-        except (TypeError, ValueError):
-            return value
-    return value
 
 
 def get_gate_inputs(
@@ -90,16 +91,14 @@ def missing_requirements(user: User, inputs: GateInputs) -> list[str]:
         missing.append("level_4")
     if (
         inputs.progress_pct is None
-        or not math.isfinite(inputs.progress_pct)
-        or inputs.progress_pct < 100
-        or inputs.progress_pct > 100
+        or not isfinite(inputs.progress_pct)
+        or inputs.progress_pct != 100
     ):
         missing.append("plan_progress_100")
     if (
         inputs.brier is None
-        or not math.isfinite(inputs.brier)
-        or inputs.brier < 0
-        or inputs.brier > MAX_BRIER
+        or not isfinite(inputs.brier)
+        or not 0 <= inputs.brier <= MAX_BRIER
     ):
         missing.append("brier_lte_0.25")
     return missing

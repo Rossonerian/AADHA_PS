@@ -20,6 +20,7 @@ def _make_client_with_env(
     monkeypatch: pytest.MonkeyPatch,
     **env_vars: str,
 ) -> TestClient:
+    monkeypatch.setenv("RATE_LIMIT_ENABLED", "true")
     for key, value in env_vars.items():
         monkeypatch.setenv(key, value)
     get_settings.cache_clear()
