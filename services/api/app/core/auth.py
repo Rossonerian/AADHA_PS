@@ -18,6 +18,7 @@ from app.core.config import Settings, get_settings
 from app.core.db import get_db
 from app.core.errors import ToolLockedError, UnauthorizedError
 from app.core.models import UserRecord
+from app.profiles.service import upsert_profile_from_claims
 
 security = HTTPBearer(auto_error=False)
 
@@ -202,10 +203,18 @@ def current_user(
             if record is None:
                 raise UnauthorizedError("Failed to provision user account") from None
 
+    profile = upsert_profile_from_claims(
+        db,
+        user_id,
+        claims,
+        fallback_name=record.name,
+    )
+    resolved_name = profile.display_name or record.name
+
     return User(
         id=record.id,
         level=record.current_level,
-        name=record.name,
+        name=resolved_name,
         email=email,
     )
 

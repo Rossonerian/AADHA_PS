@@ -97,12 +97,15 @@ def test_me_auto_provisions_level_1_user(
 
     response = client.get("/api/v1/me", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
-    assert response.json() == {
-        "id": user_id,
-        "name": "Riya Sharma",
-        "level": 1,
-        "unlocks": ["scenarios", "red_flag_check"],
-    }
+    body = response.json()
+    assert body["id"] == user_id
+    assert body["name"] == "Riya Sharma"
+    assert body["level"] == 1
+    assert body["unlocks"] == ["scenarios", "red_flag_check"]
+    assert body["onboarding_completed"] is False
+    assert body["data_origin"] == "real"
+    assert body["profile"]["user_id"] == user_id
+    assert body["profile"]["display_name"] == "Riya Sharma"
 
     db_session.expire_all()
     record = db_session.get(UserRecord, user_id)
@@ -130,12 +133,19 @@ def test_me_existing_level_3_user_returns_level_3_unlocks(
     token = make_jwt(user_id)
     response = client.get("/api/v1/me", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
-    assert response.json() == {
-        "id": user_id,
-        "name": "Arjun Mehta",
-        "level": 3,
-        "unlocks": ["scenarios", "red_flag_check", "explain_stock", "verifier"],
-    }
+    body = response.json()
+    assert body["id"] == user_id
+    assert body["name"] == "Arjun Mehta"
+    assert body["level"] == 3
+    assert body["unlocks"] == [
+        "scenarios",
+        "red_flag_check",
+        "explain_stock",
+        "verifier",
+    ]
+    assert body["onboarding_completed"] is False
+    assert body["data_origin"] == "real"
+    assert body["profile"]["display_name"] == "Arjun Mehta"
 
 
 def test_require_level_blocks_lower_level_with_403_tool_locked(
@@ -229,12 +239,14 @@ def test_me_neon_auth_eddsa_auto_provisions_level_1_user(
 
     response = client.get("/api/v1/me", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
-    assert response.json() == {
-        "id": user_id,
-        "name": "Kavya Iyer",
-        "level": 1,
-        "unlocks": ["scenarios", "red_flag_check"],
-    }
+    body = response.json()
+    assert body["id"] == user_id
+    assert body["name"] == "Kavya Iyer"
+    assert body["level"] == 1
+    assert body["unlocks"] == ["scenarios", "red_flag_check"]
+    assert body["onboarding_completed"] is False
+    assert body["data_origin"] == "real"
+    assert body["profile"]["display_name"] == "Kavya Iyer"
     assert requested_urls == [jwks_url]
 
     db_session.expire_all()

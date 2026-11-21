@@ -21,7 +21,15 @@ import type {
   VerifyResponse,
 } from "@/lib/contracts";
 
-export type { DataOrigin, SkillArea } from "@/lib/contracts";
+export type {
+  DataOrigin,
+  ProfileExperience,
+  ProfileGoal,
+  ProfileRecord,
+  ProfileResponse,
+  ProfileUpdateInput,
+  SkillArea,
+} from "@/lib/contracts";
 export type UserProfile = MeResponse;
 export type Health = HealthResponse;
 export type Question = QuestionItem;

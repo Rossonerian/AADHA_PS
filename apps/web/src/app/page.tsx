@@ -42,7 +42,7 @@ import { Skeleton } from "@/components/minor/skeleton";
 import { Toaster, notify } from "@/components/minor/toaster";
 import { Tooltip, TooltipProvider } from "@/components/minor/tooltip";
 import { BUILD_LABEL } from "@/lib/build-info";
-import { api, isToolLocked, mocksEnabled } from "@/lib/api";
+import { api, isToolLocked, mockAuthBridge, mocksEnabled } from "@/lib/api";
 import { ApiClientError } from "@/lib/api-client";
 import type {
   Assessment,
@@ -63,6 +63,11 @@ import type {
 } from "@/lib/types";
 import { authClient } from "@/lib/neon-auth-client";
 import type { LessonCheckResponse } from "@/lib/contracts";
+import { AuthScreen } from "@/components/auth/auth-screen";
+import { avatarInitials } from "@/components/auth/profile-options";
+import { ProfilePanel } from "@/components/auth/profile-panel";
+import { ProfileOnboarding } from "@/components/onboarding/profile-onboarding";
+import { AvatarImage } from "@/components/ui/avatar";
 import { NasdaqVerifier } from "@/components/nasdaq-verifier";
 
 type View =
@@ -75,7 +80,8 @@ type View =
   | "explain"
   | "verifier"
   | "progress"
-  | "nasdaq";
+  | "nasdaq"
+  | "profile";
 type NavItem = { id: View; label: string; icon: typeof House; tool?: string; level?: number };
 const navItems: NavItem[] = [
   { id: "home", label: "Overview", icon: House },
@@ -146,11 +152,6 @@ export default function PaisaProofApp() {
   }, [theme]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [authMode, setAuthMode] = useState<"in" | "up">("in");
-  const [authMessage, setAuthMessage] = useState("");
   const [verifyProgress, setVerifyProgress] = useState(0);
   const [verifyUnavailable, setVerifyUnavailable] = useState(false);
   const [onboarding, setOnboarding] = useState<{
@@ -181,15 +182,33 @@ export default function PaisaProofApp() {
 
   useEffect(() => {
     let cancelled = false;
-    if (mocksEnabled) return;
+    if (mocksEnabled) {
+      if (mockAuthBridge?.getActiveEmail()) {
+        void api
+          .me()
+          .then((nextMe) => {
+            if (!cancelled) setProfile(nextMe);
+          })
+          .catch((reason: unknown) => {
+            if (!cancelled) setError(friendlyError(reason));
+          });
+      }
+      return () => {
+        cancelled = true;
+      };
+    }
     void authClient
       .getSession()
       .then((session) => {
         if (!cancelled && session.data?.session) {
           void api
             .me()
-            .then(setProfile)
-            .catch((reason: unknown) => setError(friendlyError(reason)));
+            .then((nextMe) => {
+              if (!cancelled) setProfile(nextMe);
+            })
+            .catch((reason: unknown) => {
+              if (!cancelled) setError(friendlyError(reason));
+            });
         }
       })
       .catch((reason: unknown) => {
@@ -201,7 +220,29 @@ export default function PaisaProofApp() {
   }, []);
 
   useEffect(() => {
-    if (!profile) return;
+    if (mocksEnabled || !profile) return;
+    let lastCheckedAt = Date.now();
+    const refreshSession = () => {
+      if (document.visibilityState === "hidden") return;
+      const now = Date.now();
+      if (now - lastCheckedAt < 60_000) return;
+      lastCheckedAt = now;
+      void authClient.getSession().catch(() => undefined);
+    };
+    window.addEventListener("focus", refreshSession);
+    document.addEventListener("visibilitychange", refreshSession);
+    return () => {
+      window.removeEventListener("focus", refreshSession);
+      document.removeEventListener("visibilitychange", refreshSession);
+    };
+  }, [profile]);
+
+  const profileId = profile?.id;
+  const profileLevel = profile?.level;
+  const profileOnboardingCompleted = profile?.onboarding_completed;
+
+  useEffect(() => {
+    if (!profileId || !profileOnboardingCompleted) return;
     let cancelled = false;
     Promise.all([api.plan(), api.submissions()])
       .then(([nextPlan, nextSubmissions]) => {
@@ -216,58 +257,31 @@ export default function PaisaProofApp() {
     return () => {
       cancelled = true;
     };
-  }, [profile]);
+  }, [profileId, profileLevel, profileOnboardingCompleted]);
 
-  const activeNav = useMemo(
-    () => navItems.find((item) => item.id === view)?.label ?? "Overview",
-    [view],
-  );
+  const activeNav = useMemo(() => {
+    if (view === "profile") return "Profile";
+    return navItems.find((item) => item.id === view)?.label ?? "Overview";
+  }, [view]);
   const clearError = () => setError("");
   const showError = (reason: unknown) => setError(friendlyError(reason));
 
-  async function submitAuth(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    clearError();
-    if (!email || !password || (authMode === "up" && !fullName.trim())) {
-      setError(
-        authMode === "up"
-          ? "Enter your name, email and a password to create your account."
-          : "Enter your email and password to continue.",
-      );
-      return;
-    }
-    if (authMode === "up" && password.length < 8) {
-      setError("Use a password with at least 8 characters.");
-      return;
-    }
-    setBusy(true);
-    try {
-      if (!mocksEnabled) {
-        const result =
-          authMode === "up"
-            ? await authClient.signUp.email({ email, password, name: fullName.trim() })
-            : await authClient.signIn.email({ email, password });
-        if (result.error) throw new Error(result.error.message ?? "Authentication failed.");
-      }
-      setProfile(await api.me());
-      setAuthMessage("");
-    } catch (reason) {
-      setError(friendlyError(reason));
-    } finally {
-      setBusy(false);
-    }
+  async function loadAuthenticatedUser() {
+    setProfile(await api.me());
   }
 
   async function signOut() {
     try {
-      if (!mocksEnabled) await authClient.signOut();
+      if (mocksEnabled) mockAuthBridge?.signOut();
+      else await authClient.signOut();
     } finally {
       setProfile(null);
       setPlan(null);
       setDashboard(null);
       setSubmissions([]);
       setVerification(null);
-      setPassword("");
+      setOnboarding(null);
+      setOnboardingResult(null);
       setView("home");
       setError("");
     }
@@ -581,150 +595,37 @@ export default function PaisaProofApp() {
     if (target === "learn" && !plan) void api.plan().then(setPlan).catch(showError);
   }
 
-  if (!profile)
+  if (!profile) {
     return (
-      <main className="welcome-screen" data-theme={theme}>
-        <div className="welcome-noise" aria-hidden="true" />
-        <div className="welcome-brand">
-          <div className="welcome-brand-name">
-            <span className="brand-mark">P</span>
-            <span>PaisaProof</span>
-          </div>
-          <Button
-            variant="quiet"
-            className="theme-toggle welcome-theme-toggle"
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
-            aria-pressed={theme === "dark"}
-          >
-            {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}
-          </Button>
-        </div>
-        <div className="welcome-content">
-          <div className="welcome-copy">
-            <span className="eyebrow light">A CALMER WAY TO LEARN ABOUT MARKETS</span>
-            <h1>
-              Build your money sense,
-              <br />
-              <em>one question at a time.</em>
-            </h1>
-            <p>
-              Learn to read financial information, question bold claims, and understand how your
-              confidence matches real outcomes.
-            </p>
-            <div className="welcome-points">
-              <span>
-                <i>01</i> Short, guided lessons
-              </span>
-              <span>
-                <i>02</i> Practice with real-world clues
-              </span>
-              <span>
-                <i>03</i> See your skills grow over time
-              </span>
-            </div>
-            <div className="welcome-disclaimer">
-              Learning tool only · No personal financial guidance
-            </div>
-          </div>
-          <Panel className="signin-panel">
-            <div className="signin-icon">✳</div>
-            <span className="eyebrow">YOUR LEARNING SPACE</span>
-            <h2>{authMode === "in" ? "Welcome back" : "Create your account"}</h2>
-            <p>
-              {authMode === "in"
-                ? "Pick up your learning path where you left it."
-                : "Start with a short check-in. We’ll shape a path around what you already know."}
-            </p>
-            <div className="signin-tabs" role="tablist" aria-label="Account">
-              <button
-                type="button"
-                role="tab"
-                aria-selected={authMode === "in"}
-                className={`signin-tab ${authMode === "in" ? "active" : ""}`}
-                onClick={() => {
-                  setAuthMode("in");
-                  clearError();
-                }}
-              >
-                Sign in
-              </button>
-              <button
-                type="button"
-                role="tab"
-                aria-selected={authMode === "up"}
-                className={`signin-tab ${authMode === "up" ? "active" : ""}`}
-                onClick={() => {
-                  setAuthMode("up");
-                  clearError();
-                }}
-              >
-                Create account
-              </button>
-            </div>
-            <form onSubmit={submitAuth} className="signin-form">
-              {authMode === "up" && (
-                <div className="field-group">
-                  <label htmlFor="full-name">Your name</label>
-                  <Input
-                    id="full-name"
-                    value={fullName}
-                    onChange={(event) => setFullName(event.target.value)}
-                    autoComplete="name"
-                  />
-                </div>
-              )}
-              <div className="field-group">
-                <label htmlFor="email">Email address</label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  autoComplete="email"
-                />
-              </div>
-              <div className="field-group">
-                <label htmlFor="password">Password</label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                  autoComplete={authMode === "in" ? "current-password" : "new-password"}
-                />
-              </div>
-              <Button type="submit" disabled={busy}>
-                {busy
-                  ? authMode === "in"
-                    ? "Signing in…"
-                    : "Creating account…"
-                  : authMode === "in"
-                    ? "Sign in"
-                    : "Create account"}
-                <span aria-hidden="true">→</span>
-              </Button>
-            </form>
-            {authMessage && (
-              <p className="form-message" role="status">
-                {authMessage}
-              </p>
-            )}
-            {error && (
-              <p className="form-error" role="alert">
-                {error}
-              </p>
-            )}
-            <small>PaisaProof is a learning tool. It never tells you what to buy or sell.</small>
-          </Panel>
-        </div>
-        <footer className="welcome-footer">
-          <span>© 2026 PaisaProof</span>
-          <span>Learn with care. Decide with context.</span>
-        </footer>
-      </main>
+      <AuthScreen
+        theme={theme}
+        onToggleTheme={() => setTheme(theme === "light" ? "dark" : "light")}
+        onAuthenticated={loadAuthenticatedUser}
+      />
     );
+  }
+
+  if (!profile.onboarding_completed) {
+    return (
+      <ProfileOnboarding
+        key={profile.id}
+        me={profile}
+        theme={theme}
+        onToggleTheme={() => setTheme(theme === "light" ? "dark" : "light")}
+        onProfileUpdated={setProfile}
+        onComplete={async ({ startAssessment }) => {
+          setProfile((current) => (current ? { ...current, onboarding_completed: true } : current));
+          if (startAssessment) {
+            await beginOnboarding();
+          } else {
+            setView("home");
+            notify("Your workspace is ready.");
+          }
+        }}
+        onSignOut={signOut}
+      />
+    );
+  }
 
   const isLocked = (entry: NavItem) => Boolean(entry.level && profile.level < entry.level);
   return (
@@ -822,10 +723,14 @@ export default function PaisaProofApp() {
                 <Button
                   variant="quiet"
                   className="avatar-button"
+                  onClick={() => navigate("profile")}
                   aria-label={`${profile.name} profile`}
                 >
                   <Avatar>
-                    <AvatarFallback>{profile.name.slice(0, 1).toUpperCase()}</AvatarFallback>
+                    {profile.profile?.avatar_url && (
+                      <AvatarImage src={profile.profile.avatar_url} alt={profile.name} />
+                    )}
+                    <AvatarFallback>{avatarInitials(profile.name)}</AvatarFallback>
                   </Avatar>
                 </Button>
               </Tooltip>
@@ -998,6 +903,14 @@ export default function PaisaProofApp() {
               ) : (
                 <ProgressView data={dashboard} />
               ))}
+            {view === "profile" && (
+              <ProfilePanel
+                profile={profile}
+                onProfileUpdated={setProfile}
+                onRetakeLevelCheck={() => void beginOnboarding()}
+                onSignOut={signOut}
+              />
+            )}
           </main>
           <footer className="app-footer">
             <span>PaisaProof · Learn to read the signal</span>
