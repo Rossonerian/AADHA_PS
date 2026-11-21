@@ -39,6 +39,7 @@ class AppError(Exception):
         self.message = message
         self.status_code = status_code
         self.extra: dict[str, Any] = dict(extra) if extra else {}
+        self.headers: dict[str, str] | None = None
         super().__init__(message)
 
 
@@ -130,7 +131,10 @@ def register_exception_handlers(app: FastAPI) -> None:
 
     @app.exception_handler(AppError)
     async def handle_app_error(_request: Request, exc: AppError) -> JSONResponse:
-        return _error_json(exc.status_code, exc.code, exc.message, exc.extra)
+        response = _error_json(exc.status_code, exc.code, exc.message, exc.extra)
+        if exc.headers:
+            response.headers.update(exc.headers)
+        return response
 
     @app.exception_handler(StarletteHTTPException)
     async def handle_http_exception(

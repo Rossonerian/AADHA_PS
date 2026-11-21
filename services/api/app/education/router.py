@@ -163,7 +163,7 @@ def api_assessments_start(
     user: User = Depends(current_user),
     repo: EducationRepository = Depends(_repo),
 ) -> dict[str, Any]:
-    _effective_level(repo, user)
+    _effective_level(repo, user)  # provisions the user row if needed
     return start_assessment(repo, user_id=user.id, target_level=level)
 
 

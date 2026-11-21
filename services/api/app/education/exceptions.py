@@ -42,9 +42,19 @@ class NotFoundError(EducationError):
         super().__init__(code=code, message=message, status_code=404)
 
 
+# Re-submitting a finished session, or answering out of order, is a state conflict.
+_CONFLICT_CODES = frozenset(
+    {"ASSESSMENT_ALREADY_SUBMITTED", "SESSION_COMPLETED", "QUESTION_MISMATCH"}
+)
+
+
 class ValidationDomainError(EducationError):
     def __init__(self, code: str, message: str):
-        super().__init__(code=code, message=message, status_code=422)
+        super().__init__(
+            code=code,
+            message=message,
+            status_code=409 if code in _CONFLICT_CODES else 422,
+        )
 
 
 def register_exception_handlers(app: FastAPI) -> None:

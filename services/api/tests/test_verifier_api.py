@@ -467,3 +467,105 @@ def test_sources_and_submissions_carry_top_level_data_origin(api):
     synthetic_mine = client.get("/api/v1/submissions/mine").json()
     assert synthetic_mine["data_origin"] == "synthetic"
     assert synthetic_mine["items"][0]["data_origin"] == "synthetic"
+
+
+def test_low_level_submissions_do_not_poison_public_source_rating(api, monkeypatch):
+    client, sessions, _, _, _ = api
+    posted = datetime(2025, 1, 15, tzinfo=UTC)
+
+    def capture(*, text, url, image_base64):
+        return CapturedTip(
+            "TCS will rise",
+            "telegram",
+            "targetdesk",
+            "f" * 64,
+            posted,
+            posted,
+            url,
+            author_verified=True,
+        )
+
+    monkeypatch.setattr(service_module, "ingest", capture)
+    low = {"x-user": str(uuid4()), "x-level": "2"}
+    for number in range(1, 7):
+        resp = client.post(
+            "/api/v1/verify",
+            json={"url": f"https://t.me/s/targetdesk/{number}"},
+            headers=low,
+        )
+        assert resp.status_code == 200, resp.text
+    with sessions() as session:
+        claims = session.scalars(select(Claim)).all()
+        assert claims and not any(claim.rating_eligible for claim in claims)
+        assert (
+            session.scalar(select(func.count()).select_from(SourceRatingHistory)) == 0
+        )
+
+    high = {"x-user": str(uuid4()), "x-level": "3"}
+    for number in range(7, 10):
+        resp = client.post(
+            "/api/v1/verify",
+            json={"url": f"https://t.me/s/targetdesk/{number}"},
+            headers=high,
+        )
+        assert resp.status_code == 200, resp.text
+    with sessions() as session:
+        eligible = session.scalars(select(Claim).where(Claim.rating_eligible)).all()
+        assert len(eligible) == 3
+    # Below the minimum scored sample the source shows no score.
+    view = client.get(f"/api/v1/sources/{resp.json()['source']['id']}").json()["source"]
+    assert view["label"] == "not_enough_history" and view["score"] is None
+
+
+def test_submissions_are_paginated_and_source_get_is_read_only(api, monkeypatch):
+    client, sessions, _, _, _ = api
+    posted = datetime(2025, 1, 15, tzinfo=UTC)
+    counter = iter(range(1000))
+
+    def capture(*, text, url, image_base64):
+        number = next(counter)
+        return CapturedTip(
+            f"TCS will rise {number}",
+            "telegram",
+            "pagedesk",
+            f"{number:064x}",
+            posted,
+            posted,
+            url,
+            author_verified=True,
+        )
+
+    monkeypatch.setattr(service_module, "ingest", capture)
+    for number in range(1, 6):
+        resp = client.post(
+            "/api/v1/verify", json={"url": f"https://t.me/s/pagedesk/{number}"}
+        )
+        assert resp.status_code == 200, resp.text
+    source_id = resp.json()["source"]["id"]
+
+    first_resp = client.get("/api/v1/submissions/mine?limit=2")
+    first = first_resp.json()
+    assert len(first["items"]) == 2 and first_resp.headers["X-Next-Offset"] == "2"
+    assert "next_offset" not in first
+    second = client.get("/api/v1/submissions/mine?limit=2&offset=2").json()
+    last = client.get("/api/v1/submissions/mine?limit=2&offset=4").json()
+    assert len(second["items"]) == 2 and len(last["items"]) == 1
+    assert (
+        "X-Next-Offset" not in client.get("/api/v1/submissions/mine?offset=4").headers
+    )
+    seen = [i["submission_id"] for p in (first, second, last) for i in p["items"]]
+    assert len(set(seen)) == 5
+    assert client.get("/api/v1/submissions/mine?limit=101").status_code == 422
+    assert client.get("/api/v1/submissions/mine?limit=0").status_code == 422
+
+    def boom(*args, **kwargs):
+        raise AssertionError("GET /sources must not write or call providers")
+
+    monkeypatch.setattr(service_module, "refresh", boom)
+    monkeypatch.setattr(service_module, "update_rating", boom)
+    with sessions() as session:
+        before = session.scalar(select(func.count()).select_from(SourceRatingHistory))
+    assert client.get(f"/api/v1/sources/{source_id}").status_code == 200
+    with sessions() as session:
+        after = session.scalar(select(func.count()).select_from(SourceRatingHistory))
+    assert before == after

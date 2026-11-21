@@ -5,11 +5,14 @@ from __future__ import annotations
 import uuid
 from typing import Any
 
+from sqlalchemy import update
+
 from ..core.provenance import aggregate_data_origin
 from .config import DEFAULT_CONFIG, EducationConfig
 from .enums import AttemptContext, AttemptItemType, SkillArea
 from .exceptions import NotFoundError, ValidationDomainError
 from .learning import build_or_update_plan, ensure_level_unlocks
+from .models import EduSession
 from .repository import EducationRepository
 from .scenarios import build_public_scenario, scenario_outcome
 from .scoring import (
@@ -17,6 +20,40 @@ from .scoring import (
     compute_skill_scores,
     shuffle_options_for_question,
 )
+
+
+def _claim_session(repo: EducationRepository, session_id: str) -> bool:
+    """Atomically flip ``completed`` false -> true; only one concurrent caller wins."""
+    if repo.is_orm:
+        result = repo.conn.execute(
+            update(EduSession)
+            .where(EduSession.id == session_id, EduSession.completed.is_(False))
+            .values(completed=True)
+        )
+        repo.conn.commit()
+        return bool(result.rowcount)
+    cur = repo.conn.execute(
+        "UPDATE edu_sessions SET completed = 1 WHERE id = ? AND completed = 0",
+        (session_id,),
+    )
+    repo.conn.commit()
+    return bool(cur.rowcount == 1)
+
+
+def _release_session(repo: EducationRepository, session_id: str) -> None:
+    if repo.is_orm:
+        repo.conn.rollback()
+        repo.conn.execute(
+            update(EduSession)
+            .where(EduSession.id == session_id)
+            .values(completed=False)
+        )
+        repo.conn.commit()
+        return
+    repo.conn.execute(
+        "UPDATE edu_sessions SET completed = 0 WHERE id = ?", (session_id,)
+    )
+    repo.conn.commit()
 
 
 def start_assessment(
@@ -33,6 +70,15 @@ def start_assessment(
         )
 
     repo.ensure_user(user_id)
+    # Level gating: the assessment for level N is the gate out of level N. A learner may
+    # start their current level's assessment (or re-take an already-passed lower one),
+    # never a higher one.
+    current_level = repo.get_user_level(user_id, default_level=1)
+    if int(target_level) > current_level:
+        raise ValidationDomainError(
+            "ASSESSMENT_LEVEL_MISMATCH",
+            f"You can only start assessments up to level {current_level} right now.",
+        )
     seen_q_ids = repo.list_seen_item_ids(user_id, AttemptItemType.QUESTION.value)
     seen_s_ids = repo.list_seen_item_ids(user_id, AttemptItemType.SCENARIO.value)
 
@@ -179,6 +225,16 @@ def submit_assessment(
             "ASSESSMENT_ALREADY_SUBMITTED", "Assessment was already submitted."
         )
 
+    # A stored target is never trusted beyond the learner's persisted level; a session
+    # whose target exceeds it is stale/tampered and must not promote (or skip) any level.
+    stored_level = repo.get_user_level(user_id, default_level=1)
+    session_target = int(session["target_level"] or stored_level)
+    if session_target > stored_level:
+        raise ValidationDomainError(
+            "ASSESSMENT_LEVEL_CHANGED",
+            "This assessment no longer matches your current level. Start a new one.",
+        )
+
     spec_map = {item["item_id"]: item for item in session["state"]["items"]}
     if len(answers) != len(spec_map):
         raise ValidationDomainError(
@@ -196,6 +252,32 @@ def submit_assessment(
             "Answers must match the items issued for this assessment.",
         )
 
+    # Claim the session atomically before any attempt is recorded so concurrent submits
+    # cannot both grade/promote. Released again if grading fails part-way.
+    if not _claim_session(repo, assessment_id):
+        raise ValidationDomainError(
+            "ASSESSMENT_ALREADY_SUBMITTED", "Assessment was already submitted."
+        )
+    try:
+        return _grade_and_apply(
+            repo, user_id, assessment_id, session, spec_map, answers, stored_level, cfg
+        )
+    except Exception:
+        _release_session(repo, assessment_id)
+        raise
+
+
+def _grade_and_apply(
+    repo: EducationRepository,
+    user_id: str,
+    assessment_id: str,
+    session: dict[str, Any],
+    spec_map: dict[str, dict[str, Any]],
+    answers: list[dict[str, Any]],
+    stored_level: int,
+    cfg: EducationConfig,
+) -> dict[str, Any]:
+    session_target = int(session["target_level"] or stored_level)
     graded_records: list[dict[str, Any]] = []
     brier_pairs: list[tuple[int, bool]] = []
     item_origins: list[str] = []
@@ -259,14 +341,19 @@ def submit_assessment(
     passed = (score_ratio >= cfg.assessment_pass_accuracy) and (
         brier <= cfg.assessment_max_brier
     )
-    current_level = repo.get_user_level(user_id, default_level=1)
-    target_level = int(session["target_level"] or current_level)
+    current_level = stored_level
 
     new_level = None
     newly_unlocked: list[str] = []
 
     if passed:
-        promoted = min(cfg.max_level, max(current_level, target_level + 1))
+        # Only the assessment gating the current level promotes, and by exactly one level;
+        # re-takes of lower levels never change the level.
+        promoted = (
+            min(cfg.max_level, current_level + 1)
+            if session_target == current_level
+            else current_level
+        )
         if promoted > current_level:
             repo.set_user_level(user_id, promoted)
         new_level = promoted

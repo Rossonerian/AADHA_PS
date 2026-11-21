@@ -13,6 +13,7 @@ from fastapi.testclient import TestClient
 
 from app.core.config import get_settings
 from app.core.logging import get_logger
+from app.core.rate_limit import SlidingWindowRateLimiter, get_rate_limiter
 from app.main import create_app
 
 
@@ -39,6 +40,7 @@ def test_per_user_rate_limit_returns_429_and_allows_second_user(
         RATE_LIMIT_USER_PER_WINDOW="2",
         RATE_LIMIT_IP_PER_WINDOW="20",
         RATE_LIMIT_WINDOW_SECONDS="60",
+        TRUSTED_PROXY_HOPS="1",
     ) as limited_client:
         user1_token = make_jwt(str(uuid.uuid4()))
         user2_token = make_jwt(str(uuid.uuid4()))
@@ -123,6 +125,7 @@ def test_per_ip_rate_limit_blocks_distinct_users_sharing_ip(
         RATE_LIMIT_USER_PER_WINDOW="20",
         RATE_LIMIT_IP_PER_WINDOW="3",
         RATE_LIMIT_WINDOW_SECONDS="60",
+        TRUSTED_PROXY_HOPS="1",
     ) as limited_client:
         shared_ip = "203.0.113.42"
         for _ in range(3):
@@ -140,7 +143,7 @@ def test_per_ip_rate_limit_blocks_distinct_users_sharing_ip(
             "/api/v1/verify",
             headers={
                 "Authorization": f"Bearer {make_jwt(str(uuid.uuid4()))}",
-                "X-Forwarded-For": f"{shared_ip}, 10.0.0.1",
+                "X-Forwarded-For": f"198.51.100.99, {shared_ip}",
             },
             json={},
         )
@@ -259,3 +262,142 @@ def test_health_exempt_from_rate_limit_and_logs_stale_warning(
         assert stale_logs[-1]["extra"]["market_data_as_of"] == "2020-01-01"
 
     get_settings.cache_clear()
+
+
+def test_spoofed_xff_ignored_without_trusted_proxy(
+    migrated_db: str,
+    make_jwt: Callable[..., str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Rotating X-Forwarded-For must not mint fresh IP buckets by default."""
+    del migrated_db
+    with _make_client_with_env(
+        monkeypatch,
+        RATE_LIMIT_USER_PER_WINDOW="100",
+        RATE_LIMIT_IP_PER_WINDOW="3",
+    ) as limited_client:
+        statuses = []
+        for idx in range(5):
+            resp = limited_client.get(
+                "/api/v1/explain?symbol=TCS&year=2020",
+                headers={
+                    "Authorization": f"Bearer {make_jwt(str(uuid.uuid4()))}",
+                    "X-Forwarded-For": f"203.0.113.{idx}",
+                },
+            )
+            statuses.append(resp.status_code)
+        assert statuses[:3] != [429] * 3 and statuses[3:] == [429, 429]
+        assert get_rate_limiter().bucket_count() == 1 + 3  # one IP + three users
+
+    get_settings.cache_clear()
+
+
+def test_trusted_proxy_hops_use_rightmost_trusted_address(
+    migrated_db: str,
+    make_jwt: Callable[..., str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Behind N trusted proxies only the Nth-from-right XFF entry identifies the client."""
+    del migrated_db
+    with _make_client_with_env(
+        monkeypatch,
+        RATE_LIMIT_USER_PER_WINDOW="100",
+        RATE_LIMIT_IP_PER_WINDOW="2",
+        TRUSTED_PROXY_HOPS="1",
+    ) as limited_client:
+        codes = [
+            limited_client.get(
+                "/api/v1/explain?symbol=TCS&year=2020",
+                headers={
+                    "Authorization": f"Bearer {make_jwt(str(uuid.uuid4()))}",
+                    # Attacker-chosen left entry; proxy appended the real peer.
+                    "X-Forwarded-For": f"203.0.113.{idx}, 198.51.100.7",
+                },
+            ).status_code
+            for idx in range(3)
+        ]
+        assert codes[2] == 429 and 429 not in codes[:2]
+    get_settings.cache_clear()
+
+
+def test_forged_unsigned_sub_cannot_consume_or_exhaust_user_buckets(
+    migrated_db: str,
+    make_jwt: Callable[..., str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Per-user keys come from verified tokens only; forged ones never touch them."""
+    del migrated_db
+    victim = str(uuid.uuid4())
+    with _make_client_with_env(
+        monkeypatch,
+        RATE_LIMIT_USER_PER_WINDOW="2",
+        RATE_LIMIT_IP_PER_WINDOW="100",
+    ) as limited_client:
+        for _ in range(10):
+            forged = make_jwt(victim, secret="attacker-secret-attacker-secret-0000")
+            resp = limited_client.get(
+                "/api/v1/explain?symbol=TCS&year=2020",
+                headers={"Authorization": f"Bearer {forged}"},
+            )
+            assert resp.status_code == 401
+        # Only the caller's IP bucket exists; nothing keyed by the forged subject.
+        assert get_rate_limiter().bucket_count() == 1
+        real = make_jwt(victim)
+        ok = limited_client.get(
+            "/api/v1/explain?symbol=TCS&year=2020",
+            headers={"Authorization": f"Bearer {real}"},
+        )
+        assert ok.status_code != 429
+    get_settings.cache_clear()
+
+
+def test_newly_protected_routes_are_rate_limited(
+    migrated_db: str,
+    make_jwt: Callable[..., str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    del migrated_db
+    token = make_jwt(str(uuid.uuid4()))
+    calls = [
+        ("GET", f"/api/v1/sources/{uuid.uuid4()}"),
+        ("POST", "/api/v1/study/start"),
+        ("POST", "/api/v1/assessments/1/start"),
+        ("POST", "/api/v1/lessons/lesson-x/check"),
+        ("PATCH", "/api/v1/me/profile"),
+    ]
+    for method, path in calls:
+        get_rate_limiter().reset()
+        with _make_client_with_env(
+            monkeypatch,
+            RATE_LIMIT_USER_PER_WINDOW="100",
+            RATE_LIMIT_IP_PER_WINDOW="1",
+        ) as limited_client:
+            first = limited_client.request(
+                method, path, headers={"Authorization": f"Bearer {token}"}, json={}
+            )
+            second = limited_client.request(
+                method, path, headers={"Authorization": f"Bearer {token}"}, json={}
+            )
+        assert first.status_code != 429, path
+        assert second.status_code == 429, path
+    get_settings.cache_clear()
+
+
+def test_limiter_caps_buckets_and_evicts_idle_entries() -> None:
+    now = [0.0]
+    limiter = SlidingWindowRateLimiter(clock=lambda: now[0], max_buckets=5)
+    for idx in range(50):
+        decision = limiter.consume(key=f"ip:10.0.0.{idx}", limit=3, window_seconds=60)
+        assert decision.allowed
+        assert limiter.bucket_count() <= 5
+    assert limiter.bucket_count() == 5
+
+    # Idle buckets are swept once the window passes, freeing capacity.
+    now[0] = 1000.0
+    limiter.consume(key="ip:fresh", limit=3, window_seconds=60)
+    assert limiter.bucket_count() == 1
+
+    # Limits still hold for an active key while others churn.
+    for _ in range(3):
+        assert limiter.consume(key="user:a", limit=3, window_seconds=60).allowed
+    assert not limiter.consume(key="user:a", limit=3, window_seconds=60).allowed

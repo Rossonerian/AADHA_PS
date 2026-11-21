@@ -16,6 +16,9 @@ def normalize_database_url(url: str) -> str:
     return stripped
 
 
+_DEV_CORS_ORIGINS = ("http://localhost:3000", "http://127.0.0.1:3000")
+
+
 class Settings(BaseSettings):
     """Runtime settings loaded from environment variables and `.env` files."""
 
@@ -26,12 +29,16 @@ class Settings(BaseSettings):
 
     app_env: str = "local"
     app_version: str = "0.1.0"
-    cors_origins: str = "http://localhost:3000,http://127.0.0.1:3000"
+    cors_origins: str = ""
     database_url: str = "sqlite:///./paisaproof_dev.db"
     database_url_unpooled: str = ""
 
     neon_auth_base_url: str = ""
     neon_auth_jwks_url: str = ""
+
+    # Optional strict claim checks: verified only when set.
+    jwt_issuer: str = ""
+    jwt_audience: str = ""
 
     supabase_url: str = ""
     supabase_anon_key: str = ""
@@ -58,6 +65,9 @@ class Settings(BaseSettings):
     rate_limit_window_seconds: int = 60
     rate_limit_user_per_window: int = 20
     rate_limit_ip_per_window: int = 60
+    rate_limit_max_buckets: int = Field(default=50_000, ge=1)
+    # Number of trusted reverse proxies in front of the API (0 = ignore X-Forwarded-For).
+    trusted_proxy_hops: int = Field(default=0, ge=0, le=10)
     max_request_body_bytes: int = 1_048_576
     max_verify_body_bytes: int = 10_485_760
 
@@ -71,11 +81,21 @@ class Settings(BaseSettings):
     @property
     def cors_origins_list(self) -> list[str]:
         """Return parsed list of allowed CORS origins."""
-        return [
+        configured = [
             origin.strip().rstrip("/")
             for origin in self.cors_origins.split(",")
             if origin.strip().rstrip("/")
         ]
+        if configured:
+            return configured
+        if self.is_production:
+            return []  # fail closed: no cross-origin access unless CORS_ORIGINS is set
+        return list(_DEV_CORS_ORIGINS)
+
+    @property
+    def is_production(self) -> bool:
+        """True when APP_ENV is production."""
+        return self.app_env.strip().lower() == "production"
 
 
 @lru_cache

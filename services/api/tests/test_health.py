@@ -88,3 +88,83 @@ def test_health_endpoint_degraded_when_db_check_fails(
     payload = response.json()
     assert payload["status"] == "degraded"
     assert payload["db"] == "error"
+
+
+def test_stale_market_warning_uses_utc_date(monkeypatch) -> None:
+    from datetime import UTC, datetime, timedelta
+
+    from app import main as main_module
+
+    warnings: list[str] = []
+    monkeypatch.setattr(
+        main_module._logger, "warning", lambda msg, *a, **k: warnings.append(msg)
+    )
+    today = datetime.now(UTC).date()
+    main_module._warn_if_market_data_stale(today.isoformat(), 5)
+    assert warnings == []
+    main_module._warn_if_market_data_stale((today - timedelta(days=9)).isoformat(), 5)
+    assert warnings == ["market_data_stale"]
+
+
+def _app_with_env(monkeypatch, **env: str):
+    from app.core.config import get_settings
+    from app.main import create_app
+
+    for key in ("APP_ENV", "CORS_ORIGINS"):
+        monkeypatch.delenv(key, raising=False)
+    for key, value in env.items():
+        monkeypatch.setenv(key, value)
+    get_settings.cache_clear()
+    try:
+        return create_app()
+    finally:
+        get_settings.cache_clear()
+
+
+def test_production_disables_docs_and_fails_closed_on_cors(monkeypatch) -> None:
+    from fastapi.testclient import TestClient
+
+    app = _app_with_env(monkeypatch, APP_ENV="production")
+    client = TestClient(app)
+    for path in ("/docs", "/redoc", "/openapi.json"):
+        assert client.get(path).status_code == 404
+    preflight = client.options(
+        "/api/v1/me",
+        headers={
+            "Origin": "http://localhost:3000",
+            "Access-Control-Request-Method": "GET",
+        },
+    )
+    assert "access-control-allow-origin" not in preflight.headers
+
+
+def test_non_production_keeps_docs_and_dev_cors(monkeypatch) -> None:
+    from fastapi.testclient import TestClient
+
+    client = TestClient(_app_with_env(monkeypatch, APP_ENV="local"))
+    assert client.get("/openapi.json").status_code == 200
+    preflight = client.options(
+        "/api/v1/me",
+        headers={
+            "Origin": "http://localhost:3000",
+            "Access-Control-Request-Method": "GET",
+            "Access-Control-Request-Headers": "authorization",
+        },
+    )
+    assert preflight.headers["access-control-allow-origin"] == "http://localhost:3000"
+
+
+def test_explicit_cors_origins_used_in_production(monkeypatch) -> None:
+    from fastapi.testclient import TestClient
+
+    app = _app_with_env(
+        monkeypatch, APP_ENV="production", CORS_ORIGINS="https://app.example.com"
+    )
+    preflight = TestClient(app).options(
+        "/api/v1/me",
+        headers={
+            "Origin": "https://app.example.com",
+            "Access-Control-Request-Method": "GET",
+        },
+    )
+    assert preflight.headers["access-control-allow-origin"] == "https://app.example.com"

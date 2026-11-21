@@ -152,6 +152,76 @@ class TestPhase4Assessments(unittest.TestCase):
             [],
         )
 
+    def test_level_one_user_cannot_start_higher_level_assessment(self) -> None:
+        self.repo.ensure_user("u_gate", level=1)
+        for target in (2, 3):
+            with self.assertRaises(ValidationDomainError) as ctx:
+                start_assessment(self.repo, "u_gate", target_level=target)
+            self.assertEqual(ctx.exception.code, "ASSESSMENT_LEVEL_MISMATCH")
+
+    def test_pass_promotes_by_exactly_one_level_and_never_skips(self) -> None:
+        self.repo.ensure_user("u_noskip", level=1)
+        asmt = start_assessment(self.repo, "u_noskip", target_level=1)
+        # Simulate a tampered/stale session that stores a higher target than the level.
+        self.conn.execute(
+            "UPDATE edu_sessions SET target_level = 3 WHERE id = ?",
+            (asmt["assessment_id"],),
+        )
+        self.conn.commit()
+        answers = self._build_answers(asmt["items"], correct_count=12, confidence=85)
+        with self.assertRaises(ValidationDomainError) as ctx:
+            submit_assessment(self.repo, "u_noskip", asmt["assessment_id"], answers)
+        self.assertEqual(ctx.exception.code, "ASSESSMENT_LEVEL_CHANGED")
+        self.assertEqual(self.repo.get_user_level("u_noskip"), 1)
+
+        fresh = start_assessment(self.repo, "u_noskip", target_level=1)
+        answers = self._build_answers(fresh["items"], correct_count=12, confidence=85)
+        result = submit_assessment(
+            self.repo, "u_noskip", fresh["assessment_id"], answers
+        )
+        self.assertTrue(result["passed"])
+        self.assertEqual(result["new_level"], 2)
+        self.assertEqual(self.repo.get_user_level("u_noskip"), 2)
+
+    def test_double_submit_is_idempotent_and_promotes_once(self) -> None:
+        from app.education.assessments import _claim_session
+
+        self.repo.ensure_user("u_double", level=1)
+        asmt = start_assessment(self.repo, "u_double", target_level=1)
+        answers = self._build_answers(asmt["items"], correct_count=12, confidence=85)
+        # A racing submit that already claimed the session wins; the loser grades nothing.
+        self.assertTrue(_claim_session(self.repo, asmt["assessment_id"]))
+        self.assertFalse(_claim_session(self.repo, asmt["assessment_id"]))
+        with self.assertRaises(ValidationDomainError) as ctx:
+            submit_assessment(self.repo, "u_double", asmt["assessment_id"], answers)
+        self.assertEqual(ctx.exception.code, "ASSESSMENT_ALREADY_SUBMITTED")
+        self.assertEqual(ctx.exception.status_code, 409)
+        self.assertEqual(self.repo.get_user_level("u_double"), 1)
+
+    def test_failed_grading_releases_the_claim(self) -> None:
+        self.repo.ensure_user("u_release", level=1)
+        asmt = start_assessment(self.repo, "u_release", target_level=1)
+        answers = self._build_answers(asmt["items"], correct_count=12, confidence=85)
+        answers[0]["confidence"] = "not-a-number"
+        with self.assertRaises(ValueError):
+            submit_assessment(self.repo, "u_release", asmt["assessment_id"], answers)
+        answers[0]["confidence"] = 85
+        result = submit_assessment(
+            self.repo, "u_release", asmt["assessment_id"], answers
+        )
+        self.assertTrue(result["passed"])
+        self.assertEqual(self.repo.get_user_level("u_release"), 2)
+
+    def test_retaking_a_lower_level_never_changes_level(self) -> None:
+        self.repo.ensure_user("u_retake", level=3)
+        asmt = start_assessment(self.repo, "u_retake", target_level=2)
+        answers = self._build_answers(asmt["items"], correct_count=12, confidence=85)
+        result = submit_assessment(
+            self.repo, "u_retake", asmt["assessment_id"], answers
+        )
+        self.assertTrue(result["passed"])
+        self.assertEqual(self.repo.get_user_level("u_retake"), 3)
+
 
 if __name__ == "__main__":
     unittest.main()

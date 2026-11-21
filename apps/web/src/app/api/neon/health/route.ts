@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDatabaseName, isDatabaseConfigured, queryDb } from "@/lib/neon-db";
+import { hasDetailAccess } from "@/lib/health-access";
 import { isNeonAuthConfigured } from "@/lib/neon-auth";
 import { isRealtimeConfigured, sealJobRunsQuery } from "@/lib/neon-realtime";
 import { DEFAULT_ASSETS_BUCKET, getStorageClient, isStorageConfigured } from "@/lib/neon-storage";
@@ -160,7 +161,7 @@ async function checkRealtime() {
   }
 }
 
-export async function GET(): Promise<Response> {
+export async function GET(request: Request): Promise<Response> {
   const [postgres, auth, objectStorage, realtime] = await Promise.all([
     checkPostgres(),
     checkAuth(),
@@ -169,20 +170,12 @@ export async function GET(): Promise<Response> {
   ]);
 
   const ok = postgres.ok && auth.ok && objectStorage.ok && realtime.ok;
+  const init = { status: ok ? 200 : 503, headers: { "Cache-Control": "no-store" } };
 
-  return NextResponse.json(
-    {
-      ok,
-      services: {
-        postgres,
-        auth,
-        objectStorage,
-        realtime,
-      },
-    },
-    {
-      status: ok ? 200 : 503,
-      headers: { "Cache-Control": "no-store" },
-    },
-  );
+  // Public callers only learn whether the deployment is healthy; no config or error text.
+  if (!hasDetailAccess(request)) {
+    return NextResponse.json({ ok }, init);
+  }
+
+  return NextResponse.json({ ok, services: { postgres, auth, objectStorage, realtime } }, init);
 }

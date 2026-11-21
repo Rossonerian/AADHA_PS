@@ -196,3 +196,5 @@ class SubmissionItem(BaseModel):
 class SubmissionsResponse(BaseModel):
     items: list[SubmissionItem]
     data_origin: ResponseDataOrigin
+    # Pagination cursor, surfaced via the X-Next-Offset header (not in the JSON body).
+    next_offset: int | None = Field(default=None, exclude=True)
