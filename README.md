@@ -31,6 +31,7 @@
 1. Copy the environment template and fill in your local credentials (never commit `.env*`):
    ```bash
    cp .env.example .env.local
+   cp apps/web/.env.example apps/web/.env.local
    ```
    *(Optional local database: run `docker compose -f infra/docker-compose.yml up -d` if not targeting Neon directly.)*
 2. Install backend and frontend dependencies:
@@ -61,7 +62,7 @@ Fresh accounts are created exclusively via **Neon Auth sign-up** (`POST /api/aut
 | `make check` | Run the full local gate: `lint`, `typecheck`, `test`, and `build` |
 | `make lint` | Run `ruff`, `black --check`, ESLint, and Prettier |
 | `make typecheck` | Run `mypy` (`services/api/app`) and `tsc --noEmit` (`apps/web`) |
-| `make test` | Run backend pytest suite (`services/api/tests`) |
+| `make test` | Run backend pytest suite (`services/api/tests`); run pytest from the repo root with `PYTHONPATH=services/api` |
 | `make build` | Build Next.js production bundle (`apps/web`) |
 | `make check-api` | Verify API `/health` and `/me` auth guard (`API_URL` defaults to `http://localhost:8000/api/v1`) |
 | `make migrate` | Apply Alembic migrations (`alembic -c db/alembic.ini upgrade head`) |
@@ -115,22 +116,28 @@ Templates with safe placeholder values live in [`.env.example`](.env.example).
 | `MARKET_DATA_DIR`, `MARKET_DATA_MAX_STALE_DAYS` | Render, Local | Seed/cache path (`data/seed/market`) and stale-refresh warning threshold |
 | `RATE_LIMIT_ENABLED`, `RATE_LIMIT_WINDOW_SECONDS`, `RATE_LIMIT_USER_PER_WINDOW`, `RATE_LIMIT_IP_PER_WINDOW` | Render, Local | Sliding-window rate limiter configuration (`true`, `60s`, `20/user`, `60/IP`) |
 | `MAX_REQUEST_BODY_BYTES`, `MAX_VERIFY_BODY_BYTES` | Render, Local | Payload size caps (`1048576` default, `10485760` `/verify`) |
-| `NEXT_PUBLIC_APP_URL`, `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_USE_MOCKS` | Vercel, Local | Web origin, Render `/api/v1` base URL, and `false` to disable staging mocks |
+| `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_USE_MOCKS` | Vercel, Local | Render `/api/v1` base URL, and `false` to disable staging mocks (`NEXT_PUBLIC_APP_URL` is unused and has been removed) |
+| `NEXT_PUBLIC_API_BASE_URL` | Vercel, Local | Optional alias, read only when `NEXT_PUBLIC_API_URL` is empty |
+| `NEXT_PUBLIC_MOCK_LEVEL` | Local (dev only) | Mock-data level (default `2`); never set in production |
+| `ENABLE_NEON_VERIFY` | Vercel (keep unset) | Re-enables the dev-only `/api/neon/verify` diagnostic in production; keep unset |
+| `LOG_LEVEL` | Render, Local | API log level (default `INFO`) |
+| `EDU_PASS_ACCURACY`, `EDU_MAX_BRIER` | Render, Local | Education assessment pass thresholds (`0.70` accuracy, `0.25` max Brier) |
+| `STAGING_API_URL`, `SMOKE_TEST_JWT`, `SMOKE_TEST_EMAIL`, `SMOKE_TEST_PASSWORD`, `SMOKE_TEST_ORIGIN`, `SMOKE_AUTH_BASE_URL` | Local / CI (smoke test only) | Inputs for `infra/scripts/smoke_test.py`; never commit real values |
 
 ## Deployment
 
 - **Neon:** Hosts Lakebase Postgres, Neon Auth (JWKS + `https://aadha-ps.vercel.app` trusted origin), Object Storage, and Realtime.
-- **Render:** Hosts the Python 3.11 FastAPI service (`alembic -c db/alembic.ini upgrade head && uvicorn app.main:app --app-dir services/api --host 0.0.0.0 --port $PORT`, health check `/api/v1/health`) and daily cron (`infra/scripts/daily_job.py`).
+- **Render:** Hosts the Python 3.11 FastAPI service (Dockerfile starts `uvicorn`; Alembic migrations run as the Render `preDeployCommand`; health check `/api/v1/health`) and daily cron (`infra/scripts/daily_job.py`).
 - **Vercel:** Deploys Next.js from `apps/web` with Neon service env vars, `NEXT_PUBLIC_USE_MOCKS=false`, and `NEXT_PUBLIC_API_URL` pointing to the Render `/api/v1` base.
 
-### Google OAuth & Neon Auth Setup (Human Console Step)
+### Google sign-in setup
 
-"Continue with Google" uses Neon Managed Better Auth (`authClient.signIn.social({ provider: "google" })`) and requires one-time console configuration outside git:
+"Continue with Google" uses Neon Managed Better Auth and needs one-time console configuration outside git:
 
-1. In the **Neon Console**, open **Project → Auth → Providers → Google** and copy the **Authorized redirect URI** shown for your Neon Auth instance.
-2. In **Google Cloud Console**, open **APIs & Services → Credentials → Create Credentials → OAuth client ID** (`Web application`), add the Neon Auth callback URL to **Authorized redirect URIs**, and save the generated Client ID and Client Secret.
-3. Back in the **Neon Console** Google provider panel, paste the Google Client ID and Client Secret and enable the Google provider.
-4. Under **Neon Console → Auth → Domains / Trusted Origins**, add `http://localhost:3000`, `https://aadha-ps.vercel.app`, and any Vercel preview domains you test on.
+1. In **Google Cloud Console** → **APIs & Services → Credentials → Create Credentials → OAuth client ID**, choose **Web application**.
+2. Add this **Authorized redirect URI**: `{NEON_AUTH_BASE_URL}/callback/google` (substitute your actual `NEON_AUTH_BASE_URL`). Save and copy the Client ID and Client Secret.
+3. In **Neon Console → Auth → Providers → Google**, enter the Client ID and Client Secret and enable the provider. These go in the Neon Console, not in app env vars.
+4. In **Neon Console → Auth → Domains / Trusted Origins**, add `https://aadha-ps.vercel.app`, `http://localhost:3000`, and the `/auth/callback` URL on each (e.g. `https://aadha-ps.vercel.app/auth/callback`), plus any Vercel preview domains you test on.
 
 No extra Next.js or FastAPI environment variables are needed beyond `NEON_AUTH_BASE_URL`, `NEON_AUTH_JWKS_URL`, and `NEON_AUTH_COOKIE_SECRET` (Google OAuth secrets live exclusively in the Neon Auth console).
 
