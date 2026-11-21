@@ -175,7 +175,7 @@ export default function PaisaProofApp() {
   const [scenarioConfidence, setScenarioConfidence] = useState(65);
   const [selectedClues, setSelectedClues] = useState<string[]>([]);
   const [symbol, setSymbol] = useState("");
-  const [year, setYear] = useState("2025");
+  const [year, setYear] = useState("");
   const [verifyText, setVerifyText] = useState("");
   const [verifyUrl, setVerifyUrl] = useState("");
   const [userGuess, setUserGuess] = useState("");
@@ -539,7 +539,7 @@ export default function PaisaProofApp() {
   }
 
   async function runVerify(payload?: { image_base64?: string }) {
-    const content = verifyText.trim();
+    const content = payload?.image_base64 ? "" : verifyText.trim();
     if (!payload?.image_base64 && !verifyUrl.trim() && !content) {
       setError("Paste a message, add a link, or choose a screenshot.");
       return;
@@ -557,9 +557,12 @@ export default function PaisaProofApp() {
     setVerifyProgress(1);
     try {
       const result = await api.verify({
-        ...(payload ?? {}),
-        ...(verifyUrl.trim() ? { url: verifyUrl.trim() } : {}),
-        ...(content ? { text: content } : {}),
+        ...(payload?.image_base64
+          ? payload
+          : {
+              ...(verifyUrl.trim() ? { url: verifyUrl.trim() } : {}),
+              ...(content ? { text: content } : {}),
+            }),
         ...(userGuess ? { user_guess: userGuess, user_confidence: userConfidence } : {}),
       });
       setVerifyProgress(2);
@@ -1824,6 +1827,23 @@ function ExplainView({
   setYear: (value: string) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }) {
+  const [catalog, setCatalog] = useState<{ symbol: string; year: number }[]>([]);
+  const [catalogError, setCatalogError] = useState("");
+  useEffect(() => {
+    let live = true;
+    void api.explainCatalog().then(
+      (items) => {
+        if (live) setCatalog(items);
+      },
+      () => {
+        if (live) setCatalogError("Couldn’t load available walkthroughs. Try again shortly.");
+      },
+    );
+    return () => {
+      live = false;
+    };
+  }, []);
+  const examples = catalog.filter((item) => ["INFY", "TCS", "RELIANCE"].includes(item.symbol));
   return (
     <>
       <SectionHeading
@@ -1840,6 +1860,7 @@ function ExplainView({
               onChange={(event) => setSymbol(event.target.value)}
               placeholder="e.g. INFY"
               aria-label="Company or symbol"
+              required
             />
           </label>
           <label>
@@ -1851,6 +1872,7 @@ function ExplainView({
               max="2026"
               onChange={(event) => setYear(event.target.value)}
               aria-label="Year"
+              required
             />
           </label>
           <Button type="submit" disabled={busy}>
@@ -1860,19 +1882,56 @@ function ExplainView({
         </form>
         <div className="fb-example-chips" role="group" aria-label="Example symbols">
           <span>Try:</span>
-          {["INFY", "TCS", "RELIANCE"].map((example) => (
+          {examples.map((example) => (
             <Button
-              key={example}
+              key={`${example.symbol}-${example.year}`}
               type="button"
               variant="secondary"
               className="fb-example-chip"
-              aria-pressed={symbol.toUpperCase() === example}
-              onClick={() => setSymbol(example)}
+              aria-pressed={
+                symbol.toUpperCase() === example.symbol && year === String(example.year)
+              }
+              onClick={() => {
+                setSymbol(example.symbol);
+                setYear(String(example.year));
+              }}
             >
-              {example}
+              {example.symbol} · {example.year}
             </Button>
           ))}
         </div>
+        <label className="search-hint">
+          Available walkthroughs{" "}
+          <select
+            aria-label="Available walkthroughs"
+            value={
+              catalog.some(
+                (item) => item.symbol === symbol.toUpperCase() && String(item.year) === year,
+              )
+                ? `${symbol.toUpperCase()}:${year}`
+                : ""
+            }
+            onChange={(event) => {
+              const [ticker, selectedYear] = event.target.value.split(":");
+              if (ticker && selectedYear) {
+                setSymbol(ticker);
+                setYear(selectedYear);
+              }
+            }}
+          >
+            <option value="">Choose a company and year</option>
+            {catalog.map((item) => (
+              <option key={`${item.symbol}:${item.year}`} value={`${item.symbol}:${item.year}`}>
+                {item.symbol} · {item.year}
+              </option>
+            ))}
+          </select>
+        </label>
+        {catalogError && (
+          <p role="alert" className="search-hint">
+            {catalogError}
+          </p>
+        )}
         <p className="search-hint">
           We’ll show dated events alongside the company price chart. This tool explains history, not
           what comes next.

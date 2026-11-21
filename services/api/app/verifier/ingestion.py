@@ -531,8 +531,10 @@ def ingest(
     now: datetime | None = None,
     transcribe: Callable[[str], Transcript] | None = None,
 ) -> CapturedTip:
-    """Capture exactly one input; hash the redacted text, not the URL or source metadata."""
-    if sum(value is not None for value in (text, url, image_base64)) != 1:
+    """Capture content; an optional link on pasted text is unverified context only."""
+    if (image_base64 is not None and (text is not None or url is not None)) or (
+        image_base64 is None and text is None and url is None
+    ):
         raise IngestionError(
             "INVALID_INPUT", "Provide exactly one link, pasted tip or screenshot."
         )
@@ -545,7 +547,21 @@ def ingest(
     published_at = post_url = handle = None
     author_verified = False
     transcript_segments = None
-    if url is not None:
+    if text is not None and url is not None:
+        # Never infer authorship or a publication date from a user-supplied link.
+        # In particular, X requires pasted content and must not be fetched here.
+        try:
+            link = _split_url(url.strip())
+            valid = link.scheme in {"http", "https"} and bool(link.hostname)
+        except ValueError:
+            valid = False
+        if not valid:
+            raise IngestionError(
+                "UNSUPPORTED_URL", "Provide a valid public HTTP or HTTPS link."
+            )
+        platform = "text"
+        post_url = link._replace(query="", fragment="").geturl()
+    elif url is not None:
         unsupported = (
             "Use a public Telegram post or YouTube video link, "
             "or paste the tip or upload a screenshot."
@@ -588,10 +604,10 @@ def ingest(
         text = _image_text(image_base64)
     else:
         platform = "text"
-        if text is not None and len(text) > _MAX_TEXT_CHARS:
-            raise IngestionError("INVALID_INPUT", "The pasted tip is too long.")
 
     assert text is not None
+    if len(text) > _MAX_TEXT_CHARS:
+        raise IngestionError("INVALID_INPUT", "The pasted tip is too long.")
     text = redact_phone_numbers(text.replace("\r\n", "\n").replace("\r", "\n")).strip()
     if not text:
         raise IngestionError(

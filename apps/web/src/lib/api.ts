@@ -1,7 +1,5 @@
-import { apiFetch, ApiClientError, type ApiFetchOptions } from "@/lib/api-client";
+import { apiFetch, ApiClientError, readToken, type ApiFetchOptions } from "@/lib/api-client";
 import { AUTH_EXPIRED_EVENT, SESSION_EXPIRED_MESSAGE } from "@/lib/auth-errors";
-import { createTokenProvider, fetchProxyToken } from "@/lib/auth-token";
-import { authClient } from "@/lib/neon-auth-client";
 import type {
   AssessmentStartResponse,
   AssessmentSubmitRequest,
@@ -54,24 +52,6 @@ export const mocksEnabled = useMocks;
 /* eslint-disable @typescript-eslint/no-require-imports */
 const demo = (useMocks ? require("@/lib/mock-data") : null) as typeof import("@/lib/mock-data");
 /* eslint-enable @typescript-eslint/no-require-imports */
-
-const tokenProvider = createTokenProvider({
-  fetchToken: fetchProxyToken,
-  sdkToken: async () => {
-    const client = authClient as typeof authClient & {
-      getJWTToken?: () => Promise<string | null>;
-    };
-    return (await client.getJWTToken?.()) ?? null;
-  },
-});
-
-async function readToken(forceRefresh = false): Promise<string | null> {
-  try {
-    return await tokenProvider.get(forceRefresh);
-  } catch {
-    return null;
-  }
-}
 
 function expireSession(): ApiClientError {
   if (typeof window !== "undefined") window.dispatchEvent(new Event(AUTH_EXPIRED_EVENT));
@@ -414,6 +394,11 @@ export const api = {
     return getOriginated<ExplainResponse>("/explain", () => demo.explain, {
       query: { symbol, year },
     });
+  },
+
+  async explainCatalog(): Promise<{ symbol: string; year: number }[]> {
+    if (useMocks) return [{ symbol: "INFY", year: 2017 }];
+    return request("/explain/catalog");
   },
 
   async dashboard(): Promise<DashboardData> {

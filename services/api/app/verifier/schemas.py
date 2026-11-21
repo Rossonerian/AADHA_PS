@@ -60,11 +60,11 @@ class VerifyRequest(BaseModel):
 
     @model_validator(mode="after")
     def one_input(self) -> "VerifyRequest":
-        if (
-            sum(value is not None for value in (self.text, self.url, self.image_base64))
-            != 1
-        ):
-            raise ValueError("Provide exactly one of url, text or image_base64.")
+        if self.image_base64 is not None:
+            if self.text is not None or self.url is not None:
+                raise ValueError("Submit a screenshot separately from text or a link.")
+        elif self.text is None and self.url is None:
+            raise ValueError("Provide a link, pasted text or screenshot.")
         return self
 
 

@@ -3,6 +3,9 @@ lessons:
   level: 1
   skill_area: basics
   title: How Indian Stock Markets Actually Work
+  description: Learn how NSE/BSE trading, NSDL/CDSL Demat custody, SEBI regulation,
+    and T+1 settlement work. Covers market versus limit orders, bid-ask liquidity
+    costs, and why market cap matters more than share price after splits or bonuses.
   minutes: 7
   sections:
   - heading: Exchanges, Depositories & SEBI
@@ -50,6 +53,9 @@ lessons:
   level: 1
   skill_area: reading_stock
   title: Reading the Three Core Financial Statements
+  description: Compare P&L, Balance Sheet, and Cash Flow statements to verify whether
+    accounting profits generate real cash. Explains EPS, P/E, Debt-to-Equity, and
+    the forced-selling risk of high promoter share pledging.
   minutes: 8
   sections:
   - heading: P&L vs Balance Sheet vs Cash Flow
@@ -95,6 +101,9 @@ lessons:
   level: 1
   skill_area: judging_info
   title: Spotting Stock Tip Red Flags & Finfluencer Traps
+  description: Spot manipulation signals such as guaranteed-return promises and circuit-limit
+    urgency in forwarded tips. Covers verifying INH/INA SEBI registration numbers
+    and cross-checking claims against NSE/BSE filings and ASM/GSM lists.
   minutes: 6
   sections:
   - heading: Promises and Pressure Tactics
@@ -140,6 +149,9 @@ lessons:
   level: 1
   skill_area: risk
   title: Drawdown Math, Diversification & Calibration Basics
+  description: See why deep percentage drawdowns demand disproportionately larger
+    gains to recover and how illiquid lower circuits trap holders. Introduces Brier
+    score calibration to test whether stated confidence matches real accuracy.
   minutes: 7
   sections:
   - heading: Asymmetry of Losses
@@ -185,6 +197,9 @@ lessons:
   level: 2
   skill_area: basics
   title: IPOs, OFS, Free Float & Surveillance Segments
+  description: Distinguish IPO Fresh Issues that fund operations from Offers for Sale
+    (OFS) where existing holders exit, using DRHP filings. Covers low free-float swings,
+    T2T and ASM/GSM surveillance segments, and split-adjusted charts.
   minutes: 8
   sections:
   - heading: Fresh Issue vs Offer for Sale (OFS)
@@ -229,6 +244,9 @@ lessons:
   level: 2
   skill_area: reading_stock
   title: Cash Flow Quality, Leverage & Forensic Red Flags
+  description: Assess earnings quality by comparing multi-year Operating Cash Flow
+    to EBITDA and flagging receivables outpacing sales. Covers bank/NBFC NPA metrics
+    plus governance warnings such as auditor resignations and related-party loans.
   minutes: 9
   sections:
   - heading: Operating Cash Flow & Receivables
@@ -273,6 +291,9 @@ lessons:
   level: 2
   skill_area: judging_info
   title: Auditing Claims, Timestamps & Pump-and-Dump Patterns
+  description: Recognize coordinated pump-and-dump volume spikes and cherry-picking
+    where losing social posts are deleted. Shows how reading exchange filings reveals
+    non-binding MoUs or multi-year terms behind headline order announcements.
   minutes: 7
   sections:
   - heading: Anatomy of a Pump-and-Dump
@@ -319,6 +340,9 @@ lessons:
   level: 2
   skill_area: risk
   title: Behavioral Biases & Portfolio Position Sizing
+  description: Avoid confirmation, anchoring, and sunk-cost traps while measuring
+    hidden sector concentration across correlated holdings. Reviews SEBI findings
+    showing over 90% of individual F&O traders lose money net of costs.
   minutes: 8
   sections:
   - heading: Confirmation, Anchoring & Sunk Cost
@@ -363,6 +387,9 @@ lessons:
   level: 3
   skill_area: basics
   title: Corporate Restructurings, IBC Waterfalls & Governance
+  description: Understand creditor priority waterfalls under India's IBC, where equity
+    holders rank last and face near-total wipeout in insolvency. Covers lock-in expiry
+    supply waves, preferential warrant dilution, LODR disclosures, and GSM warnings.
   minutes: 9
   sections:
   - heading: IBC & Equity Waterfall Risk
@@ -407,6 +434,9 @@ lessons:
   level: 3
   skill_area: reading_stock
   title: 'Forensic Financial Analysis: Spotting Hidden Fragility'
+  description: Detect hidden balance-sheet fragility via anomalous cash yields, aggressive
+    cost capitalization, and NBFC asset-liability mismatches. Emphasizes auditing
+    consolidated statements and footnotes for subsidiary debt and guarantees.
   minutes: 10
   sections:
   - heading: Cash Yield Anomalies & Capitalization
@@ -452,6 +482,9 @@ lessons:
   level: 3
   skill_area: judging_info
   title: Evaluating Research Sources, Conflicts & Benchmarks
+  description: Separate audited source track records from stock advice while accounting
+    for issuer-paid and short-seller incentives. Shows why testable claims need clear
+    timeframes and NIFTY 50 benchmarking to separate skill from market moves.
   minutes: 8
   sections:
   - heading: Source Reliability vs Stock Advice
@@ -497,6 +530,9 @@ lessons:
   level: 3
   skill_area: risk
   title: Pre-Mortems, Tail Risk & Decision Journals
+  description: Apply historical base rates and structured pre-mortems to surface thesis
+    failure modes early. Covers crisis correlation spikes and using decision journals
+    with numeric confidence ratings to curb hindsight bias.
   minutes: 8
   sections:
   - heading: Base Rates & Pre-Mortems
