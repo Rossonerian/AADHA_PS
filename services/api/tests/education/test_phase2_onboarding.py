@@ -5,8 +5,10 @@ from __future__ import annotations
 import random
 import sqlite3
 import unittest
+from unittest import mock
 
 from app.education.enums import SkillArea
+from app.education.exceptions import ValidationDomainError
 from app.education.loader import load_seed_directory
 from app.education.onboarding import answer_onboarding, start_onboarding
 from app.education.repository import EducationRepository, apply_migrations
@@ -59,6 +61,9 @@ class TestPhase2Onboarding(unittest.TestCase):
         started = start_onboarding(self.repo, user_id=user_id, user_name=user_id)
         session_id = started["session_id"]
         q = started["question"]
+        self.assertEqual(started["total_questions"], 6)
+        self.assertEqual(q["index"], 1)
+        self.assertEqual(q["number"], 1)
         self.assertEqual(
             q["difficulty"], 3, "Onboarding must start at medium difficulty (3)"
         )
@@ -85,6 +90,10 @@ class TestPhase2Onboarding(unittest.TestCase):
             elif strategy == "overconfident":
                 ans = correct_ans if (step % 2 == 0) else wrong_ans
                 conf = 98
+            elif strategy == "skill_skewed":
+                # Only RISK questions are answered correctly; the rest are wrong.
+                right = full_q["skill_area"] == SkillArea.RISK.value
+                ans, conf = (correct_ans if right else wrong_ans), 75
             else:
                 raise ValueError(strategy)
 
@@ -100,13 +109,55 @@ class TestPhase2Onboarding(unittest.TestCase):
             q = resp["next_question"]
             result = resp["result"]
 
-        self.assertGreaterEqual(len(asked), 12)
-        self.assertLessEqual(len(asked), 15)
+        self.assertEqual(len(asked), 6, "Check-in must end after exactly 6 questions")
+        self.assertIsNone(resp["next_question"])
+        self.assertEqual(resp["result"]["level"] in (1, 2, 3, 4), True)
+        self.assertEqual(
+            len(resp["result"]["skills"]), len(SkillArea), "All skills scored"
+        )
         self.assertEqual(
             len(asked), len(set(asked)), "Duplicate questions asked in onboarding"
         )
         assert result is not None
+        # Completed sessions must reject further answers, never serve a question.
+        with self.assertRaises(ValidationDomainError) as ctx:
+            answer_onboarding(
+                self.repo,
+                user_id=user_id,
+                session_id=session_id,
+                question_id=asked[-1],
+                answer="x",
+                confidence=50,
+            )
+        self.assertEqual(ctx.exception.code, "SESSION_COMPLETED")
         return result, difficulties
+
+    def test_check_in_ends_when_question_bank_runs_out(self) -> None:
+        real_list = self.repo.list_questions
+        allowed = {q["id"] for q in real_list()[:4]}
+
+        def limited(*args, **kwargs):
+            return [q for q in real_list(*args, **kwargs) if q["id"] in allowed]
+
+        with mock.patch.object(self.repo, "list_questions", side_effect=limited):
+            started = start_onboarding(self.repo, user_id="bank_out", user_name="b")
+            session_id = started["session_id"]
+            q = started["question"]
+            resp: dict = {}
+            steps = 0
+            while q is not None:
+                resp = answer_onboarding(
+                    self.repo,
+                    user_id="bank_out",
+                    session_id=session_id,
+                    question_id=q["id"],
+                    answer=self.repo.get_question(q["id"])["answer"],
+                    confidence=80,
+                )
+                steps += 1
+                q = resp["next_question"]
+        self.assertEqual(steps, 4)
+        self.assertIsNotNone(resp["result"])
 
     def test_simulated_users_land_at_sensible_levels_and_brier(self) -> None:
         res_good, diffs_good = self._run_simulated_user(
@@ -127,11 +178,15 @@ class TestPhase2Onboarding(unittest.TestCase):
         self.assertEqual(res_rand["level"], 1)
         self.assertAlmostEqual(res_rand["brier"], 0.25, places=4)
 
+        res_skew, _ = self._run_simulated_user("sim_skill_skewed", "skill_skewed")
+        self.assertIn(res_skew["level"], (1, 2, 3, 4))
+
         res_over, _ = self._run_simulated_user("sim_overconfident", "overconfident")
         self.assertEqual(
             res_over["level"], 1, "Overconfident 50% user must be capped at Level 1"
         )
-        self.assertAlmostEqual(res_over["brier"], 0.4484, places=4)
+        # 6 answers: 3 right at 98% (0.0004 each) + 3 wrong at 98% (0.9604 each) -> 0.4804
+        self.assertAlmostEqual(res_over["brier"], 0.4804, places=4)
 
 
 if __name__ == "__main__":

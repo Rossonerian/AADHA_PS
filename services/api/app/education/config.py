@@ -8,9 +8,8 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class EducationConfig:
-    # Onboarding adaptive quiz parameters (SoT / Phase 2: 12-15 questions)
-    onboarding_min_questions: int = 12
-    onboarding_max_questions: int = 15
+    # Onboarding check-in: always exactly this many questions, then a result.
+    onboarding_question_count: int = 6
     onboarding_start_difficulty: int = 3  # Medium on 1-5 scale
 
     # Assessment parameters (Phase 4: 10 questions + 2 scenarios, >= 70% & Brier <= 0.25)
