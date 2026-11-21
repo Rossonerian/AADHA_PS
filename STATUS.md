@@ -7,10 +7,10 @@
 
 | Person | % | Phase | Blockers | Last Update |
 |---|---|---|---|---|
-| Hardhik | 92% | Phase 6/6 (PR #10 synced with main PRs #9/#11/#12/#13; Neon re-seeded with PR #11 real-data Education content; awaiting PR #10 merge & 2x live smoke) | PR #10 merge + Arnav 3 MAJOR decisions; OpenRouter quota / 2x live /verify smoke; `/api/neon/health` 403 in `apps/web/`; Render `FINNHUB_API_KEY`, cron confirm & service rename; Vercel project title; `docs/PRD.md` & C4 backup video | 2026-11-21 |
-| Arnav | 80% | Phase 6/6 (PR #9 & PR #13 merged onto main: 30x5 real seed, durable Nasdaq challenges, unified TOOL_LOCKED, 503 guard, top-level data_origin) | Live F1 (OpenRouter quota + held-out set); production Verifier real-seed load & SoT quota decision; vetted deletion evidence | 2026-11-21 |
-| Divyansh | 100% | Phase 6/6 (PR #11 merged — Education real-data provenance & Nasdaq gate hardened) | none | 2026-11-21 |
-| Ananya | ~90% (PR #12 merged & live on Vercel) | Phase 6/6 (v0 UI live: demo workspace removed, Neon Auth tabs, dev-only mocks, Looseleaf polish) | `/api/neon/health` 403 prod guard in `apps/web/`; mobile nav confirmation | 2026-11-21 |
+| Hardhik | 96% | Phase 6/6 (PRs #10/#15/#17/#19/#20/#23/#24/#25/#28/#29/#34/#36 merged on `main`; PR #39 `test/e2e-smoke` open with CI passing; live Render/Vercel health, CORS, headers & backend static checks verified) | Cloud console checks per `docs/DEPLOY_CHECKLIST.md` (`TRUSTED_PROXY_HOPS=1`, Render `paisaproof-daily-cron` / `FINNHUB_API_KEY`, Vercel prod env `NEXT_PUBLIC_USE_MOCKS=false`, Neon Auth trusted origins & Google OAuth publish/test users); funded OpenRouter key/credits + 2x fresh-user staging smoke (`infra/scripts/smoke_test.py --fresh-user --cleanup-db`); real-source seed Option A/B sign-off (with Arnav); `docs/PRD.md` export & 3-min backup video (`docs/DEMO_BACKUP_CHECKLIST.md`) | 2026-11-21 |
+| Arnav | 90% | Phase 6/6 (PRs #9/#13/#16/#18/#26/#32 merged on `main`: 30x5 real seed, durable Nasdaq challenges, Verifier v2, Tavily search, lock fix & Nasdaq/verifier fixes; v0 live F1 & real-seed acceptance remain open) | Funded OpenRouter key/credits + live F1 evaluation; real-source seed Option A/B sign-off (with Hardhik); vetted deletion evidence; Render `GEMINI_API_KEY`/`TAVILY_API_KEY`/`FINNHUB_API_KEY` console verification | 2026-11-21 |
+| Divyansh | 100% | Phase 6/6 (PRs #11/#15/#24/#30/#32/#35 merged on `main` — Education real-data provenance, option shuffle, 12 lesson descriptions, 6-question check-in, Nasdaq pass floor & walkthrough fixes) | none (5 scenarios & 6 Explain examples remain explicitly `synthetic` due to unavailable Yahoo Finance history) | 2026-11-21 |
+| Ananya | 95% | Phase 6/6 (PRs #12/#14/#17/#21/#22/#25/#27/#31/#32/#33/#37/#38 merged & live on Vercel: Google sign-in/up separation, Silk auth screen, lazy charts/Nasdaq, favicons/manifest, 404, OG/Twitter images; `/api/neon/health` redacted `200` & `/api/neon/verify` `403`; 390px/1440px sign-in layout zero overflow in PR #39) | Vercel prod env `NEXT_PUBLIC_USE_MOCKS=false` + clean redeploy & Neon/Google OAuth console checks per `docs/DEPLOY_CHECKLIST.md` (authenticated browser pass pending console checks) | 2026-11-21 |
 
 ## Checkpoint Targets
 
@@ -59,6 +59,29 @@ Blockers: OpenRouter free daily limit exhausted (53/50, 0 remaining); Vercel `NE
 Arnav 80% (PR #9 & PR #13 merged on main) | Divyansh 100% (PR #11 merged on main) | Hardhik 92% (PR #10 synced & CI-ready) | Ananya ~90% (PR #12 merged & live on Vercel)
 Behind target: Final C4 demo freeze pending PR #10 merge, 2x live staging smoke, and dashboard/docs completion
 Blockers: PR #10 review/merge; Arnav 3 MAJOR decisions (SoT public-research seed policy, 61 default-horizon quota, OpenRouter quota + held-out F1 set); 2x live staging smoke; `/api/neon/health` 403 prod guard in `apps/web/`; Render `FINNHUB_API_KEY`, cron confirm & service rename; Vercel project title; `docs/PRD.md` export & C4 backup video
+```
+
+```text
+[TEAM] C4 (Pre-Demo Readiness) | Overall ~95% (2026-11-21)
+Hardhik 96% | Arnav 90% | Divyansh 100% | Ananya 95%
+Behind target: All 4 above C3 (85%); final C4 (100%) freeze awaits funded OpenRouter live F1 & 2x authenticated staging smoke, real-seed Option A/B sign-off, unverified cloud console checks, backup video, and docs/PRD.md export
+PRs merged on main: #15-#38 (incl. contract hardening #15, Verifier v2 #16, auth/profile onboarding #17, Tavily #18, Better Auth JWT #19, infra audit #20, lazy load #21, Silk auth #22, security audit #23, backend audit #24, OAuth session #25, verifier lock fix #26, auth separation #27, CI concurrency #28, deploy checklist #29, lesson descriptions #30, nasdaq dynamic lazy #31, learning tools fix #32, favicon/icons #33, Render API keepalive #34, 6-question check-in #35, demo script #36, on-brand 404 #37, OG/Twitter images #38); PR #39 (test/e2e-smoke) open (CI & Vercel checks passing; main HEAD d8582af)
+Live production probes (2026-11-21):
+- GET https://aadha-ps.onrender.com/api/v1/health -> 200 {"status":"ok","version":"0.1.0","db":"ok","market_data_as_of":"2026-11-20"}
+- Render CORS OPTIONS /api/v1/me (Origin: https://aadha-ps.vercel.app) -> 200 (access-control-allow-origin: https://aadha-ps.vercel.app)
+- Vercel GET https://aadha-ps.vercel.app/ -> 200 with CSP, X-Frame-Options: DENY, and HSTS headers; /favicon.ico 200, /icon.svg 200, /apple-icon.png 200, /manifest.webmanifest 200; /api/neon/health redacted 200 {"ok":true}; POST /api/neon/verify 403
+Backend static checks on main (9032470; PRs #36-#38 are docs/web-only):
+- ruff check services/api infra db/migrations -> All checks passed!
+- black --check services/api infra db/migrations -> 128 files would be left unchanged.
+- mypy services/api/app -> Success: no issues found in 72 source files
+Live read-only Playwright E2E smoke (PR #39):
+- 4 passed (17.5s): https://aadha-ps.vercel.app sign-in load & zero unexpected console errors, zero horizontal overflow at 390px & 1440px, GET /api/v1/health ok
+Blockers:
+- Funded OpenRouter key / credits + live F1 evaluation (Arnav)
+- Real-source seed Option A/B sign-off (Arnav/Hardhik)
+- Unverified cloud console checks per docs/DEPLOY_CHECKLIST.md (TRUSTED_PROXY_HOPS=1, Render paisaproof-daily-cron / FINNHUB_API_KEY, Vercel prod env NEXT_PUBLIC_USE_MOCKS=false, Neon Auth trusted origins & Google OAuth publish/test users)
+- Run 2x full authenticated fresh-user smoke tests against staging (infra/scripts/smoke_test.py --fresh-user --cleanup-db) + 3-minute backup video (docs/DEMO_BACKUP_CHECKLIST.md)
+- Export docs/PRD.md (currently placeholder)
 ```
 
 ## Hardhik
@@ -699,10 +722,8 @@ In progress: mobile navigation.
 ```
 
 Open items:
-- Server-side answer shuffle (Divyansh).
-- Top-level `data_origin` missing on some endpoints.
-- `/verify` returns 500 without an OpenRouter key.
-- Nasdaq challenge store is process-local.
-- Live F1 run (Arnav, needs OpenRouter key).
-- Real-source seed (Arnav, Option A/B decision from Hardhik).
-- CI database name `aacharya_test` (Hardhik).
+- Funded OpenRouter key / credits + live F1 evaluation (Arnav).
+- Real-source seed Option A/B sign-off (Arnav/Hardhik).
+- Cloud console checks per `docs/DEPLOY_CHECKLIST.md` (`TRUSTED_PROXY_HOPS=1`, Render `paisaproof-daily-cron` / `FINNHUB_API_KEY`, Vercel prod env `NEXT_PUBLIC_USE_MOCKS=false`, Neon Auth trusted origins & Google OAuth publish/test users).
+- Run 2x full authenticated fresh-user smoke tests against staging (`infra/scripts/smoke_test.py --fresh-user --cleanup-db`) + 3-minute backup video (`docs/DEMO_BACKUP_CHECKLIST.md`).
+- Export `docs/PRD.md` (currently placeholder).
