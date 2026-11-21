@@ -7,19 +7,32 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Panel } from "@/components/ui";
 import { mocksEnabled } from "@/lib/api";
 import { authClient } from "@/lib/neon-auth-client";
+import { decideGoogleOutcome, isNewGoogleUser, readOAuthUrlError } from "@/lib/auth-flow";
+import {
+  clearDeclinedEmail,
+  clearIntent,
+  flagWelcomeBack,
+  isDeclinedEmail,
+  markDeclinedEmail,
+  readIntent,
+} from "@/lib/auth-flow-storage";
+import { GoogleCreateConfirm } from "@/components/auth/google-create-confirm";
 
 export default function AuthCallbackPage() {
   const router = useRouter();
   const [error, setError] = useState("");
+  const [confirmEmail, setConfirmEmail] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
 
     async function completeOAuth() {
       const params = new URLSearchParams(window.location.search);
-      const paramError = params.get("error_description") ?? params.get("error");
+      const paramError = readOAuthUrlError(window.location.search);
       if (paramError) {
-        if (!cancelled) setError(`Sign-in could not finish: ${paramError}`);
+        clearIntent();
+        if (!cancelled) setError(paramError);
         return;
       }
 
@@ -32,6 +45,22 @@ export default function AuthCallbackPage() {
         const res = await authClient.getSession();
         if (cancelled) return;
         if (res.data?.session) {
+          const user = res.data.user as { email?: string; createdAt?: string | Date } | undefined;
+          const email = user?.email ?? "";
+          const intent = readIntent();
+          const isNewUser = isNewGoogleUser({
+            newUserParam: params.get("new") === "1",
+            createdAt: user?.createdAt,
+            previouslyDeclined: email ? isDeclinedEmail(email) : false,
+          });
+          const outcome = decideGoogleOutcome({ intent, isNewUser });
+          if (outcome === "confirm_create") {
+            // Signed in via Google but no PaisaProof account existed: ask before continuing.
+            setConfirmEmail(email);
+            return;
+          }
+          if (outcome === "welcome_back") flagWelcomeBack();
+          clearIntent();
           router.replace("/");
         } else {
           setError("Your sign-in session was not established. Please try signing in again.");
@@ -50,6 +79,26 @@ export default function AuthCallbackPage() {
     };
   }, [router]);
 
+  async function createAccount() {
+    if (confirmEmail) clearDeclinedEmail(confirmEmail);
+    clearIntent();
+    router.replace("/");
+  }
+
+  async function cancelCreate() {
+    setBusy(true);
+    // The account row already exists in Neon Auth (no client-side delete endpoint), so remember
+    // the decline: the next Google sign-in for this email asks again instead of entering.
+    if (confirmEmail) markDeclinedEmail(confirmEmail);
+    clearIntent();
+    try {
+      await authClient.signOut();
+    } catch {
+      // Ignore: the user is returned to sign-in either way.
+    }
+    router.replace("/");
+  }
+
   return (
     <main className="welcome-screen">
       <div className="welcome-noise" aria-hidden="true" />
@@ -59,8 +108,21 @@ export default function AuthCallbackPage() {
             ✳
           </div>
           <span className="eyebrow">AUTHENTICATION</span>
-          <h2>{error ? "Sign-in paused" : "Finishing sign-in…"}</h2>
-          {!error ? (
+          <h2>
+            {confirmEmail !== null
+              ? "Create your account?"
+              : error
+                ? "Sign-in paused"
+                : "Finishing sign-in…"}
+          </h2>
+          {confirmEmail !== null ? (
+            <GoogleCreateConfirm
+              email={confirmEmail}
+              busy={busy}
+              onCreate={() => void createAccount()}
+              onCancel={() => void cancelCreate()}
+            />
+          ) : !error ? (
             <p>Connecting your learning space cleanly. You will be redirected automatically.</p>
           ) : (
             <div className="mt-4 text-left">
