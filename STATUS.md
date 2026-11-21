@@ -156,6 +156,22 @@ Need from: Hardhik/User (PR #10 merge & PR #9 policy decisions, OpenRouter quota
 
 ## Arnav
 
+```text
+[Verifier v2] 0% | Phase 1/8: Docs and contracts in progress (2026-11-21)
+Done: Read approved design; branched feat/verifier-v2 from origin/main ebede08. Prior PRs #9 and #13 are already merged by others. Prepared authorized contract additions, synchronized SoT copies, and provider/config documentation.
+Next: Complete contract types, then migration/models and core adapters.
+Minor: Preserve current eligibility; YouTube channel/date alone does not establish authorship of every spoken claim. Design's multi-claim assumption requires removing the existing unique claims.submission_id constraint.
+Blockers: none for v2 implementation; existing seed/F1 acceptance remains open.
+```
+
+```text
+[Verifier v2] MAJOR | Prior real-seed audit found a missed stated horizon
+Impact: LKP SONACOMS report dated 2024-01-24 visibly states 12 M Price Target, but the shipped seed defaults to 20 sessions. The existing 61-default count is not independently accepted; horizon review/re-scoring remains required before seed sign-off.
+Options: Correct and re-score frozen publication membership in a separate seed fix; do not reselect by outcome (recommended).
+Need from: Arnav/Hardhik — review separate seed correction. V2 does not silently claim seed acceptance.
+```
+
+
 _Append updates here._
 
 ```text

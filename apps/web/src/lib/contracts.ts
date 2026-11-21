@@ -83,6 +83,9 @@ export interface VerifySourceSummary {
 }
 
 export interface ClaimRecord {
+  tip_facts?: TipFact[];
+  evidence_start_s?: number | null;
+  evidence_end_s?: number | null;
   id: string;
   submission_id?: string;
   symbol: string | null;
@@ -344,10 +347,37 @@ export interface VerifyRequest {
   user_confidence?: number;
 }
 
+export type TipFactCode =
+  | "required_move_pct"
+  | "move_base_rate"
+  | "pre_post_run_up_pct"
+  | "pre_post_volume_ratio"
+  | "illiquid_small_cap"
+  | "surveillance_list"
+  | "stop_distance_pct"
+  | "reward_risk";
+export interface TipFact {
+  code: TipFactCode;
+  text: string;
+  value: number | boolean | string | null;
+  as_of: string;
+  data_origin: DataOrigin;
+}
+export interface SourceMention {
+  url: string;
+  title: string;
+  published_at: string | null;
+  platform: string;
+  fetched_at: string;
+  data_origin: DataOrigin;
+}
+
 export interface VerifyResponse {
   submission_id: string;
   source: VerifySourceSummary | null;
   claim: ClaimRecord | null;
+  tip_facts?: TipFact[];
+  claims?: ClaimRecord[];
   red_flags: RedFlagItem[];
   mode: "basic" | "full";
   data_origin?: DataOrigin;
@@ -365,6 +395,8 @@ export interface SourceRatingHistoryItem {
 }
 
 export interface SourceDetailResponse {
+  enforcement?: { flag: boolean | null; refs: Record<string, unknown>[]; data_origin: DataOrigin };
+  mentions?: SourceMention[];
   source: VerifySourceSummary;
   history: SourceRatingHistoryItem[];
   recent_claims: ClaimRecord[];

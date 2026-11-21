@@ -67,6 +67,11 @@ paisaproof/
 | `core.market.surveillance(symbol, date)` | ASM/GSM stage or `None` |
 | `core.market.sebi_registered(name_or_reg_no)` | `{found, type, reg_no}` where `type` is `"RA"` or `"IA"` |
 
+### Verifier v2 core additions (approved design, Hardhik reviews implementation)
+
+- `core.transcribe.transcribe(media_url) -> {segments:[{start_s,end_s,text}], language, data_origin}`: verbatim timestamped transcription only, bounded public YouTube input.
+- `core.web_search.web_search(query, *, limit) -> [{url,title,published_at|null,snippet,data_origin}]`: one general search adapter, 24-hour query cache; dates remain null when not established as publication dates.
+
 ## 6. Database tables
 
 | Table | Owner | Key columns |
@@ -92,6 +97,13 @@ paisaproof/
 > `submissions.user_id -> users.id` is enforced by a reconciliation revision;
 > existing orphaned submissions must be reconciled before deploying it.
 
+Verifier v2 adds nullable `claims.tip_quality` JSON and `tip_quality_version`,
+`submissions.transcript_segments` JSON, nullable `sources.enforcement_flag` and
+`enforcement_refs` JSON, and `source_rating_history.formula_version`.
+`source_mentions` stores id, source_id FK, URL, title, published_at nullable,
+platform, fetched_at and data_origin; (source_id, URL) is unique. One submission
+may retain up to five grounded claims; remove the previous unique submission FK.
+
 ## 7. API contract
 
 All endpoints under `/api/v1`, JSON, auth required except `/health`.
@@ -110,8 +122,8 @@ All endpoints under `/api/v1`, JSON, auth required except `/health`.
 | `POST /assessments/{id}/submit` | Divyansh | `{answers[{item_id, answer, confidence}]}` | `{passed, score, brier, new_level?, unlocked[]}` |
 | `GET /explain?symbol=&year=` | Divyansh | – | `{chart[], moves[{date, pct, events[{text, source}]}], summary}` |
 | `GET /me/dashboard` | Divyansh | – | `{level, skills_over_time[], brier_over_time[], scenario_accuracy[]}` |
-| `POST /verify` | Arnav | one of `{url}`, `{text}`, `{image_base64}`; optional `{user_guess, user_confidence}` | `{submission_id, source{id, platform, handle, label, score, facts{}, data_origin}, claim{...}, red_flags[{code, text, evidence{}, data_origin}], mode: "basic" or "full", data_origin}` |
-| `GET /sources/{id}` | Arnav | – | `{source, history[], recent_claims[], data_origin}` |
+| `POST /verify` | Arnav | one of `{url}`, `{text}`, `{image_base64}`; optional `{user_guess, user_confidence}` | `{submission_id, source{id, platform, handle, label, score, facts{}, data_origin}, claim{...}, claims[], tip_facts[{code,text,value,as_of,data_origin}], red_flags[{code, text, evidence{}, data_origin}], mode: "basic" or "full", data_origin}` |
+| `GET /sources/{id}` | Arnav | – | `{source, history[], recent_claims[], enforcement{flag,refs[],data_origin}, mentions[], data_origin}` |
 | `GET /submissions/mine` | Arnav | – | `{items[{submission_id, claim, status, outcome, data_origin}], data_origin}` |
 | `GET /nasdaq-verifier/challenge?symbol=` | Arnav (gate: shared core) | – | `{challenge_id, data_origin: "real", as_of, snapshot{symbol, name, sector, price, day_low, day_high, week52_low, week52_high, market_cap_musd, pe_ttm, chart[], data_origin}, nasdaq_url, disclaimer, questions[{id, text, options[]}]}` |
 | `POST /nasdaq-verifier/submit` | Arnav (gate: shared core) | `{challenge_id, answers[{question_id, answer, confidence 50–100}]}` | `{data_origin: "real", passed, score, brier, results[{question_id, correct, correct_answer, explanation}], feedback}` |
@@ -119,6 +131,20 @@ All endpoints under `/api/v1`, JSON, auth required except `/health`.
 Errors: `{error: {code, message}}` with HTTP 4xx/5xx. Locked tool → `403 {error: {code: "TOOL_LOCKED", message, required_level}}`. Missing `OPENROUTER_API_KEY` on `/verify` → `503 {error: {code: "VERIFIER_UNAVAILABLE", message}}`.
 
 **Nasdaq literacy verifier (final capstone, `nasdaq_verifier`).** Not level-granted: unlocked only when `user.level == 4` **and** `plan.progress_pct == 100` **and** calibration `brier <= 0.25`, checked server-side on both endpoints (missing data fails closed). Locked → `403 {error: {code: "TOOL_LOCKED", message, required_level: 4, missing_requirements["level_4"|"plan_progress_100"|"brier_lte_0.25"]}}`. `GET /me` adds `nasdaq_verifier` to `unlocks` only when the gate passes. Data comes from Finnhub (`FINNHUB_API_KEY`), allowlist `/quote`, `/stock/profile2`, `/stock/metric`, `/stock/candle` only; never `/stock/recommendation`, `/stock/price-target` or `/stock/upgrade-downgrade`. Every record is `data_origin: "real"` (REAL badge); questions are template-generated from the numbers; feedback passes `core.guardrails.check_output()`. `nasdaq.com` cannot be iframed, so the UI shows its own snapshot + Recharts chart with an external "Open on Nasdaq.com" link. Extra errors: `FINNHUB_UNAVAILABLE` 503, `NOT_NASDAQ` 422, `INVALID_SYMBOL` 422.
+
+**Verifier v2 rules.** Per-tip output is facts only, never an overall tip score,
+label, probability or verdict. `claim` is the first retained claim; additive
+`claims` contains up to five, each with `tip_facts` and grounded evidence time
+offsets where available. Only strictly pre-publication sessions enter facts.
+Registration credit becomes registered with no matched SEBI enforcement order;
+match by registration number or exact legal name only. Search mentions are
+unverified display links and never enter ratings. Snippets are search excerpts,
+not verified page quotations, so the profile displays titles and links only.
+`tip_quality_score` stays private with config weight 0 pending independent offline
+validation (>=300 eligible scored claims, >=30 providers, temporal test AUC>=0.60
+and grouped provider AUC>=0.60). Any manual nonzero weight (max 10) comes from the
+15-point red-flag share; the 60-point track record is unchanged. No automatic
+activation. Existing public/date/first-sighting eligibility is preserved.
 
 ## 8. Shared enums
 
@@ -151,6 +177,7 @@ uses the existing 20-session default. Target-only reports use the existing
 benchmark-relative policy; their outcomes are not target-hit statistics. Imported
 source ratings are limited to this availability-selected historical sample.
 
+- Tip fact codes: `required_move_pct`, `move_base_rate`, `pre_post_run_up_pct`, `pre_post_volume_ratio`, `illiquid_small_cap`, `surveillance_list`, `stop_distance_pct`, `reward_risk`.
 - Source labels: `reliable`, `semi_reliable`, `not_reliable`, `not_enough_history`.
 - Red-flag codes: `guaranteed_returns`, `urgency`, `illiquid_small_cap`, `surveillance_list`, `pre_post_volume_spike`, `not_sebi_registered`, `vague_claim`, `deleted_post`.
 - Levels: 1 Foundations, 2 Reading a stock, 3 Judging information, 4 Risk & discipline.
