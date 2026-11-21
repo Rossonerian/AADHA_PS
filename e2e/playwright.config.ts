@@ -1,6 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const baseURL = process.env.BASE_URL?.trim() || "https://aadha-ps.vercel.app";
+const baseURL = process.env.BASE_URL?.trim() || "https://paisaproof.vercel.app";
 
 export default defineConfig({
   testDir: ".",

@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const DEFAULT_BASE_URL = "https://aadha-ps.vercel.app";
+const DEFAULT_BASE_URL = "https://paisaproof.vercel.app";
 const DEFAULT_API_BASE_URL = "https://aadha-ps.onrender.com";
 
 function getBaseUrl(): string {

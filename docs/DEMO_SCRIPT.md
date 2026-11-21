@@ -1,6 +1,6 @@
 # PaisaProof — 5-Minute Judge Walkthrough Script
 
-> **Total Runtime:** 5:00 (live production: `https://aadha-ps.vercel.app`)
+> **Total Runtime:** 5:00 (live production: `https://paisaproof.vercel.app`)
 > **Core Rule:** Educational investor literacy & deterministic claim verification only — PaisaProof **never** gives buy, sell, or hold advice.
 
 ---
@@ -13,7 +13,7 @@
    ```
    Confirm HTTP `200` with `{"status":"ok","db":"ok",...}`.
 2. **Open two browser tabs:**
-   - **Tab A (Incognito — Fresh User):** `https://aadha-ps.vercel.app` on the clean sign-in screen (use this for Sign-up + Check-in + Level 1 Learning Path + Scenario).
+   - **Tab A (Incognito — Fresh User):** `https://paisaproof.vercel.app` on the clean sign-in screen (use this for Sign-up + Check-in + Level 1 Learning Path + Scenario).
    - **Tab B (Pre-leveled L4 Session or Local Backup):** Either a pre-leveled Level 4 session (so Level 2–4 server-enforced tools — Explain a stock, Source verifier, Progress dashboard, Nasdaq L4 — open immediately without spending 3 minutes taking level-up assessments live) or local dev (`NEXT_PUBLIC_USE_MOCKS=true`, `NEXT_PUBLIC_MOCK_LEVEL=4`).
 3. **Copy your Verifier paste snippet** to the clipboard so you never type live:
    ```text
@@ -25,7 +25,7 @@
 ## 5-Minute Live Walkthrough
 
 ### 1. Sign-Up / Google OAuth (`0:00 – 0:35`)
-- **On screen:** On `https://aadha-ps.vercel.app`, click **Sign in with Google** (or switch to **Create account** and submit email + password). Complete the 4-card profile setup (`Continue` through goal, experience, and weekly study time).
+- **On screen:** On `https://paisaproof.vercel.app`, click **Sign in with Google** (or switch to **Create account** and submit email + password). Complete the 4-card profile setup (`Continue` through goal, experience, and weekly study time).
 - **What to say:**
   > "Retail investors get flooded with screenshots and finfluencer tips every day, yet almost nobody measures whether a tipster actually has a track record — or whether the reader is overconfident. PaisaProof fixes both, without ever giving buy or sell advice. Every account starts real through Neon Auth with an EdDSA JWT — zero hardcoded demo users — and we immediately personalize the learner's study path."
 

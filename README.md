@@ -2,7 +2,7 @@
 
 > Investor literacy and financial claim verification platform. Educational only — no buy/sell/hold advice or stock recommendations.
 
-- **Live Web:** https://aadha-ps.vercel.app
+- **Live Web:** https://paisaproof.vercel.app
 - **Architecture & Contracts:** [`docs/SOURCE_OF_TRUTH.md`](docs/SOURCE_OF_TRUTH.md)
 - **Team Progress:** [`STATUS.md`](STATUS.md)
 - **Deploy Checklist:** [`docs/DEPLOY_CHECKLIST.md`](docs/DEPLOY_CHECKLIST.md)
@@ -80,13 +80,13 @@ make check-api API_URL=https://<your-api-host>/api/v1
 # Full fresh-user staging walkthrough (onboarding -> plan -> lesson -> assessment -> scenario -> explain -> verify -> dashboard)
 PYTHONPATH=services/api services/api/.venv/bin/python infra/scripts/smoke_test.py \
   --base-url https://<your-api-host>/api/v1 \
-  --auth-base-url https://aadha-ps.vercel.app/api/auth \
-  --origin https://aadha-ps.vercel.app \
+  --auth-base-url https://paisaproof.vercel.app/api/auth \
+  --origin https://paisaproof.vercel.app \
   --fresh-user --cleanup-db --timeout 75
 
 # Minimal curl checks (/api/neon/health and /api/neon/verify are dev-only diagnostics intended to return 403 in production)
 curl -sf https://<your-api-host>/api/v1/health
-curl -sfI https://aadha-ps.vercel.app
+curl -sfI https://paisaproof.vercel.app
 ```
 
 ## Cron, Stale-Refresh Alerting & Rate Limits
@@ -102,7 +102,7 @@ Templates with safe placeholder values live in [`.env.example`](.env.example).
 | Variable | Target | Purpose |
 |---|---|---|
 | `APP_ENV`, `APP_VERSION` | Render, Local | Runtime environment (`production`/`development`) and reported API version |
-| `CORS_ORIGINS` | Render, Local | Comma-separated allowed web origins (include `https://aadha-ps.vercel.app`) |
+| `CORS_ORIGINS` | Render, Local | Comma-separated allowed web origins (include `https://paisaproof.vercel.app`) |
 | `DATABASE_URL` | Render, Vercel, Local | Pooled Neon Postgres connection string |
 | `DATABASE_URL_UNPOOLED` | Render, Local | Direct non-pooled Neon Postgres URL used by Alembic migrations & cleanup |
 | `NEON_AUTH_BASE_URL` | Render, Vercel, Local | Neon Managed Better Auth endpoint URL |
@@ -128,7 +128,7 @@ Templates with safe placeholder values live in [`.env.example`](.env.example).
 
 ## Deployment
 
-- **Neon:** Hosts Lakebase Postgres, Neon Auth (JWKS + `https://aadha-ps.vercel.app` trusted origin), Object Storage, and Realtime.
+- **Neon:** Hosts Lakebase Postgres, Neon Auth (JWKS + `https://paisaproof.vercel.app` trusted origin), Object Storage, and Realtime.
 - **Render:** Hosts the Python 3.11 FastAPI service (Dockerfile starts `uvicorn`; Alembic migrations run as the Render `preDeployCommand`; health check `/api/v1/health`) and daily cron (`infra/scripts/daily_job.py`).
 - **Vercel:** Deploys Next.js from `apps/web` with Neon service env vars, `NEXT_PUBLIC_USE_MOCKS=false`, and `NEXT_PUBLIC_API_URL` pointing to the Render `/api/v1` base.
 
@@ -139,7 +139,7 @@ Templates with safe placeholder values live in [`.env.example`](.env.example).
 1. In **Google Cloud Console** → **APIs & Services → Credentials → Create Credentials → OAuth client ID**, choose **Web application**.
 2. Add this **Authorized redirect URI**: `{NEON_AUTH_BASE_URL}/callback/google` (substitute your actual `NEON_AUTH_BASE_URL`). Save and copy the Client ID and Client Secret.
 3. In **Neon Console → Auth → Providers → Google**, enter the Client ID and Client Secret and enable the provider. These go in the Neon Console, not in app env vars.
-4. In **Neon Console → Auth → Domains / Trusted Origins**, add `https://aadha-ps.vercel.app`, `http://localhost:3000`, and the `/auth/callback` URL on each (e.g. `https://aadha-ps.vercel.app/auth/callback`), plus any Vercel preview domains you test on.
+4. In **Neon Console → Auth → Domains / Trusted Origins**, add `https://paisaproof.vercel.app`, `http://localhost:3000`, and the `/auth/callback` URL on each (e.g. `https://paisaproof.vercel.app/auth/callback`), plus any Vercel preview domains you test on.
 
 No extra Next.js or FastAPI environment variables are needed beyond `NEON_AUTH_BASE_URL`, `NEON_AUTH_JWKS_URL`, and `NEON_AUTH_COOKIE_SECRET` (Google OAuth secrets live exclusively in the Neon Auth console).
 
