@@ -75,3 +75,17 @@
     opacity: 0.96;
   }
 }
+
+/* Mobile: form first so the sign-in buttons sit above the fold. */
+@media (max-width: 639.98px) {
+  .welcome-screen .welcome-content {
+    gap: 20px;
+    padding-top: 20px;
+  }
+
+  .welcome-screen .signin-panel.pp-auth-card {
+    order: -1;
+    max-width: none;
+    justify-self: stretch;
+  }
+}
