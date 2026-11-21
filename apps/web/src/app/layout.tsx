@@ -22,6 +22,11 @@ const plexMono = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "https://aadha-ps.vercel.app",
+  ),
   title: "PaisaProof",
   description:
     "Learn to judge financial claims. PaisaProof teaches calibration and checks tips, and never tells you what to buy or sell.",
