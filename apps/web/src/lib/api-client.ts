@@ -5,6 +5,7 @@ import type {
   NasdaqSubmitResponse,
   UserLevel,
 } from "./contracts";
+import { authClient } from "./neon-auth-client";
 
 // Fixtures are required lazily and only outside production, so the branch (and the
 // mock-nasdaq module) is removed from production bundles.
@@ -101,8 +102,16 @@ export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): 
     headers.set("Accept", "application/json");
   }
 
-  if (token) {
-    headers.set("Authorization", `Bearer ${token}`);
+  const sessionToken =
+    token === undefined && !headers.has("Authorization")
+      ? await (
+          authClient as typeof authClient & {
+            getJWTToken?: () => Promise<string | null>;
+          }
+        ).getJWTToken?.()
+      : token;
+  if (sessionToken) {
+    headers.set("Authorization", `Bearer ${sessionToken}`);
   }
 
   let serializedBody: BodyInit | undefined;

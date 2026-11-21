@@ -416,6 +416,11 @@ export const api = {
     });
   },
 
+  async explainCatalog(): Promise<{ symbol: string; year: number }[]> {
+    if (useMocks) return [{ symbol: "INFY", year: 2017 }];
+    return request("/explain/catalog");
+  },
+
   async dashboard(): Promise<DashboardData> {
     return getOriginated<DashboardResponse, RawDashboard>(
       "/me/dashboard",

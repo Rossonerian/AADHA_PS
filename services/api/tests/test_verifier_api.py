@@ -86,6 +86,19 @@ def api(tmp_path):
     engine.dispose()
 
 
+def test_pasted_tip_and_x_link_are_accepted_without_public_attribution(api):
+    client, _, _, _, _ = api
+    response = client.post(
+        "/api/v1/verify",
+        json={
+            "text": "TCS to rise.",
+            "url": "https://x.com/StocksResearch/status/2123681669534404637?a=4Wp",
+        },
+    )
+    assert response.status_code == 200, response.text
+    assert response.json()["source"]["handle"] == "unattributed"
+
+
 def test_basic_mode_deduplication_guard_and_owner_privacy(api):
     client, sessions, _, _, observations = api
     tip = {"text": "TCS to rise. Guaranteed returns. WhatsApp: 98765 432 10."}

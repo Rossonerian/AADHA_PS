@@ -408,7 +408,7 @@ export function NasdaqVerifier() {
       )}
       {view.s === "error" && (
         <Alert variant="warning" role="alert" className="text-sm">
-          {view.message}
+          <span className="col-start-2">{view.message}</span>
         </Alert>
       )}
       {view.s === "locked" && (

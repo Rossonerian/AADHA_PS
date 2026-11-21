@@ -47,6 +47,18 @@ class TestE2ESecurityAndGuardrails(unittest.TestCase):
         token = self.make_jwt(user_id, user_metadata={"name": name})
         return {"Authorization": f"Bearer {token}"}
 
+    def test_explain_catalog_lists_actual_prepared_pairs(self) -> None:
+        self.assertEqual(self.client.get("/api/v1/explain/catalog").status_code, 401)
+        headers = self._auth_headers(level=2)
+        response = self.client.get("/api/v1/explain/catalog", headers=headers)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), self.repo.list_explain_records())
+        pairs = {(item["symbol"], item["year"]) for item in response.json()}
+        self.assertIn(("TCS", 2020), pairs)
+        self.assertIn(("INFY", 2017), pairs)
+        self.assertIn(("RELIANCE", 2020), pairs)
+        self.assertNotIn(("TCS", 2025), pairs)
+
     def test_full_learner_lifecycle_via_http_api(self) -> None:
         # 1. Health & /me
         h = self.client.get("/api/v1/health")

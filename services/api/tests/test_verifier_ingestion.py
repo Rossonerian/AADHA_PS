@@ -130,11 +130,30 @@ def test_whatsapp_paste_with_multiple_senders_does_not_assign_one_author():
     assert (tip.platform, tip.handle) == ("whatsapp", None)
 
 
-@pytest.mark.parametrize("inputs", [{}, {"text": "one", "url": VIDEO_URL}])
-def test_ingest_requires_exactly_one_input(inputs):
+@pytest.mark.parametrize("inputs", [{}, {"text": "one", "image_base64": "image"}])
+def test_ingest_requires_content_without_mixing_screenshot_and_text(inputs):
     with pytest.raises(IngestionError) as err:
         capture(**inputs)
     assert err.value.code == "INVALID_INPUT"
+
+
+def test_pasted_tip_with_x_link_does_not_fetch_or_verify_author():
+    tip = capture(
+        text="JBM Auto 489 sl 480 intraday",
+        url="https://x.com/StocksResearch/status/2123681669534404637?a=4Wp",
+    )
+    assert tip.text == "JBM Auto 489 sl 480 intraday"
+    assert tip.post_url == "https://x.com/StocksResearch/status/2123681669534404637"
+    assert tip.platform == "text"
+    assert tip.handle is None and tip.published_at is None
+    assert tip.author_verified is False
+
+
+@pytest.mark.parametrize("url", ["bad link", "file:///etc/passwd", "https://[bad"])
+def test_pasted_tip_with_malformed_link_is_rejected(url):
+    with pytest.raises(IngestionError) as err:
+        capture(text="A pasted tip", url=url)
+    assert err.value.code == "UNSUPPORTED_URL"
 
 
 def test_telegram_captures_only_requested_post_and_published_date(stub_http):

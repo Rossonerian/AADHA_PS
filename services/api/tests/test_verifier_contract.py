@@ -79,7 +79,8 @@ def test_verifier_revision_upgrades_downgrades_and_enforces_origin():
     [
         {},
         {"text": "  "},
-        {"url": "https://t.me/s/test/1", "text": "tip"},
+        {"image_base64": "image", "text": "tip"},
+        {"image_base64": "image", "url": "https://x.com/test/status/1"},
         {"text": "tip", "user_confidence": 49},
         {"text": "tip", "data_origin": "synthetic"},
     ],
@@ -95,3 +96,11 @@ def test_verify_accepts_a_tip_and_optional_source_guess():
     )
     assert req.text == "An example tip."
     assert req.user_guess == "not_reliable"
+
+
+def test_verify_accepts_pasted_text_with_a_context_link():
+    req = VerifyRequest(
+        text="JBM Auto 489 sl 480 intraday", url="https://x.com/StocksResearch/status/1"
+    )
+    assert req.text == "JBM Auto 489 sl 480 intraday"
+    assert req.url == "https://x.com/StocksResearch/status/1"
