@@ -2,12 +2,24 @@
 
 from __future__ import annotations
 
+import hashlib
 import math
 from collections.abc import Sequence
 
 from scipy import stats
 
 from .enums import SkillArea
+
+
+def shuffle_options_for_question(question_id: str, options: Sequence[str]) -> list[str]:
+    """Deterministically shuffle options per question ID so index 0 is not always correct."""
+    indexed = list(enumerate(options))
+    indexed.sort(
+        key=lambda pair: hashlib.sha256(
+            f"{question_id}:{pair[0]}:{pair[1]}".encode()
+        ).hexdigest()
+    )
+    return [opt for _, opt in indexed]
 
 
 def compute_brier_score(attempts: Sequence[tuple[int, bool]]) -> float:

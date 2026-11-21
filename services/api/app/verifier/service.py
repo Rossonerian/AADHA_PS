@@ -7,7 +7,15 @@ from uuid import UUID, uuid4, uuid5
 from sqlalchemy import exists, select
 from sqlalchemy.orm import Session
 
-from .extraction import extract_claim, extract_video_claims, reject_advice_request
+from app.core.errors import ConfigurationError
+from app.core.provenance import aggregate_data_origin
+
+from .extraction import (
+    ExtractedClaim,
+    extract_claim,
+    extract_video_claims,
+    reject_advice_request,
+)
 from .ingestion import CapturedTip, ingest
 from .models import Claim, Source, SourceMention, SourceRatingHistory, Submission
 from .ports import MARKET_TZ, SessionFactory, VerifierCore
@@ -79,11 +87,17 @@ class VerifierService:
                 demo = self._find_demo(session, tip)
                 if demo is not None:
                     return self._copy_demo(session, owner, request, tip, *demo, mode)
-        extracted = (
-            extract_video_claims(tip.transcript_segments, self.core)
-            if tip.transcript_segments
-            else [extract_claim(tip.text, self.core)]
-        )
+        degraded = False
+        try:
+            extracted = (
+                extract_video_claims(tip.transcript_segments, self.core)
+                if tip.transcript_segments
+                else [extract_claim(tip.text, self.core)]
+            )
+        except ConfigurationError:
+            degraded = True
+            mode = Mode.BASIC
+            extracted = [ExtractedClaim(status=ClaimStatus.NEEDS_REVIEW)]
         claim = extracted[0]
         published = (
             tip.published_at.astimezone(MARKET_TZ).date() if tip.published_at else None
@@ -189,7 +203,7 @@ class VerifierService:
                     scorable=status == ClaimStatus.OPEN,
                     status=status,
                     data_origin=DataOrigin.REAL,
-                    rating_eligible=public and prior is None,
+                    rating_eligible=public and prior is None and not degraded,
                 ),
             )
             if submission.id != proposed_id:
@@ -211,13 +225,13 @@ class VerifierService:
                         scorable=extra_status == ClaimStatus.OPEN,
                         status=extra_status,
                         data_origin=DataOrigin.REAL,
-                        rating_eligible=public and prior is None,
+                        rating_eligible=public and prior is None and not degraded,
                         tip_quality=quality,
                         tip_quality_version=VERSION,
                     )
                 )
             session.flush()
-            if public:
+            if public and not degraded:
                 refresh(session, source, self.core)
                 update_rating(session, source)
             return self._verification(session, submission, stored, mode)
@@ -320,10 +334,9 @@ class VerifierService:
                 )
                 for submission, claim in rows
             ]
-            origin = (
-                DataOrigin.SYNTHETIC
-                if any(item.data_origin == DataOrigin.SYNTHETIC for item in items)
-                else DataOrigin.REAL
+            origin = aggregate_data_origin(
+                [item.data_origin.value for item in items],
+                empty_default="real",
             )
             return SubmissionsResponse(items=items, data_origin=origin)
 

@@ -13,6 +13,7 @@ from typing import Any
 import pandas as pd
 
 from ..core import guardrails, market
+from ..core.provenance import aggregate_data_origin
 from .config import DEFAULT_CONFIG, EducationConfig
 from .enums import AttemptContext, AttemptItemType, ToolName
 from .exceptions import NotFoundError, ValidationDomainError
@@ -23,7 +24,7 @@ from .scenarios import (
     recompute_scenario_outcome,
     scenario_outcome,
 )
-from .scoring import compute_brier_score
+from .scoring import compute_brier_score, shuffle_options_for_question
 
 
 def _real_explain_series(
@@ -176,14 +177,48 @@ def get_dashboard(
     ]
 
     # 2. Scenario accuracy breakdown by difficulty and overall
-    scen_attempts = repo.list_attempts(
-        user_id=user_id, item_type=AttemptItemType.SCENARIO.value
-    )
+    all_attempts = repo.list_attempts(user_id=user_id)
+    scen_attempts = [
+        att
+        for att in all_attempts
+        if att["item_type"] == AttemptItemType.SCENARIO.value
+    ]
     by_diff: dict[int, list[bool]] = defaultdict(list)
+    scenario_cache: dict[str, dict[str, Any] | None] = {}
+    scenario_origin_cache: dict[str, str] = {}
     for att in scen_attempts:
-        sc = repo.get_scenario(att["item_id"])
+        sc_id = att["item_id"]
+        if sc_id not in scenario_cache:
+            scenario_cache[sc_id] = repo.get_scenario(sc_id)
+        sc = scenario_cache[sc_id]
         diff = int(sc["difficulty"]) if sc else 0
         by_diff[diff].append(bool(att["correct"]))
+
+    attempt_origins: list[str] = []
+    question_cache: dict[str, dict[str, Any] | None] = {}
+    for att in all_attempts:
+        itype = att["item_type"]
+        iid = att["item_id"]
+        if itype == AttemptItemType.QUESTION.value:
+            if iid not in question_cache:
+                question_cache[iid] = repo.get_question(iid)
+            q = question_cache[iid]
+            attempt_origins.append(
+                str(q.get("data_origin", "synthetic")) if q else "synthetic"
+            )
+        elif itype == AttemptItemType.SCENARIO.value:
+            if iid not in scenario_cache:
+                scenario_cache[iid] = repo.get_scenario(iid)
+            sc = scenario_cache[iid]
+            if sc is None:
+                attempt_origins.append("synthetic")
+            else:
+                if iid not in scenario_origin_cache:
+                    _, series_origin = scenario_outcome(sc)
+                    scenario_origin_cache[iid] = series_origin
+                attempt_origins.append(scenario_origin_cache[iid])
+        else:
+            attempt_origins.append("synthetic")
 
     scenario_accuracy = []
     for diff in sorted(by_diff.keys()):
@@ -203,6 +238,9 @@ def get_dashboard(
         "skills_over_time": skills_over_time,
         "brier_over_time": brier_over_time,
         "scenario_accuracy": scenario_accuracy,
+        "data_origin": aggregate_data_origin(
+            attempt_origins, empty_default="synthetic"
+        ),
     }
 
 
@@ -259,7 +297,7 @@ def start_study_session(
                     "skill_area": q["skill_area"],
                     "difficulty": q["difficulty"],
                     "text": q["text"],
-                    "options": q["options"],
+                    "options": shuffle_options_for_question(q["id"], q["options"]),
                     "data_origin": q.get("data_origin", "synthetic"),
                 },
             }

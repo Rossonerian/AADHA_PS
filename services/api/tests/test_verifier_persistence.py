@@ -28,7 +28,9 @@ from app.verifier.models import Source, Submission
 
 
 def migrate(db: Session, revision: str, *, downgrade: bool = False) -> None:
-    cfg = Config(str(Path(__file__).resolve().parents[3] / "db/alembic.ini"))
+    repo_root = Path(__file__).resolve().parents[3]
+    cfg = Config(str(repo_root / "db/alembic.ini"))
+    cfg.set_main_option("script_location", str(repo_root / "db/migrations"))
     cfg.attributes["connection"] = db.connection()
     (command.downgrade if downgrade else command.upgrade)(cfg, revision)
     db.commit()

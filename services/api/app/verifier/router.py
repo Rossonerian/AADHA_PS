@@ -60,7 +60,7 @@ def create_router(
                 except ConfigurationError:
                     return _error(
                         503,
-                        "VERIFIER_UNAVAILABLE",
+                        "SERVICE_UNAVAILABLE",
                         service.safe_text(
                             "Tip verification is temporarily unavailable while the "
                             "extraction service is not configured."

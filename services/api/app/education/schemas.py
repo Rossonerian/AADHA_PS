@@ -6,7 +6,14 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
-from .enums import DataOrigin, Direction, LessonStatus, SkillArea
+from ..core.provenance import ResponseDataOrigin
+from .enums import (
+    DataOrigin,
+    Direction,
+    LessonStatus,
+    ScenarioGuessDirection,
+    SkillArea,
+)
 
 # ---- Onboarding (Phase 2) ----
 
@@ -24,6 +31,7 @@ class QuestionPublic(BaseModel):
 class OnboardingStartResponse(BaseModel):
     session_id: str
     question: QuestionPublic
+    data_origin: ResponseDataOrigin = "synthetic"
 
 
 class OnboardingAnswerRequest(BaseModel):
@@ -42,6 +50,7 @@ class OnboardingResult(BaseModel):
 class OnboardingAnswerResponse(BaseModel):
     next_question: QuestionPublic | None = None
     result: OnboardingResult | None = None
+    data_origin: ResponseDataOrigin = "synthetic"
 
 
 # ---- Plan & Lessons (Phase 3) ----
@@ -59,6 +68,7 @@ class PlanResponse(BaseModel):
     level: int
     progress_pct: float
     lessons: list[PlanLessonItem]
+    data_origin: ResponseDataOrigin = "synthetic"
 
 
 class LessonSection(BaseModel):
@@ -135,7 +145,7 @@ class ScenarioNextResponse(BaseModel):
 
 
 class ScenarioAnswerRequest(BaseModel):
-    direction: Direction
+    direction: ScenarioGuessDirection
     confidence: int = Field(..., ge=50, le=100)
     clues: list[str] = Field(default_factory=list)
 
@@ -168,6 +178,7 @@ class AssessmentStartResponse(BaseModel):
     assessment_id: str
     level: int
     items: list[AssessmentItemPublic]
+    data_origin: ResponseDataOrigin = "synthetic"
 
 
 class AssessmentAnswerInput(BaseModel):
@@ -186,6 +197,7 @@ class AssessmentSubmitResponse(BaseModel):
     brier: float
     new_level: int | None = None
     unlocked: list[str] = Field(default_factory=list)
+    data_origin: ResponseDataOrigin = "synthetic"
 
 
 # ---- Explain a Stock & Dashboard & Study Mode (Phase 6) ----
@@ -217,6 +229,7 @@ class DashboardResponse(BaseModel):
     skills_over_time: list[dict[str, Any]]
     brier_over_time: list[dict[str, Any]]
     scenario_accuracy: list[dict[str, Any]]
+    data_origin: ResponseDataOrigin = "synthetic"
 
 
 class StudyStartRequest(BaseModel):

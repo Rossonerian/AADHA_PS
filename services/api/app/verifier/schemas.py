@@ -6,6 +6,8 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from app.core.provenance import ResponseDataOrigin
+
 
 class DataOrigin(StrEnum):
     REAL = "real"
@@ -193,4 +195,4 @@ class SubmissionItem(BaseModel):
 
 class SubmissionsResponse(BaseModel):
     items: list[SubmissionItem]
-    data_origin: DataOrigin
+    data_origin: ResponseDataOrigin

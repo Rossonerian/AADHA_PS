@@ -343,7 +343,9 @@ def test_v2_migration_roundtrip(persistence_engine):  # noqa: F811
     from pathlib import Path
 
     engine = persistence_engine
-    cfg = Config(str(Path(__file__).resolve().parents[3] / "db/alembic.ini"))
+    repo_root = Path(__file__).resolve().parents[3]
+    cfg = Config(str(repo_root / "db/alembic.ini"))
+    cfg.set_main_option("script_location", str(repo_root / "db/migrations"))
     with engine.begin() as connection:
         cfg.attributes["connection"] = connection
         assert "tip_quality" in {
