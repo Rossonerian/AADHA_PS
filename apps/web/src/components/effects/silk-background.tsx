@@ -48,7 +48,9 @@ export function SilkBackground({ theme }: { theme: "light" | "dark" }) {
     <div className="silk-background" data-theme={theme} aria-hidden="true">
       <Silk
         {...palette}
-        speed={2}
+        speed={1.8}
+        paused={false}
+        intro
         scale={1}
         fade={0.3}
         mouseInteraction={!compact}
