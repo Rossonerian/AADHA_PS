@@ -2,7 +2,7 @@
 
 from functools import lru_cache
 
-from pydantic import field_validator
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -40,6 +40,13 @@ class Settings(BaseSettings):
     openrouter_api_key: str = ""
     openrouter_default_model: str = "nvidia/nemotron-3.5-lightning:free"
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
+
+    gemini_api_key: str = ""
+    google_ai_studio_api_key: str = ""
+    gemini_transcribe_model: str = "gemini-4-hydrogen"
+    web_search_provider: str = "exa"
+    web_search_api_key: str = ""
+    tip_quality_weight: int = Field(default=0, ge=0, le=10)
 
     finnhub_api_key: str = ""
 
