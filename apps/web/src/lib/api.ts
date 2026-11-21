@@ -1,5 +1,6 @@
 import { apiFetch, ApiClientError, readToken, type ApiFetchOptions } from "@/lib/api-client";
 import { AUTH_EXPIRED_EVENT, SESSION_EXPIRED_MESSAGE } from "@/lib/auth-errors";
+import { queryCache } from "@/lib/query-cache";
 import type {
   AssessmentStartResponse,
   AssessmentSubmitRequest,
@@ -251,6 +252,11 @@ async function getOriginated<T extends object, R extends object = T>(
 const post = (body?: unknown): ApiFetchOptions => ({ method: "POST", body });
 const patch = (body?: unknown): ApiFetchOptions => ({ method: "PATCH", body });
 const delay = () => new Promise((resolve) => setTimeout(resolve, 180));
+const explainKey = (symbol: string, year: number) =>
+  `explain:${symbol.trim().toUpperCase()}:${year}`;
+const invalidatePrefixes = (...prefixes: string[]) => {
+  for (const prefix of prefixes) queryCache.invalidate(prefix);
+};
 
 export const mockAuthBridge = useMocks ? demo.mockAuth : null;
 
@@ -272,19 +278,25 @@ export const api = {
   },
 
   async updateProfile(payload: ProfileUpdateInput): Promise<ProfileResponse> {
-    if (useMocks) {
-      await delay();
-      return demo.mockAuth.updateProfile(payload);
-    }
-    return request<ProfileResponse>("/me/profile", patch(payload));
+    const result = useMocks
+      ? await (async () => {
+          await delay();
+          return demo.mockAuth.updateProfile(payload);
+        })()
+      : await request<ProfileResponse>("/me/profile", patch(payload));
+    invalidatePrefixes("plan", "dashboard");
+    return result;
   },
 
   async completeOnboarding(): Promise<ProfileResponse> {
-    if (useMocks) {
-      await delay();
-      return demo.mockAuth.completeOnboarding();
-    }
-    return request<ProfileResponse>("/me/onboarding/complete", post({}));
+    const result = useMocks
+      ? await (async () => {
+          await delay();
+          return demo.mockAuth.completeOnboarding();
+        })()
+      : await request<ProfileResponse>("/me/onboarding/complete", post({}));
+    invalidatePrefixes("plan", "dashboard");
+    return result;
   },
 
   async onboardingStart(): Promise<OnboardingStart> {
@@ -308,7 +320,7 @@ export const api = {
       next_question: demo.onboardingQuestions[index + 1] ?? null,
       result: index + 1 >= demo.onboardingQuestions.length ? demo.onboardingResult : undefined,
     });
-    return getOriginated<OnboardingAnswerResponse>(
+    const result = await getOriginated<OnboardingAnswerResponse>(
       "/onboarding/answer",
       fixture,
       post(payload),
@@ -318,22 +330,31 @@ export const api = {
         result: raw.result ?? undefined,
       }),
     );
+    invalidatePrefixes("plan", "dashboard");
+    return result;
   },
 
   async plan(): Promise<LearningPlan> {
-    return getOriginated<PlanResponse>("/plan", () => demo.plan);
+    return queryCache.fetch("plan", () => getOriginated<PlanResponse>("/plan", () => demo.plan), {
+      ttlMs: 60_000,
+    });
   },
 
   async lesson(id: string): Promise<Lesson> {
     const fixture = (): LessonDetailResponse => ({ ...demo.lesson, id });
-    return getOriginated<LessonDetailResponse>(
-      `/lessons/${encodeURIComponent(id)}`,
-      fixture,
-      undefined,
-      (raw) => ({
-        ...raw,
-        check_questions: raw.check_questions.map((q) => normalizeQuestion(q)),
-      }),
+    return queryCache.fetch(
+      `lesson:${id}`,
+      () =>
+        getOriginated<LessonDetailResponse>(
+          `/lessons/${encodeURIComponent(id)}`,
+          fixture,
+          undefined,
+          (raw) => ({
+            ...raw,
+            check_questions: raw.check_questions.map((q) => normalizeQuestion(q)),
+          }),
+        ),
+      { ttlMs: 300_000 },
     );
   },
 
@@ -341,11 +362,17 @@ export const api = {
     id: string,
     answers: { question_id: string; answer: string; confidence?: number }[],
   ): Promise<LessonCheckResponse> {
-    if (useMocks) {
-      await delay();
-      return demo.lessonCheck;
-    }
-    return request(`/lessons/${encodeURIComponent(id)}/check`, post({ answers }));
+    const result = useMocks
+      ? await (async () => {
+          await delay();
+          return demo.lessonCheck;
+        })()
+      : await request<LessonCheckResponse>(
+          `/lessons/${encodeURIComponent(id)}/check`,
+          post({ answers }),
+        );
+    invalidatePrefixes("plan", "dashboard", "lesson:");
+    return result;
   },
 
   async scenarioNext(): Promise<Scenario> {
@@ -360,7 +387,13 @@ export const api = {
 
   async scenarioAnswer(id: string, payload: ScenarioAnswerRequest): Promise<ScenarioResult> {
     const fixture = (): ScenarioAnswerResponse => demo.scenarioResult;
-    return getOriginated(`/scenarios/${encodeURIComponent(id)}/answer`, fixture, post(payload));
+    const result = await getOriginated<ScenarioAnswerResponse>(
+      `/scenarios/${encodeURIComponent(id)}/answer`,
+      fixture,
+      post(payload),
+    );
+    invalidatePrefixes("dashboard");
+    return result;
   },
 
   async assessmentStart(level: number): Promise<Assessment> {
@@ -383,17 +416,24 @@ export const api = {
       new_level: Math.min(4, (Number(id.split("l").at(-1)) || 2) + 1) as 1 | 2 | 3 | 4,
       unlocked: Number(id.split("l").at(-1)) === 3 ? ["dashboard"] : ["verifier"],
     });
-    return getOriginated(
+    const result = await getOriginated<AssessmentSubmitResponse>(
       `/assessments/${encodeURIComponent(id)}/submit`,
       fixture,
       post({ answers }),
     );
+    invalidatePrefixes("plan", "dashboard");
+    return result;
   },
 
   async explain(symbol: string, year: number): Promise<ExplainResult> {
-    return getOriginated<ExplainResponse>("/explain", () => demo.explain, {
-      query: { symbol, year },
-    });
+    return queryCache.fetch(
+      explainKey(symbol, year),
+      () =>
+        getOriginated<ExplainResponse>("/explain", () => demo.explain, {
+          query: { symbol, year },
+        }),
+      { ttlMs: 600_000 },
+    );
   },
 
   async explainCatalog(): Promise<{ symbol: string; year: number }[]> {
@@ -402,39 +442,76 @@ export const api = {
   },
 
   async dashboard(): Promise<DashboardData> {
-    return getOriginated<DashboardResponse, RawDashboard>(
-      "/me/dashboard",
-      () => demo.dashboard,
-      undefined,
-      normalizeDashboard,
+    return queryCache.fetch(
+      "dashboard",
+      () =>
+        getOriginated<DashboardResponse, RawDashboard>(
+          "/me/dashboard",
+          () => demo.dashboard,
+          undefined,
+          normalizeDashboard,
+        ),
+      { ttlMs: 45_000 },
     );
   },
 
   async verify(payload: VerifyRequest): Promise<VerifyResult> {
-    return getOriginated<VerifyResponse>(
+    const result = await getOriginated<VerifyResponse>(
       "/verify",
       () => demo.verification,
       post(payload),
       normalizeVerify,
     );
+    invalidatePrefixes("submissions", "source:");
+    return result;
   },
 
   async source(id: string): Promise<SourceDetail> {
     const fixture = (): SourceDetailResponse => demo.sourceDetail;
-    return getOriginated(`/sources/${encodeURIComponent(id)}`, fixture);
+    return queryCache.fetch(
+      `source:${id}`,
+      () => getOriginated<SourceDetailResponse>(`/sources/${encodeURIComponent(id)}`, fixture),
+      { ttlMs: 60_000 },
+    );
   },
 
   async submissions(): Promise<SubmissionSummary[]> {
-    if (useMocks) {
-      await delay();
-      return demo.submissions.map((item) => ({ ...item, data_origin: "synthetic" as const }));
-    }
-    type Item = SubmissionMineItem & { data_origin?: string };
-    const result = await request<{ items: Item[] }>("/submissions/mine");
-    return result.items.map((item) => ({
-      ...item,
-      data_origin: item.data_origin === "real" ? "real" : ("synthetic" as const),
-    }));
+    return queryCache.fetch(
+      "submissions",
+      async () => {
+        if (useMocks) {
+          await delay();
+          return demo.submissions.map((item) => ({ ...item, data_origin: "synthetic" as const }));
+        }
+        type Item = SubmissionMineItem & { data_origin?: string };
+        const result = await request<{ items: Item[] }>("/submissions/mine");
+        return result.items.map((item) => ({
+          ...item,
+          data_origin: item.data_origin === "real" ? "real" : ("synthetic" as const),
+        }));
+      },
+      { ttlMs: 30_000 },
+    );
+  },
+
+  peekPlan(): LearningPlan | null {
+    return queryCache.peek<LearningPlan>("plan");
+  },
+
+  peekLesson(id: string): Lesson | null {
+    return queryCache.peek<Lesson>(`lesson:${id}`);
+  },
+
+  peekDashboard(): DashboardData | null {
+    return queryCache.peek<DashboardData>("dashboard");
+  },
+
+  peekExplain(symbol: string, year: number): ExplainResult | null {
+    return queryCache.peek<ExplainResult>(explainKey(symbol, year));
+  },
+
+  clearCache(): void {
+    queryCache.clear();
   },
 };
 

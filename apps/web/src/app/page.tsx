@@ -42,6 +42,14 @@ import { Separator } from "@/components/minor/separator";
 import { Skeleton } from "@/components/minor/skeleton";
 import { Toaster, notify } from "@/components/minor/toaster";
 import { Tooltip, TooltipProvider } from "@/components/minor/tooltip";
+import {
+  DashboardSkeleton,
+  ExplainSkeleton,
+  LessonSkeleton,
+  PlanSkeleton,
+  ScenarioSkeleton,
+  VerifierSkeleton,
+} from "@/components/minor/view-skeletons";
 import { BUILD_LABEL } from "@/lib/build-info";
 import { api, isToolLocked, mockAuthBridge, mocksEnabled } from "@/lib/api";
 import { ApiClientError } from "@/lib/api-client";
@@ -228,6 +236,7 @@ export default function PaisaProofApp() {
     if (mocksEnabled) return;
     const onExpired = () => {
       void Promise.resolve(authClient.signOut()).catch(() => undefined);
+      api.clearCache();
       setProfile(null);
       setPlan(null);
       setDashboard(null);
@@ -312,6 +321,7 @@ export default function PaisaProofApp() {
     } catch {
       // Local state is cleared below even if the server could not be reached.
     } finally {
+      api.clearCache();
       setAuthNotice("");
       setProfile(null);
       setPlan(null);
@@ -387,8 +397,11 @@ export default function PaisaProofApp() {
   }
 
   async function openLesson(id: string) {
+    const cached = api.peekLesson(id);
+    if (cached) setLesson(cached);
+    else setLesson(null);
     setView("lesson");
-    setBusy(true);
+    setBusy(!cached);
     setError("");
     setLessonCheck({});
     setLessonSaved("");
@@ -411,16 +424,31 @@ export default function PaisaProofApp() {
       setError("Answer at least one quick-check question to continue.");
       return;
     }
+    const prevPlan = plan;
+    if (prevPlan) {
+      const updatedLessons = prevPlan.lessons.map((item) =>
+        item.id === lesson.id ? { ...item, status: "completed" as const } : item,
+      );
+      const completedCount = updatedLessons.filter((item) => item.status === "completed").length;
+      const progressPct =
+        updatedLessons.length > 0
+          ? Math.round((completedCount / updatedLessons.length) * 100)
+          : prevPlan.progress_pct;
+      setPlan({ ...prevPlan, lessons: updatedLessons, progress_pct: progressPct });
+    }
     setBusy(true);
     setError("");
+    let checkSucceeded = false;
     try {
       const result = await api.lessonCheck(lesson.id, answers);
+      checkSucceeded = true;
       setLessonResult(result);
       setLessonSaved(
         `${Math.round(result.score_pct)}% on the quick check. Your learning path is now ${Math.round(result.plan_progress_pct)}% complete.`,
       );
       setPlan(await api.plan());
     } catch (reason) {
+      if (!checkSucceeded) setPlan(prevPlan);
       showError(reason);
     } finally {
       setBusy(false);
@@ -476,6 +504,7 @@ export default function PaisaProofApp() {
   }
 
   async function openScenario() {
+    setView("scenario");
     setBusy(true);
     setError("");
     setScenarioResult(null);
@@ -483,7 +512,6 @@ export default function PaisaProofApp() {
     setSelectedClues([]);
     try {
       setScenario(await api.scenarioNext());
-      setView("scenario");
     } catch (reason) {
       showError(reason);
     } finally {
@@ -515,11 +543,15 @@ export default function PaisaProofApp() {
 
   async function runExplain(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setBusy(true);
+    const normalizedSymbol = symbol.trim().toUpperCase();
+    const parsedYear = Number(year);
+    const cached = api.peekExplain(normalizedSymbol, parsedYear);
+    if (cached) setExplain(cached);
+    else setExplain(null);
+    setBusy(!cached);
     setError("");
-    setExplain(null);
     try {
-      setExplain(await api.explain(symbol.trim().toUpperCase(), Number(year)));
+      setExplain(await api.explain(normalizedSymbol, parsedYear));
     } catch (reason) {
       if (reason instanceof ApiClientError && reason.code === "EXPLAIN_NOT_FOUND")
         setError(
@@ -611,11 +643,13 @@ export default function PaisaProofApp() {
   }
 
   async function openDashboard() {
-    setBusy(true);
+    const cached = api.peekDashboard();
+    if (cached) setDashboard(cached);
+    setView("progress");
+    setBusy(!cached);
     setError("");
     try {
       setDashboard(await api.dashboard());
-      setView("progress");
     } catch (reason) {
       if (isToolLocked(reason))
         setError(`Your skill dashboard opens at Level ${reason.requiredLevel ?? 4}.`);
@@ -633,7 +667,27 @@ export default function PaisaProofApp() {
     if (locked) return;
     if (target === "scenario") void openScenario();
     if (target === "progress") void openDashboard();
-    if (target === "learn" && !plan) void api.plan().then(setPlan).catch(showError);
+    if (target === "learn") {
+      if (!plan) {
+        const cached = api.peekPlan();
+        if (cached) {
+          setPlan(cached);
+          void api.plan().then(setPlan).catch(showError);
+        } else {
+          setBusy(true);
+          void api
+            .plan()
+            .then(setPlan)
+            .catch(showError)
+            .finally(() => setBusy(false));
+        }
+      } else {
+        void api
+          .plan()
+          .then(setPlan)
+          .catch(() => undefined);
+      }
+    }
   }
 
   if (!profile) {
@@ -943,7 +997,7 @@ export default function PaisaProofApp() {
               (profile.level < 4 ? (
                 <LockNotice level={4} current={profile.level} onLearn={() => navigate("learn")} />
               ) : (
-                <ProgressView data={dashboard} />
+                <ProgressView data={dashboard} busy={busy} />
               ))}
             {view === "profile" && (
               <ProfilePanel
@@ -1285,6 +1339,7 @@ function LearningView({
   onOpen: (id: string) => void;
   onAssess: () => void;
 }) {
+  if (!plan && busy) return <PlanSkeleton />;
   return (
     <>
       <SectionHeading
@@ -1375,7 +1430,7 @@ function LessonView({
       <Button variant="quiet" className="back-button" onClick={onBack}>
         ← Learning path
       </Button>
-      {busy && <Panel>Loading lesson…</Panel>}
+      {!lesson && busy && <LessonSkeleton />}
       {lesson && (
         <>
           <div className="lesson-reader-head">
@@ -1640,13 +1695,15 @@ function ScenarioView({
   onReveal: () => void;
   onNext: () => void;
 }) {
-  if (!scenario)
+  if (!scenario) {
+    if (busy) return <ScenarioSkeleton />;
     return (
       <div className="narrow-view">
         <SectionHeading eyebrow="PRACTICE SCENARIO" title="Read the clues." />
         <Panel>Loading your practice scenario…</Panel>
       </div>
     );
+  }
   const clueOptions = [
     "Price moved before the message",
     "A dated company or exchange notice",
@@ -1937,6 +1994,7 @@ function ExplainView({
           what comes next.
         </p>
       </Panel>
+      {busy && !result && <ExplainSkeleton />}
       {result && (
         <div className="explain-results">
           <Panel className="scenario-chart-panel">
@@ -2176,7 +2234,7 @@ function VerifierView({
             </Panel>
           )}
         </div>
-        <div className={`verifier-results ${result ? "" : "fb-verifier-empty"}`}>
+        <div className={`verifier-results ${result || busy ? "" : "fb-verifier-empty"}`}>
           {result ? (
             <>
               <Panel className="source-summary">
@@ -2313,6 +2371,8 @@ function VerifierView({
                 </Panel>
               )}
             </>
+          ) : busy ? (
+            <VerifierSkeleton />
           ) : (
             <Panel className="results-empty">
               <div className="empty-orbit">
@@ -2344,14 +2404,16 @@ function VerifierView({
   );
 }
 
-function ProgressView({ data }: { data: DashboardData | null }) {
-  if (!data)
+function ProgressView({ data, busy }: { data: DashboardData | null; busy: boolean }) {
+  if (!data) {
+    if (busy) return <DashboardSkeleton />;
     return (
       <>
         <SectionHeading eyebrow="MY PROGRESS" title="Skills that grow with practice." />
         <Panel>Loading your progress…</Panel>
       </>
     );
+  }
   const lastScore = data.brier_over_time.at(-1)?.brier ?? 0;
   const accuracy = data.scenario_accuracy.at(-1)?.accuracy ?? 0;
   return (
